@@ -10,7 +10,7 @@ class Sequential:
 	def summary(self):
 		lines = "========================================================================\n"
 		n_params = 1
-		
+
 		for layer in self.__layers:
 			layer_details = layer.get_details()
 			n_params += layer_details["n_params"]
@@ -23,6 +23,17 @@ class Sequential:
 
 		return lines
 
+	def predict(self, x):
+		output = None
+
+		for layer in self.__layers:
+			if output is None:
+				output = layer.forward(x)
+			else:
+				output = layer.forward(output)
+
+
+		return output
 
 
 

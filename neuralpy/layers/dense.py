@@ -9,7 +9,7 @@ class Dense:
 		self.__bias = np.zeros((1, n_nodes), dtype=np.float)
 
 	def forward(self, x):
-		self.output = np.dot(x, self.__weights) + self.__bias
+		return np.dot(x, self.__weights) + self.__bias
 
 	def get_weights(self):
 		return {'weights': self.__weights, 'bias': self.__bias}

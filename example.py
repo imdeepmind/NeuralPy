@@ -11,3 +11,7 @@ model.add(Dense(5, 1))
 
 
 print(model.summary())
+
+output = model.predict(input)
+
+print(output)
