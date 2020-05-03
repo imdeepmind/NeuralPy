@@ -6,7 +6,7 @@ class Dense:
 		self.__n_nodes = n_nodes
 		self.__activation = activation
 
-		self.__weights = np.random.randn(n_inputs, n_nodes)
+		self.__weights = .01 * np.random.randn(n_inputs, n_nodes)
 		self.__bias = np.zeros((1, n_nodes), dtype=np.float)
 
 	def forward(self, x):
