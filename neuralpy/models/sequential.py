@@ -1,3 +1,5 @@
+import pickle
+
 class Sequential:
 	__layers = []
 
@@ -34,6 +36,14 @@ class Sequential:
 
 
 		return output
+
+	def save(self, path):
+		with open(path, "wb") as f:
+			pickle.dump(self.__layers, f)
+
+	def load_model(self, path):
+		with open(path, "rb") as f:
+			self.__layers = pickle.load(f)
 
 
 
