@@ -1,2 +1,4 @@
+import numpy as np
+
 def mean_squared_error(y, y_pred):
-	pass
+	return (np.sum(y - y.pred)**2) / len(y)
