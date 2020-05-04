@@ -49,6 +49,13 @@ class Sequential:
 		self.__optimizer = optimizer
 		self.__loss_function = loss_function
 
+	def evaluate(self, X, y):
+		y_pred = self.predict(X)
+
+		loss = self.__loss_function(y, y_pred)
+
+		return loss
+
 
 
 
