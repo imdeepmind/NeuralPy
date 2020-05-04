@@ -45,5 +45,10 @@ class Sequential:
 		with open(path, "rb") as f:
 			self.__layers = pickle.load(f)
 
+	def compile(self, optimizer, loss_function):
+		self.__optimizer = optimizer
+		self.__loss_function = loss_function
+
+
 
 
