@@ -27,13 +27,9 @@ class Sequential():
 
 	def summary(self):
 		if self.__build:
-			n_params = 0
-
-			for layer_details in self.__layers:
-				n_params += layer_details["n_params"]
-
 			print(self.__model)
-			print("Total Trainable Parameters: ", n_params)
+			print("Total Number of Parameters: ", sum(p.numel() for p in self.__model.parameters()))
+			print("Total Number of Trainable Parameters: ", sum(p.numel() for p in self.__model.parameters() if p.requires_grad))
 		else:
 			print("You need to build the model first")
 
@@ -52,7 +48,7 @@ class Sequential():
 
 
 
-		
+
 
 	def predict(self, x):
 		output = None
