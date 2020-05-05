@@ -1,1 +1,1 @@
-from .functions import relu, softmax, sigmoid
+from torch.nn.functional import relu, softmax, sigmoid
