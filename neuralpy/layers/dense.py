@@ -14,6 +14,7 @@ class Dense:
 		return {
 			'n_inputs': self.__n_inputs,
 			'n_nodes': self.__n_nodes,
+			'n_params': self.__n_nodes * self.__n_inputs + self.__n_nodes,
 			'activation': self.__activation,
 			'name': self.__name,
 			'type': 'Dense',

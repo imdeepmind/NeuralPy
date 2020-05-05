@@ -14,11 +14,10 @@ class Sequential:
 		n_params = 0
 
 		for layer in self.__layers:
-			layer_details = layer.get_details()
-			n_params += layer_details["n_params"]
+			n_params += layer["n_params"]
 
 
-			lines += f"Layer Name: {layer_details['name']}	Inputs: {layer_details['n_inputs']}	Outputs: {layer_details['n_nodes']}	Parameters: {layer_details['n_params']}\n"
+			lines += f"Layer Name: {layer['name']}	Inputs: {layer['n_inputs']}	Outputs: {layer['n_nodes']}	Parameters: {layer['n_params']}\n"
 			lines += "========================================================================\n"
 
 		lines += f"\nTotal Trainable Parameters: {n_params}\n"
