@@ -22,37 +22,37 @@ class Sequential():
 
 			layers.append((layer_details["name"], layer))
 
-		model = nn.Sequential(OrderedDict(layers))
-		self.__model = model
-
-
-	def forward(self, x):
-		output = None
-
-		for layer_details in self.__layers:
-			layer = layer_details["layer"](**layer_details["keyword_arguments"])
-
-			output = layer(x)	
-
-			if layer_details["activation"] is not None:
-				output = layer_details["activation"](output)
-
-		return output
+		self.__model = nn.Sequential(OrderedDict(layers))
+		self.__build = True
 
 	def summary(self):
-		lines = "========================================================================\n"
-		n_params = 0
+		if self.__build:
+			n_params = 0
 
-		for layer in self.__layers:
-			n_params += layer["n_params"]
+			for layer_details in self.__layers:
+				n_params += layer_details["n_params"]
+
+			print(self.__model)
+			print("Total Trainable Parameters: ", n_params)
+		else:
+			print("You need to build the model first")
+
+		
 
 
-			lines += f"Layer Name: {layer['name']}	Inputs: {layer['n_inputs']}	Outputs: {layer['n_nodes']}	Parameters: {layer['n_params']}\n"
-			lines += "========================================================================\n"
 
-		lines += f"\nTotal Trainable Parameters: {n_params}\n"
 
-		return lines
+
+
+
+
+
+
+
+
+
+
+		
 
 	def predict(self, x):
 		output = None

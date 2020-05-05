@@ -12,7 +12,7 @@ model.add(Dense(n_nodes=256, n_inputs=784, bias=True, name="Layer 1", activation
 model.add(Dense(n_nodes=10, n_inputs=256, bias=True, name="Layer 2", activation=softmax))
 
 model.build()
-
+model.summary()
 
 
 
