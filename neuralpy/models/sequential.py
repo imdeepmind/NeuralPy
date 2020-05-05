@@ -7,7 +7,7 @@ class Sequential:
 		pass
 
 	def add(self, layer):
-		self.__layers.append(layer)
+		self.__layers.append(layer.get_layer())
 
 	def summary(self):
 		lines = "========================================================================\n"
