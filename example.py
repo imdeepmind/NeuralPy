@@ -8,18 +8,18 @@ y = [1, 2]
 
 model = Sequential()
 
-model.add(Dense(n_inputs=3, n_nodes=5, activation=relu))
-model.add(Dense(n_inputs=5, n_nodes=1, activation=sigmoid))
+# model.add(Dense(n_inputs=3, n_nodes=5, activation=relu))
+# model.add(Dense(n_inputs=5, n_nodes=1, activation=sigmoid))
 
-model.compile(optimizer=None, loss_function=mean_squared_error)
+# model.compile(optimizer=None, loss_function=mean_squared_error)
 
-output = model.predict(X)
+# output = model.predict(X)
 
-loss = model.evaluate(X, y)
+# loss = model.evaluate(X, y)
 
-model.save("ignore/model.pickle")
+# model.save("ignore/model.pickle")
 
-print(model.summary())
-print(output)
-print("Loss of the model", loss)
+# print(model.summary())
+# print(output)
+# print("Loss of the model", loss)
 
