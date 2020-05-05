@@ -18,5 +18,10 @@ class Dense:
 			'activation': self.__activation,
 			'name': self.__name,
 			'type': 'Dense',
-			'layer': Linear(in_features=self.__n_inputs, out_features=self.__n_nodes, bias=self.__bias)
+			'layer': Linear,
+			"keyword_arguments": {
+				'in_features':self.__n_inputs, 
+				'out_features':self.__n_nodes, 
+				'bias':self.__bias
+			}
 		}

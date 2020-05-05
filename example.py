@@ -11,7 +11,18 @@ model = Sequential()
 model.add(Dense(n_nodes=256, n_inputs=784, bias=True, name="Layer 1", activation=relu))
 model.add(Dense(n_nodes=10, n_inputs=256, bias=True, name="Layer 2", activation=softmax))
 
-print(model.summary())
+model.build()
+
+
+
+
+
+
+
+
+
+
+# model.forward(X)
 
 # model.add(Dense(n_inputs=3, n_nodes=5, activation=relu))
 # model.add(Dense(n_inputs=5, n_nodes=1, activation=sigmoid))

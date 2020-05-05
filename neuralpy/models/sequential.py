@@ -1,13 +1,43 @@
 import pickle
+import torch.nn as nn
+from collections import OrderedDict
 
-class Sequential:
+
+class Sequential():
 	__layers = []
+	__model = None
+	__build = False
 
 	def __init__(self):
-		pass
+		super(Sequential, self).__init__()
 
 	def add(self, layer):
 		self.__layers.append(layer.get_layer())
+
+	def build(self):
+		layers = []
+
+		for layer_details in self.__layers:
+			layer = layer_details["layer"](**layer_details["keyword_arguments"])
+
+			layers.append((layer_details["name"], layer))
+
+		model = nn.Sequential(OrderedDict(layers))
+		self.__model = model
+
+
+	def forward(self, x):
+		output = None
+
+		for layer_details in self.__layers:
+			layer = layer_details["layer"](**layer_details["keyword_arguments"])
+
+			output = layer(x)	
+
+			if layer_details["activation"] is not None:
+				output = layer_details["activation"](output)
+
+		return output
 
 	def summary(self):
 		lines = "========================================================================\n"
