@@ -1,6 +1,6 @@
 from neuralpy.models import Sequential
 from neuralpy.layers import Dense
-from neuralpy.activation_functions import ReLU
+from neuralpy.activation_functions import ReLU, Sigmoid, Softmax
 X = [[1,2,3], [4,5,6]]
 y = [1, 2]
 
@@ -13,6 +13,7 @@ model.add(Dense(n_nodes=256, n_inputs=None, bias=True, name="Hidden Layer"))
 model.add(ReLU())
 
 model.add(Dense(n_nodes=10, n_inputs=None, bias=True, name="Output Layer"))
+model.add(Softmax())
 
 model.build()
 model.summary()

@@ -1,1 +1,1 @@
-from .activation_functions import ReLU
+from .activation_functions import ReLU, Sigmoid, Softmax
