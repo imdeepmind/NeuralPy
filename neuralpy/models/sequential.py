@@ -1,5 +1,5 @@
-import pickle
 import torch.nn as nn
+
 from collections import OrderedDict
 
 
@@ -12,6 +12,12 @@ class Sequential():
 		super(Sequential, self).__init__()
 
 	def add(self, layer):
+		if (self.__build):
+			raise Exception("You have built this model already, you can not make any changes in this model")
+
+		if not layer:
+			raise Exception("You need to pass a layer")
+
 		self.__layers.append(layer.get_layer())
 
 	def build(self):
@@ -25,62 +31,12 @@ class Sequential():
 		self.__model = nn.Sequential(OrderedDict(layers))
 		self.__build = True
 
+		del self.__layers
+
 	def summary(self):
 		if self.__build:
 			print(self.__model)
 			print("Total Number of Parameters: ", sum(p.numel() for p in self.__model.parameters()))
 			print("Total Number of Trainable Parameters: ", sum(p.numel() for p in self.__model.parameters() if p.requires_grad))
 		else:
-			print("You need to build the model first")
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	def predict(self, x):
-		output = None
-
-		for layer in self.__layers:
-			if output is None:
-				output = layer.forward(x)
-			else:
-				output = layer.forward(output)
-
-
-		return output
-
-	def save(self, path):
-		with open(path, "wb") as f:
-			pickle.dump(self.__layers, f)
-
-	def load_model(self, path):
-		with open(path, "rb") as f:
-			self.__layers = pickle.load(f)
-
-	def compile(self, optimizer, loss_function):
-		self.__optimizer = optimizer
-		self.__loss_function = loss_function
-
-	def evaluate(self, X, y):
-		y_pred = self.predict(X)
-
-		loss = self.__loss_function(y, y_pred)
-
-		return loss
-
-
-
-
+			raise Exception("You need to build the model first")
