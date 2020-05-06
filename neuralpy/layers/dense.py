@@ -5,13 +5,13 @@ class Dense:
 		if not n_nodes or n_nodes <= 0:
 			raise ValueError("Please provide a valid n_nodes")
 
-		# if not n_inputs or n_inputs <= 0:
-		# 	raise ValueError("Please provide a valid n_inputs")
+		if n_inputs is not None and n_inputs <= 0:
+			raise ValueError("Please provide a valid n_inputs")
 
 		if not (bias == True or bias == False):
 			raise ValueError("Please provide a valid bias")
 
-		if not name or not (isinstance(name, str) and name is not ""):
+		if name is not None and not (isinstance(name, str) and name is not ""):
 			raise ValueError("Please provide a valid name")
 
 		self.__n_inputs = n_inputs

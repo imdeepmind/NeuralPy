@@ -12,6 +12,9 @@ class Sequential():
 	def __init__(self):
 		super(Sequential, self).__init__()
 
+	def __generate_layer_name(self, type, index):
+		return f"{type.lower()}_layer_{index+1}"
+
 	def add(self, layer):
 		if (self.__build):
 			raise Exception("You have built this model already, you can not make any changes in this model")
@@ -24,7 +27,7 @@ class Sequential():
 	def build(self):
 		layers = []
 
-		for layer_ref in self.__layers:
+		for index, layer_ref in enumerate(self.__layers):
 			if self.__prev_output_dim is not 0:
 				layer_ref.get_input_dim(self.__prev_output_dim)
 
@@ -32,7 +35,12 @@ class Sequential():
 
 			layer = layer_details["layer"](**layer_details["keyword_arguments"])
 
-			layers.append((layer_details["name"], layer))
+			name = layer_details["name"]
+
+			if not name:
+				name = self.__generate_layer_name(layer_details["type"], index)
+
+			layers.append((name, layer))
 
 			self.__prev_output_dim = layer_details["n_nodes"]
 
