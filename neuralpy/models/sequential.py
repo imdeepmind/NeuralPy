@@ -50,14 +50,18 @@ class Sequential():
 			if not layer_name:
 				layer_name = self.__generate_layer_name(layer_type, index)
 
-			# Calling a layer function with arguments to make the layer
-			layer = layer_function_ref(**layer_arguments) 
+			# Checking layer_arguments value against some condition, and then calling the layer function with arguments to make the layer
+			if layer_arguments is not None:
+				layer = layer_function_ref(**layer_arguments) 
+			else:
+				layer = layer_function_ref() 
 
 			# Appending the layer to layers array
 			layers.append((layer_name, layer))
 
-			# Storing the n_nodes to calculate the input dim of next layer
-			prev_output_dim = layer_nodes
+			# Checking layer_nodes value against some condition, and then storing the n_nodes to calculate the input dim of next layer 
+			if layer_nodes is not None and layer_nodes >= 0:
+				prev_output_dim = layer_nodes
 
 
 		# Making the pytorch model using nn.Sequential

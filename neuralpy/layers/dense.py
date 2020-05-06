@@ -2,7 +2,7 @@ from torch.nn import Linear
 
 class Dense:
 	def __init__(self, n_nodes, n_inputs=None, bias=True, name=None):
-		# Check the n_nodes field
+		# Checking the n_nodes field
 		if not n_nodes or n_nodes <= 0:
 			raise ValueError("Please provide a valid n_nodes")
 
