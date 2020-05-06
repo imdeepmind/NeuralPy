@@ -31,8 +31,6 @@ class Sequential():
 		self.__model = nn.Sequential(OrderedDict(layers))
 		self.__build = True
 
-		del self.__layers
-
 	def summary(self):
 		if self.__build:
 			print(self.__model)

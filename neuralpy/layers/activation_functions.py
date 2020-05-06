@@ -2,7 +2,7 @@ from torch.nn import ReLU as _ReLU
 
 class ReLU:
 	def __init__(self, name=None)
-		if not name or (isinstance(name, str) and name is not ""):
+		if not name or not (isinstance(name, str) and name is not ""):
 			raise ValueError("Please provide a valid name")
 
 		self.__name = name

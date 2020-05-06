@@ -2,6 +2,7 @@ from torch.nn import Linear
 
 class Dense:
 	def __init__(self, n_nodes, n_inputs=None, bias=True, name=None):
+		print(name)
 		if not n_nodes or n_nodes <= 0:
 			raise ValueError("Please provide a valid n_nodes")
 
@@ -11,7 +12,7 @@ class Dense:
 		if not (bias == True or bias == False):
 			raise ValueError("Please provide a valid bias")
 
-		if not name or (isinstance(name, str) and name is not ""):
+		if not name or not (isinstance(name, str) and name is not ""):
 			raise ValueError("Please provide a valid name")
 
 		self.__n_inputs = n_inputs
