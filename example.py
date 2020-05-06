@@ -9,7 +9,7 @@ y = [1, 2]
 model = Sequential()
 
 model.add(Dense(n_nodes=256, n_inputs=784, bias=True, name="Input Layer"))
-model.add(Dense(n_nodes=10, n_inputs=256, bias=True, name="Output Layer"))
+model.add(Dense(n_nodes=10, n_inputs=None, bias=True, name="Output Layer"))
 
 model.build()
 model.summary()
