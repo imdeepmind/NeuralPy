@@ -7,6 +7,8 @@ class Sequential():
 	__layers = []
 	__model = None
 	__build = False
+	__optimizer = None
+	__loss_function = None
 
 	def __init__(self):
 		super(Sequential, self).__init__()
@@ -70,6 +72,13 @@ class Sequential():
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
 
+	def compile(self, optimizer=None, loss_function=None):
+		if not self.__build:
+			self.build()
+
+		self.__optimizer = optimizer
+		self.__loss_function = loss_function
+		
 	def summary(self):
 		# Printing the model summary using pytorch model
 		if self.__build:
