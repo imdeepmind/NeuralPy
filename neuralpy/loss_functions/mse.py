@@ -1,4 +1,4 @@
-import torch.nn.MSELoss as _MSELoss
+from torch.nn import MSELoss as _MSELoss
 
 class MSELoss:
 	def __init__(self, reduction='mean'):

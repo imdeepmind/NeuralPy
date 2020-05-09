@@ -1,2 +1,2 @@
-from .binary_cross_entropy import binary_cross_entropy
+from .cross_entropy import CrossEntropyLoss
 from .mse import MSELoss

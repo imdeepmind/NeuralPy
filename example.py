@@ -2,6 +2,7 @@ from neuralpy.models import Sequential
 from neuralpy.layers import Dense
 from neuralpy.activation_functions import ReLU, Sigmoid, Softmax
 from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import MSELoss, CrossEntropyLoss
 
 X = [[1,2,3], [4,5,6]]
 y = [1, 2]
