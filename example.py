@@ -4,22 +4,27 @@ from neuralpy.activation_functions import ReLU, Sigmoid, Softmax
 from neuralpy.optimizer import Adam
 from neuralpy.loss_functions import MSELoss, CrossEntropyLoss
 
-X = [[1,2,3], [4,5,6]]
-y = [1, 2]
+import torch
+
+X = torch.randn(100, 1) * 10
+y = X + 5 * torch.randn(100, 1)
 
 model = Sequential()
 
-model.add(Dense(n_nodes=512, n_inputs=784, bias=True, name="Input Layer"))
-model.add(ReLU())
+model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
+# model.add(())
 
-model.add(Dense(n_nodes=256, n_inputs=None, bias=True, name="Hidden Layer"))
-model.add(ReLU())
+# model.add(Dense(n_nodes=256, n_inputs=None, bias=True, name="Hidden Layer"))
+# model.add(ReLU())
 
-model.add(Dense(n_nodes=10, n_inputs=None, bias=True, name="Output Layer"))
-model.add(Softmax())
+# model.add(Dense(n_nodes=10, n_inputs=None, bias=True, name="Output Layer"))
+# model.add(Softmax())
 
-model.compile(optimizer=Adam(), loss_function=CrossEntropyLoss())
+model.compile(optimizer=Adam(), loss_function=MSELoss())
+
 model.summary()
+
+model.fit(X, y, epochs=50)
 
 
 

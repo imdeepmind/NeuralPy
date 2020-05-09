@@ -1,7 +1,8 @@
 import torch.nn as nn
 
 from collections import OrderedDict
-
+from tqdm import tqdm
+from torch import Tensor
 
 class Sequential():
 	__layers = []
@@ -72,7 +73,7 @@ class Sequential():
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
 
-	def compile(self, optimizer=None, loss_function=None):
+	def compile(self, optimizer, loss_function):
 		if not self.__build:
 			self.build()
 
@@ -90,6 +91,25 @@ class Sequential():
 
 		self.__optimizer = optimizer
 		self.__loss_function = loss_function
+
+	def fit(self, X, y, epochs=10, batch_size=32):
+		X = Tensor(X)
+		y = Tensor(y)
+
+		self.__model.train()
+
+		for _ in range(epochs):
+			for i in tqdm(range(0, len(X), batch_size)):
+				batch_X = X[i:i+batch_size]
+				batch_y = y[i:i+batch_size]
+
+				self.__model.zero_grad()
+				outputs = self.__model(batch_X)
+				loss = self.__loss_function(outputs, batch_y)
+				loss.backward()
+				self.__optimizer.step()
+
+			print(loss)
 		
 	def summary(self):
 		# Printing the model summary using pytorch model
