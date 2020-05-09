@@ -11,7 +11,7 @@ class Sequential():
 	__loss_function = None
 
 	def __init__(self):
-		super(Sequential, self).__init__()
+		pass
 
 	def __generate_layer_name(self, type, index):
 		# Generating a unique name for the layer
@@ -75,6 +75,18 @@ class Sequential():
 	def compile(self, optimizer=None, loss_function=None):
 		if not self.__build:
 			self.build()
+
+		optimizer_details = optimizer.get_optimizer()
+		loss_function_details = loss_function.get_loss_function()
+
+		optimizer_ref = optimizer_details["optimizer"]
+		optimizer_arguments = optimizer_details["keyword_arguments"]
+
+		loss_function_ref = loss_function_details["loss_function"]
+		loss_function_arguments = loss_function_details["keyword_arguments"]
+
+		optimizer = optimizer_ref(**optimizer_arguments, params=self.__model.parameters())
+		loss_function = loss_function_ref(**loss_function_arguments)
 
 		self.__optimizer = optimizer
 		self.__loss_function = loss_function

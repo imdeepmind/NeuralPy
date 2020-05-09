@@ -20,7 +20,7 @@ class Adam:
         self.__weight_decay = weight_decay
         self.__amsgrad = amsgrad
 
-    def get_optimizer():
+    def get_optimizer(self):
         return {
             'optimizer': _Adam,
             'keyword_arguments': {

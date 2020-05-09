@@ -18,7 +18,7 @@ model.add(ReLU())
 model.add(Dense(n_nodes=10, n_inputs=None, bias=True, name="Output Layer"))
 model.add(Softmax())
 
-model.compile(optimizer=Adam, loss_function=None)
+model.compile(optimizer=Adam(), loss_function=CrossEntropyLoss())
 model.summary()
 
 
