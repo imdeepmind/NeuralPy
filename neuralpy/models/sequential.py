@@ -1,7 +1,7 @@
 import torch.nn as nn
 
 from collections import OrderedDict
-from tqdm import tqdm
+from tqdm import trange
 from torch import Tensor
 
 class Sequential():
@@ -98,8 +98,12 @@ class Sequential():
 
 		self.__model.train()
 
-		for _ in range(epochs):
-			for i in tqdm(range(0, len(X), batch_size)):
+		history = {}
+
+		for epoch in range(epochs):
+			t = trange(len(X)//batch_size, desc=f"Epoch: {epoch+1}/{epochs} Train Loss: NA", leave=True)
+
+			for i in t:
 				batch_X = X[i:i+batch_size]
 				batch_y = y[i:i+batch_size]
 
@@ -109,7 +113,15 @@ class Sequential():
 				loss.backward()
 				self.__optimizer.step()
 
-			print(loss)
+				t.set_description(f"Epoch: {epoch+1}/{epochs} Train Loss {loss.item():.2f}")
+				t.refresh()
+
+				if f"epoch-{epoch+1}" in history: 
+					history[f"epoch-{epoch+1}"].append(loss.item())
+				else:
+					history[f"epoch-{epoch+1}"] = [loss.item()]
+		
+		return history
 		
 	def summary(self):
 		# Printing the model summary using pytorch model

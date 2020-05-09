@@ -6,8 +6,8 @@ from neuralpy.loss_functions import MSELoss, CrossEntropyLoss
 
 import torch
 
-X = torch.randn(100, 1) * 10
-y = X + 5 * torch.randn(100, 1)
+X = torch.randn(1000, 1) * 10
+y = X + 5 * torch.randn(1000, 1)
 
 model = Sequential()
 
@@ -24,7 +24,7 @@ model.compile(optimizer=Adam(), loss_function=MSELoss())
 
 model.summary()
 
-model.fit(X, y, epochs=50)
+history = model.fit(X, y, epochs=500, batch_size=32)
 
 
 
