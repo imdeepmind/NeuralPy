@@ -9,8 +9,11 @@ from numpy import random
 X_train = random.rand(1000, 1) * 10
 y_train = X_train + 5 * random.rand(1000, 1)
 
-X_test = random.rand(100, 1) * 10
-y_test = X_test + 5 * random.rand(100, 1)
+X_validation = random.rand(100, 1) * 10
+y_validation = X_validation + 5 * random.rand(100, 1)
+
+X_test = random.rand(10, 1) * 10
+y_test = X_test + 5 * random.rand(10, 1)
 
 model = Sequential()
 
@@ -27,7 +30,12 @@ model.compile(optimizer=Adam(), loss_function=MSELoss())
 
 model.summary()
 
-history = model.fit(train_data=(X_train, y_train), test_data=(X_test, y_test), epochs=100, batch_size=32)
+history = model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=500, batch_size=32)
+
+preds = model.predict(X=X_test, batch_size=32)
+
+for i in range(len(preds)):
+	print(f"{preds[i]} {y_test[i][0]}")
 
 # print(history["epochwise"])
 

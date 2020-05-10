@@ -163,7 +163,23 @@ class Sequential():
 
 
 		return history
-		
+	
+	def predict(self, X, batch_size=32):
+		predictions = []
+
+		X = Tensor(X)
+
+		with no_grad():
+			for i in range(0, len(X), batch_size):
+				batch_X = X[i:i+batch_size]
+
+				outputs = self.__model(batch_X)
+
+				predictions += outputs.numpy().tolist()
+
+
+		return [x[0] for x in predictions]
+
 	def summary(self):
 		# Printing the model summary using pytorch model
 		if self.__build:
