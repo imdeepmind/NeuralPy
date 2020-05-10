@@ -92,35 +92,74 @@ class Sequential():
 		self.__optimizer = optimizer
 		self.__loss_function = loss_function
 
-	def fit(self, X, y, epochs=10, batch_size=32):
-		X = Tensor(X)
-		y = Tensor(y)
+	def fit(self, train_data, test_data, epochs=10, batch_size=32):
+		X_train, y_train = train_data
+		X_test, y_test = test_data
 
-		self.__model.train()
+		X_train = Tensor(X_train)
+		y_train = Tensor(y_train)
 
-		history = {}
+		X_test = Tensor(X_test)
+		y_test = Tensor(y_test)
+
+		history = {
+			'batchwise': {
+				'training_loss': [],
+				'validation_loss': []
+			},
+			'epochwise': {
+				'training_loss': [],
+				'validation_loss': []
+			}
+		}
 
 		for epoch in range(epochs):
-			t = trange(len(X)//batch_size, desc=f"Epoch: {epoch+1}/{epochs} Train Loss: NA", leave=True)
+			training_loss_score = 0
+			validation_loss_score = 0
+
+			self.__model.train()
+
+			t = trange(len(X_train)//batch_size, desc=f"Epoch: {epoch+1}/{epochs} Train Loss: NA", leave=True)
 
 			for i in t:
-				batch_X = X[i:i+batch_size]
-				batch_y = y[i:i+batch_size]
+				batch_X = X_train[i:i+batch_size]
+				batch_y = y_train[i:i+batch_size]
 
 				self.__model.zero_grad()
+
 				outputs = self.__model(batch_X)
-				loss = self.__loss_function(outputs, batch_y)
-				loss.backward()
+				train_loss = self.__loss_function(outputs, batch_y)
+
+				train_loss.backward()
 				self.__optimizer.step()
 
-				t.set_description(f"Epoch: {epoch+1}/{epochs} Train Loss {loss.item():.2f}")
+				t.set_description(f"Epoch: {epoch+1}/{epochs} Train Loss {train_loss.item():.2f}")
 				t.refresh()
 
-				if f"epoch-{epoch+1}" in history: 
-					history[f"epoch-{epoch+1}"].append(loss.item())
-				else:
-					history[f"epoch-{epoch+1}"] = [loss.item()]
-		
+				training_loss_score += train_loss.item()
+				history["batchwise"]["training_loss"].append(train_loss.item())
+
+			self.__model.eval()
+
+			for i in range(0, len(X_test), batch_size):
+				batch_X = X_test[i:i+batch_size]
+				batch_y = y_test[i:i+batch_size]
+
+				outputs = self.__model(batch_X)
+				validation_loss = self.__loss_function(outputs, batch_y)
+
+				validation_loss_score += validation_loss.item()
+				history["batchwise"]["validation_loss"].append(validation_loss.item())
+
+			training_loss_score /= batch_size
+			validation_loss_score /= batch_size
+
+			history["epochwise"]["training_loss"].append(training_loss_score)
+			history["epochwise"]["validation_loss"].append(validation_loss_score)
+
+			print("Validation Loss: ", validation_loss_score)
+
+
 		return history
 		
 	def summary(self):

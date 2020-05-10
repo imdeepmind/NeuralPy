@@ -4,10 +4,13 @@ from neuralpy.activation_functions import ReLU, Sigmoid, Softmax
 from neuralpy.optimizer import Adam
 from neuralpy.loss_functions import MSELoss, CrossEntropyLoss
 
-import torch
+from numpy import random
 
-X = torch.randn(1000, 1) * 10
-y = X + 5 * torch.randn(1000, 1)
+X_train = random.rand(1000, 1) * 10
+y_train = X_train + 5 * random.rand(1000, 1)
+
+X_test = random.rand(100, 1) * 10
+y_test = X_test + 5 * random.rand(100, 1)
 
 model = Sequential()
 
@@ -24,7 +27,9 @@ model.compile(optimizer=Adam(), loss_function=MSELoss())
 
 model.summary()
 
-history = model.fit(X, y, epochs=500, batch_size=32)
+history = model.fit(train_data=(X_train, y_train), test_data=(X_test, y_test), epochs=100, batch_size=32)
+
+# print(history["epochwise"])
 
 
 
