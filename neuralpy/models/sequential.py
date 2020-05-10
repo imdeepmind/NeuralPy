@@ -159,7 +159,7 @@ class Sequential():
 			history["epochwise"]["training_loss"].append(training_loss_score)
 			history["epochwise"]["validation_loss"].append(validation_loss_score)
 
-			print("Validation Loss: ", validation_loss_score)
+			print(f"Validation Loss: {validation_loss_score:.2f}")
 
 
 		return history

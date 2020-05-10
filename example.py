@@ -35,7 +35,7 @@ history = model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_va
 preds = model.predict(X=X_test, batch_size=32)
 
 for i in range(len(preds)):
-	print(f"{preds[i]} {y_test[i][0]}")
+	print(f"Predicted Value: {preds[i]} Original Value: {y_test[i][0]}")
 
 # print(history["epochwise"])
 
