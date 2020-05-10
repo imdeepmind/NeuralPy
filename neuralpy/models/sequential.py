@@ -1,8 +1,9 @@
-import torch.nn as nn
-
 from collections import OrderedDict
 from tqdm import trange
 from torch import Tensor
+from torch import nn
+from torch import no_grad
+
 
 class Sequential():
 	__layers = []
@@ -141,15 +142,16 @@ class Sequential():
 
 			self.__model.eval()
 
-			for i in range(0, len(X_test), batch_size):
-				batch_X = X_test[i:i+batch_size]
-				batch_y = y_test[i:i+batch_size]
+			with no_grad():
+				for i in range(0, len(X_test), batch_size):
+					batch_X = X_test[i:i+batch_size]
+					batch_y = y_test[i:i+batch_size]
 
-				outputs = self.__model(batch_X)
-				validation_loss = self.__loss_function(outputs, batch_y)
+					outputs = self.__model(batch_X)
+					validation_loss = self.__loss_function(outputs, batch_y)
 
-				validation_loss_score += validation_loss.item()
-				history["batchwise"]["validation_loss"].append(validation_loss.item())
+					validation_loss_score += validation_loss.item()
+					history["batchwise"]["validation_loss"].append(validation_loss.item())
 
 			training_loss_score /= batch_size
 			validation_loss_score /= batch_size
