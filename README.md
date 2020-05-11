@@ -1,4 +1,9 @@
-# NeuralPy
+<p align="center">
+ <img src="https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png" alt="logo of NeuralPy" />
+</p>
+
+
+
 A Keras like library work on top of PyTorch
 
 Currently, this library is at a very early stage of development. I'll add a proper README later.
