@@ -1,5 +1,4 @@
 from collections import OrderedDict
-from tqdm import trange
 from torch import Tensor
 from torch import nn
 from torch import no_grad
@@ -120,9 +119,7 @@ class Sequential():
 
 			self.__model.train()
 
-			t = trange(len(X_train)//batch_size, desc=f"Epoch: {epoch+1}/{epochs} Train Loss: NA", leave=True)
-
-			for i in t:
+			for i in range(0, len(X_train), batch_size):
 				batch_X = X_train[i:i+batch_size]
 				batch_y = y_train[i:i+batch_size]
 
@@ -134,11 +131,10 @@ class Sequential():
 				train_loss.backward()
 				self.__optimizer.step()
 
-				t.set_description(f"Epoch: {epoch+1}/{epochs} Train Loss {train_loss.item():.2f}")
-				t.refresh()
-
-				training_loss_score += train_loss.item()
+				training_loss_score = train_loss.item()
 				history["batchwise"]["training_loss"].append(train_loss.item())
+
+				print(f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{batch_size} - Training Loss: {train_loss.item():0.4f}", end="\r")
 
 			self.__model.eval()
 
@@ -153,13 +149,14 @@ class Sequential():
 					validation_loss_score += validation_loss.item()
 					history["batchwise"]["validation_loss"].append(validation_loss.item())
 
-			training_loss_score /= batch_size
+			
+
 			validation_loss_score /= batch_size
 
 			history["epochwise"]["training_loss"].append(training_loss_score)
 			history["epochwise"]["validation_loss"].append(validation_loss_score)
 
-			print(f"Validation Loss: {validation_loss_score:.2f}")
+			print(f"\nValidation Loss: {validation_loss_score:.4f}")
 
 
 		return history
