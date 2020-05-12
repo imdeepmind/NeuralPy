@@ -5,14 +5,12 @@ from torch import no_grad
 
 
 class Sequential():
-	__layers = []
-	__model = None
-	__build = False
-	__optimizer = None
-	__loss_function = None
-
 	def __init__(self):
-		pass
+		self.__layers = []
+		self.__model = None
+		self.__build = False
+		self.__optimizer = None
+		self.__loss_function = None
 
 	def __generate_layer_name(self, type, index):
 		# Generating a unique name for the layer
@@ -185,7 +183,3 @@ class Sequential():
 			print("Total Number of Trainable Parameters: ", sum(p.numel() for p in self.__model.parameters() if p.requires_grad))
 		else:
 			raise Exception("You need to build the model first")
-
-	def debug(self):
-		# Temp method for debug
-		return self.__model, self.__build, self.__layers
