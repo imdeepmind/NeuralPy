@@ -2,15 +2,27 @@ from collections import OrderedDict
 from torch import Tensor
 from torch import nn
 from torch import no_grad
+from torch import device
+from torch.cuda import is_available
 
 
 class Sequential():
-	def __init__(self):
+	def __init__(self, force_cpu=False, training_device=None):
 		self.__layers = []
 		self.__model = None
 		self.__build = False
 		self.__optimizer = None
 		self.__loss_function = None
+
+		if training_device:
+			self.__device = training_device
+		elif force_cpu == True:
+			self.__device = device("cpu")
+		else:
+			if is_available():
+				self.__device = device("cuda:0")
+			else:
+				self.__device = device("cpu")
 
 	def __generate_layer_name(self, type, index):
 		# Generating a unique name for the layer
@@ -67,6 +79,9 @@ class Sequential():
 
 		# Making the pytorch model using nn.Sequential
 		self.__model = nn.Sequential(OrderedDict(layers))
+		self.__model.to(self.__device)
+
+		print("The model is running on", self.__device)
 
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
@@ -121,6 +136,8 @@ class Sequential():
 				batch_X = X_train[i:i+batch_size]
 				batch_y = y_train[i:i+batch_size]
 
+				batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
+
 				self.__model.zero_grad()
 
 				outputs = self.__model(batch_X)
@@ -140,6 +157,8 @@ class Sequential():
 				for i in range(0, len(X_test), batch_size):
 					batch_X = X_test[i:i+batch_size]
 					batch_y = y_test[i:i+batch_size]
+
+					batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
 
 					outputs = self.__model(batch_X)
 					validation_loss = self.__loss_function(outputs, batch_y)
