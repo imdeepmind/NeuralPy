@@ -36,8 +36,8 @@ The documentation for NeuralPy is available at [https://imdeepmind.com/NeuralPy/
 ## Next Release Plan
 
 Here is a list if things that I want to add in the library before the `0.1.0-alpha` release.
-  * [ ] Models
-    * [ ] Sequential
+  * [x] Models
+    * [x] Sequential
   * [ ] Layers
     * [x] Linear
       * [x] Dense
@@ -53,10 +53,24 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
       * [ ] AvgPool2D
       * [ ] AvgPool3D
   * [ ] Regulariziers
+      * [ ] Dropout
   * [ ] Activation Functions
+      * [x] Softmax
+      * [x] Sigmoid
+      * [ ] Tanh
+      * [x] ReLU
+      * [ ] LeakyReLU
   * [ ] Loss Functions
+      * [x] MSELoss
+      * [ ] CrossEntropyLoss
+      * [ ] NLLLoss
+      * [ ] BCELoss
   * [ ] Optimizers
-  * [ ] Generator Training
+      * [x] Adam
+      * [ ] SGD
+      * [ ] Adagrad
+      * [ ] RMSprop
+  * [x] GPU Support
   * [ ] Sample code and Blogs
   * [ ] Proper README
   * [ ] Configure project for PyPI
