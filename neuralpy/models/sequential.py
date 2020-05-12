@@ -185,3 +185,7 @@ class Sequential():
 			print("Total Number of Trainable Parameters: ", sum(p.numel() for p in self.__model.parameters() if p.requires_grad))
 		else:
 			raise Exception("You need to build the model first")
+
+	def debug(self):
+		# Temp method for debug
+		return self.__model, self.__build, self.__layers
