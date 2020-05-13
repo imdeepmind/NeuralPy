@@ -27,7 +27,7 @@ A Keras like library work on top of PyTorch
 ## Dependencies
 
 ## Documentation
-The documentation for NeuralPy is available at [https://imdeepmind.com/NeuralPy/](https://imdeepmind.com/NeuralPy/)
+The documentation for NeuralPy is available at [https://neuralpy.imdeepmind.com/](https://neuralpy.imdeepmind.com/)
 
 ## Support
 
@@ -54,7 +54,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
       * [ ] AvgPool3D
   * [ ] Regulariziers
       * [ ] Dropout
-  * [ ] Activation Functions
+  * [x] Activation Functions
       * [x] Softmax
       * [x] Sigmoid
       * [x] Tanh
