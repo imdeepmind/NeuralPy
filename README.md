@@ -59,7 +59,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
       * [x] Sigmoid
       * [x] Tanh
       * [x] ReLU
-      * [ ] LeakyReLU
+      * [x] LeakyReLU
   * [ ] Loss Functions
       * [x] MSELoss
       * [ ] CrossEntropyLoss
