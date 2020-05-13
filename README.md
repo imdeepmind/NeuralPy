@@ -57,7 +57,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
   * [ ] Activation Functions
       * [x] Softmax
       * [x] Sigmoid
-      * [ ] Tanh
+      * [x] Tanh
       * [x] ReLU
       * [ ] LeakyReLU
   * [ ] Loss Functions
