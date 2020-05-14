@@ -68,7 +68,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
   * [ ] Optimizers
       * [x] Adam
       * [x] SGD
-      * [ ] Adagrad
+      * [x] Adagrad
       * [ ] RMSprop
   * [x] GPU Support
   * [ ] User input validation
