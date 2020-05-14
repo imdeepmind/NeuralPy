@@ -63,7 +63,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
   * [ ] Loss Functions
       * [x] MSELoss
       * [x] CrossEntropyLoss
-      * [ ] NLLLoss
+      * [x] NLLLoss
       * [ ] BCELoss
   * [ ] Optimizers
       * [x] Adam
