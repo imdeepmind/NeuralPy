@@ -60,17 +60,19 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
       * [x] Tanh
       * [x] ReLU
       * [x] LeakyReLU
-  * [ ] Loss Functions
+  * [x] Loss Functions
       * [x] MSELoss
       * [x] CrossEntropyLoss
       * [x] NLLLoss
-      * [ ] BCELoss
+      * [x] BCELoss
   * [ ] Optimizers
       * [x] Adam
       * [ ] SGD
       * [ ] Adagrad
       * [ ] RMSprop
   * [x] GPU Support
+  * [ ] User input validation
+  * [ ] Documentation and Code Commenting
   * [ ] Sample code and Blogs
   * [ ] Proper README
   * [ ] Configure project for PyPI
