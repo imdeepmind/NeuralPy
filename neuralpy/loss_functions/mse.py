@@ -8,8 +8,6 @@ class MSELoss:
 		return {
 			'loss_function': _MSELoss,
 			'keyword_arguments': {
-				'size_average': None, # Deprecated
-				'reduce': None, # Deprecated
 				'reduction': self.__reduction
 			}
 		}

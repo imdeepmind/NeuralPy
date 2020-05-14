@@ -11,9 +11,7 @@ class CrossEntropyLoss:
 			'loss_function': _CrossEntrypyLoss,
 			'keyword_arguments': {
 				'weight': self.__weight,
-				'size_average': None, #Deprecated
 				'ignore_index': self.__ignore_index,
-				'reduce': None, #Deprecated
 				'reduction': self.__reduction
 			}
 		}
