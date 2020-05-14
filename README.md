@@ -67,7 +67,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
       * [x] BCELoss
   * [ ] Optimizers
       * [x] Adam
-      * [ ] SGD
+      * [x] SGD
       * [ ] Adagrad
       * [ ] RMSprop
   * [x] GPU Support
