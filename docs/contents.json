@@ -128,5 +128,23 @@
       "title": "Advanced Topics",
       "link": "#advanced-topics"
     }
+  ],
+  "content": [
+    {
+      "key": "introduction",
+      "title": "Some random stuff",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
+      "contents": [
+        {
+          "title": "Content title",
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
+          "code": "some code goes here",
+          "further-reading": {
+            "title": "Go to this website for more",
+            "url": "https://imdeepmind.com"
+          }
+        }
+      ]
+    }
   ]
 }
