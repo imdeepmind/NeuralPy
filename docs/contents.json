@@ -32,15 +32,62 @@
           "urls": [
             {
               "title": "Linear",
-              "link": "#linear"
+              "link": "#linear",
+              "urls": [
+                {
+                  "title": "Dense",
+                  "link": "#linear"
+                }
+              ]
             },
             {
               "title": "Convolutional",
-              "link": "#convolutional"
+              "link": "#convolutional",
+              "urls": [
+                {
+                  "title": "Conv1D",
+                  "link": "#conv1d"
+                },
+                {
+                  "title": "Conv2D",
+                  "link": "#conv2d"
+                },
+                {
+                  "title": "Conv3D",
+                  "link": "#conv3d"
+                }
+              ]
             },
             {
               "title": "Pooling",
-              "link": "#pooling"
+              "link": "#pooling",
+              "urls": [
+                {
+                  "title": "MaxPool1D",
+                  "link": "#maxpool1d"
+                },
+                {
+                  "title": "MaxPool2D",
+                  "link": "#maxpool2d"
+                },
+                {
+                  "title": "MaxPool3D",
+                  "link": "#maxpool3d"
+                },
+                {
+                  "title": "AvgPool1D",
+                  "link": "#avgpool1d"
+                },
+                {
+                  "title": "AvgPool2D",
+                  "link": "#avgpool2d"
+                },
+                {
+                  "title": "AvgPool3D",
+                  "link": "#avgpool3d"
+                },
+                 
+              ]
             }
           ]
         },
@@ -71,8 +118,14 @@
           ]
         },
         {
-          "title": "Regularization",
-          "link": "#regularization"
+          "title": "Regulariziers",
+          "links": "#regulariziers",
+          "urls": [
+            {
+              "title": "Dropout",
+              "link": "#dropout"
+            }
+          ]
         },
         {
           "title": "Loss Functions",
