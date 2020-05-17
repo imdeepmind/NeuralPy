@@ -14,6 +14,9 @@ class Sequential():
 		self.__optimizer = None
 		self.__loss_function = None
 
+		if not (force_cpu == True or force_cpu == False):
+			raise ValueError(f"You have provided an invalid value for the parameter force_cpu")
+
 		if training_device:
 			self.__device = training_device
 		elif force_cpu == True:
@@ -24,9 +27,12 @@ class Sequential():
 			else:
 				self.__device = device("cpu")
 
-	def __generate_layer_name(self, type, index):
+	def __generate_layer_name(self, layer_type, index):
 		# Generating a unique name for the layer
-		return f"{type.lower()}_layer_{index+1}"
+		if not layer_type:
+			raise ValueError("Layer does not have a type")
+
+		return f"{layer_type.lower()}_layer_{index+1}"
 
 	def add(self, layer):
 		# If we already built the model, then we can not a new layer
@@ -35,7 +41,7 @@ class Sequential():
 
 		# We need to pass the layer
 		if not layer:
-			raise Exception("You need to pass a layer")
+			raise ValueError("You need to pass a layer")
 
 		# Finally adding the layer for layers array
 		self.__layers.append(layer)
@@ -44,44 +50,50 @@ class Sequential():
 		layers = []
 		prev_output_dim = 0
 
-		# Iterating through the layers
-		for index, layer_ref in enumerate(self.__layers):
-			# Generating n_input if not present
-			if prev_output_dim is not 0:
-				layer_ref.get_input_dim(prev_output_dim)
+		try:
+			# Iterating through the layers
+			for index, layer_ref in enumerate(self.__layers):
+				# Generating n_input if not present
+				if prev_output_dim is not 0:
+					layer_ref.get_input_dim(prev_output_dim)
 
-			# Getting the details of the layer
-			layer_details = layer_ref.get_layer()
+				# Getting the details of the layer
+				layer_details = layer_ref.get_layer()
 
-			layer_name = layer_details["name"]
-			layer_type = layer_details["type"]
-			layer_nodes = layer_details["n_nodes"]
-			layer_arguments = layer_details["keyword_arguments"]
-			layer_function_ref = layer_details["layer"]
+				layer_name = layer_details["name"]
+				layer_type = layer_details["type"]
+				layer_nodes = layer_details["n_nodes"]
+				layer_arguments = layer_details["keyword_arguments"]
+				layer_function_ref = layer_details["layer"]
 
-			# If layer does not have name, then creating a unique name
-			if not layer_name:
-				layer_name = self.__generate_layer_name(layer_type, index)
+				# If layer does not have name, then creating a unique name
+				if not layer_name:
+					layer_name = self.__generate_layer_name(layer_type, index)
 
-			# Checking layer_arguments value against some condition, and then calling the layer function with arguments to make the layer
-			if layer_arguments is not None:
-				layer = layer_function_ref(**layer_arguments) 
-			else:
-				layer = layer_function_ref() 
+				# Checking layer_arguments value against some condition, and then calling the layer function with arguments to make the layer
+				if layer_arguments is not None:
+					layer = layer_function_ref(**layer_arguments) 
+				else:
+					layer = layer_function_ref() 
 
-			# Appending the layer to layers array
-			layers.append((layer_name, layer))
+				# Appending the layer to layers array
+				layers.append((layer_name, layer))
 
-			# Checking layer_nodes value against some condition, and then storing the n_nodes to calculate the input dim of next layer 
-			if layer_nodes is not None and layer_nodes >= 0:
-				prev_output_dim = layer_nodes
+				# Checking layer_nodes value against some condition, and then storing the n_nodes to calculate the input dim of next layer 
+				if layer_nodes is not None and layer_nodes >= 0:
+					prev_output_dim = layer_nodes
 
 
-		# Making the pytorch model using nn.Sequential
-		self.__model = nn.Sequential(OrderedDict(layers))
-		self.__model.to(self.__device)
+			# Making the pytorch model using nn.Sequential
+			self.__model = nn.Sequential(OrderedDict(layers))
+			self.__model.to(self.__device)
 
-		print("The model is running on", self.__device)
+			print("The model is running on", self.__device)
+
+		except AttributeError as ex:
+			raise ValueError("Please provide a valid layer")
+		except Exception as ex:
+			raise Exception(str(ex))
 
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
@@ -90,20 +102,27 @@ class Sequential():
 		if not self.__build:
 			self.build()
 
-		optimizer_details = optimizer.get_optimizer()
-		loss_function_details = loss_function.get_loss_function()
+		try:
+			optimizer_details = optimizer.get_optimizer()
+			loss_function_details = loss_function.get_loss_function()
 
-		optimizer_ref = optimizer_details["optimizer"]
-		optimizer_arguments = optimizer_details["keyword_arguments"]
+			optimizer_ref = optimizer_details["optimizer"]
+			optimizer_arguments = optimizer_details["keyword_arguments"]
 
-		loss_function_ref = loss_function_details["loss_function"]
-		loss_function_arguments = loss_function_details["keyword_arguments"]
+			loss_function_ref = loss_function_details["loss_function"]
+			loss_function_arguments = loss_function_details["keyword_arguments"]
 
-		optimizer = optimizer_ref(**optimizer_arguments, params=self.__model.parameters())
-		loss_function = loss_function_ref(**loss_function_arguments)
+			optimizer = optimizer_ref(**optimizer_arguments, params=self.__model.parameters())
+			loss_function = loss_function_ref(**loss_function_arguments)
 
-		self.__optimizer = optimizer
-		self.__loss_function = loss_function
+			self.__optimizer = optimizer
+			self.__loss_function = loss_function
+
+		except AttributeError as ex:
+			raise ValueError("Please provide a valid loss_function and/or optimizer")
+		except Exception as ex:
+			raise Exception(str(ex))
+
 
 	def fit(self, train_data, test_data, epochs=10, batch_size=32):
 		X_train, y_train = train_data
