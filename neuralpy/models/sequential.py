@@ -5,6 +5,8 @@ from torch import no_grad
 from torch import device
 from torch.cuda import is_available
 
+from .utils import is_valid_layer
+
 
 class Sequential():
 	def __init__(self, force_cpu=False, training_device=None):
@@ -16,6 +18,9 @@ class Sequential():
 
 		if not (force_cpu == True or force_cpu == False):
 			raise ValueError(f"You have provided an invalid value for the parameter force_cpu")
+
+		if training_device and not issubclass(training_device, device):
+			raise ValueError("Please provide a valid neuralpy device class")
 
 		if training_device:
 			self.__device = training_device
@@ -40,8 +45,8 @@ class Sequential():
 			raise Exception("You have built this model already, you can not make any changes in this model")
 
 		# We need to pass the layer
-		if not layer:
-			raise ValueError("You need to pass a layer")
+		if not is_valid_layer(layer):
+			raise ValueError("Please provide a valid neuralpy layer")
 
 		# Finally adding the layer for layers array
 		self.__layers.append(layer)
