@@ -60,47 +60,46 @@ class Sequential():
 		# Strong the output dimension, for the next layer, we need this to calculate the next input layer dim
 		prev_output_dim = 0
 
-		try:
-			# Iterating through the layers
-			for index, layer_ref in enumerate(self.__layers):
+		# Iterating through the layers
+		for index, layer_ref in enumerate(self.__layers):
 
-				# Generating n_input if not present
-				if prev_output_dim is not 0:
-					# For each layer, we have this method that returns the new input layer for next dim
-					# based on the previous output dim
-					layer_ref.get_input_dim(prev_output_dim)
+			# Generating n_input if not present
+			if prev_output_dim is not 0:
+				# For each layer, we have this method that returns the new input layer for next dim
+				# based on the previous output dim
+				layer_ref.get_input_dim(prev_output_dim)
 
-				# Getting the details of the layer using the get_layer method
-				layer_details = layer_ref.get_layer()
+			# Getting the details of the layer using the get_layer method
+			layer_details = layer_ref.get_layer()
 
-				# Stroning the layer details
-				layer_name = layer_details["name"]
-				layer_type = layer_details["type"]
-				layer_nodes = layer_details["n_nodes"]
-				layer_arguments = layer_details["keyword_arguments"]
+			# Stroning the layer details
+			layer_name = layer_details["name"]
+			layer_type = layer_details["type"]
+			layer_nodes = layer_details["n_nodes"]
+			layer_arguments = layer_details["keyword_arguments"]
 
-				# Here we are just storing the ref, not the initialized the layer 
-				layer_function_ref = layer_details["layer"]
+			# Here we are just storing the ref, not the initialized the layer 
+			layer_function_ref = layer_details["layer"]
 
-				# If layer does not have name, then creating a unique name
-				if not layer_name:
-					# This method generates a unique layer name based on layer type and index
-					layer_name = self.__generate_layer_name(layer_type, index)
+			# If layer does not have name, then creating a unique name
+			if not layer_name:
+				# This method generates a unique layer name based on layer type and index
+				layer_name = self.__generate_layer_name(layer_type, index)
 
-				# If layer_arguments is not None, then the layer accepts some parameters to initialize 
-				if layer_arguments is not None:
-					# Here passing the layer_arguments to the layer reference to initialize the layer
-					layer = layer_function_ref(**layer_arguments) 
-				else:
-					# This layer does not need layer_arguments so not passing anything
-					layer = layer_function_ref() 
+			# If layer_arguments is not None, then the layer accepts some parameters to initialize 
+			if layer_arguments is not None:
+				# Here passing the layer_arguments to the layer reference to initialize the layer
+				layer = layer_function_ref(**layer_arguments) 
+			else:
+				# This layer does not need layer_arguments so not passing anything
+				layer = layer_function_ref() 
 
-				# Appending the layer to layers array
-				layers.append((layer_name, layer))
+			# Appending the layer to layers array
+			layers.append((layer_name, layer))
 
-				# Checking layer_nodes value against some condition, and then storing the n_nodes to calculate the input dim of next layer 
-				if layer_nodes is not None and layer_nodes >= 0:
-					prev_output_dim = layer_nodes
+			# Checking layer_nodes value against some condition, and then storing the n_nodes to calculate the input dim of next layer 
+			if layer_nodes is not None and layer_nodes >= 0:
+				prev_output_dim = layer_nodes
 
 
 			# Making the pytorch model using nn.Sequential
@@ -112,38 +111,29 @@ class Sequential():
 			# Printing a message with the device name
 			print("The model is running on", self.__device)
 
-		except AttributeError as ex:
-			raise ValueError("Please provide a valid layer")
-		except Exception as ex:
-			raise Exception(str(ex))
-
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
 
 	def compile(self, optimizer, loss_function):
+		# To compile a model, first we need to build it, building it first
 		if not self.__build:
+			# Calling build
 			self.build()
 
-		try:
-			optimizer_details = optimizer.get_optimizer()
-			loss_function_details = loss_function.get_loss_function()
+		optimizer_details = optimizer.get_optimizer()
+		loss_function_details = loss_function.get_loss_function()
 
-			optimizer_ref = optimizer_details["optimizer"]
-			optimizer_arguments = optimizer_details["keyword_arguments"]
+		optimizer_ref = optimizer_details["optimizer"]
+		optimizer_arguments = optimizer_details["keyword_arguments"]
 
-			loss_function_ref = loss_function_details["loss_function"]
-			loss_function_arguments = loss_function_details["keyword_arguments"]
+		loss_function_ref = loss_function_details["loss_function"]
+		loss_function_arguments = loss_function_details["keyword_arguments"]
 
-			optimizer = optimizer_ref(**optimizer_arguments, params=self.__model.parameters())
-			loss_function = loss_function_ref(**loss_function_arguments)
+		optimizer = optimizer_ref(**optimizer_arguments, params=self.__model.parameters())
+		loss_function = loss_function_ref(**loss_function_arguments)
 
-			self.__optimizer = optimizer
-			self.__loss_function = loss_function
-
-		except AttributeError as ex:
-			raise ValueError("Please provide a valid loss_function and/or optimizer")
-		except Exception as ex:
-			raise Exception(str(ex))
+		self.__optimizer = optimizer
+		self.__loss_function = loss_function
 
 
 	def fit(self, train_data, test_data, epochs=10, batch_size=32):
