@@ -55,3 +55,38 @@ def is_valid_layer(layer):
 	# If the layer_details dict does not contains a key that it supposed to have
 	except KeyError:
 		return False
+
+def is_valid_optimizer(optimizer):
+	if not optimizer:
+		return False
+
+	try:
+		# Calling the get_optimizer method to details of the optimizer
+		optimizer_details = optimizer.get_optimizer()
+
+		# Checking the optimizer_details, it should return a dict
+		if not isinstance(optimizer_details, dict):
+			return False
+
+		# Here im checking all the keys of object returned from the get_optimizer method
+		optimizer_arguments = optimizer_details["keyword_arguments"]
+		optimizer_function_ref = optimizer_details["optimizer"]
+
+		# Checking the optimizer_arguments, it should return a dict or None
+		if optimizer_arguments and not isinstance(optimizer_arguments, dict):
+			return False
+
+		# Checking the optimizer_function_ref
+		# TODO: We should the check the type of optimizer_function_ref, whether it is pytorch valid optimizer or not
+		if not optimizer_function_ref:
+			return False
+
+		# All good
+		return True
+
+	# If there is some missing atricture in the optimizer, then returning False
+	except AttributeError:
+		return False
+	# If the optimizer_details dict does not contains a key that it supposed to have
+	except KeyError:
+		return False
