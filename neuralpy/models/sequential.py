@@ -7,36 +7,38 @@ from torch.cuda import is_available
 
 from .utils import is_valid_layer
 
-
 class Sequential():
 	def __init__(self, force_cpu=False, training_device=None):
+		# Initializing some attributes that we need to function
 		self.__layers = []
 		self.__model = None
 		self.__build = False
 		self.__optimizer = None
 		self.__loss_function = None
 
+		# Checking the force_cpu parameter
 		if not (force_cpu == True or force_cpu == False):
 			raise ValueError(f"You have provided an invalid value for the parameter force_cpu")
 
+		# Checking the training_device parameter and comparing it with pytorch device class
 		if training_device and not issubclass(training_device, device):
 			raise ValueError("Please provide a valid neuralpy device class")
 
+		# if force_cpu then using CPU
+		# if device provided, then using it
+		# else auto detecting the device, if cuda available then using it (default option)
 		if training_device:
 			self.__device = training_device
 		elif force_cpu == True:
 			self.__device = device("cpu")
 		else:
 			if is_available():
-				self.__device = device("cuda:0")
+				self.__device = device("cuda:0") # TODO: currently setting it to cuda:0, may need to change it
 			else:
 				self.__device = device("cpu")
 
 	def __generate_layer_name(self, layer_type, index):
 		# Generating a unique name for the layer
-		if not layer_type:
-			raise ValueError("Layer does not have a type")
-
 		return f"{layer_type.lower()}_layer_{index+1}"
 
 	def add(self, layer):
@@ -44,7 +46,7 @@ class Sequential():
 		if (self.__build):
 			raise Exception("You have built this model already, you can not make any changes in this model")
 
-		# We need to pass the layer
+		# Layer verification using the method is_valid_layer
 		if not is_valid_layer(layer):
 			raise ValueError("Please provide a valid neuralpy layer")
 
@@ -52,33 +54,45 @@ class Sequential():
 		self.__layers.append(layer)
 
 	def build(self):
+		# Storing the layer here to build the Sequentuial layer
 		layers = []
+
+		# Strong the output dimension, for the next layer, we need this to calculate the next input layer dim
 		prev_output_dim = 0
 
 		try:
 			# Iterating through the layers
 			for index, layer_ref in enumerate(self.__layers):
+
 				# Generating n_input if not present
 				if prev_output_dim is not 0:
+					# For each layer, we have this method that returns the new input layer for next dim
+					# based on the previous output dim
 					layer_ref.get_input_dim(prev_output_dim)
 
-				# Getting the details of the layer
+				# Getting the details of the layer using the get_layer method
 				layer_details = layer_ref.get_layer()
 
+				# Stroning the layer details
 				layer_name = layer_details["name"]
 				layer_type = layer_details["type"]
 				layer_nodes = layer_details["n_nodes"]
 				layer_arguments = layer_details["keyword_arguments"]
+
+				# Here we are just storing the ref, not the initialized the layer 
 				layer_function_ref = layer_details["layer"]
 
 				# If layer does not have name, then creating a unique name
 				if not layer_name:
+					# This method generates a unique layer name based on layer type and index
 					layer_name = self.__generate_layer_name(layer_type, index)
 
-				# Checking layer_arguments value against some condition, and then calling the layer function with arguments to make the layer
+				# If layer_arguments is not None, then the layer accepts some parameters to initialize 
 				if layer_arguments is not None:
+					# Here passing the layer_arguments to the layer reference to initialize the layer
 					layer = layer_function_ref(**layer_arguments) 
 				else:
+					# This layer does not need layer_arguments so not passing anything
 					layer = layer_function_ref() 
 
 				# Appending the layer to layers array
@@ -91,8 +105,11 @@ class Sequential():
 
 			# Making the pytorch model using nn.Sequential
 			self.__model = nn.Sequential(OrderedDict(layers))
+
+			# Transferring the model to device
 			self.__model.to(self.__device)
 
+			# Printing a message with the device name
 			print("The model is running on", self.__device)
 
 		except AttributeError as ex:
