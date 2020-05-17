@@ -1,6 +1,5 @@
 {
-  "navigation": [
-    {
+  "navigation": [{
       "title": "Introduction",
       "link": "#introduction"
     },
@@ -15,36 +14,29 @@
     {
       "title": "APIs",
       "link": "#apis",
-      "urls": [
-        {
+      "urls": [{
           "title": "Models",
           "link": "#models",
-          "urls": [
-            {
-              "title": "Sequential",
-              "link": "#sequential"
-            }
-          ]
+          "urls": [{
+            "title": "Sequential",
+            "link": "#sequential"
+          }]
         },
         {
           "title": "Layers",
           "link": "#layers",
-          "urls": [
-            {
+          "urls": [{
               "title": "Linear",
               "link": "#linear",
-              "urls": [
-                {
-                  "title": "Dense",
-                  "link": "#linear"
-                }
-              ]
+              "urls": [{
+                "title": "Dense",
+                "link": "#linear"
+              }]
             },
             {
               "title": "Convolutional",
               "link": "#convolutional",
-              "urls": [
-                {
+              "urls": [{
                   "title": "Conv1D",
                   "link": "#conv1d"
                 },
@@ -61,8 +53,7 @@
             {
               "title": "Pooling",
               "link": "#pooling",
-              "urls": [
-                {
+              "urls": [{
                   "title": "MaxPool1D",
                   "link": "#maxpool1d"
                 },
@@ -85,8 +76,7 @@
                 {
                   "title": "AvgPool3D",
                   "link": "#avgpool3d"
-                },
-                 
+                }
               ]
             }
           ]
@@ -94,8 +84,7 @@
         {
           "title": "Activation Functions",
           "link": "#activation-functions",
-          "urls": [
-            {
+          "urls": [{
               "title": "Softmax",
               "link": "#softmax"
             },
@@ -120,18 +109,15 @@
         {
           "title": "Regulariziers",
           "links": "#regulariziers",
-          "urls": [
-            {
-              "title": "Dropout",
-              "link": "#dropout"
-            }
-          ]
+          "urls": [{
+            "title": "Dropout",
+            "link": "#dropout"
+          }]
         },
         {
           "title": "Loss Functions",
           "link": "#loss-functions",
-          "urls": [
-            {
+          "urls": [{
               "title": "MSELoss",
               "link": "#mse-loss"
             },
@@ -152,8 +138,7 @@
         {
           "title": "Optimizers",
           "link": "#optimizers",
-          "urls": [
-            {
+          "urls": [{
               "title": "Adam",
               "link": "#adam"
             },
@@ -182,24 +167,18 @@
       "link": "#advanced-topics"
     }
   ],
-  "content": [
-    {
-      "key": "introduction",
-      "title": "Some random stuff",
-      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
-      "contents": [
-        {
-          "title": "Content title",
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
-          "code": "some code goes here",
-          "links": [
-            {
-              "title": "Go to this website for more",
-              "url": "https://imdeepmind.com"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "content": [{
+    "key": "introduction",
+    "title": "Some random stuff",
+    "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
+    "contents": [{
+      "title": "Content title",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
+      "code": "some code goes here",
+      "links": [{
+        "title": "Go to this website for more",
+        "url": "https://imdeepmind.com"
+      }]
+    }]
+  }]
 }
