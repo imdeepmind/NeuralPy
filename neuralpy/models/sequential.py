@@ -5,7 +5,7 @@ from torch import no_grad
 from torch import device
 from torch.cuda import is_available
 
-from .utils import is_valid_layer, is_valid_optimizer
+from .utils import is_valid_layer, is_valid_optimizer, is_valid_loss_function
 
 class Sequential():
 	def __init__(self, force_cpu=False, training_device=None):
@@ -123,6 +123,11 @@ class Sequential():
 		# Checking the optimizer using the method is_valid_optimizer
 		if not is_valid_optimizer(optimizer):
 			raise ValueError("Please provide a value neuralpy optimizer")
+
+		# Checking the loss_function using the method is_valid_loss_function
+		if not is_valid_loss_function(loss_function):
+			raise ValueError("Please provide a value neuralpy loss function")
+
 
 		# Getting the details of the optimizer using get_optimizer method
 		optimizer_details = optimizer.get_optimizer()

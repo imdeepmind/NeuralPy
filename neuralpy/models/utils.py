@@ -57,6 +57,7 @@ def is_valid_layer(layer):
 		return False
 
 def is_valid_optimizer(optimizer):
+	# If the optimizer is None returning False
 	if not optimizer:
 		return False
 
@@ -88,5 +89,41 @@ def is_valid_optimizer(optimizer):
 	except AttributeError:
 		return False
 	# If the optimizer_details dict does not contains a key that it supposed to have
+	except KeyError:
+		return False
+
+def is_valid_loss_function(loss_function):
+	# If the loss_function is None returning False
+	if not loss_function:
+		return False
+
+	try:
+		# Calling the get_loss_function method to details of the loss_function
+		loss_function_details = loss_function.get_loss_function()
+
+		# Checking the loss_function_details, it should return a dict
+		if not isinstance(loss_function_details, dict):
+			return False
+
+		# Here im checking all the keys of object returned from the get_loss_function method
+		loss_function_arguments = loss_function_details["keyword_arguments"]
+		loss_function_function_ref = loss_function_details["loss_function"]
+
+		# Checking the loss_function_arguments, it should return a dict or None
+		if loss_function_arguments and not isinstance(loss_function_arguments, dict):
+			return False
+
+		# Checking the loss_function_function_ref
+		# TODO: We should the check the type of loss_function_function_ref, whether it is pytorch valid loss_function or not
+		if not loss_function_function_ref:
+			return False
+
+		# All good
+		return True
+
+	# If there is some missing atricture in the loss_function, then returning False
+	except AttributeError:
+		return False
+	# If the loss_function_details dict does not contains a key that it supposed to have
 	except KeyError:
 		return False
