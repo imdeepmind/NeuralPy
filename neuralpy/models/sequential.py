@@ -4,6 +4,7 @@ from torch import nn
 from torch import no_grad
 from torch import device
 from torch.cuda import is_available
+from numpy import array
 
 from .utils import is_valid_layer, is_valid_optimizer, is_valid_loss_function
 
@@ -236,22 +237,42 @@ class Sequential():
 
 		return history
 	
-	def predict(self, X, batch_size=32):
-		
+	def predict(self, X, batch_size=None):
+		# Initializing an empty list to store the predictions
 		predictions = []
 
+		# Conveting the input X to pytorch Tensor
 		X = Tensor(X)
 
-		with no_grad():
-			for i in range(0, len(X), batch_size):
-				batch_X = X[i:i+batch_size]
+		if batch_size:
+			# If batch_size is there then checking the length and comparing it with the length of input
+			if X.shape[0] < batch_size:
+				# Batch size can not be greater that same size
+				raise ValueError("Batch size is greater than total number of samples")
 
-				outputs = self.__model(batch_X)
+			# Predicting, so no grad
+			with no_grad():
+				# Spliting the data into batches
+				for i in range(0, len(X), batch_size):
+					# Generating the batch from X
+					batch_X = X[i:i+batch_size]
 
-				predictions += outputs.numpy()
+					# Feeding the batch into the model for predictions
+					outputs = self.__model(batch_X)
 
+					# Appending the data into the predictions list
+					predictions += outputs.numpy().tolist()
+		else:
+			# Predicting, so no grad
+			with no_grad():
+				# Feeding the full data into the model for predictions
+				outputs = self.__model(X)
 
-		return predictions
+				# Appending the data into the predictions list
+				predictions += outputs.numpy().tolist()
+		
+		# Converting the list to numpy array and returning
+		return array(predictions)
 
 	def summary(self):
 		# Printing the model summary using pytorch model
