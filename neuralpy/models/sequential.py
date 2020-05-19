@@ -238,6 +238,9 @@ class Sequential():
 		return history
 	
 	def predict(self, X, batch_size=None):
+		# Calling model.eval as we are evaluating the model only
+		self.__model.eval()
+
 		# Initializing an empty list to store the predictions
 		predictions = []
 
