@@ -78,7 +78,7 @@ class Sequential():
 			layer_nodes = layer_details["n_nodes"]
 			layer_arguments = layer_details["keyword_arguments"]
 
-			# Here we are just storing the ref, not the initialized the layer 
+			# Here we are just storing the ref, not the initialized layer 
 			layer_function_ref = layer_details["layer"]
 
 			# If layer does not have name, then creating a unique name
@@ -237,6 +237,7 @@ class Sequential():
 		return history
 	
 	def predict(self, X, batch_size=32):
+		
 		predictions = []
 
 		X = Tensor(X)
@@ -247,16 +248,21 @@ class Sequential():
 
 				outputs = self.__model(batch_X)
 
-				predictions += outputs.numpy().tolist()
+				predictions += outputs.numpy()
 
 
-		return [x[0] for x in predictions]
+		return predictions
 
 	def summary(self):
 		# Printing the model summary using pytorch model
 		if self.__build:
+			# Printing models summary
 			print(self.__model)
+
+			# Calculating total number of params
 			print("Total Number of Parameters: ", sum(p.numel() for p in self.__model.parameters()))
+			
+			# Calculating total number of trainable params
 			print("Total Number of Trainable Parameters: ", sum(p.numel() for p in self.__model.parameters() if p.requires_grad))
 		else:
 			raise Exception("You need to build the model first")
