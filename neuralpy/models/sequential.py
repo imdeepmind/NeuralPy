@@ -337,3 +337,16 @@ class Sequential():
 			print("Total Number of Trainable Parameters: ", sum(p.numel() for p in self.__model.parameters() if p.requires_grad))
 		else:
 			raise Exception("You need to build the model first")
+
+	def get_model(self):
+		# Returning the pytorch model
+		return self.__model
+
+	def set_model(self, model):
+		# Checking if model is None
+		if model is None:
+			raise ValueError("Please provide a valid pytorch model")
+
+		# Saving the model
+		self.__model = model
+		self.__build = True
