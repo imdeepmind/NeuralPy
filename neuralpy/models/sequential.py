@@ -165,15 +165,18 @@ class Sequential():
 		self.__loss_function = loss_function
 
 	def fit(self, train_data, test_data, epochs=10, batch_size=32):
+		# Ectracting the train and test data from the touples
 		X_train, y_train = train_data
 		X_test, y_test = test_data
 
+		# Conveting the data into pytorch tensor
 		X_train = Tensor(X_train)
 		y_train = Tensor(y_train)
 
 		X_test = Tensor(X_test)
 		y_test = Tensor(y_test)
 
+		# Initializing a dict to store the training progress, can be used for viz purposes
 		history = {
 			'batchwise': {
 				'training_loss': [],
@@ -185,56 +188,80 @@ class Sequential():
 			}
 		}
 
+		# Running the epochs
 		for epoch in range(epochs):
+			# Initializing the loss to 0
 			training_loss_score = 0
 			validation_loss_score = 0
 
+			# Training model :)
 			self.__model.train()
 
+			# Spliting the data into batches
 			for i in range(0, len(X_train), batch_size):
+				# Making the batches
 				batch_X = X_train[i:i+batch_size]
 				batch_y = y_train[i:i+batch_size]
 
+				# Moving the batches to device
 				batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
 
+				# Zero grad
 				self.__model.zero_grad()
 
+				# Feeding the data into the model
 				outputs = self.__model(batch_X)
+
+				# Calculating the loss
 				train_loss = self.__loss_function(outputs, batch_y)
 
+				# Training
 				train_loss.backward()
 				self.__optimizer.step()
 
+				# Storing the loss val, batchwise data
 				training_loss_score = train_loss.item()
 				history["batchwise"]["training_loss"].append(train_loss.item())
 
+				# Printing a friendly message to the console
 				print(f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{batch_size} - Training Loss: {train_loss.item():0.4f}", end="\r")
 
+			# Evluating model
 			self.__model.eval()
 
+			# no grad, no training
 			with no_grad():
+				# Spliting the data into batches
 				for i in range(0, len(X_test), batch_size):
+					# Making the batches
 					batch_X = X_test[i:i+batch_size]
 					batch_y = y_test[i:i+batch_size]
 
+					# Moving the batches to device
 					batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
 
+					# Feeding the data into the model
 					outputs = self.__model(batch_X)
+
+					# Calculating the loss
 					validation_loss = self.__loss_function(outputs, batch_y)
 
+					# Storing the loss val, batchwise data
 					validation_loss_score += validation_loss.item()
 					history["batchwise"]["validation_loss"].append(validation_loss.item())
 
 			
-
+			# Calculating the mean val loss score for all batches
 			validation_loss_score /= batch_size
 
+			# Added the epochwise value to the history dict
 			history["epochwise"]["training_loss"].append(training_loss_score)
 			history["epochwise"]["validation_loss"].append(validation_loss_score)
 
+			# Printing a friendly message to the console
 			print(f"\nValidation Loss: {validation_loss_score:.4f}")
 
-
+		# Returning history
 		return history
 	
 	def predict(self, X, batch_size=None):
