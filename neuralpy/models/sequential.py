@@ -169,6 +169,26 @@ class Sequential():
 		X_train, y_train = train_data
 		X_test, y_test = test_data
 
+		# If batch_size is there then checking the length and comparing it with the length of training data
+		if X_train.shape[0] < batch_size:
+			# Batch size can not be greater that train data size
+			raise ValueError("Batch size is greater than total number of training samples")
+
+		# If batch_size is there then checking the length and comparing it with the length of training data
+		if X_test.shape[0] < batch_size:
+			# Batch size can not be greater that test data size
+			raise ValueError("Batch size is greater than total number of testing samples")
+
+		# Checking the length of input and output
+		if X_train.shape[0] != y_train.shape[0]:
+			# length of X and y should be same
+			raise ValueError("Length of training Input data and training output data should be same")
+
+		# Checking the length of input and output
+		if X_test.shape[0] != y_test.shape[0]:
+			# length of X and y should be same
+			raise ValueError("Length of testing Input data and testing output data should be same")
+
 		# Conveting the data into pytorch tensor
 		X_train = Tensor(X_train)
 		y_train = Tensor(y_train)
@@ -277,7 +297,7 @@ class Sequential():
 		if batch_size:
 			# If batch_size is there then checking the length and comparing it with the length of input
 			if X.shape[0] < batch_size:
-				# Batch size can not be greater that same size
+				# Batch size can not be greater that sample size
 				raise ValueError("Batch size is greater than total number of samples")
 
 			# Predicting, so no grad
