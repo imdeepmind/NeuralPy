@@ -1,8 +1,8 @@
 <p align="center">
- <img src="https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png" alt="logo of NeuralPy" />
+ <img src="https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png" alt="Logo of NeuralPy" />
+ <br />
+ A Keras like library work on top of PyTorch
 </p>
-
-A Keras like library work on top of PyTorch
 
 > Currently, this library is at a very early stage of development. README and Documentation is incomplete.
 
@@ -10,9 +10,11 @@ A Keras like library work on top of PyTorch
 - [Introduction](#introduction)
 - [Pytorch](#pytorch)
 - [Install](#install)
-- [Get Started](#get-started)
 - [Dependencies](#dependencies)
+- [Get Started](#get-started)
 - [Documentation](#documentation)
+- [Examples](#examples)
+- [Blogs and Tutorials](#blogs-and-tutorials)
 - [Support](#support)
 - [Contribution Guidelines](#contribution-guidelines)
 - [Next Release Plan](#next-release-plan)
@@ -26,8 +28,15 @@ A Keras like library work on top of PyTorch
 
 ## Dependencies
 
+## Get Started
+
 ## Documentation
 The documentation for NeuralPy is available at [https://neuralpy.imdeepmind.com/](https://neuralpy.imdeepmind.com/)
+
+## Examples 
+Several examples for projects in NeuralPy are available at [github.com/imdeepmind/NeuralPy-Examples](github.com/imdeepmind/NeuralPy-Examples). Please check visit this link.
+
+## Blogs and Tutorials
 
 ## Support
 
@@ -41,17 +50,6 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
   * [ ] Layers
     * [x] Linear
       * [x] Dense
-    * [ ] Convolutional
-      * [ ] Conv1D
-      * [ ] Conv2D
-      * [ ] Conv3D
-    * [ ] Pooling
-      * [ ] MaxPool1D
-      * [ ] MaxPool2D
-      * [ ] MaxPool3D
-      * [ ] AvgPool1D
-      * [ ] AvgPool2D
-      * [ ] AvgPool3D
   * [ ] Regulariziers
       * [ ] Dropout
   * [x] Activation Functions
@@ -72,6 +70,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
       * [ ] RMSprop
   * [x] GPU Support
   * [ ] User input validation
+  * [ ] Error handling
   * [ ] Documentation and Code Commenting
   * [ ] Sample code and Blogs
   * [ ] Proper README
