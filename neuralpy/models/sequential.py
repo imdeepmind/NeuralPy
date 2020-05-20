@@ -197,16 +197,21 @@ class Sequential():
 		y_test = tensor(y_test)
 
 		# Initializing a dict to store the training progress, can be used for viz purposes
+		if self.__metrics is not None:
+			metrics = ["loss"] + self.__metrics
+		else:
+			metrics = ["loss"]
+
 		history = {
-			'batchwise': {
-				'training_loss': [],
-				'validation_loss': []
-			},
-			'epochwise': {
-				'training_loss': [],
-				'validation_loss': []
-			}
+			'batchwise': {},
+			'epochwise': {}
 		}
+
+		for matrix in metrics:
+			history["batchwise"][f"training_{matrix}"] = []
+			history["batchwise"][f"validation_{matrix}"] = []
+			history["epochwise"][f"training_{matrix}"] = []
+			history["epochwise"][f"validation_{matrix}"] = []
 
 		# Running the epochs
 		for epoch in range(epochs):
