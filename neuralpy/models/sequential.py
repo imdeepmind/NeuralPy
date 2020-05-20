@@ -16,6 +16,7 @@ class Sequential():
 		self.__build = False
 		self.__optimizer = None
 		self.__loss_function = None
+		self.__metrics = None
 
 		# Checking the force_cpu parameter
 		if not (force_cpu == True or force_cpu == False):
@@ -115,7 +116,7 @@ class Sequential():
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
 
-	def compile(self, optimizer, loss_function):
+	def compile(self, optimizer, loss_function, metrics=None):
 		# To compile a model, first we need to build it, building it first
 		if not self.__build:
 			# Calling build
@@ -129,6 +130,8 @@ class Sequential():
 		if not is_valid_loss_function(loss_function):
 			raise ValueError("Please provide a value neuralpy loss function")
 
+		# Setting metrics
+		self.__metrics = metrics
 
 		# Getting the details of the optimizer using get_optimizer method
 		optimizer_details = optimizer.get_optimizer()
