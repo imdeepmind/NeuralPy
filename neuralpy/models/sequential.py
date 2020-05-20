@@ -1,8 +1,5 @@
 from collections import OrderedDict
-from torch import Tensor
-from torch import nn
-from torch import no_grad
-from torch import device
+from torch import nn, no_grad, device, torch, tensor
 from torch.cuda import is_available
 from numpy import array
 
@@ -193,11 +190,11 @@ class Sequential():
 			raise ValueError("Length of testing Input data and testing output data should be same")
 
 		# Conveting the data into pytorch tensor
-		X_train = Tensor(X_train)
-		y_train = Tensor(y_train)
+		X_train = tensor(X_train)
+		y_train = tensor(y_train)
 
-		X_test = Tensor(X_test)
-		y_test = Tensor(y_test)
+		X_test = tensor(X_test)
+		y_test = tensor(y_test)
 
 		# Initializing a dict to store the training progress, can be used for viz purposes
 		history = {
@@ -233,7 +230,7 @@ class Sequential():
 				self.__model.zero_grad()
 
 				# Feeding the data into the model
-				outputs = self.__model(batch_X)
+				outputs = self.__model(batch_X.float())
 
 				# Calculating the loss
 				train_loss = self.__loss_function(outputs, batch_y)
@@ -264,7 +261,7 @@ class Sequential():
 					batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
 
 					# Feeding the data into the model
-					outputs = self.__model(batch_X)
+					outputs = self.__model(batch_X.float())
 
 					# Calculating the loss
 					validation_loss = self.__loss_function(outputs, batch_y)
@@ -295,7 +292,7 @@ class Sequential():
 		predictions = []
 
 		# Conveting the input X to pytorch Tensor
-		X = Tensor(X)
+		X = tensor(X)
 
 		if batch_size:
 			# If batch_size is there then checking the length and comparing it with the length of input
@@ -311,7 +308,7 @@ class Sequential():
 					batch_X = X[i:i+batch_size]
 
 					# Feeding the batch into the model for predictions
-					outputs = self.__model(batch_X)
+					outputs = self.__model(batch_X.float())
 
 					# Appending the data into the predictions list
 					predictions += outputs.numpy().tolist()
