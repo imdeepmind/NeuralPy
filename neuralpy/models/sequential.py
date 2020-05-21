@@ -228,8 +228,12 @@ class Sequential():
 			# Spliting the data into batches
 			for i in range(0, len(X_train), batch_size):
 				# Making the batches
-				batch_X = X_train[i:i+batch_size]
-				batch_y = y_train[i:i+batch_size]
+				batch_X = X_train[i:i+batch_size].float()
+				if "accuracy" in metrics:
+					batch_y = y_train[i:i+batch_size]
+				else:
+					batch_y = y_train[i:i+batch_size].float()	
+				
 
 				# Moving the batches to device
 				batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
@@ -238,7 +242,7 @@ class Sequential():
 				self.__model.zero_grad()
 
 				# Feeding the data into the model
-				outputs = self.__model(batch_X.float())
+				outputs = self.__model(batch_X)
 
 				# Calculating the loss
 				train_loss = self.__loss_function(outputs, batch_y)
@@ -277,14 +281,17 @@ class Sequential():
 				# Spliting the data into batches
 				for i in range(0, len(X_test), batch_size):
 					# Making the batches
-					batch_X = X_test[i:i+batch_size]
-					batch_y = y_test[i:i+batch_size]
+					batch_X = X_train[i:i+batch_size].float()
+					if "accuracy" in metrics:
+						batch_y = y_train[i:i+batch_size]
+					else:
+						batch_y = y_train[i:i+batch_size].float()	
 
 					# Moving the batches to device
 					batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
 
 					# Feeding the data into the model
-					outputs = self.__model(batch_X.float())
+					outputs = self.__model(batch_X)
 
 					# Calculating the loss
 					validation_loss = self.__loss_function(outputs, batch_y)
@@ -347,10 +354,10 @@ class Sequential():
 				# Spliting the data into batches
 				for i in range(0, len(X), batch_size):
 					# Generating the batch from X
-					batch_X = X[i:i+batch_size]
+					batch_X = X[i:i+batch_size].float()
 
 					# Feeding the batch into the model for predictions
-					outputs = self.__model(batch_X.float())
+					outputs = self.__model(batch_X)
 
 					# Appending the data into the predictions list
 					predictions += outputs.numpy().tolist()
