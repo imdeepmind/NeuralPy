@@ -1,57 +1,125 @@
 <p align="center">
- <img src="https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png" alt="logo of NeuralPy" />
+ <img src="https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png" alt="Logo of NeuralPy" />
+ <br />
+ A Keras like deep learning library works on top of PyTorch
 </p>
 
-A Keras like library work on top of PyTorch
-
-> Currently, this library is at a very early stage of development. README and Documentation is incomplete.
+> Currently, this library is at a very early stage of development. README and Documentation are incomplete.
 
 ## Table of contents:
 - [Introduction](#introduction)
-- [Pytorch](#pytorch)
+- [PyTorch](#pytorch)
 - [Install](#install)
-- [Get Started](#get-started)
 - [Dependencies](#dependencies)
+- [Get Started](#get-started)
 - [Documentation](#documentation)
+- [Examples](#examples)
+- [Blogs and Tutorials](#blogs-and-tutorials)
 - [Support](#support)
-- [Contribution Guidelines](#contribution-guidelines)
+- [Contributing](#contributing)
 - [Next Release Plan](#next-release-plan)
 - [License](#license)
 
 ## Introduction
+NeuralPy is a High-Level [Keras](https://keras.io/) like deep learning library that works on top of [PyTorch](https://pytorch.org) written in pure Python. NeuralPy can be used to develop state-of-the-art deep learning models in a few lines of code. It provides a Keras like simple yet powerful interface to build and train models. 
 
-## Pytorch
+Here are some highlights of NeuralPy
+ - Provides an easy interface that is suitable for fast prototyping, learning, and research
+ - Can run on both CPU and GPU
+ - Works on top of PyTorch
+ - Cross-Compatible with PyTorch models
+
+## PyTorch
+PyTorch is a machine learning library developed by Facebook. According to wikipedia, 
+
+> PyTorch is an open source machine learning library based on the Torch library, used for applications such as computer vision and natural language processing, primarily developed by Facebook's AI Research lab (FAIR). It is free and open-source software released under the Modified BSD license.
+
+NeuralPy is based on PyTorch and uses the APIs that are exposed by PyTorch. 
+
+If you want to learn more about PyTorch, then please check the [PyTorch documentation](https://pytorch.org/).
 
 ## Install
+Currently, this library is not available through pip, so please clone the master branch and then use it. 
+
+> NeuralPy requires Pytorch and Numpy 
 
 ## Dependencies
+The only dependencies of NeuralPy are Pytorch (used as backend) and Numpy.
+
+## Get Started
+Let's create a linear regression model in 100 seconds.
+
+### Importing the dependencies
+```python
+import numpy as np
+
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import MSELoss
+```
+
+### Making some random data
+```python
+# Random seed for numpy
+np.random.seed(1969)
+
+# Generating the data
+X_train = np.random.rand(100, 1) * 10
+y_train = X_train + 5 *np.random.rand(100, 1)
+
+X_validation = np.random.rand(100, 1) * 10
+y_validation = X_validation + 5 * np.random.rand(100, 1)
+
+X_test = np.random.rand(10, 1) * 10
+y_test = X_test + 5 * np.random.rand(10, 1)
+```
+
+### Making the model
+```python
+# Making the model
+model = Sequential()
+model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
+
+# Compiling the model
+model.compile(optimizer=Adam(), loss_function=MSELoss())
+
+# Printing model summary
+model.summary()
+```
+
+### Training the model
+```python
+model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)
+```
+
+### Predicting using the trained model
+```python
+model.predict(X=X_test, batch_size=4)
+```
 
 ## Documentation
 The documentation for NeuralPy is available at [https://neuralpy.imdeepmind.com/](https://neuralpy.imdeepmind.com/)
 
-## Support
+## Examples  
+Several example projects in NeuralPy are available at [github.com/imdeepmind/NeuralPy-Examples](github.com/imdeepmind/NeuralPy-Examples). Please check the above link.
 
-## Contribution Guidelines
+## Blogs and Tutorials
+For now, there are no blogs or tutorials available, I'll update once I post something. Please also have a look at the examples currently available.
+
+## Support
+If you are facing any issues using NeuralPy, then please raise an issue on GitHub or contact with me. 
+
+## Contributing
+Feel free to contribute to this project. If you need some help to get started, then reach me or open a GitHub issue.
 
 ## Next Release Plan
-
-Here is a list if things that I want to add in the library before the `0.1.0-alpha` release.
+Here is a list of features/enhancements that I want to add in the library before the first `0.1.0-alpha` release.
   * [x] Models
     * [x] Sequential
-  * [ ] Layers
+  * [x] Layers
     * [x] Linear
       * [x] Dense
-    * [ ] Convolutional
-      * [ ] Conv1D
-      * [ ] Conv2D
-      * [ ] Conv3D
-    * [ ] Pooling
-      * [ ] MaxPool1D
-      * [ ] MaxPool2D
-      * [ ] MaxPool3D
-      * [ ] AvgPool1D
-      * [ ] AvgPool2D
-      * [ ] AvgPool3D
   * [ ] Regulariziers
       * [ ] Dropout
   * [x] Activation Functions
@@ -63,7 +131,6 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
   * [x] Loss Functions
       * [x] MSELoss
       * [x] CrossEntropyLoss
-      * [x] NLLLoss
       * [x] BCELoss
   * [ ] Optimizers
       * [x] Adam
@@ -72,6 +139,7 @@ Here is a list if things that I want to add in the library before the `0.1.0-alp
       * [ ] RMSprop
   * [x] GPU Support
   * [ ] User input validation
+  * [ ] Error handling
   * [ ] Documentation and Code Commenting
   * [ ] Sample code and Blogs
   * [ ] Proper README

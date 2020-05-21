@@ -1,4 +1,4 @@
-from torch.nn import BCELoss as _BCELoss
+from torch.nn import BCEWithLogitsLoss as _BCEWithLogitsLoss
 
 class BCELoss:
 	def __init__(self, weight=None, reduction='mean'):
@@ -7,7 +7,7 @@ class BCELoss:
 
 	def get_loss_function(self):
 		return {
-			'loss_function': _BCELoss,
+			'loss_function': _BCEWithLogitsLoss,
 			'keyword_arguments': {
 				'weight': self.__weight,
 				'reduction': self.__reduction

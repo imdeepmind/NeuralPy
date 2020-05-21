@@ -26,7 +26,7 @@ def is_valid_layer(layer):
 			return False
 
 		# Validating layer_nodes
-		if not isinstance(layer_nodes, int) and layer_nodes < 1:
+		if layer_nodes and not isinstance(layer_nodes, int) and layer_nodes < 1:
 			return False
 
 		# Validating layer_name

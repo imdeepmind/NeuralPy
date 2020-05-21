@@ -1,8 +1,5 @@
 from collections import OrderedDict
-from torch import Tensor
-from torch import nn
-from torch import no_grad
-from torch import device
+from torch import nn, no_grad, device, torch, tensor
 from torch.cuda import is_available
 from numpy import array
 
@@ -16,6 +13,7 @@ class Sequential():
 		self.__build = False
 		self.__optimizer = None
 		self.__loss_function = None
+		self.__metrics = None
 
 		# Checking the force_cpu parameter
 		if not (force_cpu == True or force_cpu == False):
@@ -115,7 +113,7 @@ class Sequential():
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
 
-	def compile(self, optimizer, loss_function):
+	def compile(self, optimizer, loss_function, metrics=None):
 		# To compile a model, first we need to build it, building it first
 		if not self.__build:
 			# Calling build
@@ -129,6 +127,8 @@ class Sequential():
 		if not is_valid_loss_function(loss_function):
 			raise ValueError("Please provide a value neuralpy loss function")
 
+		# Setting metrics
+		self.__metrics = metrics
 
 		# Getting the details of the optimizer using get_optimizer method
 		optimizer_details = optimizer.get_optimizer()
@@ -190,23 +190,28 @@ class Sequential():
 			raise ValueError("Length of testing Input data and testing output data should be same")
 
 		# Conveting the data into pytorch tensor
-		X_train = Tensor(X_train)
-		y_train = Tensor(y_train)
+		X_train = tensor(X_train)
+		y_train = tensor(y_train)
 
-		X_test = Tensor(X_test)
-		y_test = Tensor(y_test)
+		X_test = tensor(X_test)
+		y_test = tensor(y_test)
 
 		# Initializing a dict to store the training progress, can be used for viz purposes
+		if self.__metrics is not None:
+			metrics = ["loss"] + self.__metrics
+		else:
+			metrics = ["loss"]
+
 		history = {
-			'batchwise': {
-				'training_loss': [],
-				'validation_loss': []
-			},
-			'epochwise': {
-				'training_loss': [],
-				'validation_loss': []
-			}
+			'batchwise': {},
+			'epochwise': {}
 		}
+
+		for matrix in metrics:
+			history["batchwise"][f"training_{matrix}"] = []
+			history["batchwise"][f"validation_{matrix}"] = []
+			history["epochwise"][f"training_{matrix}"] = []
+			history["epochwise"][f"validation_{matrix}"] = []
 
 		# Running the epochs
 		for epoch in range(epochs):
@@ -214,14 +219,21 @@ class Sequential():
 			training_loss_score = 0
 			validation_loss_score = 0
 
+			correct_training = 0
+			correct_val = 0
+
 			# Training model :)
 			self.__model.train()
 
 			# Spliting the data into batches
 			for i in range(0, len(X_train), batch_size):
 				# Making the batches
-				batch_X = X_train[i:i+batch_size]
-				batch_y = y_train[i:i+batch_size]
+				batch_X = X_train[i:i+batch_size].float()
+				if "accuracy" in metrics:
+					batch_y = y_train[i:i+batch_size]
+				else:
+					batch_y = y_train[i:i+batch_size].float()	
+				
 
 				# Moving the batches to device
 				batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
@@ -243,8 +255,23 @@ class Sequential():
 				training_loss_score = train_loss.item()
 				history["batchwise"]["training_loss"].append(train_loss.item())
 
+				# Calculating accuracy
+				# Checking if accuracy is there in metrics
+				# TODO: Need to do it more dynamic way
+				if "accuracy" in metrics:
+					pred = outputs.argmax(dim=1, keepdim=True)
+					corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+					correct_training += corrects
+
+					history["batchwise"]["training_accuracy"].append(corrects/batch_size*100)
+
 				# Printing a friendly message to the console
-				print(f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{batch_size} - Training Loss: {train_loss.item():0.4f}", end="\r")
+				message = f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{len(X_train)//batch_size} - Training Loss: {train_loss.item():0.4f}"
+
+				if "accuracy" in metrics:
+					message += f" - Training Accuracy: {corrects/batch_size*100:.4f}%"
+
+				print(message, end="\r")
 
 			# Evluating model
 			self.__model.eval()
@@ -254,8 +281,11 @@ class Sequential():
 				# Spliting the data into batches
 				for i in range(0, len(X_test), batch_size):
 					# Making the batches
-					batch_X = X_test[i:i+batch_size]
-					batch_y = y_test[i:i+batch_size]
+					batch_X = X_train[i:i+batch_size].float()
+					if "accuracy" in metrics:
+						batch_y = y_train[i:i+batch_size]
+					else:
+						batch_y = y_train[i:i+batch_size].float()	
 
 					# Moving the batches to device
 					batch_X, batch_y = batch_X.to(self.__device), batch_y.to(self.__device)
@@ -270,6 +300,15 @@ class Sequential():
 					validation_loss_score += validation_loss.item()
 					history["batchwise"]["validation_loss"].append(validation_loss.item())
 
+					# Calculating accuracy
+					# Checking if accuracy is there in metrics
+					# TODO: Need to do it more dynamic way
+					if "accuracy" in metrics:
+						pred = outputs.argmax(dim=1, keepdim=True)
+						corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+						correct_val += corrects
+
+						history["batchwise"]["validation_accuracy"].append(corrects/batch_size*100)
 			
 			# Calculating the mean val loss score for all batches
 			validation_loss_score /= batch_size
@@ -278,8 +317,18 @@ class Sequential():
 			history["epochwise"]["training_loss"].append(training_loss_score)
 			history["epochwise"]["validation_loss"].append(validation_loss_score)
 
-			# Printing a friendly message to the console
-			print(f"\nValidation Loss: {validation_loss_score:.4f}")
+			# Checking if accuracy is there in metrics
+			if "accuracy" in metrics:
+				# Adding data into hostory dict
+				history["epochwise"]["training_accuracy"].append(correct_training/len(X_train)*100)
+				history["epochwise"]["training_accuracy"].append(correct_val/len(X_test)*100)
+
+				# Printing a friendly message to the console
+				print(f"\nValidation Loss: {validation_loss_score:.4f} - Validation Accuracy: {correct_val/len(X_test)*100:.4f}%")
+			else:
+				# Printing a friendly message to the console
+				print(f"\nValidation Loss: {validation_loss_score:.4f}")
+				
 
 		# Returning history
 		return history
@@ -292,7 +341,7 @@ class Sequential():
 		predictions = []
 
 		# Conveting the input X to pytorch Tensor
-		X = Tensor(X)
+		X = tensor(X)
 
 		if batch_size:
 			# If batch_size is there then checking the length and comparing it with the length of input
@@ -305,7 +354,7 @@ class Sequential():
 				# Spliting the data into batches
 				for i in range(0, len(X), batch_size):
 					# Generating the batch from X
-					batch_X = X[i:i+batch_size]
+					batch_X = X[i:i+batch_size].float()
 
 					# Feeding the batch into the model for predictions
 					outputs = self.__model(batch_X)
@@ -320,6 +369,52 @@ class Sequential():
 
 				# Appending the data into the predictions list
 				predictions += outputs.numpy().tolist()
+		
+		# Converting the list to numpy array and returning
+		return array(predictions)
+
+	def predict_classes(self, X, batch_size=None):
+		# Calling model.eval as we are evaluating the model only
+		self.__model.eval()
+
+		# Initializing an empty list to store the predictions
+		predictions = []
+
+		# Conveting the input X to pytorch Tensor
+		X = tensor(X)
+
+		if batch_size:
+			# If batch_size is there then checking the length and comparing it with the length of input
+			if X.shape[0] < batch_size:
+				# Batch size can not be greater that sample size
+				raise ValueError("Batch size is greater than total number of samples")
+
+			# Predicting, so no grad
+			with no_grad():
+				# Spliting the data into batches
+				for i in range(0, len(X), batch_size):
+					# Generating the batch from X
+					batch_X = X[i:i+batch_size].float()
+
+					# Feeding the batch into the model for predictions
+					outputs = self.__model(batch_X)
+
+					# Predicting the class
+					pred = outputs.argmax(dim=1, keepdim=True)
+
+					# Appending the data into the predictions list
+					predictions += pred.numpy().tolist()
+		else:
+			# Predicting, so no grad
+			with no_grad():
+				# Feeding the full data into the model for predictions
+				outputs = self.__model(X)
+
+				# Predicting the class
+				pred = outputs.argmax(dim=1, keepdim=True)
+
+				# Appending the data into the predictions list
+				predictions += pred.numpy().tolist()
 		
 		# Converting the list to numpy array and returning
 		return array(predictions)
