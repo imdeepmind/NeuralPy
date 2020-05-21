@@ -259,11 +259,13 @@ class Sequential():
 					corrects = pred.eq(batch_y.view_as(pred)).sum().item()
 					correct_training += corrects
 
+					history["batchwise"]["training_accuracy"].append(corrects/batch_size*100)
+
 				# Printing a friendly message to the console
 				message = f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{batch_size} - Training Loss: {train_loss.item():0.4f}"
 
 				if "accuracy" in metrics:
-					message += f" - Training Accuracy: {corrects/batch_size*100}%"
+					message += f" - Training Accuracy: {corrects/batch_size*100:.4f}%"
 
 				print(message, end="\r")
 
@@ -291,6 +293,15 @@ class Sequential():
 					validation_loss_score += validation_loss.item()
 					history["batchwise"]["validation_loss"].append(validation_loss.item())
 
+					# Calculating accuracy
+					# Checking if accuracy is there in metrics
+					# TODO: Need to do it more dynamic way
+					if "accuracy" in metrics:
+						pred = outputs.argmax(dim=1, keepdim=True)
+						corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+						correct_val += corrects
+
+						history["batchwise"]["validation_accuracy"].append(corrects/batch_size*100)
 			
 			# Calculating the mean val loss score for all batches
 			validation_loss_score /= batch_size
@@ -299,8 +310,16 @@ class Sequential():
 			history["epochwise"]["training_loss"].append(training_loss_score)
 			history["epochwise"]["validation_loss"].append(validation_loss_score)
 
-			# Printing a friendly message to the console
-			print(f"\nValidation Loss: {validation_loss_score:.4f}")
+			if "accuracy" in metrics:
+				history["epochwise"]["training_accuracy"].append(correct_training/len(X_train)*100)
+				history["epochwise"]["training_accuracy"].append(correct_val/len(X_test)*100)
+
+				print(f"\nValidation Loss: {validation_loss_score:.4f} - Validation Accuracy: {correct_val/len(X_test)*100:.4f}%")
+			else:
+				# Printing a friendly message to the console
+				print(f"\nValidation Loss: {validation_loss_score:.4f}")
+				
+			
 
 		# Returning history
 		return history
