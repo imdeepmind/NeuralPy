@@ -398,6 +398,8 @@ class Sequential():
 
 					# Feeding the batch into the model for predictions
 					outputs = self.__model(batch_X)
+
+					# Predicting the class
 					pred = outputs.argmax(dim=1, keepdim=True)
 
 					# Appending the data into the predictions list
@@ -408,6 +410,7 @@ class Sequential():
 				# Feeding the full data into the model for predictions
 				outputs = self.__model(X)
 
+				# Predicting the class
 				pred = outputs.argmax(dim=1, keepdim=True)
 
 				# Appending the data into the predictions list
