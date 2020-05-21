@@ -4,7 +4,7 @@
  A Keras like library works on top of PyTorch
 </p>
 
-> Currently, this library is at a very early stage of development. README and Documentation is incomplete.
+> Currently, this library is at a very early stage of development. README and Documentation are incomplete.
 
 ## Table of contents:
 - [Introduction](#introduction)
@@ -26,8 +26,10 @@ NeuralPy is a Keras like deep learning library that works on top of PyTorch.
 ## Pytorch
 
 ## Install
+Currently, this library is not available through 
 
 ## Dependencies
+The only dependencies of NeuralPy are Pytorch (used as backend) and Numpy.
 
 ## Get Started
 Let's create a linear regression model in 100 seconds.
@@ -84,23 +86,23 @@ model.predict(X=X_test, batch_size=32)
 ## Documentation
 The documentation for NeuralPy is available at [https://neuralpy.imdeepmind.com/](https://neuralpy.imdeepmind.com/)
 
-## Examples 
-Several examples for projects in NeuralPy are available at [github.com/imdeepmind/NeuralPy-Examples](github.com/imdeepmind/NeuralPy-Examples). Please check visit this link.
+## Examples  
+Several example projects in NeuralPy are available at [github.com/imdeepmind/NeuralPy-Examples](github.com/imdeepmind/NeuralPy-Examples). Please check the above link.
 
 ## Blogs and Tutorials
-For now there are no blogs or tutorials available, I'll update once I post something. Please also have look at the examples currently available.
+For now, there are no blogs or tutorials available, I'll update once I post something. Please also have a look at the examples currently available.
 
 ## Support
-If you are facing any issues using NeuralPy, then please raise a issue on GitHub or contact with me. 
+If you are facing any issues using NeuralPy, then please raise an issue on GitHub or contact with me. 
 
 ## Contributing
-Feel free to contribute to this project. If you need some help to get started, then reach me or open an github issue.
+Feel free to contribute to this project. If you need some help to get started, then reach me or open a GitHub issue.
 
 ## Next Release Plan
-Here is a list if things that I want to add in the library before the `0.1.0-alpha` release.
+Here is a list of features/enhancements that I want to add in the library before the first `0.1.0-alpha` release.
   * [x] Models
     * [x] Sequential
-  * [ ] Layers
+  * [x] Layers
     * [x] Linear
       * [x] Dense
   * [ ] Regulariziers
