@@ -219,6 +219,9 @@ class Sequential():
 			training_loss_score = 0
 			validation_loss_score = 0
 
+			correct_training = 0
+			correct_val = 0
+
 			# Training model :)
 			self.__model.train()
 
@@ -248,8 +251,21 @@ class Sequential():
 				training_loss_score = train_loss.item()
 				history["batchwise"]["training_loss"].append(train_loss.item())
 
+				# Calculating accuracy
+				# Checking if accuracy is there in metrics
+				# TODO: Need to do it more dynamic way
+				if "accuracy" in metrics:
+					pred = outputs.argmax(dim=1, keepdim=True)
+					corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+					correct_training += corrects
+
 				# Printing a friendly message to the console
-				print(f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{batch_size} - Training Loss: {train_loss.item():0.4f}", end="\r")
+				message = f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{batch_size} - Training Loss: {train_loss.item():0.4f}"
+
+				if "accuracy" in metrics:
+					message += f" - Training Accuracy: {corrects/batch_size*100}%"
+
+				print(message, end="\r")
 
 			# Evluating model
 			self.__model.eval()
