@@ -262,7 +262,7 @@ class Sequential():
 					history["batchwise"]["training_accuracy"].append(corrects/batch_size*100)
 
 				# Printing a friendly message to the console
-				message = f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{batch_size} - Training Loss: {train_loss.item():0.4f}"
+				message = f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{len(X_train)//batch_size} - Training Loss: {train_loss.item():0.4f}"
 
 				if "accuracy" in metrics:
 					message += f" - Training Accuracy: {corrects/batch_size*100:.4f}%"
