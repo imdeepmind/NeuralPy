@@ -95,7 +95,7 @@ model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation),
 
 ### Predicting using the trained model
 ```python
-model.predict(X=X_test, batch_size=32)
+model.predict(X=X_test, batch_size=4)
 ```
 
 ## Documentation
