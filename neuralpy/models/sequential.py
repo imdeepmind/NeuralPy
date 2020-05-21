@@ -373,6 +373,49 @@ class Sequential():
 		# Converting the list to numpy array and returning
 		return array(predictions)
 
+	def predict_classes(self, X, batch_size=None):
+		# Calling model.eval as we are evaluating the model only
+		self.__model.eval()
+
+		# Initializing an empty list to store the predictions
+		predictions = []
+
+		# Conveting the input X to pytorch Tensor
+		X = tensor(X)
+
+		if batch_size:
+			# If batch_size is there then checking the length and comparing it with the length of input
+			if X.shape[0] < batch_size:
+				# Batch size can not be greater that sample size
+				raise ValueError("Batch size is greater than total number of samples")
+
+			# Predicting, so no grad
+			with no_grad():
+				# Spliting the data into batches
+				for i in range(0, len(X), batch_size):
+					# Generating the batch from X
+					batch_X = X[i:i+batch_size].float()
+
+					# Feeding the batch into the model for predictions
+					outputs = self.__model(batch_X)
+					pred = outputs.argmax(dim=1, keepdim=True)
+
+					# Appending the data into the predictions list
+					predictions += pred.numpy().tolist()
+		else:
+			# Predicting, so no grad
+			with no_grad():
+				# Feeding the full data into the model for predictions
+				outputs = self.__model(X)
+
+				pred = outputs.argmax(dim=1, keepdim=True)
+
+				# Appending the data into the predictions list
+				predictions += pred.numpy().tolist()
+		
+		# Converting the list to numpy array and returning
+		return array(predictions)
+
 	def summary(self):
 		# Printing the model summary using pytorch model
 		if self.__build:
