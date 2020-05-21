@@ -1,7 +1,7 @@
 <p align="center">
  <img src="https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png" alt="Logo of NeuralPy" />
  <br />
- A Keras like library works on top of PyTorch
+ A Keras like deep learning library works on top of PyTorch
 </p>
 
 > Currently, this library is at a very early stage of development. README and Documentation are incomplete.
@@ -21,7 +21,7 @@
 - [License](#license)
 
 ## Introduction
-NeuralPy is a High-Level Keras like deep learning library that works on top of PyTorch written in pure Python. NeuralPy can be used to develop state-of-the-art deep learning models in a few lines of code. It provides a Keras like simple yet powerful interface to build and train models. 
+NeuralPy is a High-Level [Keras](https://keras.io/) like deep learning library that works on top of [PyTorch](https://pytorch.org) written in pure Python. NeuralPy can be used to develop state-of-the-art deep learning models in a few lines of code. It provides a Keras like simple yet powerful interface to build and train models. 
 
 Here are some highlights of NeuralPy
  - Provides an easy interface that is suitable for fast prototyping, learning, and research
