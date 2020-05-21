@@ -1,4 +1,4 @@
-from torch.nn import LogSoftmax as _Softmax
+from torch.nn import Softmax as _Softmax
 
 class Softmax:
 	def __init__(self, dim=None, name=None):

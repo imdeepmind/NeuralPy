@@ -131,7 +131,6 @@ Here is a list of features/enhancements that I want to add in the library before
   * [x] Loss Functions
       * [x] MSELoss
       * [x] CrossEntropyLoss
-      * [x] NLLLoss
       * [x] BCELoss
   * [ ] Optimizers
       * [x] Adam
