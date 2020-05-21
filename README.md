@@ -8,7 +8,7 @@
 
 ## Table of contents:
 - [Introduction](#introduction)
-- [Pytorch](#pytorch)
+- [PyTorch](#pytorch)
 - [Install](#install)
 - [Dependencies](#dependencies)
 - [Get Started](#get-started)
@@ -21,12 +21,27 @@
 - [License](#license)
 
 ## Introduction
-NeuralPy is a Keras like deep learning library that works on top of PyTorch.
+NeuralPy is a High-Level Keras like deep learning library that works on top of PyTorch written in pure Python. NeuralPy can be used to develop state-of-the-art deep learning models in a few lines of code. It provides a Keras like simple yet powerful interface to build and train models. 
 
-## Pytorch
+Here are some highlights of NeuralPy
+ - Provides an easy interface that is suitable for fast prototyping, learning, and research
+ - Can run on both CPU and GPU
+ - Works on top of PyTorch
+ - Cross-Compatible with PyTorch models
+
+## PyTorch
+PyTorch is a machine learning library developed by Facebook. According to wikipedia, 
+
+> PyTorch is an open source machine learning library based on the Torch library, used for applications such as computer vision and natural language processing, primarily developed by Facebook's AI Research lab (FAIR). It is free and open-source software released under the Modified BSD license.
+
+NeuralPy is based on PyTorch and uses the APIs that are exposed by PyTorch. 
+
+If you want to learn more about PyTorch, then please check the [PyTorch documentation](https://pytorch.org/).
 
 ## Install
-Currently, this library is not available through 
+Currently, this library is not available through pip, so please clone the master branch and then use it. 
+
+> NeuralPy requires Pytorch and Numpy 
 
 ## Dependencies
 The only dependencies of NeuralPy are Pytorch (used as backend) and Numpy.
