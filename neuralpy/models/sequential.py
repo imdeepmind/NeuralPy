@@ -310,16 +310,18 @@ class Sequential():
 			history["epochwise"]["training_loss"].append(training_loss_score)
 			history["epochwise"]["validation_loss"].append(validation_loss_score)
 
+			# Checking if accuracy is there in metrics
 			if "accuracy" in metrics:
+				# Adding data into hostory dict
 				history["epochwise"]["training_accuracy"].append(correct_training/len(X_train)*100)
 				history["epochwise"]["training_accuracy"].append(correct_val/len(X_test)*100)
 
+				# Printing a friendly message to the console
 				print(f"\nValidation Loss: {validation_loss_score:.4f} - Validation Accuracy: {correct_val/len(X_test)*100:.4f}%")
 			else:
 				# Printing a friendly message to the console
 				print(f"\nValidation Loss: {validation_loss_score:.4f}")
 				
-			
 
 		# Returning history
 		return history
