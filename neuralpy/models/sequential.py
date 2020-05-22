@@ -37,10 +37,6 @@ class Sequential(SequentialHelper):
 			else:
 				self.__device = device("cpu")
 
-	def __generate_layer_name(self, layer_type, index):
-		# Generating a unique name for the layer
-		return f"{layer_type.lower()}_layer_{index+1}"
-
 	def add(self, layer):
 		# If we already built the model, then we can not a new layer
 		if (self.__build):
@@ -84,7 +80,7 @@ class Sequential(SequentialHelper):
 			# If layer does not have name, then creating a unique name
 			if not layer_name:
 				# This method generates a unique layer name based on layer type and index
-				layer_name = self.__generate_layer_name(layer_type, index)
+				layer_name = self._generate_layer_name(layer_type, index)
 
 			# If layer_arguments is not None, then the layer accepts some parameters to initialize 
 			if layer_arguments is not None:

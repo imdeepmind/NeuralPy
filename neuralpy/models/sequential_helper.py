@@ -132,4 +132,6 @@ class SequentialHelper:
 		except KeyError:
 			return False
 
-	
+	def _generate_layer_name(self, layer_type, index):
+		# Generating a unique name for the layer
+		return f"{layer_type.lower()}_layer_{index+1}"
