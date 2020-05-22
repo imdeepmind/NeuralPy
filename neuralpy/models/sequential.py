@@ -3,10 +3,11 @@ from torch import nn, no_grad, device, torch, tensor
 from torch.cuda import is_available
 from numpy import array
 
-from .utils import is_valid_layer, is_valid_optimizer, is_valid_loss_function
+from .sequential_helper import SequentialHelper
 
-class Sequential():
+class Sequential(SequentialHelper):
 	def __init__(self, force_cpu=False, training_device=None):
+		super(Sequential, self).__init__()
 		# Initializing some attributes that we need to function
 		self.__layers = []
 		self.__model = None
@@ -46,7 +47,7 @@ class Sequential():
 			raise Exception("You have built this model already, you can not make any changes in this model")
 
 		# Layer verification using the method is_valid_layer
-		if not is_valid_layer(layer):
+		if not self._is_valid_layer(layer):
 			raise ValueError("Please provide a valid neuralpy layer")
 
 		# Finally adding the layer for layers array
@@ -120,11 +121,11 @@ class Sequential():
 			self.build()
 
 		# Checking the optimizer using the method is_valid_optimizer
-		if not is_valid_optimizer(optimizer):
+		if not self._is_valid_optimizer(optimizer):
 			raise ValueError("Please provide a value neuralpy optimizer")
 
 		# Checking the loss_function using the method is_valid_loss_function
-		if not is_valid_loss_function(loss_function):
+		if not self._is_valid_loss_function(loss_function):
 			raise ValueError("Please provide a value neuralpy loss function")
 
 		# Setting metrics
