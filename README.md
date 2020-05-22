@@ -136,7 +136,7 @@ Here is a list of features/enhancements that I want to add in the library before
       * [x] Adam
       * [x] SGD
       * [x] Adagrad
-      * [ ] RMSprop
+      * [x] RMSprop
   * [x] GPU Support
   * [ ] User input validation
   * [ ] Error handling
