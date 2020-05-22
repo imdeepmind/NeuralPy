@@ -98,14 +98,14 @@ class Sequential(SequentialHelper):
 				prev_output_dim = layer_nodes
 
 
-			# Making the pytorch model using nn.Sequential
-			self.__model = nn.Sequential(OrderedDict(layers))
+		# Making the pytorch model using nn.Sequential
+		self.__model = nn.Sequential(OrderedDict(layers))
 
-			# Transferring the model to device
-			self.__model.to(self.__device)
+		# Transferring the model to device
+		self.__model.to(self.__device)
 
-			# Printing a message with the device name
-			print("The model is running on", self.__device)
+		# Printing a message with the device name
+		print("The model is running on", self.__device)
 
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
