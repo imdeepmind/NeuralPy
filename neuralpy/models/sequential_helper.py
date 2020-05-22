@@ -185,3 +185,24 @@ class SequentialHelper:
 				prev_output_dim = layer_nodes
 
 		return layers
+
+	def _build_optimizer_from_ref_and_details(self, optimizer_ref, parameters):
+		# Getting the details of the optimizer using get_optimizer method
+		optimizer_details = optimizer_ref.get_optimizer()
+
+		# Stroing the optimizer details
+		optimizer_func = optimizer_details["optimizer"]
+		optimizer_arguments = optimizer_details["keyword_arguments"]
+
+		# Creating a variable for the optimizer
+		optimizer = None
+
+		# Cheking the optimizer_arguments, if it is not None then passing it to the optimizer
+		if optimizer_arguments:
+			# Initializing the optimizer with optimizer_arguments and models parameters
+			optimizer = optimizer_func(**optimizer_arguments, params=parameters)
+		else:
+			# Initializing the optimizer with models parameters only
+			optimizer = optimizer_func(params=parameters)
+
+		return optimizer
