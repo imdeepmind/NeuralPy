@@ -206,3 +206,24 @@ class SequentialHelper:
 			optimizer = optimizer_func(params=parameters)
 
 		return optimizer
+
+	def _build_loss_function_from_ref_and_details(self, loss_function_ref):
+		# Getting the details of the loss_function using get_loss_function method
+		loss_function_details = loss_function_ref.get_loss_function()
+
+		# Stroing the loss_function details
+		loss_function_func = loss_function_details["loss_function"]
+		loss_function_arguments = loss_function_details["keyword_arguments"]
+
+		# Creating a variable for the loss function
+		loss_function = None
+		
+		# Checking the loss_function_arguments, if not None and passing it to the loss function
+		if loss_function_arguments:
+			# Passing the loss_function_arguments to the loss function
+			loss_function = loss_function_func(**loss_function_arguments)
+		else:
+			# Not passing the loss_function_arguments to the loss function
+			loss_function = loss_function_func()
+
+		return loss_function

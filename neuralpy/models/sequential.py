@@ -82,24 +82,9 @@ class Sequential(SequentialHelper):
 		# Setting metrics
 		self.__metrics = metrics
 		
-		# Getting the details of the loss_function using get_loss_function method
-		loss_function_details = loss_function.get_loss_function()
-
-		# Stroing the loss_function details
-		loss_function_ref = loss_function_details["loss_function"]
-		loss_function_arguments = loss_function_details["keyword_arguments"]
-
-		# Checking the loss_function_arguments, if not None and passing it to the loss function
-		if loss_function_arguments:
-			# Passing the loss_function_arguments to the loss function
-			loss_function = loss_function_ref(**loss_function_arguments)
-		else:
-			# Not passing the loss_function_arguments to the loss function
-			loss_function = loss_function_ref()
-
 		# Storing the loss function and optimizer for future use
 		self.__optimizer = self._build_optimizer_from_ref_and_details(optimizer, self.__model.parameters())
-		self.__loss_function = loss_function
+		self.__loss_function = self._build_loss_function_from_ref_and_details(loss_function)
 
 	def fit(self, train_data, test_data, epochs=10, batch_size=32):
 		# Ectracting the train and test data from the touples
