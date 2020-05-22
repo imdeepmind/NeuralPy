@@ -132,7 +132,7 @@ Here is a list of features/enhancements that I want to add in the library before
       * [x] MSELoss
       * [x] CrossEntropyLoss
       * [x] BCELoss
-  * [ ] Optimizers
+  * [x] Optimizers
       * [x] Adam
       * [x] SGD
       * [x] Adagrad
