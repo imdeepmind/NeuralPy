@@ -1,184 +1,37 @@
 {
-  "navigation": [{
-      "title": "Introduction",
-      "link": "#introduction"
-    },
+  "contents": [
     {
-      "title": "Installing",
-      "link": "#installing"
-    },
-    {
-      "title": "Getting Started",
-      "link": "#getting-started"
-    },
-    {
-      "title": "APIs",
-      "link": "#apis",
-      "urls": [{
-          "title": "Models",
-          "link": "#models",
-          "urls": [{
-            "title": "Sequential",
-            "link": "#sequential"
-          }]
+      "title": "Introduciotn",
+      "id": "introduction",
+      "subtitle": "This is a sample subtitle",
+      "supported_arguments": [
+        {
+          "name": "n_inputs",
+          "default": null,
+          "details": "This is the place to put some detials about the content"
+        }  
+      ], 
+      "paragraphs": [
+        {
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id vestibulum lacus. Maecenas maximus enim faucibus libero faucibus semper. In hac habitasse platea dictumst. Quisque eleifend malesuada urna, a efficitur orci mollis in. Integer at consectetur turpis. Vivamus elementum sed ex luctus lobortis. Integer in nulla et nunc venenatis aliquam. Mauris quis faucibus enim. Phasellus fermentum mi ut porta ornare <b>for test</b>."
         },
         {
-          "title": "Layers",
-          "link": "#layers",
-          "urls": [{
-              "title": "Linear",
-              "link": "#linear",
-              "urls": [{
-                "title": "Dense",
-                "link": "#linear"
-              }]
-            },
-            {
-              "title": "Convolutional",
-              "link": "#convolutional",
-              "urls": [{
-                  "title": "Conv1D",
-                  "link": "#conv1d"
-                },
-                {
-                  "title": "Conv2D",
-                  "link": "#conv2d"
-                },
-                {
-                  "title": "Conv3D",
-                  "link": "#conv3d"
-                }
-              ]
-            },
-            {
-              "title": "Pooling",
-              "link": "#pooling",
-              "urls": [{
-                  "title": "MaxPool1D",
-                  "link": "#maxpool1d"
-                },
-                {
-                  "title": "MaxPool2D",
-                  "link": "#maxpool2d"
-                },
-                {
-                  "title": "MaxPool3D",
-                  "link": "#maxpool3d"
-                },
-                {
-                  "title": "AvgPool1D",
-                  "link": "#avgpool1d"
-                },
-                {
-                  "title": "AvgPool2D",
-                  "link": "#avgpool2d"
-                },
-                {
-                  "title": "AvgPool3D",
-                  "link": "#avgpool3d"
-                }
-              ]
-            }
-          ]
+          "list": ["Something", "Another something", "another something something"]
         },
         {
-          "title": "Activation Functions",
-          "link": "#activation-functions",
-          "urls": [{
-              "title": "Softmax",
-              "link": "#softmax"
-            },
-            {
-              "title": "Sigmoid",
-              "link": "#sigmoid"
-            },
-            {
-              "title": "Tanh",
-              "link": "#tanh"
-            },
-            {
-              "title": "ReLU",
-              "link": "#relu"
-            },
-            {
-              "title": "LeakyReLU",
-              "link": "#leaky-relu"
-            }
-          ]
+          "code": "some code goes here\nsecond line goes here"
         },
         {
-          "title": "Regulariziers",
-          "links": "#regulariziers",
-          "urls": [{
-            "title": "Dropout",
-            "link": "#dropout"
-          }]
-        },
+          "text": "Duis sollicitudin velit volutpat nisl auctor, ac placerat neque consectetur. Morbi ac euismod mi. Nulla est augue, malesuada nec gravida vitae, venenatis quis eros. Suspendisse interdum erat tellus, non posuere odio auctor ac. Vivamus ornare, magna id porttitor pharetra, purus nulla vestibulum lacus, sed laoreet lacus ex quis ligula."
+        }
+      ],
+      "contents": null,
+      "further_readings": [
         {
-          "title": "Loss Functions",
-          "link": "#loss-functions",
-          "urls": [{
-              "title": "MSELoss",
-              "link": "#mse-loss"
-            },
-            {
-              "title": "CrossEntropyLoss",
-              "link": "#cross-entropy-loss"
-            },
-            {
-              "title": "NLLLoss",
-              "link": "#nll-loss"
-            },
-            {
-              "title": "BCELoss",
-              "link": "#bce-loss"
-            }
-          ]
-        },
-        {
-          "title": "Optimizers",
-          "link": "#optimizers",
-          "urls": [{
-              "title": "Adam",
-              "link": "#adam"
-            },
-            {
-              "title": "SGD",
-              "link": "#sgd"
-            },
-            {
-              "title": "Adagrad",
-              "link": "#adagrad"
-            },
-            {
-              "title": "RMSprop",
-              "link": "#rms-prop"
-            }
-          ]
+          "title": "Go to this website for more",
+          "url": "https://imdeepmind.com"
         }
       ]
-    },
-    {
-      "title": "Code Examples",
-      "link": "#code-examples"
-    },
-    {
-      "title": "Advanced Topics",
-      "link": "#advanced-topics"
     }
-  ],
-  "content": [{
-    "key": "introduction",
-    "title": "Some random stuff",
-    "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
-    "contents": [{
-      "title": "Content title",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor libero sit amet libero iaculis, quis molestie ante dignissim. Aenean vehicula egestas fringilla. Nulla quis eros lobortis, eleifend risus convallis, scelerisque nisl.",
-      "code": "some code goes here",
-      "links": [{
-        "title": "Go to this website for more",
-        "url": "https://imdeepmind.com"
-      }]
-    }]
-  }]
+  ]
 }
