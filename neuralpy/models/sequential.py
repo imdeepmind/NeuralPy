@@ -2,6 +2,7 @@ from collections import OrderedDict
 from torch import nn, no_grad, device, torch, tensor
 from torch.cuda import is_available
 from numpy import array
+from numpy import argmax
 
 from .sequential_helper import SequentialHelper
 
@@ -214,7 +215,6 @@ class Sequential(SequentialHelper):
 
 					# Calculating accuracy
 					# Checking if accuracy is there in metrics
-					# TODO: Need to do it more dynamic way
 					if "accuracy" in metrics:
 						corrects = corrects = self._calculate_accuracy(batch_y, outputs)
 
@@ -241,7 +241,6 @@ class Sequential(SequentialHelper):
 				# Printing a friendly message to the console
 				self._print_validation_progress(validation_loss_score, len(X_train))
 				
-
 		# Returning history
 		return history
 	
@@ -286,50 +285,13 @@ class Sequential(SequentialHelper):
 		return array(predictions)
 
 	def predict_classes(self, X, batch_size=None):
-		# Calling model.eval as we are evaluating the model only
-		self.__model.eval()
+		# Calling the predict method
+		predictions = self.predict(X, batch_size)
 
-		# Initializing an empty list to store the predictions
-		predictions = []
+		# Detecting the classes
+		predictions = argmax(predictions, axis=1)
 
-		# Conveting the input X to pytorch Tensor
-		X = tensor(X)
-
-		if batch_size:
-			# If batch_size is there then checking the length and comparing it with the length of input
-			if X.shape[0] < batch_size:
-				# Batch size can not be greater that sample size
-				raise ValueError("Batch size is greater than total number of samples")
-
-			# Predicting, so no grad
-			with no_grad():
-				# Spliting the data into batches
-				for i in range(0, len(X), batch_size):
-					# Generating the batch from X
-					batch_X = X[i:i+batch_size].float()
-
-					# Feeding the batch into the model for predictions
-					outputs = self.__model(batch_X)
-
-					# Predicting the class
-					pred = outputs.argmax(dim=1, keepdim=True)
-
-					# Appending the data into the predictions list
-					predictions += pred.numpy().tolist()
-		else:
-			# Predicting, so no grad
-			with no_grad():
-				# Feeding the full data into the model for predictions
-				outputs = self.__model(X)
-
-				# Predicting the class
-				pred = outputs.argmax(dim=1, keepdim=True)
-
-				# Appending the data into the predictions list
-				predictions += pred.numpy().tolist()
-		
-		# Converting the list to numpy array and returning
-		return array(predictions)
+		return predictions
 
 	def summary(self):
 		# Printing the model summary using pytorch model
