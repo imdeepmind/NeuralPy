@@ -1,12 +1,11 @@
+import torch
+import numpy as np
 from collections import OrderedDict
-from torch import nn, no_grad, device, torch, tensor
-from torch.cuda import is_available
-from numpy import array
+from .sequential_helper import SequentialHelper
 
-from .utils import is_valid_layer, is_valid_optimizer, is_valid_loss_function
-
-class Sequential():
-	def __init__(self, force_cpu=False, training_device=None):
+class Sequential(SequentialHelper):
+	def __init__(self, force_cpu=False, training_device=None, random_state=None):
+		super(Sequential, self).__init__()
 		# Initializing some attributes that we need to function
 		self.__layers = []
 		self.__model = None
@@ -20,8 +19,12 @@ class Sequential():
 			raise ValueError(f"You have provided an invalid value for the parameter force_cpu")
 
 		# Checking the training_device parameter and comparing it with pytorch device class
-		if training_device and not issubclass(training_device, device):
+		if training_device and not isinstance(training_device, torch.device):
 			raise ValueError("Please provide a valid neuralpy device class")
+
+		# Validating random state
+		if random_state and not isinstance(random_state, int):
+			raise ValueError("Please provide a valid random state")
 
 		# if force_cpu then using CPU
 		# if device provided, then using it
@@ -29,16 +32,56 @@ class Sequential():
 		if training_device:
 			self.__device = training_device
 		elif force_cpu == True:
-			self.__device = device("cpu")
+			self.__device = torch.device("cpu")
 		else:
-			if is_available():
-				self.__device = device("cuda:0") # TODO: currently setting it to cuda:0, may need to change it
+			if torch.cuda.is_available():
+				self.__device = torch.device("cuda:0") # TODO: currently setting it to cuda:0, may need to change it
 			else:
-				self.__device = device("cpu")
+				self.__device = torch.device("cpu")
 
-	def __generate_layer_name(self, layer_type, index):
-		# Generating a unique name for the layer
-		return f"{layer_type.lower()}_layer_{index+1}"
+		# Setting random state if given
+		if random_state:
+			torch.manual_seed(random_state)
+
+	def __predict(self, X, batch_size):
+		# Calling model.eval as we are evaluating the model only
+		self.__model.eval()
+
+		# Initializing an empty list to store the predictions
+		predictions = torch.Tensor()
+
+		# Conveting the input X to pytorch Tensor
+		X = torch.tensor(X)
+
+		if batch_size:
+			# If batch_size is there then checking the length and comparing it with the length of input
+			if X.shape[0] < batch_size:
+				# Batch size can not be greater that sample size
+				raise ValueError("Batch size is greater than total number of samples")
+
+			# Predicting, so no grad
+			with torch.no_grad():
+				# Spliting the data into batches
+				for i in range(0, len(X), batch_size):
+					# Generating the batch from X
+					batch_X = X[i:i+batch_size].float()
+
+					# Feeding the batch into the model for predictions
+					outputs = self.__model(batch_X)
+
+					# Appending the data into the predictions tensor
+					predictions = torch.cat((predictions, outputs))
+		else:
+			# Predicting, so no grad
+			with torch.no_grad():
+				# Feeding the full data into the model for predictions tensor
+				outputs = self.__model(X.float())
+
+				# saving the outputs in the predictions
+				predictions = outputs
+		
+		# returning predictions tensor
+		return predictions
 
 	def add(self, layer):
 		# If we already built the model, then we can not a new layer
@@ -46,69 +89,24 @@ class Sequential():
 			raise Exception("You have built this model already, you can not make any changes in this model")
 
 		# Layer verification using the method is_valid_layer
-		if not is_valid_layer(layer):
+		if not self._is_valid_layer(layer):
 			raise ValueError("Please provide a valid neuralpy layer")
 
 		# Finally adding the layer for layers array
 		self.__layers.append(layer)
 
 	def build(self):
-		# Storing the layer here to build the Sequentuial layer
-		layers = []
+		# Building the layers from the layer refs and details
+		layers = self._build_layer_from_ref_and_details(self.__layers)
 
-		# Strong the output dimension, for the next layer, we need this to calculate the next input layer dim
-		prev_output_dim = 0
+		# Making the pytorch model using nn.Sequential
+		self.__model = torch.nn.Sequential(OrderedDict(layers))
 
-		# Iterating through the layers
-		for index, layer_ref in enumerate(self.__layers):
+		# Transferring the model to device
+		self.__model.to(self.__device)
 
-			# Generating n_input if not present
-			if prev_output_dim is not 0:
-				# For each layer, we have this method that returns the new input layer for next dim
-				# based on the previous output dim
-				layer_ref.get_input_dim(prev_output_dim)
-
-			# Getting the details of the layer using the get_layer method
-			layer_details = layer_ref.get_layer()
-
-			# Stroing the layer details
-			layer_name = layer_details["name"]
-			layer_type = layer_details["type"]
-			layer_nodes = layer_details["n_nodes"]
-			layer_arguments = layer_details["keyword_arguments"]
-
-			# Here we are just storing the ref, not the initialized layer 
-			layer_function_ref = layer_details["layer"]
-
-			# If layer does not have name, then creating a unique name
-			if not layer_name:
-				# This method generates a unique layer name based on layer type and index
-				layer_name = self.__generate_layer_name(layer_type, index)
-
-			# If layer_arguments is not None, then the layer accepts some parameters to initialize 
-			if layer_arguments is not None:
-				# Here passing the layer_arguments to the layer reference to initialize the layer
-				layer = layer_function_ref(**layer_arguments) 
-			else:
-				# This layer does not need layer_arguments so not passing anything
-				layer = layer_function_ref() 
-
-			# Appending the layer to layers array
-			layers.append((layer_name, layer))
-
-			# Checking layer_nodes value against some condition, and then storing the n_nodes to calculate the input dim of next layer 
-			if layer_nodes is not None and layer_nodes >= 0:
-				prev_output_dim = layer_nodes
-
-
-			# Making the pytorch model using nn.Sequential
-			self.__model = nn.Sequential(OrderedDict(layers))
-
-			# Transferring the model to device
-			self.__model.to(self.__device)
-
-			# Printing a message with the device name
-			print("The model is running on", self.__device)
+		# Printing a message with the device name
+		print("The model is running on", self.__device)
 
 		# Chanding the build status to True, so we can not make any changes
 		self.__build = True
@@ -120,49 +118,19 @@ class Sequential():
 			self.build()
 
 		# Checking the optimizer using the method is_valid_optimizer
-		if not is_valid_optimizer(optimizer):
+		if not self._is_valid_optimizer(optimizer):
 			raise ValueError("Please provide a value neuralpy optimizer")
 
 		# Checking the loss_function using the method is_valid_loss_function
-		if not is_valid_loss_function(loss_function):
+		if not self._is_valid_loss_function(loss_function):
 			raise ValueError("Please provide a value neuralpy loss function")
 
 		# Setting metrics
 		self.__metrics = metrics
-
-		# Getting the details of the optimizer using get_optimizer method
-		optimizer_details = optimizer.get_optimizer()
-
-		# Getting the details of the loss_function using get_loss_function method
-		loss_function_details = loss_function.get_loss_function()
-
-		# Stroing the optimizer details
-		optimizer_ref = optimizer_details["optimizer"]
-		optimizer_arguments = optimizer_details["keyword_arguments"]
-
-		# Stroing the loss_function details
-		loss_function_ref = loss_function_details["loss_function"]
-		loss_function_arguments = loss_function_details["keyword_arguments"]
-
-		# Cheking the optimizer_arguments, if it is not None then passing it to the optimizer
-		if optimizer_arguments:
-			# Initializing the optimizer with optimizer_arguments and models parameters
-			optimizer = optimizer_ref(**optimizer_arguments, params=self.__model.parameters())
-		else:
-			# Initializing the optimizer with models parameters only
-			optimizer = optimizer_ref(params=self.__model.parameters())	
-
-		# Checking the loss_function_arguments, if not None and passing it to the loss function
-		if loss_function_arguments:
-			# Passing the loss_function_arguments to the loss function
-			loss_function = loss_function_ref(**loss_function_arguments)
-		else:
-			# Not passing the loss_function_arguments to the loss function
-			loss_function = loss_function_ref()
-
+		
 		# Storing the loss function and optimizer for future use
-		self.__optimizer = optimizer
-		self.__loss_function = loss_function
+		self.__optimizer = self._build_optimizer_from_ref_and_details(optimizer, self.__model.parameters())
+		self.__loss_function = self._build_loss_function_from_ref_and_details(loss_function)
 
 	def fit(self, train_data, test_data, epochs=10, batch_size=32):
 		# Ectracting the train and test data from the touples
@@ -190,32 +158,26 @@ class Sequential():
 			raise ValueError("Length of testing Input data and testing output data should be same")
 
 		# Conveting the data into pytorch tensor
-		X_train = tensor(X_train)
-		y_train = tensor(y_train)
+		X_train = torch.tensor(X_train)
+		y_train = torch.tensor(y_train)
 
-		X_test = tensor(X_test)
-		y_test = tensor(y_test)
+		X_test = torch.tensor(X_test)
+		y_test = torch.tensor(y_test)
 
 		# Initializing a dict to store the training progress, can be used for viz purposes
+		metrics = []
+		
 		if self.__metrics is not None:
 			metrics = ["loss"] + self.__metrics
 		else:
 			metrics = ["loss"]
 
-		history = {
-			'batchwise': {},
-			'epochwise': {}
-		}
-
-		for matrix in metrics:
-			history["batchwise"][f"training_{matrix}"] = []
-			history["batchwise"][f"validation_{matrix}"] = []
-			history["epochwise"][f"training_{matrix}"] = []
-			history["epochwise"][f"validation_{matrix}"] = []
+		# Building the history object
+		history = self._build_history_object_for_training(metrics)
 
 		# Running the epochs
 		for epoch in range(epochs):
-			# Initializing the loss to 0
+			# Initializing the loss and accuracy with 0
 			training_loss_score = 0
 			validation_loss_score = 0
 
@@ -259,25 +221,21 @@ class Sequential():
 				# Checking if accuracy is there in metrics
 				# TODO: Need to do it more dynamic way
 				if "accuracy" in metrics:
-					pred = outputs.argmax(dim=1, keepdim=True)
-					corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+					corrects = self._calculate_accuracy(batch_y, outputs)
+
 					correct_training += corrects
 
 					history["batchwise"]["training_accuracy"].append(corrects/batch_size*100)
 
-				# Printing a friendly message to the console
-				message = f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{len(X_train)//batch_size} - Training Loss: {train_loss.item():0.4f}"
-
-				if "accuracy" in metrics:
-					message += f" - Training Accuracy: {corrects/batch_size*100:.4f}%"
-
-				print(message, end="\r")
+					self._print_training_progress(epoch, epochs, i, batch_size, len(X_train), train_loss.item(), corrects)
+				else:
+					self._print_training_progress(epoch, epochs, i, batch_size, len(X_train), train_loss.item())
 
 			# Evluating model
 			self.__model.eval()
 
 			# no grad, no training
-			with no_grad():
+			with torch.no_grad():
 				# Spliting the data into batches
 				for i in range(0, len(X_test), batch_size):
 					# Making the batches
@@ -302,10 +260,9 @@ class Sequential():
 
 					# Calculating accuracy
 					# Checking if accuracy is there in metrics
-					# TODO: Need to do it more dynamic way
 					if "accuracy" in metrics:
-						pred = outputs.argmax(dim=1, keepdim=True)
-						corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+						corrects = corrects = self._calculate_accuracy(batch_y, outputs)
+
 						correct_val += corrects
 
 						history["batchwise"]["validation_accuracy"].append(corrects/batch_size*100)
@@ -324,100 +281,29 @@ class Sequential():
 				history["epochwise"]["training_accuracy"].append(correct_val/len(X_test)*100)
 
 				# Printing a friendly message to the console
-				print(f"\nValidation Loss: {validation_loss_score:.4f} - Validation Accuracy: {correct_val/len(X_test)*100:.4f}%")
+				self._print_validation_progress(validation_loss_score, len(X_train), correct_val)
 			else:
 				# Printing a friendly message to the console
-				print(f"\nValidation Loss: {validation_loss_score:.4f}")
+				self._print_validation_progress(validation_loss_score, len(X_train))
 				
-
 		# Returning history
 		return history
 	
 	def predict(self, X, batch_size=None):
-		# Calling model.eval as we are evaluating the model only
-		self.__model.eval()
+		# Calling the __predict method to get the predicts
+		predictions = self.__predict(X, batch_size)
 
-		# Initializing an empty list to store the predictions
-		predictions = []
-
-		# Conveting the input X to pytorch Tensor
-		X = tensor(X)
-
-		if batch_size:
-			# If batch_size is there then checking the length and comparing it with the length of input
-			if X.shape[0] < batch_size:
-				# Batch size can not be greater that sample size
-				raise ValueError("Batch size is greater than total number of samples")
-
-			# Predicting, so no grad
-			with no_grad():
-				# Spliting the data into batches
-				for i in range(0, len(X), batch_size):
-					# Generating the batch from X
-					batch_X = X[i:i+batch_size].float()
-
-					# Feeding the batch into the model for predictions
-					outputs = self.__model(batch_X)
-
-					# Appending the data into the predictions list
-					predictions += outputs.numpy().tolist()
-		else:
-			# Predicting, so no grad
-			with no_grad():
-				# Feeding the full data into the model for predictions
-				outputs = self.__model(X)
-
-				# Appending the data into the predictions list
-				predictions += outputs.numpy().tolist()
-		
-		# Converting the list to numpy array and returning
-		return array(predictions)
+		# Returning an numpy array of predictions
+		return predictions.numpy()
 
 	def predict_classes(self, X, batch_size=None):
-		# Calling model.eval as we are evaluating the model only
-		self.__model.eval()
+		# Calling the __predict method to get the predicts
+		predictions = self.__predict(X, batch_size)
 
-		# Initializing an empty list to store the predictions
-		predictions = []
+		# Detecting the classes
+		predictions = predictions.argmax(dim=1, keepdim=True)
 
-		# Conveting the input X to pytorch Tensor
-		X = tensor(X)
-
-		if batch_size:
-			# If batch_size is there then checking the length and comparing it with the length of input
-			if X.shape[0] < batch_size:
-				# Batch size can not be greater that sample size
-				raise ValueError("Batch size is greater than total number of samples")
-
-			# Predicting, so no grad
-			with no_grad():
-				# Spliting the data into batches
-				for i in range(0, len(X), batch_size):
-					# Generating the batch from X
-					batch_X = X[i:i+batch_size].float()
-
-					# Feeding the batch into the model for predictions
-					outputs = self.__model(batch_X)
-
-					# Predicting the class
-					pred = outputs.argmax(dim=1, keepdim=True)
-
-					# Appending the data into the predictions list
-					predictions += pred.numpy().tolist()
-		else:
-			# Predicting, so no grad
-			with no_grad():
-				# Feeding the full data into the model for predictions
-				outputs = self.__model(X)
-
-				# Predicting the class
-				pred = outputs.argmax(dim=1, keepdim=True)
-
-				# Appending the data into the predictions list
-				predictions += pred.numpy().tolist()
-		
-		# Converting the list to numpy array and returning
-		return array(predictions)
+		return predictions.numpy()
 
 	def summary(self):
 		# Printing the model summary using pytorch model

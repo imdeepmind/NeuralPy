@@ -120,8 +120,8 @@ Here is a list of features/enhancements that I want to add in the library before
   * [x] Layers
     * [x] Linear
       * [x] Dense
-  * [ ] Regulariziers
-      * [ ] Dropout
+  * [x] Regulariziers
+      * [x] Dropout
   * [x] Activation Functions
       * [x] Softmax
       * [x] Sigmoid
@@ -132,11 +132,11 @@ Here is a list of features/enhancements that I want to add in the library before
       * [x] MSELoss
       * [x] CrossEntropyLoss
       * [x] BCELoss
-  * [ ] Optimizers
+  * [x] Optimizers
       * [x] Adam
       * [x] SGD
       * [x] Adagrad
-      * [ ] RMSprop
+      * [x] RMSprop
   * [x] GPU Support
   * [ ] User input validation
   * [ ] Error handling
