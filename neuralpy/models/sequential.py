@@ -22,6 +22,7 @@ class Sequential(SequentialHelper):
 		if training_device and not isinstance(training_device, torch.device):
 			raise ValueError("Please provide a valid neuralpy device class")
 
+		# Validating random state
 		if random_state and not isinstance(random_state, int):
 			raise ValueError("Please provide a valid random state")
 
@@ -38,6 +39,7 @@ class Sequential(SequentialHelper):
 			else:
 				self.__device = torch.device("cpu")
 
+		# Setting random state if given
 		if random_state:
 			torch.manual_seed(random_state)
 
