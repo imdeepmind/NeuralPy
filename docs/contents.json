@@ -13,16 +13,25 @@
       ], 
       "paragraphs": [
         {
+          "title": "Sometitle for paragraphs"
+        },
+        {
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id vestibulum lacus. Maecenas maximus enim faucibus libero faucibus semper. In hac habitasse platea dictumst. Quisque eleifend malesuada urna, a efficitur orci mollis in. Integer at consectetur turpis. Vivamus elementum sed ex luctus lobortis. Integer in nulla et nunc venenatis aliquam. Mauris quis faucibus enim. Phasellus fermentum mi ut porta ornare <b>for test</b>."
         },
         {
-          "list": {
-            "title": "Sometitle for the list",
-            "items": ["Something", "Another something", "another something something"]
-          }
+          "title": "Sometitle for paragraphs"
+        },
+        {
+          "list": ["Something", "Another something", "another something something"]
+        },
+        {
+          "title": "Sometitle for paragraphs"
         },
         {
           "code": "some code goes here\nsecond line goes here"
+        },
+        {
+          "title": "Sometitle for paragraphs"
         },
         {
           "text": "Duis sollicitudin velit volutpat nisl auctor, ac placerat neque consectetur. Morbi ac euismod mi. Nulla est augue, malesuada nec gravida vitae, venenatis quis eros. Suspendisse interdum erat tellus, non posuere odio auctor ac. Vivamus ornare, magna id porttitor pharetra, purus nulla vestibulum lacus, sed laoreet lacus ex quis ligula."
