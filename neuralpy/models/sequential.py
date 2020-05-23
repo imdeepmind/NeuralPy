@@ -19,7 +19,7 @@ class Sequential(SequentialHelper):
 			raise ValueError(f"You have provided an invalid value for the parameter force_cpu")
 
 		# Checking the training_device parameter and comparing it with pytorch device class
-		if training_device and not issubclass(training_device, torch.device):
+		if training_device and not isinstance(training_device, torch.device):
 			raise ValueError("Please provide a valid neuralpy device class")
 
 		# if force_cpu then using CPU
