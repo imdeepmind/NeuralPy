@@ -1,9 +1,6 @@
+import torch
+import numpy as np
 from collections import OrderedDict
-from torch import nn, no_grad, device, torch, tensor
-from torch.cuda import is_available
-from numpy import array
-from numpy import argmax
-
 from .sequential_helper import SequentialHelper
 
 class Sequential(SequentialHelper):
@@ -31,12 +28,12 @@ class Sequential(SequentialHelper):
 		if training_device:
 			self.__device = training_device
 		elif force_cpu == True:
-			self.__device = device("cpu")
+			self.__device = torch.device("cpu")
 		else:
-			if is_available():
-				self.__device = device("cuda:0") # TODO: currently setting it to cuda:0, may need to change it
+			if torch.cuda.is_available():
+				self.__device = torch.device("cuda:0") # TODO: currently setting it to cuda:0, may need to change it
 			else:
-				self.__device = device("cpu")
+				self.__device = torch.device("cpu")
 
 	def add(self, layer):
 		# If we already built the model, then we can not a new layer
@@ -55,7 +52,7 @@ class Sequential(SequentialHelper):
 		layers = self._build_layer_from_ref_and_details(self.__layers)
 
 		# Making the pytorch model using nn.Sequential
-		self.__model = nn.Sequential(OrderedDict(layers))
+		self.__model = torch.nn.Sequential(OrderedDict(layers))
 
 		# Transferring the model to device
 		self.__model.to(self.__device)
@@ -113,11 +110,11 @@ class Sequential(SequentialHelper):
 			raise ValueError("Length of testing Input data and testing output data should be same")
 
 		# Conveting the data into pytorch tensor
-		X_train = tensor(X_train)
-		y_train = tensor(y_train)
+		X_train = torch.tensor(X_train)
+		y_train = torch.tensor(y_train)
 
-		X_test = tensor(X_test)
-		y_test = tensor(y_test)
+		X_test = torch.tensor(X_test)
+		y_test = torch.tensor(y_test)
 
 		# Initializing a dict to store the training progress, can be used for viz purposes
 		metrics = []
@@ -190,7 +187,7 @@ class Sequential(SequentialHelper):
 			self.__model.eval()
 
 			# no grad, no training
-			with no_grad():
+			with torch.no_grad():
 				# Spliting the data into batches
 				for i in range(0, len(X_test), batch_size):
 					# Making the batches
@@ -252,7 +249,7 @@ class Sequential(SequentialHelper):
 		predictions = []
 
 		# Conveting the input X to pytorch Tensor
-		X = tensor(X)
+		X = torch.tensor(X)
 
 		if batch_size:
 			# If batch_size is there then checking the length and comparing it with the length of input
@@ -261,7 +258,7 @@ class Sequential(SequentialHelper):
 				raise ValueError("Batch size is greater than total number of samples")
 
 			# Predicting, so no grad
-			with no_grad():
+			with torch.no_grad():
 				# Spliting the data into batches
 				for i in range(0, len(X), batch_size):
 					# Generating the batch from X
@@ -274,7 +271,7 @@ class Sequential(SequentialHelper):
 					predictions += outputs.numpy().tolist()
 		else:
 			# Predicting, so no grad
-			with no_grad():
+			with torch.no_grad():
 				# Feeding the full data into the model for predictions
 				outputs = self.__model(X)
 
@@ -282,14 +279,14 @@ class Sequential(SequentialHelper):
 				predictions += outputs.numpy().tolist()
 		
 		# Converting the list to numpy array and returning
-		return array(predictions)
+		return np.array(predictions)
 
 	def predict_classes(self, X, batch_size=None):
 		# Calling the predict method
 		predictions = self.predict(X, batch_size)
 
 		# Detecting the classes
-		predictions = argmax(predictions, axis=1)
+		predictions = np.argmax(predictions, axis=1)
 
 		return predictions
 
