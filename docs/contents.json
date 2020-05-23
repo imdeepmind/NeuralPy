@@ -16,7 +16,10 @@
           "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id vestibulum lacus. Maecenas maximus enim faucibus libero faucibus semper. In hac habitasse platea dictumst. Quisque eleifend malesuada urna, a efficitur orci mollis in. Integer at consectetur turpis. Vivamus elementum sed ex luctus lobortis. Integer in nulla et nunc venenatis aliquam. Mauris quis faucibus enim. Phasellus fermentum mi ut porta ornare <b>for test</b>."
         },
         {
-          "list": ["Something", "Another something", "another something something"]
+          "list": {
+            "title": "Sometitle for the list",
+            "items": ["Something", "Another something", "another something something"]
+          }
         },
         {
           "code": "some code goes here\nsecond line goes here"
