@@ -4,7 +4,7 @@ from collections import OrderedDict
 from .sequential_helper import SequentialHelper
 
 class Sequential(SequentialHelper):
-	def __init__(self, force_cpu=False, training_device=None):
+	def __init__(self, force_cpu=False, training_device=None, random_state=None):
 		super(Sequential, self).__init__()
 		# Initializing some attributes that we need to function
 		self.__layers = []
@@ -22,6 +22,9 @@ class Sequential(SequentialHelper):
 		if training_device and not isinstance(training_device, torch.device):
 			raise ValueError("Please provide a valid neuralpy device class")
 
+		if random_state and not isinstance(random_state, int):
+			raise ValueError("Please provide a valid random state")
+
 		# if force_cpu then using CPU
 		# if device provided, then using it
 		# else auto detecting the device, if cuda available then using it (default option)
@@ -34,6 +37,9 @@ class Sequential(SequentialHelper):
 				self.__device = torch.device("cuda:0") # TODO: currently setting it to cuda:0, may need to change it
 			else:
 				self.__device = torch.device("cpu")
+
+		if random_state:
+			torch.manual_seed(random_state)
 
 	def __predict(self, X, batch_size):
 		# Calling model.eval as we are evaluating the model only
@@ -61,18 +67,18 @@ class Sequential(SequentialHelper):
 					# Feeding the batch into the model for predictions
 					outputs = self.__model(batch_X)
 
-					# Appending the data into the predictions list
+					# Appending the data into the predictions tensor
 					predictions = torch.cat((predictions, outputs))
 		else:
 			# Predicting, so no grad
 			with torch.no_grad():
-				# Feeding the full data into the model for predictions
+				# Feeding the full data into the model for predictions tensor
 				outputs = self.__model(X.float())
 
 				# saving the outputs in the predictions
 				predictions = outputs
 		
-		# returning predictions
+		# returning predictions tensor
 		return predictions
 
 	def add(self, layer):
