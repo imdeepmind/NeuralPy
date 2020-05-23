@@ -242,4 +242,9 @@ class SequentialHelper:
 
 		return history
 
-	
+	def _calculate_accuracy(self, y, y_pred):
+		pred = y_pred.argmax(dim=1, keepdim=True)
+		
+		corrects = pred.eq(y.view_as(pred)).sum().item()
+
+		return corrects

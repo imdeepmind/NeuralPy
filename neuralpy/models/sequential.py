@@ -175,8 +175,8 @@ class Sequential(SequentialHelper):
 				# Checking if accuracy is there in metrics
 				# TODO: Need to do it more dynamic way
 				if "accuracy" in metrics:
-					pred = outputs.argmax(dim=1, keepdim=True)
-					corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+					corrects = self._calculate_accuracy(batch_y, outputs)
+
 					correct_training += corrects
 
 					history["batchwise"]["training_accuracy"].append(corrects/batch_size*100)
@@ -220,8 +220,8 @@ class Sequential(SequentialHelper):
 					# Checking if accuracy is there in metrics
 					# TODO: Need to do it more dynamic way
 					if "accuracy" in metrics:
-						pred = outputs.argmax(dim=1, keepdim=True)
-						corrects = pred.eq(batch_y.view_as(pred)).sum().item()
+						corrects = corrects = self._calculate_accuracy(batch_y, outputs)
+						
 						correct_val += corrects
 
 						history["batchwise"]["validation_accuracy"].append(corrects/batch_size*100)
