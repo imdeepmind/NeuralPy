@@ -263,3 +263,5 @@ class SequentialHelper:
 			print(f"\nValidation Loss: {validation_loss:.4f} - Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%")
 		else:
 			print(f"\nValidation Loss: {validation_loss:.4f}")
+
+	

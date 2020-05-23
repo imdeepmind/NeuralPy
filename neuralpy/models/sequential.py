@@ -35,6 +35,46 @@ class Sequential(SequentialHelper):
 			else:
 				self.__device = torch.device("cpu")
 
+	def __predict(self, X, batch_size):
+		# Calling model.eval as we are evaluating the model only
+		self.__model.eval()
+
+		# Initializing an empty list to store the predictions
+		predictions = torch.Tensor()
+
+		# Conveting the input X to pytorch Tensor
+		X = torch.tensor(X)
+
+		if batch_size:
+			# If batch_size is there then checking the length and comparing it with the length of input
+			if X.shape[0] < batch_size:
+				# Batch size can not be greater that sample size
+				raise ValueError("Batch size is greater than total number of samples")
+
+			# Predicting, so no grad
+			with torch.no_grad():
+				# Spliting the data into batches
+				for i in range(0, len(X), batch_size):
+					# Generating the batch from X
+					batch_X = X[i:i+batch_size].float()
+
+					# Feeding the batch into the model for predictions
+					outputs = self.__model(batch_X)
+
+					# Appending the data into the predictions list
+					predictions = torch.cat((predictions, outputs))
+		else:
+			# Predicting, so no grad
+			with torch.no_grad():
+				# Feeding the full data into the model for predictions
+				outputs = self.__model(X.float())
+
+				# saving the outputs in the predictions
+				predictions = outputs
+		
+		# returning predictions
+		return predictions
+
 	def add(self, layer):
 		# If we already built the model, then we can not a new layer
 		if (self.__build):
@@ -242,53 +282,20 @@ class Sequential(SequentialHelper):
 		return history
 	
 	def predict(self, X, batch_size=None):
-		# Calling model.eval as we are evaluating the model only
-		self.__model.eval()
+		# Calling the __predict method to get the predicts
+		predictions = self.__predict(X, batch_size)
 
-		# Initializing an empty list to store the predictions
-		predictions = []
-
-		# Conveting the input X to pytorch Tensor
-		X = torch.tensor(X)
-
-		if batch_size:
-			# If batch_size is there then checking the length and comparing it with the length of input
-			if X.shape[0] < batch_size:
-				# Batch size can not be greater that sample size
-				raise ValueError("Batch size is greater than total number of samples")
-
-			# Predicting, so no grad
-			with torch.no_grad():
-				# Spliting the data into batches
-				for i in range(0, len(X), batch_size):
-					# Generating the batch from X
-					batch_X = X[i:i+batch_size].float()
-
-					# Feeding the batch into the model for predictions
-					outputs = self.__model(batch_X)
-
-					# Appending the data into the predictions list
-					predictions += outputs.numpy().tolist()
-		else:
-			# Predicting, so no grad
-			with torch.no_grad():
-				# Feeding the full data into the model for predictions
-				outputs = self.__model(X)
-
-				# Appending the data into the predictions list
-				predictions += outputs.numpy().tolist()
-		
-		# Converting the list to numpy array and returning
-		return np.array(predictions)
+		# Returning an numpy array of predictions
+		return predictions.numpy()
 
 	def predict_classes(self, X, batch_size=None):
-		# Calling the predict method
-		predictions = self.predict(X, batch_size)
+		# Calling the __predict method to get the predicts
+		predictions = self.__predict(X, batch_size)
 
 		# Detecting the classes
-		predictions = np.argmax(predictions, axis=1)
+		predictions = predictions.argmax(dim=1, keepdim=True)
 
-		return predictions
+		return predictions.numpy()
 
 	def summary(self):
 		# Printing the model summary using pytorch model
