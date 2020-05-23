@@ -248,3 +248,18 @@ class SequentialHelper:
 		corrects = pred.eq(y.view_as(pred)).sum().item()
 
 		return corrects
+
+	def _print_training_progress(self, epoch, epochs, batch, batches, no_samples, training_loss, training_corrects=None):
+		# Printing a friendly message to the console
+		message = f"Epoch: {epoch+1}/{epochs} - Batch: {batch//batches+1}/{no_samples//batches} - Training Loss: {training_loss:0.4f}"
+
+		if training_corrects:
+			message += f" - Training Accuracy: {training_corrects/batches*100:.4f}%"
+
+		print(message, end="\r")
+
+	def _print_validation_progress(self, validation_loss, no_samples, validtion_corrects=None):
+		if validtion_corrects:
+			print(f"\nValidation Loss: {validation_loss:.4f} - Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%")
+		else:
+			print(f"\nValidation Loss: {validation_loss:.4f}")

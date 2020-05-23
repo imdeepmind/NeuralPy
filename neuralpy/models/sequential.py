@@ -131,7 +131,7 @@ class Sequential(SequentialHelper):
 
 		# Running the epochs
 		for epoch in range(epochs):
-			# Initializing the loss to 0
+			# Initializing the loss and accuracy with 0
 			training_loss_score = 0
 			validation_loss_score = 0
 
@@ -181,13 +181,9 @@ class Sequential(SequentialHelper):
 
 					history["batchwise"]["training_accuracy"].append(corrects/batch_size*100)
 
-				# Printing a friendly message to the console
-				message = f"Epoch: {epoch+1}/{epochs} - Batch: {i//batch_size+1}/{len(X_train)//batch_size} - Training Loss: {train_loss.item():0.4f}"
-
-				if "accuracy" in metrics:
-					message += f" - Training Accuracy: {corrects/batch_size*100:.4f}%"
-
-				print(message, end="\r")
+					self._print_training_progress(epoch, epochs, i, batch_size, len(X_train), train_loss.item(), corrects)
+				else:
+					self._print_training_progress(epoch, epochs, i, batch_size, len(X_train), train_loss.item())
 
 			# Evluating model
 			self.__model.eval()
@@ -221,7 +217,7 @@ class Sequential(SequentialHelper):
 					# TODO: Need to do it more dynamic way
 					if "accuracy" in metrics:
 						corrects = corrects = self._calculate_accuracy(batch_y, outputs)
-						
+
 						correct_val += corrects
 
 						history["batchwise"]["validation_accuracy"].append(corrects/batch_size*100)
@@ -240,10 +236,10 @@ class Sequential(SequentialHelper):
 				history["epochwise"]["training_accuracy"].append(correct_val/len(X_test)*100)
 
 				# Printing a friendly message to the console
-				print(f"\nValidation Loss: {validation_loss_score:.4f} - Validation Accuracy: {correct_val/len(X_test)*100:.4f}%")
+				self._print_validation_progress(validation_loss_score, len(X_train), correct_val)
 			else:
 				# Printing a friendly message to the console
-				print(f"\nValidation Loss: {validation_loss_score:.4f}")
+				self._print_validation_progress(validation_loss_score, len(X_train))
 				
 
 		# Returning history
