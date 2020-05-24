@@ -306,6 +306,16 @@ class Sequential(SequentialHelper):
 		return predictions.numpy()
 
 	def evaluate(self, X, y, batch_size=None):
+		# If batch_size is there then checking the length and comparing it with the length of training data
+		if batch_size and X.shape[0] < batch_size:
+			# Batch size can not be greater that train data size
+			raise ValueError("Batch size is greater than total number of training samples")
+
+		# Checking the length of input and output
+		if X.shape[0] != y.shape[0]:
+			# length of X and y should be same
+			raise ValueError("Length of training Input data and training output data should be same")
+
 		# Calling the __predict method to get the predicts
 		predictions = self.__predict(X, batch_size)
 
