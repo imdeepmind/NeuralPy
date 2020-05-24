@@ -305,6 +305,45 @@ class Sequential(SequentialHelper):
 
 		return predictions.numpy()
 
+	def evaluate(self, X, y, batch_size=None):
+		# If batch_size is there then checking the length and comparing it with the length of training data
+		if batch_size and X.shape[0] < batch_size:
+			# Batch size can not be greater that train data size
+			raise ValueError("Batch size is greater than total number of training samples")
+
+		# Checking the length of input and output
+		if X.shape[0] != y.shape[0]:
+			# length of X and y should be same
+			raise ValueError("Length of training Input data and training output data should be same")
+
+		# Calling the __predict method to get the predicts
+		predictions = self.__predict(X, batch_size)
+
+		# Converting to tensor
+		y_tensor = torch.tensor(y)
+
+		# Calculating the loss
+		loss = self.__loss_function(predictions, y_tensor)
+
+		# if metrics has accuracy, then calculating accuracy
+		if "accuracy" in self.__metrics:
+			# Calculating no of corrects
+			corrects = self._calculate_accuracy(y_tensor, predictions)
+			
+			# Calculating accuracy
+			accuracy = corrects / len(X) * 100
+
+			# Returning loss and accuracy
+			return {
+				'loss': loss.item(),
+				'accuracy': accuracy
+			}
+
+		# Returning loss
+		return {
+			'loss': loss
+		}
+
 	def summary(self):
 		# Printing the model summary using pytorch model
 		if self.__build:
