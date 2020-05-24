@@ -305,6 +305,29 @@ class Sequential(SequentialHelper):
 
 		return predictions.numpy()
 
+	def evaluate(self, X, y, batch_size=None):
+		# Calling the __predict method to get the predicts
+		predictions = self.__predict(X, batch_size)
+
+		y_tensor = torch.tensor(y)
+
+		# Calculating the loss
+		loss = self.__loss_function(predictions, y_tensor)
+
+		if "accuracy" in self.__metrics:
+			corrects = self._calculate_accuracy(y_tensor, predictions)
+			
+			accuracy = corrects / len(X) * 100
+
+			return {
+				'loss': loss.item(),
+				'accuracy': accuracy
+			}
+
+		return {
+			'loss': loss
+		}
+
 	def summary(self):
 		# Printing the model summary using pytorch model
 		if self.__build:
