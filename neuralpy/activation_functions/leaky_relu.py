@@ -2,7 +2,8 @@ from torch.nn import LeakyReLU as _LeakyReLU
 
 class LeakyReLU:
 	def __init__(self, negative_slope=0.01, name=None):
-		# Checking the name field, this is an optional field, if not provided generates a unique name for the layer
+		# Checking the name field, this is an optional field,
+		# if not provided generates a unique name for the activation function
 		if name is not None and not (isinstance(name, str) and name is not ""):
 			raise ValueError("Please provide a valid name")
 
