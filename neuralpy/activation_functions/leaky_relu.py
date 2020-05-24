@@ -10,11 +10,11 @@ class LeakyReLU:
 		self.__negative_slope = negative_slope
 
 	def get_input_dim(self, prev_input_dim):
-		# Tanh does not need to n_input, so returning None
+		# LeakyReLU does not need to n_input, so returning None
 		return None
 
 	def get_layer(self):
-		# Returning all the details of the layer
+		# Returning all the details of the activation function
 		return {
 			'n_inputs': None,
 			'n_nodes': None,
@@ -22,6 +22,7 @@ class LeakyReLU:
 			'type': 'Tanh',
 			'layer': _Tanh,
 			"keyword_arguments": {
-				'negative_slope': self.__negative_slope
+				'negative_slope': self.__negative_slope,
+				'inplace': False
 			}
 		}
