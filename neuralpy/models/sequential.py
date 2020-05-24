@@ -319,21 +319,27 @@ class Sequential(SequentialHelper):
 		# Calling the __predict method to get the predicts
 		predictions = self.__predict(X, batch_size)
 
+		# Converting to tensor
 		y_tensor = torch.tensor(y)
 
 		# Calculating the loss
 		loss = self.__loss_function(predictions, y_tensor)
 
+		# if metrics has accuracy, then calculating accuracy
 		if "accuracy" in self.__metrics:
+			# Calculating no of corrects
 			corrects = self._calculate_accuracy(y_tensor, predictions)
 			
+			# Calculating accuracy
 			accuracy = corrects / len(X) * 100
 
+			# Returning loss and accuracy
 			return {
 				'loss': loss.item(),
 				'accuracy': accuracy
 			}
 
+		# Returning loss
 		return {
 			'loss': loss
 		}
