@@ -137,6 +137,44 @@
   		]
   	},
     {
+      "title": "APIs",
+      "id": "apis",
+      "contents": [
+        {
+          "title": "Models",
+          "id": "models",
+          "subtitle": "Models are one of the most important API supported in NeuralPy. Models are used to create different architecture. In NeuralPy, currently Sequential is the only type of model that is supported.",
+          "contents": [
+            {
+              "title": "Sequential",
+              "id": "sequential",
+              "subtitle": "Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.",
+              "supported_arguments": [
+                {
+                  "name": "force_cpu",
+                  "default": "False",
+                  "details": "If True, then uses CPU even if CUDA is available",
+                  "data_type": "Boolean"
+                },
+                {
+                  "name" : "training_device",
+                  "default": "None",
+                  "details": "Device that will be used for training predictions",
+                  "data_type": "NeuralPy.device"
+                },
+                {
+                  "name": "random_state",
+                  "default": "None",
+                  "details": "Random state for the device",
+                  "data_type": "Integer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "Sample",
       "id": "sample",
       "subtitle": "This is a sample subtitle",
