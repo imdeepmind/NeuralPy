@@ -1,141 +1,33 @@
 {
   "contents": [
-  	{
-  		"title": "Introduction",
-  		"id": "introduction",
-  		"subtitle": "NeuralPy is a Keras like, machine learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library, cross-compatible with PyTorch models, suitable for all kinds of machine learning experiments, learning, research, etc.",
-  		"contents": [
-  			{
-  				"title": "PyTorch in NeuralPy",
-  				"id": "pytorch-in-neuralpy",
-  				"paragraphs": [
-  					{
-  						"text": "PyTorch is an open-source machine learning framework that accelerates the path from research prototyping to production deployment developed by Facebook runs on both CPU and GPU."
-  					},
-  					{
-  						"text": "Following are some highlights of PyTorch:"
-  					},
-  					{
-  						"list": [
-  							"Production Ready",
-  							"Distributed Training",
-  							"Robust Ecosystem",
-  							"Cloud Support"
-  						]
-  					}, 
-  					{
-  						"text": "NeuralPy is a high-level library that works on top of PyTorch. It provides easy to use, powerful and interactive APIs that can be used to build state-of-the-art models. As it works on top of PyTorch, NerualPy supports both CPU and GPU and can perform numerical operations very efficiently."
-  					},
-  					{
-  						"text": "Here are some highlights of NeuralPy:"
-  					},
-  					{
-  						"list": [
-  							"Provides an easy interface that is suitable for fast prototyping, learning, and research",
-  							"Works on top of PyTorch",
-  							"Can run on both CPU and GPU",
-  							"Cross-Compatible with PyTorch models"
-  						]
-  					}
-  				]
-  			},
-  			{
-  				"title": "Get Started with NeuralPy",
-  				"id": "get-started-with-neuralpy",
-  				"paragraphs": [
-  					{
-  						"text": "Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NerualPy, we need to install some additional dependencies."
-  					}
-  				],
-  				"contents": [
-  					{
-  						"title": "Prerequisites",
-  						"id": "prerequisites",
-  						"paragraphs": [
-  							{
-  								"text": "NeuralPy runs on Python 3, so first install Python 3. Please check the python documentation for installation instructions. After that install PyTorch and Numpy. For instructions, please check their official documentation and installation guides."
-  							}
-  						]
-  					},
-  					{
-  						"title": "Installation",
-  						"id": "installation",
-  						"paragraphs": [
-  							{
-  								"text": "To install NeuralPy run the following command on terminal."
-  							},
-  							{
-  								"code": "pip install neuralpy-torch"
-  							},
-  							{
-  								"text": "If you have multiple versions of it, then you might need to use pip3."
-  							},
-  							{
-  								"code": "pip3 install neuralpy-torch\n\n//or\n\npython3 -m pip install neuralpy-torch"
-  							}
-  						]
-  					},
-  					{
-  						"title": "First Model",
-  						"id": "first-model",
-  						"paragraphs": [
-  							{
-  								"text": "Here, in this example, we’ll create a simple linear regression model. The model accepts X (independent variable) and predicts the y(dependent variable). The model basically leans the relation between X and y."
-  							},
-  							{
-  								"title": "Dataset for the model"
-  							},
-  							{
-  								"text": "Here we’ll create some synthetic data for our model, we’ll use numpy to generate random numbers."
-  							},
-  							{
-  								"code": "# Importing dependencies\nimport numpy as np\n\n# Random seed for numpy\nnp.random.seed(1969)\n\n# Generating the data\n# Training data\nX_train = np.random.rand(100, 1) * 10\ny_train = X_train + 5 * np.random.rand(100, 1)\n\n# Validation data\nX_validation = np.random.rand(100, 1) * 10\ny_validation = X_validation + 5 * np.random.rand(100, 1)"
-  							},
-  							{
-  								"title": "Importing dependencies from NeuralPy"
-  							},
-  							{
-  								"text": "Let’s import the dependencies from NeuralPy."
-  							},
-  							{
-  								"text": "Here we’ll use the Sequential model. Sequential is basically a linear stack of layers. Dense as a layer, Adam as an optimizer and MSELoss for calculating the loss."
-  							},
-  							{
-  								"code": "from neuralpy.models import Sequential\nfrom neuralpy.layers import Dense\nfrom neuralpy.optimizer import Adam\nfrom neuralpy.loss_functions import MSELoss"
-  							},
-  							{
-  								"title": "Making the model"
-  							},
-  							{
-  								"text": "Sequential provides an easy .add() method to add layers in the sequential model. We’ll use it to build the model."
-  							},
-  							{
-  								"code": "# Making the model\nmodel = Sequential()\n\n# Adding the layer\nmodel.add(Dense(n_nodes=1, n_inputs=1))"
-  							},
-  							{
-  								"title": "Compiling the model"
-  							},
-  							{
-  								"text": "Once the model architecture is ready, we can compile with the optimizer and loss function. The Sequential class provides an easy compile method for that. We just need to pass the optimizer and loss function in the compile method."
-  							},
-  							{
-  								"code": "# Compiling the model\nmodel.compile(optimizer=Adam(), loss_function=MSELoss())"
-  							},
-  							{
-  								"title": "Training the model"
-  							},
-  							{
-  								"text": "To train we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method."
-  							},
-  							{
-  								"code": "model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)"
-  							}
-  						]
-  					}
-  				]
-  			}
-  		]
-  	},
+    {
+      "title": "Introduction",
+      "id": "introduction",
+      "contents": [
+        {
+          "title": "PyTorch in NeuralPy",
+          "id": "pytorch-in-neuralpy"
+        },
+        {
+          "title": "Get Started with NeuralPy",
+          "id": "get-started-with-neuralpy",
+          "contents": [
+            {
+              "title": "Prerequisites",
+              "id": "prerequisites"
+            },
+            {
+              "title": "Installation",
+              "id": "installation"
+            },
+            {
+              "title": "First Model",
+              "id": "first-model"
+            }
+          ]
+        }
+      ]
+    },
     {
       "title": "APIs",
       "id": "apis",
@@ -143,79 +35,12 @@
         {
           "title": "Models",
           "id": "models",
-          "subtitle": "Models are one of the most important API supported in NeuralPy. Models are used to create different architecture. In NeuralPy, currently Sequential is the only type of model that is supported.",
           "contents": [
             {
               "title": "Sequential",
-              "id": "sequential",
-              "subtitle": "Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.",
-              "supported_arguments": [
-                {
-                  "name": "force_cpu",
-                  "default": "False",
-                  "details": "If True, then uses CPU even if CUDA is available",
-                  "data_type": "Boolean"
-                },
-                {
-                  "name" : "training_device",
-                  "default": "None",
-                  "details": "Device that will be used for training predictions",
-                  "data_type": "NeuralPy.device"
-                },
-                {
-                  "name": "random_state",
-                  "default": "None",
-                  "details": "Random state for the device",
-                  "data_type": "Integer"
-                }
-              ]
+              "id": "sequential"
             }
           ]
-        }
-      ]
-    },
-    {
-      "title": "Sample",
-      "id": "sample",
-      "subtitle": "This is a sample subtitle",
-      "supported_arguments": [
-        {
-          "name": "n_inputs",
-          "default": null,
-          "details": "This is the place to put some detials about the content"
-        }  
-      ], 
-      "paragraphs": [
-        {
-          "title": "Sometitle for paragraphs"
-        },
-        {
-          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse id vestibulum lacus. Maecenas maximus enim faucibus libero faucibus semper. In hac habitasse platea dictumst. Quisque eleifend malesuada urna, a efficitur orci mollis in. Integer at consectetur turpis. Vivamus elementum sed ex luctus lobortis. Integer in nulla et nunc venenatis aliquam. Mauris quis faucibus enim. Phasellus fermentum mi ut porta ornare <b>for test</b>."
-        },
-        {
-          "title": "Sometitle for paragraphs"
-        },
-        {
-          "list": ["Something", "Another something", "another something something"]
-        },
-        {
-          "title": "Sometitle for paragraphs"
-        },
-        {
-          "code": "some code goes here\nsecond line goes here"
-        },
-        {
-          "title": "Sometitle for paragraphs"
-        },
-        {
-          "text": "Duis sollicitudin velit volutpat nisl auctor, ac placerat neque consectetur. Morbi ac euismod mi. Nulla est augue, malesuada nec gravida vitae, venenatis quis eros. Suspendisse interdum erat tellus, non posuere odio auctor ac. Vivamus ornare, magna id porttitor pharetra, purus nulla vestibulum lacus, sed laoreet lacus ex quis ligula."
-        }
-      ],
-      "contents": null,
-      "further_readings": [
-        {
-          "title": "Go to this website for more",
-          "url": "https://imdeepmind.com"
         }
       ]
     }
