@@ -108,16 +108,16 @@ neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=N
 Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
 
 #### Supported Arguments
-    - `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
-    - `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
-    - `random_state`: (Integer) Random state for the device
+- `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
+- `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
+- `random_state`: (Integer) Random state for the device
 
 #### Supported Methods
 ##### `.add() method`: 
 In a Sequential model, the .add() method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
 
 ###### Supported Arguments
-    - `layer`: (NeuralPy layer classes) Adds a layer into the model
+- `layer`: (NeuralPy layer classes) Adds a layer into the model
 ###### Example Codes
 ```python
 from neuralpy.models import Sequential
