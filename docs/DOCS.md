@@ -5,18 +5,18 @@ NeuralPy is a Keras like, machine learning library that works on top of PyTorch 
 PyTorch is an open-source machine learning framework that accelerates the path from research prototyping to production deployment developed by Facebook runs on both CPU and GPU.
 
 Following are some highlights of PyTorch:
-    - Production Ready
-    - Distributed Training
-    - Robust Ecosystem
-    - Cloud Support
-    
+- Production Ready
+- Distributed Training
+- Robust Ecosystem
+- Cloud Support
+
 NeuralPy is a high-level library that works on top of PyTorch. It provides easy to use, powerful and interactive APIs that can be used to build state-of-the-art models. As it works on top of PyTorch, NerualPy supports both CPU and GPU and can perform numerical operations very efficiently.
 
 Here are some highlights of NeuralPy:
-    - Provides an easy interface that is suitable for fast prototyping, learning, and research
-    - Works on top of PyTorch
-    - Can run on both CPU and GPU
-    - Cross-Compatible with PyTorch models
+- Provides an easy interface that is suitable for fast prototyping, learning, and research
+- Works on top of PyTorch
+- Can run on both CPU and GPU
+- Cross-Compatible with PyTorch models
     
 ## Get Started with NeuralPy
 Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NerualPy, we need to install some additional dependencies.
