@@ -29,18 +29,12 @@
       ]
     },
     {
-      "title": "APIs",
-      "id": "apis",
+      "title": "Models",
+      "id": "models",
       "contents": [
         {
-          "title": "Models",
-          "id": "models",
-          "contents": [
-            {
-              "title": "Sequential",
-              "id": "sequential"
-            }
-          ]
+          "title": "Sequential",
+          "id": "sequential"
         }
       ]
     }
