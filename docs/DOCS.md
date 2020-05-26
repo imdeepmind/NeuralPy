@@ -1,7 +1,7 @@
-# 1.0 Introduction
+# Introduction
 NeuralPy is a Keras like, machine learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library, cross-compatible with PyTorch models, suitable for all kinds of machine learning experiments, learning, research, etc.
 
-## 1.1 PyTorch in NeuralPy
+## PyTorch in NeuralPy
 PyTorch is an open-source machine learning framework that accelerates the path from research prototyping to production deployment developed by Facebook runs on both CPU and GPU.
 
 Following are some highlights of PyTorch:
@@ -18,13 +18,13 @@ Here are some highlights of NeuralPy:
 - Can run on both CPU and GPU
 - Cross-Compatible with PyTorch models
     
-## 1.2 Get Started with NeuralPy
+## Get Started with NeuralPy
 Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NerualPy, we need to install some additional dependencies.
 
-### 1.2.1 Prerequisites 
+### Prerequisites 
 NeuralPy runs on Python 3, so first install Python 3. Please check the python documentation for installation instructions. After that install PyTorch and Numpy. For instructions, please check their official documentation and installation guides.
 
-### 1.2.2 Installation
+### Installation
 To install NeuralPy run the following command on terminal.
 ```bash
 pip install neuralpy-torch
@@ -37,10 +37,10 @@ pip3 install neuralpy-torch
 python3 -m pip install neuralpy-torch
 ```
 
-### 1.2.3 First Model
+### First Model
 Here, in this example, we’ll create a simple linear regression model. The model accepts X (independent variable) and predicts the y(dependent variable). The model basically leans the relation between X and y. 
 
-#### 1.2.3.1 Dataset for the model
+#### Dataset for the model
 Here we’ll create some synthetic data for our model, we’ll use numpy to generate random numbers.
 
 ```python
@@ -60,7 +60,7 @@ X_validation = np.random.rand(100, 1) * 10
 y_validation = X_validation + 5 * np.random.rand(100, 1)
 ```
 
-#### 1.2.3.2 Importing dependencies from NeuralPy
+#### Importing dependencies from NeuralPy
 Let’s import the dependencies from NeuralPy. 
 
 Here we’ll use the Sequential model. Sequential is basically a linear stack of layers. Dense as a layer, Adam as an optimizer and MSELoss for calculating the loss.
@@ -72,7 +72,7 @@ from neuralpy.optimizer import Adam
 from neuralpy.loss_functions import MSELoss
 ```
 
-#### 1.2.3.3 Making the model
+#### Making the model
 Sequential provides an easy .add() method to add layers in the sequential model. We’ll use it to build the model.
 
 ```python
@@ -83,7 +83,7 @@ model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1))
 ```
 
-#### 1.2.3.4 Compiling the model
+#### Compiling the model
 Once the model architecture is ready, we can compile with the optimizer and loss function. The Sequential class provides an easy compile method for that. We just need to pass the optimizer and loss function in the compile method.
 
 ```python
@@ -91,7 +91,7 @@ Once the model architecture is ready, we can compile with the optimizer and loss
 model.compile(optimizer=Adam(), loss_function=MSELoss())
 ```
 
-#### 1.2.3.5 Training the model
+#### Training the model
 To train we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method.
 
 ```python
@@ -100,25 +100,25 @@ model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation),
 
 ---
 
-# 2 Models
+# Models
 Models are one of the most important API supported in NeuralPy. Models are used to create different architecture. In NeuralPy, currently Sequential is the only type of model that is supported.
 
-## 2.1 Sequential
+## Sequential
 ```python
 neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
 ```
 Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
 
-### 2.1.1 Supported Arguments
+### Supported Arguments
 - `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
 - `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
 - `random_state`: (Integer) Random state for the device
 
-### 2.1.2 Supported Methods
-#### 2.1.2.1 `.add() method`: 
+### Supported Methods
+#### `.add() method`: 
 In a Sequential model, the .add() method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
 
-##### 2.1.2.2 Supported Arguments
+##### Supported Arguments
 - `layer`: (NeuralPy layer classes) Adds a layer into the model
 ##### Example Codes
 ```python
