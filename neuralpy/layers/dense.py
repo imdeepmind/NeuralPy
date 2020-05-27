@@ -3,15 +3,15 @@ from torch.nn import Linear
 class Dense:
 	def __init__(self, n_nodes, n_inputs=None, bias=True, name=None):
 		# Checking the n_nodes field
-		if not n_nodes or n_nodes <= 0:
+		if not n_nodes or not isinstance(n_nodes, int) or n_nodes <= 0:
 			raise ValueError("Please provide a valid n_nodes")
 
 		# Checking the n_input field, it is a optional field
-		if n_inputs is not None and n_inputs <= 0:
+		if n_inputs is not None and not isinstance(n_inputs, int) or n_inputs <= 0:
 			raise ValueError("Please provide a valid n_inputs")
 
 		# Checking the bias field, this is also optional, default to True
-		if not (bias == True or bias == False):
+		if not isinstance(bias, bool):
 			raise ValueError("Please provide a valid bias")
 
 		# Checking the name field, this is an optional field, if not provided generates a unique name for the layer
