@@ -1,10 +1,10 @@
 import torch
 import numpy as np
 from collections import OrderedDict
-from .sequential_helper import SequentialHelper
+from .sequential_helper import *
 
 
-class Sequential(SequentialHelper):
+class Sequential:
     def __init__(self, force_cpu=False, training_device=None, random_state=None):
         super(Sequential, self).__init__()
         # Initializing some attributes that we need to function
@@ -94,7 +94,7 @@ class Sequential(SequentialHelper):
                 "You have built this model already, you can not make any changes in this model")
 
         # Layer verification using the method is_valid_layer
-        if not self._is_valid_layer(layer):
+        if not is_valid_layer(layer):
             raise ValueError("Please provide a valid neuralpy layer")
 
         # Finally adding the layer for layers array
@@ -102,7 +102,7 @@ class Sequential(SequentialHelper):
 
     def build(self):
         # Building the layers from the layer refs and details
-        layers = self._build_layer_from_ref_and_details(self.__layers)
+        layers = build_layer_from_ref_and_details(self.__layers)
 
         # Making the pytorch model using nn.Sequential
         self.__model = torch.nn.Sequential(OrderedDict(layers))
@@ -123,20 +123,20 @@ class Sequential(SequentialHelper):
             self.build()
 
         # Checking the optimizer using the method is_valid_optimizer
-        if not self._is_valid_optimizer(optimizer):
+        if not is_valid_optimizer(optimizer):
             raise ValueError("Please provide a value neuralpy optimizer")
 
         # Checking the loss_function using the method is_valid_loss_function
-        if not self._is_valid_loss_function(loss_function):
+        if not is_valid_loss_function(loss_function):
             raise ValueError("Please provide a value neuralpy loss function")
 
         # Setting metrics
         self.__metrics = metrics
 
         # Storing the loss function and optimizer for future use
-        self.__optimizer = self._build_optimizer_from_ref_and_details(
+        self.__optimizer = build_optimizer_from_ref_and_details(
             optimizer, self.__model.parameters())
-        self.__loss_function = self._build_loss_function_from_ref_and_details(
+        self.__loss_function = build_loss_function_from_ref_and_details(
             loss_function)
 
     def fit(self, train_data, test_data, epochs=10, batch_size=32):
@@ -184,7 +184,7 @@ class Sequential(SequentialHelper):
             metrics = ["loss"]
 
         # Building the history object
-        history = self._build_history_object_for_training(metrics)
+        history = build_history_object_for_training(metrics)
 
         # Running the epochs
         for epoch in range(epochs):
@@ -232,17 +232,17 @@ class Sequential(SequentialHelper):
                 # Checking if accuracy is there in metrics
                 # TODO: Need to do it more dynamic way
                 if "accuracy" in metrics:
-                    corrects = self._calculate_accuracy(batch_y, outputs)
+                    corrects = calculate_accuracy(batch_y, outputs)
 
                     correct_training += corrects
 
                     history["batchwise"]["training_accuracy"].append(
                         corrects/batch_size*100)
 
-                    self._print_training_progress(epoch, epochs, i, batch_size, len(
+                    print_training_progress(epoch, epochs, i, batch_size, len(
                         X_train), train_loss.item(), corrects)
                 else:
-                    self._print_training_progress(
+                    print_training_progress(
                         epoch, epochs, i, batch_size, len(X_train), train_loss.item())
 
             # Evluating model
@@ -277,7 +277,7 @@ class Sequential(SequentialHelper):
                     # Calculating accuracy
                     # Checking if accuracy is there in metrics
                     if "accuracy" in metrics:
-                        corrects = corrects = self._calculate_accuracy(
+                        corrects = corrects = calculate_accuracy(
                             batch_y, outputs)
 
                         correct_val += corrects
@@ -302,11 +302,11 @@ class Sequential(SequentialHelper):
                     correct_val/len(X_test)*100)
 
                 # Printing a friendly message to the console
-                self._print_validation_progress(
+                print_validation_progress(
                     validation_loss_score, len(X_train), correct_val)
             else:
                 # Printing a friendly message to the console
-                self._print_validation_progress(
+                print_validation_progress(
                     validation_loss_score, len(X_train))
 
         # Returning history
@@ -353,7 +353,7 @@ class Sequential(SequentialHelper):
         # if metrics has accuracy, then calculating accuracy
         if "accuracy" in self.__metrics:
             # Calculating no of corrects
-            corrects = self._calculate_accuracy(y_tensor, predictions)
+            corrects = calculate_accuracy(y_tensor, predictions)
 
             # Calculating accuracy
             accuracy = corrects / len(X) * 100
