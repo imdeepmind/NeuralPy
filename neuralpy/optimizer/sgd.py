@@ -1,4 +1,5 @@
-from torch.optim import SGD as  _SGD
+from torch.optim import SGD as _SGD
+
 
 class SGD:
     def __init__(self, learning_rate=0.001, momentum=0, dampening=0, weight_decay=0, nesterov=False):

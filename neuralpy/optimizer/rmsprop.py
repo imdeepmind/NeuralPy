@@ -1,5 +1,6 @@
 from torch.optim import RMSprop as _RMSprop
 
+
 class RMSprop:
     def __init__(self, learning_rate=0.001, alpha=0.99, eps=1e-08, weight_decay=0, momentum=0, centered=False):
         if not 0.0 <= learning_rate:
