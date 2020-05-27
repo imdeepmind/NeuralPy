@@ -41,5 +41,12 @@ setup(
 		"neuralpy.optimizer",
 		"neuralpy.regulariziers"
 	],
+	install_requires=["torch"],
+	extras_require={
+		'tests': [
+			"pytest",
+			"pytest-cov"
+		]
+	},
 	include_package_data=True
 )
