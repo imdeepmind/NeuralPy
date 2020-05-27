@@ -6,6 +6,13 @@
 
 > Currently, this library is at a very early stage of development. README and Documentation are incomplete.
 
+![Maitained](https://img.shields.io/badge/Maitained%3F-Yes-brightgreen)
+![PyPI - Downloads](https://img.shields.io/pypi/dw/neuralpy-torch?style=flat)
+![PyPI](https://img.shields.io/pypi/v/neuralpy-torch?style=flat)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/imdeepmind/NeuralPy?style=flat)
+![GitHub issues](https://img.shields.io/github/issues/imdeepmind/NeuralPy?style=flat)
+![GitHub](https://img.shields.io/github/license/imdeepmind/NeuralPy?style=flat)
+
 ## Table of contents:
 - [Introduction](#introduction)
 - [PyTorch](#pytorch)
