@@ -1,11 +1,12 @@
 from torch.nn import Tanh as _Tanh
+from .utils import get_activation_details
 
 
 class Tanh:
     def __init__(self, name=None):
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the activation function
-        if name is not None and not (isinstance(name, str) and name is not ""):
+        if name and isinstance(name, str) and (name) > 0:
             raise ValueError("Please provide a valid name")
 
         self.__name = name
@@ -16,11 +17,4 @@ class Tanh:
 
     def get_layer(self):
         # Returning all the details of the activation function
-        return {
-            'n_inputs': None,
-            'n_nodes': None,
-            'name': self.__name,
-            'type': 'Tanh',
-            'layer': _Tanh,
-            "keyword_arguments": None
-        }
+        return get_activation_details(None, None, self.__name, 'Tanh', _Tanh, None)

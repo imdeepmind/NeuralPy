@@ -1,11 +1,12 @@
 from torch.nn import ReLU as _ReLU
+from .utils import get_activation_details
 
 
 class ReLU:
     def __init__(self, name=None):
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the activation function
-        if name is not None and not (isinstance(name, str) and name is not ""):
+        if name and isinstance(name, str) and (name) > 0:
             raise ValueError("Please provide a valid name")
 
         self.__name = name
@@ -16,13 +17,6 @@ class ReLU:
 
     def get_layer(self):
         # Returning all the details of the activation function
-        return {
-            'n_inputs': None,
-            'n_nodes': None,
-            'name': self.__name,
-            'type': 'ReLU',
-            'layer': _ReLU,
-            "keyword_arguments": {
-                    'inplace': False
-            }
-        }
+        return get_activation_details(None, None, self.__name, 'ReLU', _ReLU, {
+            'inplace': False
+        })

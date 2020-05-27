@@ -2,6 +2,7 @@ def generate_layer_name(layer_type, index):
     # Generating a unique name for the layer
     return f"{layer_type.lower()}_layer_{index+1}"
 
+
 def is_valid_layer(layer):
     # if the layer is none, returning False
     if not layer:
@@ -61,6 +62,7 @@ def is_valid_layer(layer):
     except KeyError:
         return False
 
+
 def is_valid_optimizer(optimizer):
     # If the optimizer is None returning False
     if not optimizer:
@@ -98,6 +100,7 @@ def is_valid_optimizer(optimizer):
     except KeyError:
         return False
 
+
 def is_valid_loss_function(loss_function):
     # If the loss_function is None returning False
     if not loss_function:
@@ -134,6 +137,7 @@ def is_valid_loss_function(loss_function):
     # If the loss_function_details dict does not contains a key that it supposed to have
     except KeyError:
         return False
+
 
 def build_layer_from_ref_and_details(layer_refs):
     # Storing the layer here to build the Sequentuial layer
@@ -187,6 +191,7 @@ def build_layer_from_ref_and_details(layer_refs):
 
     return layers
 
+
 def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
     # Getting the details of the optimizer using get_optimizer method
     optimizer_details = optimizer_ref.get_optimizer()
@@ -209,6 +214,7 @@ def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
 
     return optimizer
 
+
 def build_loss_function_from_ref_and_details(loss_function_ref):
     # Getting the details of the loss_function using get_loss_function method
     loss_function_details = loss_function_ref.get_loss_function()
@@ -230,6 +236,7 @@ def build_loss_function_from_ref_and_details(loss_function_ref):
 
     return loss_function
 
+
 def build_history_object_for_training(metrics):
     history = {
         'batchwise': {},
@@ -244,12 +251,14 @@ def build_history_object_for_training(metrics):
 
     return history
 
+
 def calculate_accuracy(y, y_pred):
     pred = y_pred.argmax(dim=1, keepdim=True)
 
     corrects = pred.eq(y.view_as(pred)).sum().item()
 
     return corrects
+
 
 def print_training_progress(epoch, epochs, batch, batches, no_samples, training_loss, training_corrects=None):
     # Printing a friendly message to the console
@@ -259,6 +268,7 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples, training_
         message += f" - Training Accuracy: {training_corrects/batches*100:.4f}%"
 
     print(message, end="\r")
+
 
 def print_validation_progress(validation_loss, no_samples, validtion_corrects=None):
     if validtion_corrects:
