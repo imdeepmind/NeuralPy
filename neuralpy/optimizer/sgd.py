@@ -2,10 +2,11 @@ from torch.optim import SGD as _SGD
 
 
 class SGD:
-    def __init__(self, learning_rate=0.001, momentum=0, dampening=0, weight_decay=0, nesterov=False):
-        if not 0.0 <= learning_rate:
+    def __init__(self, learning_rate=0.001, momentum=0,
+                 dampening=0, weight_decay=0, nesterov=False):
+        if learning_rate < 0.0:
             raise ValueError("Invalid learning_rate")
-        if not 0.0 <= weight_decay:
+        if weight_decay < 0.0:
             raise ValueError("Invalid weight_decay value")
 
         self.__learning_rate = learning_rate
