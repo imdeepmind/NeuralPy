@@ -7,7 +7,7 @@ class Dense:
 			raise ValueError("Please provide a valid n_nodes")
 
 		# Checking the n_input field, it is a optional field
-		if n_inputs is not None and not isinstance(n_inputs, int) or n_inputs <= 0:
+		if n_inputs and isinstance(n_inputs, int) and n_inputs <= 0:
 			raise ValueError("Please provide a valid n_inputs")
 
 		# Checking the bias field, this is also optional, default to True
@@ -15,7 +15,7 @@ class Dense:
 			raise ValueError("Please provide a valid bias")
 
 		# Checking the name field, this is an optional field, if not provided generates a unique name for the layer
-		if name is not None and not (isinstance(name, str) and name is not ""):
+		if name and not (isinstance(name, str) and name is not ""):
 			raise ValueError("Please provide a valid name")
 
 		# Storing the data
