@@ -155,9 +155,9 @@ To learn more about Dense layers, please check [pytorch documentation](https://p
 
 ### Supported Arguments
 - `n_nodes`: (Integer) Size of the output sample
-- `n_inputs`: (Integer) Size of the input sample, no need for this argument layers except the initial layer.
-- `bias`: (Boolean) If true then uses the bias, Defaults to `true`
-- `name`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+- `n_inputs=None`: (Integer) Size of the input sample, no need for this argument layers except the initial layer
+- `bias=True`: (Boolean) If true then uses the bias
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
 
 ### Example Code
 ```python
