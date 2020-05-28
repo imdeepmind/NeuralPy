@@ -142,13 +142,17 @@ model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
 ---
 
 # Layers
-`neuralpy.layers`
+```python
+neuralpy.layers
+```
 Layers are the building blocks of a Neural Network. A complete Neural Network model consists of several layers. A Layer is a function that receives a tensor as output, computes something out of it, and finally outputs a tensor.
 
 NeuralPy currently supports only one type of Layer and that is the Dense layer. 
 
 ## Dense Layer
-`neuralpy.layers.Dense(n_nodes, n_inputs=None, bias=True, name=None)`
+```python
+neuralpy.layers.Dense(n_nodes, n_inputs=None, bias=True, name=None)
+```
 A Dense is a normal densely connected Neural Network. It performs a linear transformation of the input.
 
 To learn more about Dense layers, please check [pytorch documentation](https://pytorch.org/docs/stable/nn.html?highlight=linear#torch.nn.Linear) for it.
