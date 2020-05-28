@@ -37,6 +37,16 @@
           "id": "sequential"
         }
       ]
+    },
+    {
+    	"title": "Layers",
+    	"id": "layers",
+    	"contents": [
+    		{
+    			"title": "Dense",
+    			"id": "dense"
+    		}
+    	]
     }
   ]
 }
