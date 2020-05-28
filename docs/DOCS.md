@@ -138,3 +138,37 @@ model.add(Dropout())
 model.add(ReLU())
 model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
 ```
+
+---
+
+# Layers
+`neuralpy.layers`
+Layers are the building blocks of a Neural Network. A complete Neural Network model consists of several layers. A Layer is a function that receives a tensor as output, computes something out of it, and finally outputs a tensor.
+
+NeuralPy currently supports only one type of Layer and that is the Dense layer. 
+
+## Dense Layer
+`neuralpy.layers.Dense(n_nodes, n_inputs=None, bias=True, name=None)`
+A Dense is a normal densely connected Neural Network. It performs a linear transformation of the input.
+
+To learn more about Dense layers, please check [pytorch documentation](https://pytorch.org/docs/stable/nn.html?highlight=linear#torch.nn.Linear) for it.
+
+### Supported Arguments
+- `n_nodes`: (Integer) Size of the output sample
+- `n_inputs`: (Integer) Size of the input sample, no need for this argument layers except the initial layer.
+- `bias`: (Boolean) If true then uses the bias, Defaults to `true`
+- `name`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+
+# Making the model
+model = Sequential()
+model.add(Dense(n_nodes=256, n_inputs=28, bias=True, name="Input Layer"))
+model.add(Dense(n_nodes=512, bias=True, name="Hidden Layer 1"))
+model.add(Dense(n_nodes=10, bias=True, name="Output Layer"))
+```
+
+---
