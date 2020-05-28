@@ -101,6 +101,9 @@ model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation),
 ---
 
 # Models
+```python
+neuralpy.models
+```
 Models are one of the most important API supported in NeuralPy. Models are used to create different architecture. In NeuralPy, currently Sequential is the only type of model that is supported.
 
 ## Sequential
