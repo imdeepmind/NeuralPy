@@ -16,6 +16,7 @@ class Sigmoid:
 
         self.__name = name
 
+    # pylint: disable=no-self-use,unused-argument
     def get_input_dim(self, prev_input_dim):
         # Sigmoid does not need to n_input, so returning None
         return None
