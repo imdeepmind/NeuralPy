@@ -1,3 +1,5 @@
+"""Dense layer for NeuralPy"""
+
 from torch.nn import Linear
 
 class Dense:
