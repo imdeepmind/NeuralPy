@@ -7,11 +7,11 @@ class ReLU:
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the activation function
         if name is not None:
-        	if isinstance(name, str):
-        		if len(name) <= 0:
-        			raise ValueError("Please provide a valid name")
-        	else:
-        		raise ValueError("Please provide a valid name")
+            if isinstance(name, str):
+                if len(name) <= 0:
+                    raise ValueError("Please provide a valid name")
+            else:
+                raise ValueError("Please provide a valid name")
 
         self.__name = name
 
