@@ -2,7 +2,7 @@ from torch.optim import Adam as _Adam
 
 
 class Adam:
-    def __init__(self, learning_rate=0.001, betas=(0.9,0.999), eps=1e-08, weight_decay=0, amsgrad=False):
+    def __init__(self, learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False):
         if not 0.0 <= learning_rate:
             raise ValueError("Invalid learning_rate")
         if not 0.0 <= eps:
