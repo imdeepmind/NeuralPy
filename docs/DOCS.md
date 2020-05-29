@@ -1,3 +1,4 @@
+
 # Introduction
 NeuralPy is a Keras like, machine learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library, cross-compatible with PyTorch models, suitable for all kinds of machine learning experiments, learning, research, etc.
 
@@ -179,3 +180,155 @@ model.add(Dense(n_nodes=10, bias=True, name="Output Layer"))
 ```
 
 ---
+
+# Activation Functions
+```python
+neuralpy.activation_functions
+```
+Activation Functions are simple functions that tell a neuron to fire or not, the purpose is to introduce non-linearity to Neural Network layers.
+
+NeuralPy supports various activation functions that are widely used for building complex Neural Network models. 
+
+## ReLU
+```python
+neuralpy.activation_functions.ReLU(name=None)
+```
+ReLU applies a rectified linear unit function to the input tensors.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#relu) page
+
+###  Supported Arguments
+- `name=None`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import ReLU
+
+# Initializing the Sequential models
+model = Sequential()
+
+# Adding layers to the model
+model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
+model.add(ReLU())
+model.add(Dense(n_nodes=3, bias=True))
+```
+## LeakyReLU
+```python
+neuralpy.activation_functions.LeakyReLU(negative_slope=0.01, name=None)
+```
+LeakyReLU is a modified ReLU activation function with some improvements. LeakyReLU solves the problem of "dead ReLU", by introducing a new parameter called the negative slope. 
+
+In traditional ReLU, if the input is negative, then the output is 0. But for LeakyReLU, the output is not zero. This feature special behavior of LeakyReLU solves the problem of "dead ReLU" and helps in learning.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#leakyrelu) page
+
+###  Supported Arguments
+- `negative_slope=0.01`: (Integer) A negative slope for the LeakyReLU
+- `name=None`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU
+
+# Initializing the Sequential models
+model = Sequential()
+
+# Adding layers to the model
+model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
+model.add(LeakyReLU())
+model.add(Dense(n_nodes=3, bias=True))
+```
+## Softmax
+```python
+neuralpy.activation_functions.Softmax(dim=None, name=None)
+```
+Applies the Softmax function to the input Tensor rescaling input to the range [0,1].
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#softmax) page
+
+###  Supported Arguments
+- `dim=None`: (Integer) A dimension along which Softmax will be computed (so every slice along dim will sum to 1).
+- `name=None`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU, Softmax
+
+# Initializing the Sequential models
+model = Sequential()
+
+# Adding layers to the model
+model.add(Dense(n_nodes=256, n_inputs=28, bias=True))
+model.add(LeakyReLU())
+
+model.add(Dense(n_nodes=512, bias=True))
+model.add(LeakyReLU())
+
+model.add(Dense(n_nodes=10, bias=True))
+model.add(Softmax())
+```
+
+## Sigmoid
+```python
+neuralpy.activation_functions.Sigmoid(name=None)
+```
+Applies a element-wise Sigmoid or Logistic function to the input tensor.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#sigmoid) page
+
+###  Supported Arguments
+- `name=None`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU, Sigmoid
+
+# Initializing the Sequential models
+model = Sequential()
+
+# Adding layers to the model
+model.add(Dense(n_nodes=256, n_inputs=28, bias=True))
+model.add(LeakyReLU())
+
+model.add(Dense(n_nodes=512, bias=True))
+model.add(LeakyReLU())
+
+model.add(Dense(n_nodes=1, bias=True))
+model.add(Sigmoid())
+```
+
+## Tanh
+```python
+neuralpy.activation_functions.Tanh(name=None)
+```
+Applies a element-wise Tanh function to the input tensor.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#tanh) page
+
+###  Supported Arguments
+- `name=None`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU, Tanh
+
+# Initializing the Sequential models
+model = Sequential()
+
+# Adding layers to the model
+model.add(Dense(n_nodes=256, n_inputs=28, bias=True))
+model.add(Tanh())
+
+model.add(Dense(n_nodes=128, bias=True))
+model.add(Tanh())
+```
