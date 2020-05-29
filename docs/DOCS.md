@@ -251,7 +251,7 @@ Applies the Softmax function to the input Tensor rescaling input to the range [0
 For more information, check [this](https://pytorch.org/docs/stable/nn.html#softmax) page
 
 ###  Supported Arguments
-- `dim=None`: (Interger) A dimension along which Softmax will be computed (so every slice along dim will sum to 1).
+- `dim=None`: (Integer) A dimension along which Softmax will be computed (so every slice along dim will sum to 1).
 - `name=None`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
 
 ### Example Code
