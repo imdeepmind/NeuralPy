@@ -47,6 +47,32 @@
     			"id": "dense-layer"
     		}
     	]
+    },
+    {
+    	"title": "Activation Functions",
+    	"id": "activation-functions",
+    	"contents": [
+    		{
+    			"title": "ReLU",
+    			"id": "relu",
+    		},
+    		{
+    			"title": "LeakyReLU",
+    			"id": "leakyrelu",
+    		},
+    		{
+    			"title": "Softmax",
+    			"id": "softmax",
+    		},
+    		{
+    			"title": "Sigmoid",
+    			"id": "sigmoid",
+    		},
+    		{
+    			"title": "Tanh",
+    			"id": "tanh",
+    		}	
+    	]
     }
   ]
 }
