@@ -127,6 +127,7 @@ In a Sequential model, the .add() method is responsible for adding a new layer t
 ```python
 from neuralpy.models import Sequential
 from neuralpy.layers import Dense
+from neuralpy.activation_functions import ReLU
 from neuralpy import device
 
 # Setting a training device
@@ -137,7 +138,6 @@ model = Sequential(force_cpu=False, training_device=training_device, random_stat
 
 # Adding layers to the model
 model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
-model.add(Dropout())
 model.add(ReLU())
 model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
 ```
