@@ -1,7 +1,7 @@
 """LeakyReLU Activation Function"""
 
 from torch.nn import LeakyReLU as _LeakyReLU
-from .utils import get_activation_details
+from .utils import get_activation_details, validate_name_field
 
 
 class LeakyReLU:
@@ -31,12 +31,7 @@ class LeakyReLU:
         """
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the activation function
-        if name is not None:
-            if isinstance(name, str):
-                if len(name) <= 0:
-                    raise ValueError("Please provide a valid name")
-            else:
-                raise ValueError("Please provide a valid name")
+        validate_name_field(name)
 
         self.__negative_slope = negative_slope
         self.__name = name

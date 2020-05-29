@@ -1,7 +1,7 @@
 """Tanh Activation Function"""
 
 from torch.nn import Tanh as _Tanh
-from .utils import get_activation_details
+from .utils import get_activation_details, validate_name_field
 
 
 class Tanh:
@@ -22,12 +22,7 @@ class Tanh:
         """
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the activation function
-        if name is not None:
-            if isinstance(name, str):
-                if len(name) <= 0:
-                    raise ValueError("Please provide a valid name")
-            else:
-                raise ValueError("Please provide a valid name")
+        validate_name_field(name)
 
         self.__name = name
 
