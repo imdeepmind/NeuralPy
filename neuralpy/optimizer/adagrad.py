@@ -34,6 +34,7 @@ class Adagrad:
             'keyword_arguments': {
                 'lr': self.__learning_rate,
                 'lr_decay': self.__learning_rate_decay,
-                'weight_decay': self.__weight_decay
+                'weight_decay': self.__weight_decay,
+                'eps': self.__eps
             }
         }
