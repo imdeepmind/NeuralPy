@@ -15,8 +15,8 @@ class SGD:
             nesterov=False : (Bool) Enables Nesterov momentum
     """
     # pylint: disable=too-many-arguments
-    def __init__(self, learning_rate=0.001, momentum=0,
-                 dampening=0, weight_decay=0, nesterov=False):
+    def __init__(self, learning_rate=0.001, momentum=0.0,
+                 dampening=0.0, weight_decay=0.0, nesterov=False):
 
         """
             __init__ method for SGD
@@ -38,6 +38,12 @@ class SGD:
 
         if not isinstance(weight_decay, float) or weight_decay < 0.0:
             raise ValueError("Invalid weight_decay value")
+
+        if not isinstance(dampening, float):
+            raise ValueError("Invalid dampening parameter")
+
+        if not isinstance(nesterov, bool):
+            raise ValueError("Invalid nesterov parameter")
 
         self.__learning_rate = learning_rate
         self.__momentum = momentum

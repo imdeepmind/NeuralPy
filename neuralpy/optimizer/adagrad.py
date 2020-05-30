@@ -4,7 +4,7 @@ from torch.optim import Adagrad as _Adagrad
 
 # pylint: disable=too-few-public-methods
 class Adagrad:
-    def __init__(self, learning_rate=0.001, learning_rate_decay=0, eps=1e-08, weight_decay=0):
+    def __init__(self, learning_rate=0.001, learning_rate_decay=0.0, eps=1e-08, weight_decay=0.0):
         if not isinstance(learning_rate, float) or learning_rate < 0.0:
             raise ValueError("Invalid learning_rate")
 
@@ -35,6 +35,6 @@ class Adagrad:
                 'lr': self.__learning_rate,
                 'lr_decay': self.__learning_rate_decay,
                 'weight_decay': self.__weight_decay,
-                'eps': self.__eps
+                # 'eps': self.__eps
             }
         }
