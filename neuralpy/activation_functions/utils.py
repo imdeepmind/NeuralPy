@@ -18,9 +18,5 @@ def validate_name_field(name):
     """
         A function that validates the name field
     """
-    if name is not None:
-        if isinstance(name, str):
-            if len(name) <= 0:
-                raise ValueError("Please provide a valid name")
-        else:
-            raise ValueError("Please provide a valid name")
+    if name is not None and not (isinstance(name, str) and name):
+        raise ValueError("Please provide a valid name")
