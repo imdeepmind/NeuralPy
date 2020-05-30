@@ -39,40 +39,50 @@
       ]
     },
     {
-    	"title": "Layers",
-    	"id": "layers",
-    	"contents": [
-    		{
-    			"title": "Dense",
-    			"id": "dense-layer"
-    		}
-    	]
+      "title": "Layers",
+      "id": "layers",
+      "contents": [
+        {
+          "title": "Dense",
+          "id": "dense-layer"
+        }
+      ]
     },
     {
-    	"title": "Activation Functions",
-    	"id": "activation-functions",
-    	"contents": [
-    		{
-    			"title": "ReLU",
-    			"id": "relu",
-    		},
-    		{
-    			"title": "LeakyReLU",
-    			"id": "leakyrelu",
-    		},
-    		{
-    			"title": "Softmax",
-    			"id": "softmax",
-    		},
-    		{
-    			"title": "Sigmoid",
-    			"id": "sigmoid",
-    		},
-    		{
-    			"title": "Tanh",
-    			"id": "tanh",
-    		}	
-    	]
+      "title": "Activation Functions",
+      "id": "activation-functions",
+      "contents": [
+        {
+          "title": "ReLU",
+          "id": "relu"
+        },
+        {
+          "title": "LeakyReLU",
+          "id": "leakyrelu"
+        },
+        {
+          "title": "Softmax",
+          "id": "softmax"
+        },
+        {
+          "title": "Sigmoid",
+          "id": "sigmoid"
+        },
+        {
+          "title": "Tanh",
+          "id": "tanh"
+        }
+      ]
+    },
+    {
+      "title": "Regulariziers",
+      "id": "regulariziers",
+      "contents": [
+        {
+          "title": "Dropout",
+          "id": "dropout"
+        }
+      ]
     }
   ]
 }
