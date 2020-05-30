@@ -4,9 +4,31 @@ from torch.optim import Adam as _Adam
 
 # pylint: disable=too-few-public-methods
 class Adam:
+    """
+        Implements Adam optimizer.
+
+        Supported Arguments
+            learning_rate=0.001: (Float) Learning Rate for the optimizer
+            betas=(0.9,0.999) : (Tuple[Float, Float]) coefficients used for computing
+                running averages of gradient and its square
+            eps=0 : (Float) Term added to the denominator to improve numerical stability
+            weight_decay=0 : (Float) Weight decay for the optimizer
+            amsgrad=False : (Bool) if true, then uses AMSGrad various of the optimizer
+    """
     # pylint: disable=too-many-arguments
-    def __init__(self, learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08, 
+    def __init__(self, learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08,
                  weight_decay=0.0, amsgrad=False):
+        """
+            __init__ method for Adam
+
+            Supported Arguments
+            learning_rate=0.001: (Float) Learning Rate for the optimizer
+            betas=(0.9,0.999) : (Tuple[Float, Float]) coefficients used for computing
+                running averages of gradient and its square
+            eps=0 : (Float) Term added to the denominator to improve numerical stability
+            weight_decay=0 : (Float) Weight decay for the optimizer
+            amsgrad=False : (Bool) if true, then uses AMSGrad various of the optimizer
+        """
         if not isinstance(learning_rate, float) or learning_rate < 0.0:
             raise ValueError("Invalid learning_rate amsgrad")
 
