@@ -1,8 +1,9 @@
-import torch
-import numpy as np
-from collections import OrderedDict
-from .sequential_helper import *
+"""Sequential Models"""
 
+from collections import OrderedDict
+import torch
+
+from .sequential_helper import *
 
 class Sequential:
     def __init__(self, force_cpu=False, training_device=None, random_state=None):
@@ -37,7 +38,6 @@ class Sequential:
             self.__device = torch.device("cpu")
         else:
             if torch.cuda.is_available():
-                # TODO: currently setting it to cuda:0, may need to change it
                 self.__device = torch.device("cuda:0")
             else:
                 self.__device = torch.device("cpu")
@@ -46,19 +46,20 @@ class Sequential:
         if random_state:
             torch.manual_seed(random_state)
 
-    def __predict(self, X, batch_size):
+    def __predict(self, x, batch_size):
         # Calling model.eval as we are evaluating the model only
         self.__model.eval()
 
         # Initializing an empty list to store the predictions
         predictions = torch.Tensor()
 
-        # Conveting the input X to pytorch Tensor
-        X = torch.tensor(X)
+        # Conveting the input x to pytorch Tensor
+        x = torch.tensor(x)
 
         if batch_size:
-            # If batch_size is there then checking the length and comparing it with the length of input
-            if X.shape[0] < batch_size:
+            # If batch_size is there then checking the length
+            # and comparing it with the length of input
+            if x.shape[0] < batch_size:
                 # Batch size can not be greater that sample size
                 raise ValueError(
                     "Batch size is greater than total number of samples")
@@ -66,12 +67,12 @@ class Sequential:
             # Predicting, so no grad
             with torch.no_grad():
                 # Spliting the data into batches
-                for i in range(0, len(X), batch_size):
-                    # Generating the batch from X
-                    batch_X = X[i:i+batch_size].float()
+                for i in range(0, len(x), batch_size):
+                    # Generating the batch from x
+                    batch_x = x[i:i+batch_size].float()
 
                     # Feeding the batch into the model for predictions
-                    outputs = self.__model(batch_X)
+                    outputs = self.__model(batch_x)
 
                     # Appending the data into the predictions tensor
                     predictions = torch.cat((predictions, outputs))
@@ -79,7 +80,7 @@ class Sequential:
             # Predicting, so no grad
             with torch.no_grad():
                 # Feeding the full data into the model for predictions tensor
-                outputs = self.__model(X.float())
+                outputs = self.__model(x.float())
 
                 # saving the outputs in the predictions
                 predictions = outputs
@@ -89,7 +90,7 @@ class Sequential:
 
     def add(self, layer):
         # If we already built the model, then we can not a new layer
-        if (self.__build):
+        if self.__build:
             raise Exception(
                 "You have built this model already, you can not make any changes in this model")
 
@@ -141,38 +142,40 @@ class Sequential:
 
     def fit(self, train_data, test_data, epochs=10, batch_size=32):
         # Ectracting the train and test data from the touples
-        X_train, y_train = train_data
-        X_test, y_test = test_data
+        x_train, y_train = train_data
+        x_test, y_test = test_data
 
-        # If batch_size is there then checking the length and comparing it with the length of training data
-        if X_train.shape[0] < batch_size:
+        # If batch_size is there then checking the
+        # length and comparing it with the length of training data
+        if x_train.shape[0] < batch_size:
             # Batch size can not be greater that train data size
             raise ValueError(
                 "Batch size is greater than total number of training samples")
 
-        # If batch_size is there then checking the length and comparing it with the length of training data
-        if X_test.shape[0] < batch_size:
+        # If batch_size is there then checking the length and
+        # comparing it with the length of training data
+        if x_test.shape[0] < batch_size:
             # Batch size can not be greater that test data size
             raise ValueError(
                 "Batch size is greater than total number of testing samples")
 
         # Checking the length of input and output
-        if X_train.shape[0] != y_train.shape[0]:
-            # length of X and y should be same
+        if x_train.shape[0] != y_train.shape[0]:
+            # length of x and y should be same
             raise ValueError(
                 "Length of training Input data and training output data should be same")
 
         # Checking the length of input and output
-        if X_test.shape[0] != y_test.shape[0]:
-            # length of X and y should be same
+        if x_test.shape[0] != y_test.shape[0]:
+            # length of x and y should be same
             raise ValueError(
                 "Length of testing Input data and testing output data should be same")
 
         # Conveting the data into pytorch tensor
-        X_train = torch.tensor(X_train)
+        x_train = torch.tensor(x_train)
         y_train = torch.tensor(y_train)
 
-        X_test = torch.tensor(X_test)
+        x_test = torch.tensor(x_test)
         y_test = torch.tensor(y_test)
 
         # Initializing a dict to store the training progress, can be used for viz purposes
@@ -199,23 +202,23 @@ class Sequential:
             self.__model.train()
 
             # Spliting the data into batches
-            for i in range(0, len(X_train), batch_size):
+            for i in range(0, len(x_train), batch_size):
                 # Making the batches
-                batch_X = X_train[i:i+batch_size].float()
+                batch_x = x_train[i:i+batch_size].float()
                 if "accuracy" in metrics:
                     batch_y = y_train[i:i+batch_size]
                 else:
                     batch_y = y_train[i:i+batch_size].float()
 
                 # Moving the batches to device
-                batch_X, batch_y = batch_X.to(
+                batch_x, batch_y = batch_x.to(
                     self.__device), batch_y.to(self.__device)
 
                 # Zero grad
                 self.__model.zero_grad()
 
                 # Feeding the data into the model
-                outputs = self.__model(batch_X)
+                outputs = self.__model(batch_x)
 
                 # Calculating the loss
                 train_loss = self.__loss_function(outputs, batch_y)
@@ -240,10 +243,10 @@ class Sequential:
                         corrects/batch_size*100)
 
                     print_training_progress(epoch, epochs, i, batch_size, len(
-                        X_train), train_loss.item(), corrects)
+                        x_train), train_loss.item(), corrects)
                 else:
                     print_training_progress(
-                        epoch, epochs, i, batch_size, len(X_train), train_loss.item())
+                        epoch, epochs, i, batch_size, len(x_train), train_loss.item())
 
             # Evluating model
             self.__model.eval()
@@ -251,20 +254,20 @@ class Sequential:
             # no grad, no training
             with torch.no_grad():
                 # Spliting the data into batches
-                for i in range(0, len(X_test), batch_size):
+                for i in range(0, len(x_test), batch_size):
                     # Making the batches
-                    batch_X = X_train[i:i+batch_size].float()
+                    batch_x = x_train[i:i+batch_size].float()
                     if "accuracy" in metrics:
                         batch_y = y_train[i:i+batch_size]
                     else:
                         batch_y = y_train[i:i+batch_size].float()
 
                     # Moving the batches to device
-                    batch_X, batch_y = batch_X.to(
+                    batch_x, batch_y = batch_x.to(
                         self.__device), batch_y.to(self.__device)
 
                     # Feeding the data into the model
-                    outputs = self.__model(batch_X)
+                    outputs = self.__model(batch_x)
 
                     # Calculating the loss
                     validation_loss = self.__loss_function(outputs, batch_y)
@@ -297,52 +300,52 @@ class Sequential:
             if "accuracy" in metrics:
                 # Adding data into hostory dict
                 history["epochwise"]["training_accuracy"].append(
-                    correct_training/len(X_train)*100)
+                    correct_training/len(x_train)*100)
                 history["epochwise"]["training_accuracy"].append(
-                    correct_val/len(X_test)*100)
+                    correct_val/len(x_test)*100)
 
                 # Printing a friendly message to the console
                 print_validation_progress(
-                    validation_loss_score, len(X_train), correct_val)
+                    validation_loss_score, len(x_train), correct_val)
             else:
                 # Printing a friendly message to the console
                 print_validation_progress(
-                    validation_loss_score, len(X_train))
+                    validation_loss_score, len(x_train))
 
         # Returning history
         return history
 
-    def predict(self, X, batch_size=None):
+    def predict(self, x, batch_size=None):
         # Calling the __predict method to get the predicts
-        predictions = self.__predict(X, batch_size)
+        predictions = self.__predict(x, batch_size)
 
         # Returning an numpy array of predictions
         return predictions.numpy()
 
-    def predict_classes(self, X, batch_size=None):
+    def predict_classes(self, x, batch_size=None):
         # Calling the __predict method to get the predicts
-        predictions = self.__predict(X, batch_size)
+        predictions = self.__predict(x, batch_size)
 
         # Detecting the classes
         predictions = predictions.argmax(dim=1, keepdim=True)
 
         return predictions.numpy()
 
-    def evaluate(self, X, y, batch_size=None):
+    def evaluate(self, x, y, batch_size=None):
         # If batch_size is there then checking the length and comparing it with the length of training data
-        if batch_size and X.shape[0] < batch_size:
+        if batch_size and x.shape[0] < batch_size:
             # Batch size can not be greater that train data size
             raise ValueError(
                 "Batch size is greater than total number of training samples")
 
         # Checking the length of input and output
-        if X.shape[0] != y.shape[0]:
-            # length of X and y should be same
+        if x.shape[0] != y.shape[0]:
+            # length of x and y should be same
             raise ValueError(
                 "Length of training Input data and training output data should be same")
 
         # Calling the __predict method to get the predicts
-        predictions = self.__predict(X, batch_size)
+        predictions = self.__predict(x, batch_size)
 
         # Converting to tensor
         y_tensor = torch.tensor(y)
@@ -356,7 +359,7 @@ class Sequential:
             corrects = calculate_accuracy(y_tensor, predictions)
 
             # Calculating accuracy
-            accuracy = corrects / len(X) * 100
+            accuracy = corrects / len(x) * 100
 
             # Returning loss and accuracy
             return {
