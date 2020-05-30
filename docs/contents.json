@@ -83,6 +83,28 @@
           "id": "dropout"
         }
       ]
+    },
+    {
+      "title": "Optimizers",
+      "id": "optimizers",
+      "contents": [
+        {
+          "title": "SDG",
+          "id": "sgd"
+        },
+        {
+          "title": "Adam",
+          "id": "adam"
+        },
+        {
+          "title": "Adagrad",
+          "id": "adagrad"
+        },
+        {
+          "title": "RMSProp",
+          "id": "rmsprop"
+        }
+      ]
     }
   ]
 }

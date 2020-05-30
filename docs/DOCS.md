@@ -379,3 +379,144 @@ model.add(Sigmoid())
 ```
 
 ---
+
+# Optimizers 
+```python neuralpy.optimizer ``` 
+
+ Optimizers are one of the most important parts of Machine Learning. The `neuralpy.optimizer` package implements different types of optimizers that can be used to optimizer a neuralpy model.
+
+Currently there 4 types of the optimizer, that neuralpy supports, these are Adam, Adagrad, RMSProp, and SGD.
+
+## SGD
+```python
+neuralpy.optimizer.SGD(learning_rate=0.001, momentum=0.0, dampening=0.0, weight_decay=0.0, nesterov=False)
+```
+Applies an SGD (Stochastic Gradient Descent) with momentum.
+
+### Supported Arguments
+- `learning_rate=0.001`: (Float) Learning Rate for the optimizer
+- `momentum=0` : (Float) Momentum for the optimizer
+- `dampening=0` : (Float) Dampening of momentum
+- `weight_decay=0` : (Float) Weight decay for the optimizer
+- `nesterov=False` : (Bool) Enables Nesterov momentum
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import SGD
+from neuralpy.loss_functions import MSELoss
+...
+# Rest of the imports
+...
+
+model =  Sequential()
+...
+# Rest of the model
+...
+
+# Compiling the model
+model.compile(
+	optimizer=SGD(learning_rate=0.001, momentum=0.0, dampening=0.0, weight_decay=0.0, nesterov=False), 
+	loss_function=MSELoss())
+```
+
+## Adam
+```python
+neuralpy.optimizer.Adam(learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.0, amsgrad=False)
+```
+Implements Adam optimizer.
+
+### Supported Arguments
+- `learning_rate=0.001`: (Float) Learning Rate for the optimizer
+- `betas=(0.9,0.999)` : (Tuple[Float, Float]) coefficients used for computing running averages of gradient and its square
+- `eps=0` : (Float) Term added to the denominator to improve numerical stability
+- `weight_decay=0` : (Float) Weight decay for the optimizer
+- `amsgrad=False` : (Bool) if true, then uses AMSGrad various of the optimizer
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import MSELoss
+...
+# Rest of the imports
+...
+
+model =  Sequential()
+...
+# Rest of the model
+...
+
+# Compiling the model
+model.compile(
+	optimizer=Adam(learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.0, amsgrad=False), 
+	loss_function=MSELoss())
+```
+
+## Adagrad
+```python
+neuralpy.optimizer.Adagrad(learning_rate=0.001, learning_rate_decay=0.0, eps=1e-08, weight_decay=0.0)
+```
+Implements Adagrad optimizer.
+
+### Supported Arguments
+- `learning_rate=0.001`: (Float) Learning Rate for the optimizer
+- `learning_rate_decay=(0.9,0.999)` : (Float) Learningn Rate decay
+- `eps=0` : (Float) Term added to the denominator to improve numerical stability
+- `weight_decay=0` : (Float) Weight decay for the optimizer
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adagrad
+from neuralpy.loss_functions import MSELoss
+...
+# Rest of the imports
+...
+
+model =  Sequential()
+...
+# Rest of the model
+...
+
+# Compiling the model
+model.compile(
+	optimizer=Adagrad(learning_rate=0.001, learning_rate_decay=0.0, eps=1e-08, weight_decay=0.0), 
+	loss_function=MSELoss())
+```
+
+## RMSProp
+```python
+neuralpy.optimizer.RMSProp(learning_rate=0.001, alpha=0.99, eps=1e-08, weight_decay=0.0,momentum=0.0, centered=False)
+```
+Implements RMSProp optimizer.
+
+### Supported Arguments
+- `learning_rate=0.001`: (Float) Learning Rate for the optimizer
+- `alpha=(0.9,0.999)` : (Float) Learningn Rate decay
+- `eps=0` : (Float) Term added to the denominator to improve numerical stability
+- `weight_decay=0` : (Float) Weight decay for the optimizer
+- `momentum=0` : (Float) Momentum for the optimizer
+- `centered=False` : (Bool) if `True`, compute the centered RMSProp, the gradient is normalized by an estimation of its variance
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import RMSProp
+from neuralpy.loss_functions import MSELoss
+...
+# Rest of the imports
+...
+
+model =  Sequential()
+...
+# Rest of the model
+...
+
+# Compiling the model
+model.compile(
+	optimizer=RMSProp(learning_rate=0.001, alpha=0.99, eps=1e-08, weight_decay=0.0,momentum=0.0, centered=False), 
+	loss_function=MSELoss())
+```
+
+---
