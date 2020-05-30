@@ -367,12 +367,12 @@ model = Sequential()
 
 # Adding layers to the model
 model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
-model.add(Dropout())
 model.add(LeakyReLU())
+model.add(Dropout())
 
 model.add(Dense(n_nodes=20, bias=True))
-model.add(Dropout())
 model.add(LeakyReLU())
+model.add(Dropout())
 
 model.add(Dense(n_nodes=1, bias=True))
 model.add(Sigmoid())
