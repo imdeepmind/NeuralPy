@@ -73,6 +73,16 @@
           "id": "tanh"
         }
       ]
+    },
+    {
+      "title": "Regulariziers",
+      "id": "regulariziers",
+      "contents": [
+        {
+          "title": "Dropout",
+          "id": "dropout"
+        }
+      ]
     }
   ]
 }
