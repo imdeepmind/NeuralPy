@@ -379,3 +379,45 @@ model.add(Sigmoid())
 ```
 
 ---
+
+# Optimizers 
+```python neuralpy.optimizer ``` 
+
+ Optimizers are one of the most important parts of Machine Learning. The `neuralpy.optimizer` package implements different types of optimizers that can be used to optimizer a neuralpy model.
+
+Currently there 4 types of the optimizer, that neuralpy supports, these are Adam, Adagrad, RMSProp, and SGD.
+
+## SGD
+```python
+neuralpy.optimizer.SGD(learning_rate=0.001, momentum=0, dampening=0, weight_decay=0, nesterov=False)
+```
+Applies a SGD (Stochastic Gradient Descent) with momentum.
+
+### Supported Arguments
+- `learning_rate=0.001`: (Float) Learning Rate for the optimizer
+- `momentum=0` : (Float) Momentum for the optimizer
+- `dampening=0` : (Float) Dampening of momentum
+- `weight_decay=0` : (Float) Weight decay for the optimizer
+- `nesterov=False` : (Bool) Enables Nesterov momentum
+
+### Example Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import SGD
+from neuralpy.loss_functions import MSELoss
+...
+# Rest of the imports
+...
+
+model =  Sequential()
+...
+# Rest of the model
+...
+
+# Compiling the model
+model.compile(
+	optimizer=SGD(learning_rate=0.001, momentum=0, dampening=0, weight_decay=0, nesterov=False), 
+	loss_function=MSELoss())
+```
+
+---
