@@ -10,7 +10,7 @@ def test_dense_should_throw_type_error():
 n_nodes = [0.3, 6.3, -0.36, 'asd', '', False]
 n_inputs = [0.3, 6.3, -0.36, 'asd', '', False]
 biases = [1, "", 0.3]
-names = [False, 12]
+names = [False, 12, ""]
 
 @pytest.mark.parametrize(
 	"n_nodes, n_inputs, bias, name", 
