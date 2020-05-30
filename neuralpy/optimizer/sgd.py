@@ -5,7 +5,7 @@ from torch.optim import SGD as _SGD
 # pylint: disable=too-few-public-methods
 class SGD:
     """
-        Applies a SGD (Stochastic Gradient Descent) with momentun.
+        Applies a SGD (Stochastic Gradient Descent) with momentum.
 
         Supported Arguments
             learning_rate=0.001: (Float) Learning Rate for the optimizer
@@ -30,10 +30,13 @@ class SGD:
         """
 
         # Validation the input fields
-        if learning_rate < 0.0:
+        if not isinstance(learning_rate, float) or learning_rate < 0.0:
             raise ValueError("Invalid learning_rate")
 
-        if weight_decay < 0.0:
+        if not isinstance(momentum, float) or momentum < 0.0:
+            raise ValueError("Invalid momentum value")
+
+        if not isinstance(weight_decay, float) or weight_decay < 0.0:
             raise ValueError("Invalid weight_decay value")
 
         self.__learning_rate = learning_rate
