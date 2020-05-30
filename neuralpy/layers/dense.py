@@ -44,7 +44,7 @@ class Dense:
 
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the layer
-        if name and isinstance(name, str) and len(name) <= 0:
+        if name is not None and not (isinstance(name, str) and name):
             raise ValueError("Please provide a valid name")
 
         # Storing the data
