@@ -6,6 +6,17 @@ import torch
 from .sequential_helper import *
 
 class Sequential:
+    """
+        Sequential is a linear stack of layers with single
+        input and output layer. It is one of the simplest types of models.
+        In Sequential models, each layer has a single input and output tensor.
+
+        Supported Arguments:
+        force_cpu=False: (Boolean) If True, then uses CPU even if CUDA is available
+        training_device=None: (NeuralPy device class) Device that will
+            be used for training predictions
+        random_state: (Integer) Random state for the device
+    """
     def __init__(self, force_cpu=False, training_device=None, random_state=None):
         super(Sequential, self).__init__()
         # Initializing some attributes that we need to function
@@ -46,20 +57,20 @@ class Sequential:
         if random_state:
             torch.manual_seed(random_state)
 
-    def __predict(self, x, batch_size):
+    def __predict(self, X, batch_size):
         # Calling model.eval as we are evaluating the model only
         self.__model.eval()
 
         # Initializing an empty list to store the predictions
         predictions = torch.Tensor()
 
-        # Conveting the input x to pytorch Tensor
-        x = torch.tensor(x)
+        # Conveting the input X to pytorch Tensor
+        X = torch.tensor(X)
 
         if batch_size:
             # If batch_size is there then checking the length
             # and comparing it with the length of input
-            if x.shape[0] < batch_size:
+            if X.shape[0] < batch_size:
                 # Batch size can not be greater that sample size
                 raise ValueError(
                     "Batch size is greater than total number of samples")
@@ -67,9 +78,9 @@ class Sequential:
             # Predicting, so no grad
             with torch.no_grad():
                 # Spliting the data into batches
-                for i in range(0, len(x), batch_size):
-                    # Generating the batch from x
-                    batch_x = x[i:i+batch_size].float()
+                for i in range(0, len(X), batch_size):
+                    # Generating the batch from X
+                    batch_x = X[i:i+batch_size].float()
 
                     # Feeding the batch into the model for predictions
                     outputs = self.__model(batch_x)
@@ -80,7 +91,7 @@ class Sequential:
             # Predicting, so no grad
             with torch.no_grad():
                 # Feeding the full data into the model for predictions tensor
-                outputs = self.__model(x.float())
+                outputs = self.__model(X.float())
 
                 # saving the outputs in the predictions
                 predictions = outputs
@@ -161,13 +172,13 @@ class Sequential:
 
         # Checking the length of input and output
         if x_train.shape[0] != y_train.shape[0]:
-            # length of x and y should be same
+            # length of X and y should be same
             raise ValueError(
                 "Length of training Input data and training output data should be same")
 
         # Checking the length of input and output
         if x_test.shape[0] != y_test.shape[0]:
-            # length of x and y should be same
+            # length of X and y should be same
             raise ValueError(
                 "Length of testing Input data and testing output data should be same")
 
@@ -315,37 +326,37 @@ class Sequential:
         # Returning history
         return history
 
-    def predict(self, x, batch_size=None):
+    def predict(self, X, batch_size=None):
         # Calling the __predict method to get the predicts
-        predictions = self.__predict(x, batch_size)
+        predictions = self.__predict(X, batch_size)
 
         # Returning an numpy array of predictions
         return predictions.numpy()
 
-    def predict_classes(self, x, batch_size=None):
+    def predict_classes(self, X, batch_size=None):
         # Calling the __predict method to get the predicts
-        predictions = self.__predict(x, batch_size)
+        predictions = self.__predict(X, batch_size)
 
         # Detecting the classes
         predictions = predictions.argmax(dim=1, keepdim=True)
 
         return predictions.numpy()
 
-    def evaluate(self, x, y, batch_size=None):
+    def evaluate(self, X, y, batch_size=None):
         # If batch_size is there then checking the length and comparing it with the length of training data
-        if batch_size and x.shape[0] < batch_size:
+        if batch_size and X.shape[0] < batch_size:
             # Batch size can not be greater that train data size
             raise ValueError(
                 "Batch size is greater than total number of training samples")
 
         # Checking the length of input and output
-        if x.shape[0] != y.shape[0]:
-            # length of x and y should be same
+        if X.shape[0] != y.shape[0]:
+            # length of X and y should be same
             raise ValueError(
                 "Length of training Input data and training output data should be same")
 
         # Calling the __predict method to get the predicts
-        predictions = self.__predict(x, batch_size)
+        predictions = self.__predict(X, batch_size)
 
         # Converting to tensor
         y_tensor = torch.tensor(y)
@@ -359,7 +370,7 @@ class Sequential:
             corrects = calculate_accuracy(y_tensor, predictions)
 
             # Calculating accuracy
-            accuracy = corrects / len(x) * 100
+            accuracy = corrects / len(X) * 100
 
             # Returning loss and accuracy
             return {
