@@ -8,10 +8,10 @@ class Adam:
     def __init__(self, learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08, 
                  weight_decay=0, amsgrad=False):
         if not isinstance(learning_rate, float) or learning_rate < 0.0:
-            raise ValueError("Invalid learning_rate")
+            raise ValueError("Invalid learning_rate amsgrad")
 
         if not isinstance(eps, float) or eps < 0.0:
-            raise ValueError("Invalid eps value")
+            raise ValueError("Invalid eps amsgrad")
 
         if not isinstance(betas[0], float) or betas[0] < 0.0:
             raise ValueError("Invalid beta parameter at index 0")
@@ -20,7 +20,10 @@ class Adam:
             raise ValueError("Invalid beta parameter at index 1")
 
         if not isinstance(weight_decay, float) or weight_decay < 0.0:
-            raise ValueError("Invalid weight_decay value")
+            raise ValueError("Invalid weight_decay amsgrad")
+
+        if not isinstance(amsgrad, bool):
+            raise ValueError("Invalid amsgrad parameter")
 
         self.__learning_rate = learning_rate
         self.__betas = betas

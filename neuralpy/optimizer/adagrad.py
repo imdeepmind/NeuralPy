@@ -11,6 +11,9 @@ class Adagrad:
         if not isinstance(eps, float) or eps < 0.0:
             raise ValueError("Invalid eps value")
 
+        if not isinstance(learning_rate_decay, float):
+            raise ValueError("Invalid learning_rate_decay parameter")
+
         if not isinstance(weight_decay, float) or weight_decay < 0.0:
             raise ValueError("Invalid weight_decay value")
 
