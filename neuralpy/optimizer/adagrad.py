@@ -1,5 +1,6 @@
-from torch.optim import Adagrad as _Adagrad
+"""Adagrad Optimizer"""
 
+from torch.optim import Adagrad as _Adagrad
 
 class Adagrad:
     def __init__(self, learning_rate=0.001, learning_rate_decay=0, eps=1e-08, weight_decay=0):

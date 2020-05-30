@@ -1,11 +1,17 @@
+"""Stochastic Gradient Descent"""
+
 from torch.optim import SGD as _SGD
 
-
+# pylint: disable=too-few-public-methods
 class SGD:
+    # pylint: disable=too-many-arguments
     def __init__(self, learning_rate=0.001, momentum=0,
                  dampening=0, weight_decay=0, nesterov=False):
+
+        # Validation the input fields
         if learning_rate < 0.0:
             raise ValueError("Invalid learning_rate")
+
         if weight_decay < 0.0:
             raise ValueError("Invalid weight_decay value")
 
