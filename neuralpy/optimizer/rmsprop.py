@@ -10,11 +10,20 @@ class RMSprop:
         if not isinstance(learning_rate, float) or learning_rate < 0.0:
             raise ValueError("Invalid learning_rate")
 
+        if not isinstance(alpha, float):
+            raise ValueError("Invalid alpha")
+
         if not isinstance(eps, float) or eps < 0.0:
             raise ValueError("Invalid eps value")
 
         if not isinstance(weight_decay, float) or weight_decay < 0.0:
             raise ValueError("Invalid weight_decay value")
+
+        if not isinstance(momentum, float) or momentum < 0.0:
+            raise ValueError("Invalid momentum value")
+
+        if not isinstance(centered, bool):
+            raise ValueError("Invalid centered value")            
 
         self.__learning_rate = learning_rate
         self.__alpha = alpha
