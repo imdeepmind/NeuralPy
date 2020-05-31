@@ -3,7 +3,16 @@
 from collections import OrderedDict
 import torch
 
-from .sequential_helper import is_valid_layer, is_valid_optimizer, is_valid_loss_function, build_layer_from_ref_and_details, build_optimizer_from_ref_and_details, build_loss_function_from_ref_and_details, build_history_object_for_training, calculate_accuracy, print_training_progress, print_validation_progress
+from .sequential_helper import (is_valid_layer,
+                                is_valid_optimizer,
+                                is_valid_loss_function,
+                                build_layer_from_ref_and_details,
+                                build_optimizer_from_ref_and_details,
+                                build_loss_function_from_ref_and_details,
+                                build_history_object_for_training,
+                                calculate_accuracy,
+                                print_training_progress,
+                                print_validation_progress)
 
 class Sequential:
     """
@@ -321,7 +330,6 @@ class Sequential:
 
                 # Calculating accuracy
                 # Checking if accuracy is there in metrics
-                # TODO: Need to do it more dynamic way
                 if "accuracy" in metrics:
                     corrects = calculate_accuracy(batch_y, outputs)
 
@@ -494,6 +502,12 @@ class Sequential:
         }
 
     def summary(self):
+        """
+            The .summary() method is getting a summary of the model.
+
+            Supported Arguments
+                None
+        """
         # Printing the model summary using PyTorch model
         if self.__build:
             # Printing models summary
@@ -511,10 +525,28 @@ class Sequential:
             raise Exception("You need to build the model first")
 
     def get_model(self):
+        """
+            The .get_model() method is used for getting the PyTorch model from the NeuralPy model.
+            After extracting the model, the model can be treated just like a regular
+            PyTorch model.
+
+            Supported Arguments
+                None
+        """
         # Returning the PyTorch model
         return self.__model
 
     def set_model(self, model):
+        """
+            The .set_model() method is used for converting a PyTorch model to a NeuralPy model.
+            After this conversion, the model can be trained using NeuralPy optimizer
+            and loss_functions.
+
+            Supported Arguments
+                model: (PyTorch model) A valid class based on Sequential PyTorch model.
+
+
+        """
         # Checking if model is None
         if model is None:
             raise ValueError("Please provide a valid PyTorch model")
