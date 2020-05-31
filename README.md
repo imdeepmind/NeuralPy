@@ -1,10 +1,10 @@
+
 <p align="center">
  <img src="https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png" alt="Logo of NeuralPy" />
  <br />
  A Keras like deep learning library works on top of PyTorch
 </p>
 
-> Currently, this library is at a very early stage of development. README and Documentation are incomplete.
 
 ![Maitained](https://img.shields.io/badge/Maitained%3F-Yes-brightgreen)
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/neuralpy-torch?style=flat)
@@ -24,7 +24,6 @@
 - [Blogs and Tutorials](#blogs-and-tutorials)
 - [Support](#support)
 - [Contributing](#contributing)
-- [Next Release Plan](#next-release-plan)
 - [License](#license)
 
 ## Introduction
@@ -37,18 +36,29 @@ Here are some highlights of NeuralPy
  - Cross-Compatible with PyTorch models
 
 ## PyTorch
-PyTorch is a machine learning library developed by Facebook. According to wikipedia, 
+PyTorch is an open-source machine learning framework that accelerates the path from research prototyping to production deployment developed by Facebook runs on both CPU and GPU.
 
-> PyTorch is an open source machine learning library based on the Torch library, used for applications such as computer vision and natural language processing, primarily developed by Facebook's AI Research lab (FAIR). It is free and open-source software released under the Modified BSD license.
+According to Wikipedia, 
+> PyTorch is an open-source machine learning library based on the Torch library, used for applications such as computer vision and natural language processing, primarily developed by Facebook's AI Research lab (FAIR). It is free and open-source software released under the Modified BSD license.
 
-NeuralPy is based on PyTorch and uses the APIs that are exposed by PyTorch. 
+NeuralPy is a high-level library that works on top of PyTorch. As it works on top of PyTorch, NerualPy supports both CPU and GPU and can perform numerical operations very efficiently.
 
 If you want to learn more about PyTorch, then please check the [PyTorch documentation](https://pytorch.org/).
 
 ## Install
-Currently, this library is not available through pip, so please clone the master branch and then use it. 
+To install NeuralPy, open terminal window type the following command:
+```
+pip install neuralpy-torch
+```
+If you have multiple versions of it, then you might need to use pip3.
+```
+pip3 install neuralpy-torch
+//or
+python3 -m pip install neuralpy-torch
+```
+> NeuralPy requires Pytorch and Numpy, first install those
 
-> NeuralPy requires Pytorch and Numpy 
+Check the documentation for Installation related information
 
 ## Dependencies
 The only dependencies of NeuralPy are Pytorch (used as backend) and Numpy.
@@ -118,39 +128,8 @@ For now, there are no blogs or tutorials available, I'll update once I post some
 If you are facing any issues using NeuralPy, then please raise an issue on GitHub or contact with me. 
 
 ## Contributing
-Feel free to contribute to this project. If you need some help to get started, then reach me or open a GitHub issue.
-
-## Next Release Plan
-Here is a list of features/enhancements that I want to add in the library before the first `0.1.0-alpha` release.
-  * [x] Models
-    * [x] Sequential
-  * [x] Layers
-    * [x] Linear
-      * [x] Dense
-  * [x] Regulariziers
-      * [x] Dropout
-  * [x] Activation Functions
-      * [x] Softmax
-      * [x] Sigmoid
-      * [x] Tanh
-      * [x] ReLU
-      * [x] LeakyReLU
-  * [x] Loss Functions
-      * [x] MSELoss
-      * [x] CrossEntropyLoss
-      * [x] BCELoss
-  * [x] Optimizers
-      * [x] Adam
-      * [x] SGD
-      * [x] Adagrad
-      * [x] RMSprop
-  * [x] GPU Support
-  * [ ] User input validation
-  * [ ] Error handling
-  * [ ] Documentation and Code Commenting
-  * [ ] Sample code and Blogs
-  * [ ] Proper README
-  * [ ] Configure project for PyPI
+Feel free to contribute to this project. If you need some help to get started, then reach me or open a GitHub issue. Check the [CONTRIBUTING.MD](https://github.com/imdeepmind/NeuralPy/blob/master/CONTRIBUTING.md) file for more information and guidelines.
 
 ## License
 [MIT](https://github.com/imdeepmind/NeuralPy/blob/master/LICENSE)
+
