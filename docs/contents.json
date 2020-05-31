@@ -89,7 +89,7 @@
       "id": "optimizers",
       "contents": [
         {
-          "title": "SDG",
+          "title": "SGD",
           "id": "sgd"
         },
         {

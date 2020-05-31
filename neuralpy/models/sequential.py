@@ -213,6 +213,21 @@ class Sequential:
             loss_function)
 
     def fit(self, train_data, test_data, epochs=10, batch_size=32):
+        """
+            The `.fit()` method is used for training the NeuralPy model.
+
+            Supported Arguments
+                train_data: (Tuple(NumPy Array, NumPy Array)) Pass the training data
+                    as a tuple like (X, y) where X is training data and y is the
+                    labels for the training the model.
+                test_data:(Tuple(NumPy Array, NumPy Array)) Pass the validation data
+                    as a tuple like (X, y) where X is test data and y is the labels
+                    for the validating the model.
+                epochs=10: (Integer) Number of epochs
+                batch_size=32: (Integer) Batch size for training.
+
+
+        """
         # Extracting the train and test data from the tuples
         x_train, y_train = train_data
         x_test, y_test = test_data
@@ -389,6 +404,14 @@ class Sequential:
         return history
 
     def predict(self, X, batch_size=None):
+        """
+            The .predict()method is used for predicting using the trained mode.
+
+            Supported Arguments
+                X: (NumPy Array) Data to be predicted
+                batch_size=None: (Integer) Batch size for predicting.
+                If not provided, then the entire data is predicted once.
+        """
         # Calling the __predict method to get the predicts
         predictions = self.__predict(X, batch_size)
 
@@ -396,16 +419,40 @@ class Sequential:
         return predictions.numpy()
 
     def predict_classes(self, X, batch_size=None):
-        # Calling the __predict method to get the predicts
-        predictions = self.__predict(X, batch_size)
+        """
+            The .predict_clas()method is used for predicting classes using the trained mode.
+            This method works only if accuracy is passed in the metrics parameter on the
+            .compile()method.
 
-        # Detecting the classes
-        predictions = predictions.argmax(dim=1, keepdim=True)
+            Supported Arguments
+                X: (NumPy Array) Data to be predicted
+                batch_size=None: (Integer) Batch size for predicting.
+                If not provided, then the entire data is predicted once.
+        """
+        # Checking if the model is for classification
+        if self.__metrics and "accuracy" in self.__metrics:
+            # Calling the __predict method to get the predicts
+            predictions = self.__predict(X, batch_size)
 
-        return predictions.numpy()
+            # Detecting the classes
+            predictions = predictions.argmax(dim=1, keepdim=True)
+
+            return predictions.numpy()
+        else:
+            raise ValueError("Cannot predict classes as this is not a classification problem")
 
     def evaluate(self, X, y, batch_size=None):
-        # If batch_size is there then checking the length and comparing it with the length of training data
+        """
+            The .evaluate()method is used for evaluating models using the test dataset.
+
+            Supported Arguments
+                X: (NumPy Array) Data to be predicted
+                y: (NumPy Array) Original labels of X
+                batch_size=None: (Integer) Batch size for predicting.
+                    If not provided, then the entire data is predicted once.
+        """
+        # If batch_size is there then checking the length and comparing
+        # it with the length of training data
         if batch_size and X.shape[0] < batch_size:
             # Batch size can not be greater that train data size
             raise ValueError(
@@ -458,7 +505,8 @@ class Sequential:
 
             # Calculating total number of trainable params
             print("Total Number of Trainable Parameters: ", sum(p.numel()
-                                                                for p in self.__model.parameters() if p.requires_grad))
+                                                                for p in self.__model.parameters()
+                                                                if p.requires_grad))
         else:
             raise Exception("You need to build the model first")
 
