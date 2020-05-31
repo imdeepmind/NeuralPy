@@ -37,7 +37,7 @@ class BCELoss:
                 type(weight).__module__ == np.__name__):
             raise ValueError("Invalid weight")
 
-        if not isinstance(reduction, str) and reduction not in ["none", "mean", "sum"]:
+        if reduction not in ["none", "mean", "sum"]:
             raise ValueError("Invalid reduction")
 
         if pos_weight is not None and not (

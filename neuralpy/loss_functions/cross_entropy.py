@@ -38,7 +38,7 @@ class CrossEntropyLoss:
                 type(weight).__module__ == np.__name__):
             raise ValueError("Invalid weight")
 
-        if not isinstance(reduction, str) and reduction not in ["none", "mean", "sum"]:
+        if reduction not in ["none", "mean", "sum"]:
             raise ValueError("Invalid reduction")
 
         if not isinstance(ignore_index, int):
