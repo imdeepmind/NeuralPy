@@ -85,6 +85,24 @@
       ]
     },
     {
+      "title": "Loss Functions",
+      "id": "loss-function",
+      "contents": [
+        {
+          "title": "BCE Loss",
+          "id": "bce-loss"
+        },
+        {
+          "title": "Cross Entropy Loss",
+          "id": "cross-entropy-loss"
+        },
+        {
+          "title": "MSE Loss",
+          "id": "mse-loss"
+        }
+      ]
+    },
+    {
       "title": "Optimizers",
       "id": "optimizers",
       "contents": [

@@ -380,6 +380,114 @@ model.add(Sigmoid())
 
 ---
 
+
+# Loss Functions
+```python
+neuralpy.loss_functions
+```
+Loss Functions are functions that calculate the error rate of a model. The optimizer optimizes the model based on these Loss Functions.
+
+NeuralPy currently supports 3 types of Loss Functions, BCELoss, CrossEntropyLoss, and MeanSquaredLoss.
+
+## BCE Loss
+```python
+neuralpy.loss_functions.BCELoss(weight=None, reduction='mean', pos_weight=None)
+```
+Applies a BCE Loss function to the model. 
+
+> BCE Loss automatically applies a Sigmoid Layer at the end of the model, so there is no need to add a Sigmoid layer.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#bcewithlogitsloss) page.
+
+### Supported Arguments
+- `weight=None` : (Numpy Array | List) Manual rescaling of classes
+- `reduction='mean'` : (String) Specifies the reduction that is to be applied to the output.
+- `post_weight=None` : (Numpy Array | List)  A weight of positive examples
+
+### Code Example
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import BCELoss
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Rest of the architecture
+...
+
+model.compile(optimizer=Adam(), loss_function=BCELoss(weight=None, reduction='mean', pos_weight=None))
+```
+
+## Cross Entropy Loss
+```python
+neuralpy.loss_functions.CrossEntropyLoss(weight=None, ignore_index=-100 reduction='mean')
+```
+Applies a Cross-Entropy Loss function to the model. 
+
+> Cross-Entropy Loss automatically applies a Softmax Layer at the end of the model, so there is no need to add a Softmax layer.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#crossentropyloss) page.
+
+### Supported Arguments
+- `weight=None` : (Numpy Array | List) Manual rescaling of classes
+- `ignore_index=-100` : (Integer)  Specifies a target value that is ignored and does not contribute to the input gradient.
+- `reduction='mean'` : (String) Specifies the reduction that is to be applied to the output.
+
+### Code Example
+```python
+import numpy as np
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import BCELoss
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Rest of the architecture
+...
+# Weight of different classes, here 3 is the number of classes
+weight = np.ones([3])
+
+model.compile(optimizer=Adam(), loss_function=CrossEntropyLoss(weight=weight, reduction='mean', pos_weight=None))
+```
+
+## MSE Loss
+```python
+neuralpy.loss_functions.MSELoss(reduction='mean')
+```
+Applies a Mean Squared Error loss function to the model. 
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#mseloss) page.
+
+### Supported Arguments
+- `reduction='mean'` : (String) Specifies the reduction that is to be applied to the output.
+
+### Code Example
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import MSELoss
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Rest of the architecture
+...
+# Compiling the model
+model.compile(optimizer=Adam(), loss_function=MSELoss(reduction='mean'))
+```
+
+
+
+---
+
 # Optimizers 
 ```python neuralpy.optimizer ``` 
 
