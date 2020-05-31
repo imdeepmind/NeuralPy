@@ -1,5 +1,6 @@
 """CrossEntropyLoss"""
 
+import numpy as np
 import torch
 from torch.nn import CrossEntropyLoss as _CrossEntrypyLoss
 
@@ -32,7 +33,9 @@ class CrossEntropyLoss:
                 reduction='mean' : (String) Specifies the reduction that is to be
                     applied to the output.
         """
-        if weight is not None and not weight:
+        if weight is not None and not (
+                isinstance(weight, list) or
+                type(weight).__module__ == np.__name__):
             raise ValueError("Invalid weight")
 
         if not isinstance(reduction, str) and reduction not in ["none", "mean", "sum"]:
