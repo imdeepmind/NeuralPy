@@ -1,9 +1,12 @@
 """BCE Loss"""
 
+import numpy as np
 import torch
 from torch.nn import BCEWithLogitsLoss as _BCEWithLogitsLoss
 
 # pylint: disable=too-few-public-methods
+
+
 class BCELoss:
     """
         Applies a BCE Loss function to the model.
@@ -18,6 +21,7 @@ class BCELoss:
                 that is to be applied to the output.
             post_weight=None : (Numpy Array | List) A weight of positive examples
     """
+
     def __init__(self, weight=None, reduction='mean', pos_weight=None):
         """
             __init__ method for BCELoss
@@ -28,7 +32,9 @@ class BCELoss:
                     that is to be applied to the output.
                 post_weight=None : (Numpy Array | List) A weight of positive examples
         """
-        if weight is not None and not weight:
+        if weight is not None and not (
+                isinstance(weight, list) or
+                type(weight).__module__ == np.__name__):
             raise ValueError("Invalid weight")
 
         if not isinstance(reduction, str) and reduction not in ["none", "mean", "sum"]:

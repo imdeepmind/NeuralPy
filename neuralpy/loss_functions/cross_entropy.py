@@ -4,6 +4,8 @@ import torch
 from torch.nn import CrossEntropyLoss as _CrossEntrypyLoss
 
 # pylint: disable=too-few-public-methods
+
+
 class CrossEntropyLoss:
     """
         Applies a Cross Entropy Loss function to the model.
@@ -18,6 +20,7 @@ class CrossEntropyLoss:
             reduction='mean' : (String) Specifies the reduction that is to be
                 applied to the output.
     """
+
     def __init__(self, weight=None, ignore_index=-100, reduction='mean'):
         """
             __init__ method for CrossEntropyLoss

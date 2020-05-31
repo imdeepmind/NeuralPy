@@ -3,6 +3,8 @@
 from torch.nn import MSELoss as _MSELoss
 
 # pylint: disable=too-few-public-methods
+
+
 class MSELoss:
     """
         Applies a Mean Squared Error loss function to the model.
@@ -11,6 +13,7 @@ class MSELoss:
             reduction='mean' : (String) Specifies the reduction that
                 is to be applied to the output.
     """
+
     def __init__(self, reduction='mean'):
         """
             __init__ method for MSELoss
