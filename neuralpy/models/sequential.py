@@ -14,6 +14,7 @@ from .sequential_helper import (is_valid_layer,
                                 print_training_progress,
                                 print_validation_progress)
 
+
 class Sequential:
     """
         Sequential is a linear stack of layers with single
@@ -84,6 +85,7 @@ class Sequential:
         if random_state:
             torch.manual_seed(random_state)
 
+    # pylint: disable=invalid-name
     def __predict(self, X, batch_size=None):
         """
             Method for predicting
@@ -447,7 +449,8 @@ class Sequential:
 
             return predictions.numpy()
         else:
-            raise ValueError("Cannot predict classes as this is not a classification problem")
+            raise ValueError(
+                "Cannot predict classes as this is not a classification problem")
 
     def evaluate(self, X, y, batch_size=None):
         """

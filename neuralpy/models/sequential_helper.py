@@ -1,9 +1,16 @@
+"""Sequential Helper functions"""
+
 def generate_layer_name(layer_type, index):
+    """
+    	Generates a unique layer name
+    """
     # Generating a unique name for the layer
     return f"{layer_type.lower()}_layer_{index+1}"
 
-
 def is_valid_layer(layer):
+    """
+    	Check if layer is valid for not
+    """
     # if the layer is none, returning False
     if not layer:
         return False
@@ -47,15 +54,13 @@ def is_valid_layer(layer):
             return False
 
         # Checking the layer_function_ref
-        # TODO: We should the check the type of layer_function_ref,
-        # whether it is pytorch valid layer or not
         if not layer_function_ref:
             return False
 
         # All good
         return True
 
-    # If there is some missing atricture in the layer, then returning False
+    # If there is some missing architecture in the layer, then returning False
     except AttributeError:
         return False
     # If the layer_details dict does not contains a key that it supposed to have
@@ -64,6 +69,9 @@ def is_valid_layer(layer):
 
 
 def is_valid_optimizer(optimizer):
+    """
+    	Checks if optimizer is valid or not
+    """
     # If the optimizer is None returning False
     if not optimizer:
         return False
@@ -76,7 +84,7 @@ def is_valid_optimizer(optimizer):
         if not isinstance(optimizer_details, dict):
             return False
 
-        # Here im checking all the keys of object returned from the get_optimizer method
+        # checking all the keys of object returned from the get_optimizer method
         optimizer_arguments = optimizer_details["keyword_arguments"]
         optimizer_function_ref = optimizer_details["optimizer"]
 
@@ -85,15 +93,13 @@ def is_valid_optimizer(optimizer):
             return False
 
         # Checking the optimizer_function_ref
-        # TODO: We should the check the type of optimizer_function_ref,
-        # whether it is pytorch valid optimizer or not
         if not optimizer_function_ref:
             return False
 
         # All good
         return True
 
-    # If there is some missing atricture in the optimizer, then returning False
+    # If there is some missing architecture in the optimizer, then returning False
     except AttributeError:
         return False
     # If the optimizer_details dict does not contains a key that it supposed to have
@@ -102,6 +108,9 @@ def is_valid_optimizer(optimizer):
 
 
 def is_valid_loss_function(loss_function):
+    """
+    	Checks if a loss function is valid or not
+    """
     # If the loss_function is None returning False
     if not loss_function:
         return False
@@ -123,15 +132,13 @@ def is_valid_loss_function(loss_function):
             return False
 
         # Checking the loss_function_function_ref
-        # TODO: We should the check the type of loss_function_function_ref,
-        # whether it is pytorch valid loss_function or not
         if not loss_function_function_ref:
             return False
 
         # All good
         return True
 
-    # If there is some missing atricture in the loss_function, then returning False
+    # If there is some missing architecture in the loss_function, then returning False
     except AttributeError:
         return False
     # If the loss_function_details dict does not contains a key that it supposed to have
@@ -140,7 +147,10 @@ def is_valid_loss_function(loss_function):
 
 
 def build_layer_from_ref_and_details(layer_refs):
-    # Storing the layer here to build the Sequentuial layer
+    """
+    	Builds model from layers ref and details
+    """
+    # Storing the layer here to build the Sequential layer
     layers = []
 
     # Strong the output dimension, for the next layer,
@@ -159,7 +169,7 @@ def build_layer_from_ref_and_details(layer_refs):
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
 
-        # Stroing the layer details
+        # Storing the layer details
         layer_name = layer_details["name"]
         layer_type = layer_details["type"]
         layer_nodes = layer_details["n_nodes"]
@@ -193,17 +203,20 @@ def build_layer_from_ref_and_details(layer_refs):
 
 
 def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
+    """
+    	Builds optimizer from ref and details
+    """
     # Getting the details of the optimizer using get_optimizer method
     optimizer_details = optimizer_ref.get_optimizer()
 
-    # Stroing the optimizer details
+    # Storing the optimizer details
     optimizer_func = optimizer_details["optimizer"]
     optimizer_arguments = optimizer_details["keyword_arguments"]
 
     # Creating a variable for the optimizer
     optimizer = None
 
-    # Cheking the optimizer_arguments, if it is not None then passing it to the optimizer
+    # Checking the optimizer_arguments, if it is not None then passing it to the optimizer
     if optimizer_arguments:
         # Initializing the optimizer with optimizer_arguments and models parameters
         optimizer = optimizer_func(
@@ -216,10 +229,13 @@ def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
 
 
 def build_loss_function_from_ref_and_details(loss_function_ref):
+    """
+    	Builds loss function
+    """
     # Getting the details of the loss_function using get_loss_function method
     loss_function_details = loss_function_ref.get_loss_function()
 
-    # Stroing the loss_function details
+    # Storing the loss_function details
     loss_function_func = loss_function_details["loss_function"]
     loss_function_arguments = loss_function_details["keyword_arguments"]
 
@@ -238,6 +254,9 @@ def build_loss_function_from_ref_and_details(loss_function_ref):
 
 
 def build_history_object_for_training(metrics):
+    """
+    	Builds history object
+    """
     history = {
         'batchwise': {},
         'epochwise': {}
@@ -252,7 +271,11 @@ def build_history_object_for_training(metrics):
     return history
 
 
+# pylint: disable=invalid-name
 def calculate_accuracy(y, y_pred):
+    """
+    	Calculates accuracy from real labels and predicted labels
+    """
     pred = y_pred.argmax(dim=1, keepdim=True)
 
     corrects = pred.eq(y.view_as(pred)).sum().item()
@@ -260,7 +283,11 @@ def calculate_accuracy(y, y_pred):
     return corrects
 
 
-def print_training_progress(epoch, epochs, batch, batches, no_samples, training_loss, training_corrects=None):
+def print_training_progress(epoch, epochs, batch, batches, no_samples,
+                            training_loss, training_corrects=None):
+    """
+    	Show a training progress text
+    """
     # Printing a friendly message to the console
     message = f"Epoch: {epoch+1}/{epochs} - Batch: {batch//batches+1}/{no_samples//batches} - Training Loss: {training_loss:0.4f}"
 
@@ -271,6 +298,9 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples, training_
 
 
 def print_validation_progress(validation_loss, no_samples, validtion_corrects=None):
+    """
+    	Show a validation progress text
+    """
     if validtion_corrects:
         print(
             f"\nValidation Loss: {validation_loss:.4f} - Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%")
