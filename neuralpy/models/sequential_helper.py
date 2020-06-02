@@ -289,7 +289,11 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
     	Show a training progress text
     """
     # Printing a friendly message to the console
-    message = f"Epoch: {epoch+1}/{epochs} - Batch: {batch//batches+1}/{no_samples//batches} - Training Loss: {training_loss:0.4f}"
+    message = (
+    		  f"Epoch: {epoch+1}/{epochs} - "
+    		  f"Batch: {batch//batches+1}/{no_samples//batches} - "
+    		  f"Training Loss: {training_loss:0.4f}"
+    		  )
 
     if training_corrects:
         message += f" - Training Accuracy: {training_corrects/batches*100:.4f}%"
@@ -303,6 +307,10 @@ def print_validation_progress(validation_loss, no_samples, validtion_corrects=No
     """
     if validtion_corrects:
         print(
-            f"\nValidation Loss: {validation_loss:.4f} - Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%")
+            (
+            	   f"\nValidation Loss: {validation_loss:.4f} - "
+            	   f"Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%"
+            )
+        )
     else:
         print(f"\nValidation Loss: {validation_loss:.4f}")
