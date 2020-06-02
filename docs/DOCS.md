@@ -628,3 +628,104 @@ model.compile(
 ```
 
 ---
+
+
+# Advanced Topics
+
+NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regularizers, etc, in NeuralPy.
+
+But there are times when someone might need a layer, or an optimizer, or a loss function for there model.
+
+In NeuralPy, anyone can build a custom Layer, Optimizer, Loss Function, Regularizer, etc.
+
+## Building a Custom Layer
+
+NeuralPy is based on PyTorch, so first we need to build PyTorch valid layer, or use some existing PyTorch layer. To get a list of Layers implemented by PyTorch, check [this](https://pytorch.org/docs/stable/nn.html) page.
+
+> The PyTorch layer needed to be a class-based layer, functional PyTorch layers are not supported by NeuralPy.
+
+> Also if you want to build your own custom PyTorch layer, then please check [this](https://hackernoon.com/how-to-build-your-own-pytorch-neural-network-layer-from-scratch-2x6136th) medium article.
+
+#### So now let's start coding
+
+First import the PyTorch layer class that you want to use in NeuralPy. If you are using a custom PyTorch layer, then import that.
+
+In the example below, I'll use the [Flatten](https://pytorch.org/docs/stable/nn.html#flatten) layer this is implemented by PyTorch. Also for your layer, if you need other packages, import those also.
+
+```python
+from torch.nn import Flatten as _Flatten
+...
+# Rest of the imports
+...
+```
+
+After that, create a class with two public methods `get_input_dim` and `get_layer`. Along with that create an `__init__` method also.
+
+```python
+class Flatten:
+    def __init__(self):
+       pass
+
+    def get_input_dim(self, prev_input_dim):
+       pass
+
+    def get_layer(self):
+       pass
+```
+
+Here the `__init__` method is for setting up the layer. Pass all the parameters that you need for the layer, like input share, output shape, etc.
+
+The `get_input_dim` method is used for calculating input shape based on the output shape of the previous layer. If your layer does not have an input shape, then just return `None`.
+
+The `get_layer` method is the most important layer and it returns a dictionary with all the details that NeuralPy Model class needs for building the model.
+
+```python
+class Flatten:
+    def __init__(self, start_dim=1, end_dim=-1, name):
+	# Validate the parameters
+
+	# Checking the name field, this is an optional field,
+	# if not provided generates a unique name for the layer
+        if name is not None and not (isinstance(name, str) and name):
+            raise ValueError("Please provide a valid name")
+
+	    self.__start_dim = start_dim
+	    self.__end_dim = end_dim
+	    self.__name = name
+
+    def get_input_dim(self, prev_input_dim):
+
+        # As there is no input shape, returning None
+        return None
+
+    def get_layer(self):
+        return {
+             'n_inputs': None,
+             'n_nodes': None,
+             'name': self.__name,
+             'type': 'Flatten',
+             'layer': _Flatten,
+             'keyword_arguments': {
+                 'start_dim': self.__start_dim,
+                 'end_dim': self.__end_dim
+              }
+        }
+```
+If you check the PyTorch docs, then Flatten accepts two parameters, `start_dim` and `end_dim`. So in the `__init__` method, I've added these two parameters, along with the `name` parameter. NeuralPy needs a name for every layer, if there is no name provided, then auto generates a layer name.
+
+Flatten does not have an input shape parameter, `get_input_dim` method just returns `None`.
+
+Finally, the `get_layer` method returns a dictionary with several fields. Here is the detail of all the fields.
+
+- `n_inputs`: Pass the input shape of the layer, in the next layer, you'll get this field as `prev_input_dim` parameter in the `get_input_dim`.
+
+- `n_nodes`: Is the output dim of the layer
+
+- `type`: Type of the layer, just pass the layer name in a string. This is used to auto-generate layer name
+
+- `name`: Pass the name parameter
+
+- `keyword_arguments`: It contains a dictionary of all the parameters that the PyTorch layer or your custom layer accepts. If there is no parameter for the layer, send set it as None. For our `Flatten` layer, we need to pass the `start_dim` and `end_dim`.  
+
+
+---
