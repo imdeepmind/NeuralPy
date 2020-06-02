@@ -727,5 +727,13 @@ Finally, the `get_layer` method returns a dictionary with several fields. Here i
 
 - `keyword_arguments`: It contains a dictionary of all the parameters that the PyTorch layer or your custom layer accepts. If there is no parameter for the layer, send set it as None. For our `Flatten` layer, we need to pass the `start_dim` and `end_dim`.  
 
+> We can create Activation Functions, Regularizers using the same above method also.
+
+Check the following links for some more examples:
+- [Dense layer](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/layers/dense.py)
+- [ReLU Activation Function](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/activation_functions/relu.py)
+- [Dropout](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/regulariziers/dropout.py)
+
+
 
 ---
