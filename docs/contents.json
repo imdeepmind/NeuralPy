@@ -123,6 +123,24 @@
           "id": "rmsprop"
         }
       ]
+    },
+    {
+      "title": "Advanced Topics",
+      "id" : "advanced-topics",
+      "contents" : [
+        {
+          "title" : "Building a Custom Layer",
+          "id" : "building-a-custom-layer"
+        },
+        {
+          "title" : "Building a Custom Optimizer",
+          "id" : "building-a-custom-optimizer"
+        },
+        {
+          "title" : "building a Custom Loss Function",
+          "id" : "building-a-custom-loss-function"
+        }
+      ]
     }
   ]
 }
