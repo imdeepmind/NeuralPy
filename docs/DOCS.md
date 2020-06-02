@@ -735,5 +735,178 @@ Check the following links for some more examples:
 - [Dropout](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/regulariziers/dropout.py)
 
 
+# Advanced Topics
+
+NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regularizers, etc, in NeuralPy.
+
+But there are times when we might need a layer, or an optimizer, or a loss function for a model that is not implimented on NeuralPy.
+
+In NeuralPy, anyone can build a custom Layer, Optimizer, Loss Function, Regularizer, etc.
+
+## Building a Custom Layer
+
+NeuralPy is based on PyTorch, so first we need to build PyTorch valid layer, or use some existing PyTorch layer. To get a list of Layers implemented by PyTorch, check [this](https://pytorch.org/docs/stable/nn.html) page.
+
+> The PyTorch layer needed to be a class-based layer, functional PyTorch layers are not supported by NeuralPy.
+
+> Also if you want to build your own custom PyTorch layer, then please check [this](https://hackernoon.com/how-to-build-your-own-pytorch-neural-network-layer-from-scratch-2x6136th) medium article.
+
+#### So now let's start coding
+
+First import the PyTorch layer class that you want to use in NeuralPy. If you are using a custom PyTorch layer, then import that.
+
+In the example below, We'll use the [Flatten](https://pytorch.org/docs/stable/nn.html#flatten) layer, This layer already is implemented by PyTorch. So importing it from the `nn` module.
+
+```python
+from torch.nn import Flatten as _Flatten
+...
+# Rest of the imports
+...
+```
+
+After that, create a class with two public methods `get_input_dim` and `get_layer`. Along with that create an `__init__` method also.
+
+```python
+class Flatten:
+    def __init__(self):
+       pass
+
+    def get_input_dim(self, prev_input_dim):
+       pass
+
+    def get_layer(self):
+       pass
+```
+
+Here the `__init__` method is for setting up the layer. Pass all the parameters that you need for the layer, like input share, output shape, etc.
+
+The `get_input_dim` method is used for calculating input shape based on the output shape of the previous layer. If your layer does not have an input shape, then just return `None`.
+
+The `get_layer` method is the most important layer and it returns a dictionary with all the details that NeuralPy Model class needs for building the model.
+
+```python
+class Flatten:
+    def __init__(self, start_dim=1, end_dim=-1, name):
+	# Validate the parameters
+
+	# Checking the name field, this is an optional field,
+	# if not provided generates a unique name for the layer
+        if name is not None and not (isinstance(name, str) and name):
+            raise ValueError("Please provide a valid name")
+
+	    self.__start_dim = start_dim
+	    self.__end_dim = end_dim
+	    self.__name = name
+
+    def get_input_dim(self, prev_input_dim):
+
+        # As there is no input shape, returning None
+        return None
+
+    def get_layer(self):
+        return {
+             'n_inputs': None,
+             'n_nodes': None,
+             'name': self.__name,
+             'type': 'Flatten',
+             'layer': _Flatten,
+             'keyword_arguments': {
+                 'start_dim': self.__start_dim,
+                 'end_dim': self.__end_dim
+              }
+        }
+```
+If you check the PyTorch docs, then Flatten accepts two parameters, `start_dim` and `end_dim`. So in the `__init__` method, I've added these two parameters, along with the `name` parameter. NeuralPy needs a name for every layer, if there is no name provided, then auto generates a layer name.
+
+Flatten does not have an input shape parameter, `get_input_dim` method just returns `None`.
+
+Finally, the `get_layer` method returns a dictionary with several fields. Here is the detail of all the fields.
+
+- `n_inputs`: Pass the input shape of the layer, in the next layer, you'll get this field as `prev_input_dim` parameter in the `get_input_dim`.
+
+- `n_nodes`: Is the output dim of the layer
+
+- `type`: Type of the layer, just pass the layer name in a string. This is used to auto-generate layer name
+
+- `name`: Pass the name parameter
+
+- `keyword_arguments`: It contains a dictionary of all the parameters that the PyTorch layer or your custom layer accepts. If there is no parameter for the layer, send set it as None. For our `Flatten` layer, we need to pass the `start_dim` and `end_dim`.  
+
+> We can create Activation Functions, Regularizers using the same above method also.
+
+Check the following links for some more examples:
+- [Dense layer](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/layers/dense.py)
+- [ReLU Activation Function](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/activation_functions/relu.py)
+- [Dropout](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/regulariziers/dropout.py)
+
+## Building a custom Optimizer
+Steps for making a custom Optimizer is mostly similar to making a custom Layer. So first we need to import an PyTorch optimizer or use a custom PyTorch compatable optimizer.
+
+Create a class with one public method `get_optimizer` and an `__init__` method.
+
+```python
+from torch.optim import SGD as _SGD
+
+class SGD:
+	def __init__(self):
+		pass
+	
+	def get_optimizer(self):
+		pass
+```
+
+Then in the `__init__` method pass all the parameters that is needed for the optimizer.
+
+In the `get_optimizer` method returns a dictionary with all the details that is needed by the NeuralPy Models.
+
+```python
+from torch.optim import SGD as _SGD
+
+# pylint: disable=too-few-public-methods
+class SGD:
+    # pylint: disable=too-many-arguments
+    def __init__(self, learning_rate=0.001, momentum=0.0,
+                 dampening=0.0, weight_decay=0.0, nesterov=False):
+
+        # Validation the input fields
+        if not isinstance(learning_rate, float) or learning_rate < 0.0:
+            raise ValueError("Invalid learning_rate")
+
+        if not isinstance(momentum, float) or momentum < 0.0:
+            raise ValueError("Invalid momentum value")
+
+        if not isinstance(weight_decay, float) or weight_decay < 0.0:
+            raise ValueError("Invalid weight_decay value")
+
+        if not isinstance(dampening, float):
+            raise ValueError("Invalid dampening parameter")
+
+        if not isinstance(nesterov, bool):
+            raise ValueError("Invalid nesterov parameter")
+
+        self.__learning_rate = learning_rate
+        self.__momentum = momentum
+        self.__dampening = dampening
+        self.__weight_decay = weight_decay
+        self.__nesterov = nesterov
+
+    def get_optimizer(self):
+        # Returning the optimizer data
+        return {
+            'optimizer': _SGD,
+            'keyword_arguments': {
+                'lr': self.__learning_rate,
+                'momentum': self.__momentum,
+                'dampening': self.__dampening,
+                'weight_decay': self.__weight_decay,
+                'nesterov': self.__nesterov
+            }
+        }
+```
+
+Here the `get_optimizer` is similar to the `get_layer` method. Just returns a dictionary with all the data. The `optimizer` in the dictionary is the main optimizer and the `keyword_arguments` contains all the arguments for the PyTorch SGD optimizer.
+
+
+
 
 ---
