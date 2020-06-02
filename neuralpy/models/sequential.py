@@ -478,17 +478,19 @@ class Sequential:
         # Calling the __predict method to get the predicts
         predictions = self.__predict(X, batch_size)
 
+        # Converting to tensor
+        # pylint: disable=not-callable,no-member
+        if self.__metrics and "accuracy" in self.__metrics:
+            y_tensor = torch.tensor(y)
+        else:
+            y_tensor = torch.tensor(y).float()
+
+        # Calculating the loss
+        loss = self.__loss_function(predictions, y_tensor)
 
         # if metrics has accuracy, then calculating accuracy
         if self.__metrics and "accuracy" in self.__metrics:
-        	# Converting to tensor
-            # pylint: disable=not-callable,no-member
-            y_tensor = torch.tensor(y)
-
-            # Calculating the loss
-            loss = self.__loss_function(predictions, y_tensor)
-
-            # Calculating no of corrects
+        	# Calculating no of corrects
             corrects = calculate_accuracy(y_tensor, predictions)
 
             # Calculating accuracy
@@ -499,18 +501,11 @@ class Sequential:
                 'loss': loss.item(),
                 'accuracy': accuracy
             }
-        else:
-            # Converting to tensor
-            # pylint: disable=not-callable,no-member
-            y_tensor = torch.tensor(y).float()
 
-            # Calculating the loss
-            loss = self.__loss_function(predictions, y_tensor)
-
-            # Returning loss
-            return {
-                'loss': loss
-            }
+        # Returning loss
+        return {
+            'loss': loss
+        }
 
     def summary(self):
         """
