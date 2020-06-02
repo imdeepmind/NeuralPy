@@ -107,6 +107,7 @@ neuralpy.models
 ```
 Models are one of the most important API supported in NeuralPy. Models are used to create different architecture. In NeuralPy, currently Sequential is the only type of model that is supported.
 
+
 ## Sequential
 ```python
 neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
@@ -119,8 +120,9 @@ Sequential is a linear stack of layers with single input and output layer. It is
 - `random_state`: (Integer) Random state for the device
 
 ### Supported Methods
-#### `.add() method`: 
-In a Sequential model, the .add() method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
+
+#### `.add()` method: 
+In a Sequential model, the `.add()` method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
 
 ##### Supported Arguments
 - `layer`: (NeuralPy layer classes) Adds a layer into the model
@@ -142,8 +144,197 @@ model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
 model.add(ReLU())
 model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
 ```
+#### `.build()` method:
+
+In a Sequential model, the `.build()` method is responsible for building the PyTorch model from the NeuralPy model.
+
+After finishing the architecture of the model, the model needed to be built before training.
+
+##### Supported Arguments:
+- There is no argument for this model
+
+#### Exaample Code
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Model Architecture
+...
+
+# Calling .build to build the model
+model.build()
+```
+
+#### `.compile()` mehod:
+In the Sequential model, the compile method is responsible for attaching a loss function and optimizer with the model and this method needs to be called before training.
+
+> The `.compile()` method internally calls the `.build()`, so there is no need to call 	`.build()`.
+
+	 
+##### Supported Arguments:
+- `optimizer`: (NeuralPy Optimizer class) Adds an optimizer to the model
+- `loss_function`: (NeuralPy Loss Function class) Adds a loss function to the model
+- `metrics`: ([String]) Metrics that will be evaluated by the model. Currently only supports `accuracy`. 
+
+#### Exaample Code
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import MSELoss
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Model Architecture
+...
+
+# Calling .compile to build the model 
+# and attach a optimizer and loss function with the model
+model.compile(optimizer=Adam(), loss_function=MSELoss(),metrics=["accuracy"])
+```
+
+#### `.fit()` Method	
+The `.fit()` method is used for training the NeuralPy model. 
+
+##### Supported Arguments
+- `train_data`: (Tuple(NumPy Array, NumPy Array)) Pass the training data as a tuple like `(X, y)` where `X` is training data and `y` is the labels for the training the model.
+- `test_data`:(Tuple(NumPy Array, NumPy Array)) Pass the validation data as a tuple like `(X, y)` where `X` is test data and `y` is the labels for the validating the model.
+- `epochs=10`: (Integer) Number of epochs
+- `batch_size=32`: (Integer) Batch size for training.
+
+##### Example Code
+```python
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the code
+...
+
+# Training the model
+model.fit(train_data, test_data, epochs=10, batch_size=32)
+```
+#### `.predict()` Method
+The `.predict()`method is used for predicting using the trained mode.
+
+##### Supported Arguments
+- `X`: (NumPy Array) Data to be predicted
+- `batch_size=None`: (Integer) Batch size for predicting. If not provided, then the entire data is predicted once.
+
+##### Example Code
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the code
+...
+
+# Predicting using the trained model
+y_pred = model.predict(X, batch_size=32)
+```
+
+#### `.predict_class()` Method
+The `.predict_clas()` method is used for predicting classes using the trained model. This method works only if `accuracy` is passed in the `metrics` parameter on the `.compile()` method.
+
+##### Supported Arguments
+- `X`: (NumPy Array) Data to be predicted
+- `batch_size=None`: (Integer) Batch size for predicting. If not provided, then the entire data is predicted once.
+
+##### Example Code
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the code
+...
+
+# Predicting the labels using the trained model
+y_pred = model.predict_clas(X, batch_size=32)
+```
+
+
+#### `.evaluate()` Method
+The `.evaluate()` method is used for evaluating models using the test dataset.
+
+##### Supported Arguments
+- `X`: (NumPy Array) Data to be predicted
+- `y`: (NumPy Array) Original labels of `X`
+- `batch_size=None`: (Integer) Batch size for predicting. If not provided, then the entire data is predicted once.
+
+##### Example Code
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the code
+...
+
+# Evaluating the labels using the trained model
+results = model.evaluate(X, batch_size=32)
+```
+
+
+
+
+#### `.summary()` Method
+The `.summary()` method is getting a summary of the model
+
+##### Supported Arguments
+- None
+
+##### Example Code
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the code
+...
+
+# Detailed summary of the model
+print(model.summary())
+```
+
+
+
+
+#### `.get_model()` Method
+The `.get_model()` method is used for getting the PyTorch model from the NeuralPy model. After extracting the model, the model can be treated just like a regular PyTorch model. 
+
+##### Supported Arguments
+- None
+
+##### Example Code
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the code
+...
+
+# Extracting the PyTorch model
+pytorch_model = model.get_model()
+```
+
+
+#### `.set_model()` Method
+The `.set_model()` method is used for converting a PyTorch model to a NeuralPy model. After this conversion, the model can be trained using NeuralPy optimizer and loss_functions.
+
+##### Supported Arguments
+- `model`: (PyTorch model) A valid class based on Sequential PyTorch model.
+
+##### Example Code
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the code
+...
+
+# Conveting the PyTorch model to NeuralPy model
+model.set_model(pytorch_model)
+```
 
 ---
+
 
 # Layers
 ```python
