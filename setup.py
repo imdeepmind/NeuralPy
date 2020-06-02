@@ -10,7 +10,7 @@ Check the docs for more info: https://neuralpy.imdeepmind.com/
 
 setup(
 	name="neuralpy-torch",
-	version="0.0.3",
+	version="0.0.4",
 	description="A Keras like deep learning library works on top of PyTorch",
 	long_description=long_description,
 	url="https://github.com/imdeepmind/NeuralPy",
