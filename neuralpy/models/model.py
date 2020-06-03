@@ -422,7 +422,7 @@ class Model:
 
         # Returning loss
         return {
-            'loss': loss
+            'loss': loss.item()
         }
 
     def summary(self):
