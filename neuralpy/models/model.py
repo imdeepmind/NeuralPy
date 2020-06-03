@@ -477,3 +477,6 @@ class Model:
 
         # Saving the model
         self.__model = model
+
+        # Transferring the model to device
+        self.__model.to(self.__device)
