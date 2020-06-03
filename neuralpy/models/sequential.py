@@ -34,8 +34,6 @@ class Sequential(Model):
         self.__layers = []
         self.__build = False
 
-        print(self.model)
-
     def add(self, layer):
         """
             In a Sequential model, the .add() method is responsible
@@ -74,13 +72,9 @@ class Sequential(Model):
         layers = build_layer_from_ref_and_details(self.__layers)
 
         # Making the PyTorch model using nn.Sequential
-        self.model = torch.nn.Sequential(OrderedDict(layers))
+        model = torch.nn.Sequential(OrderedDict(layers))
 
-        # Transferring the model to device
-        self.model.to(self.device)
-
-        # Printing a message with the device name
-        print("The model is running on", self.device)
+        self.set_model(model)
 
         # Changing the build status to True, so we can not make any changes
         self.__build = True
