@@ -490,7 +490,7 @@ class Sequential:
 
         # if metrics has accuracy, then calculating accuracy
         if self.__metrics and "accuracy" in self.__metrics:
-        	# Calculating no of corrects
+            # Calculating no of corrects
             corrects = calculate_accuracy(y_tensor, predictions)
 
             # Calculating accuracy

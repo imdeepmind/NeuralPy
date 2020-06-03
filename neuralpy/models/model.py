@@ -1,131 +1,75 @@
+import torch
+
+from .model_helper import (is_valid_layer,
+                           is_valid_optimizer,
+                           is_valid_loss_function,
+                           build_layer_from_ref_and_details,
+                           build_optimizer_from_ref_and_details,
+                           build_loss_function_from_ref_and_details,
+                           build_history_object_for_training,
+                           calculate_accuracy,
+                           print_training_progress,
+                           print_validation_progress)
+
 class Model:
-	def __init__(self):
-		pass
+    def __init__(self):
+        self.__model = None
+        self.__metrics = ["loss"]
+        self.__loss_function = None
+        self.__optimizer = None
 
-    def __is_valid_optimizer(self, optimizer):
+    
+    # pylint: disable=invalid-name
+    def __predict(self, X, batch_size=None):
         """
-            Checks if optimizer is valid or not
+            Method for predicting
+
+            Supported Arguments:
+                X: (Numpy Array) Data
+                batch_size=None: (Integer) Batch size for predicting
         """
-        # If the optimizer is None returning False
-        if not optimizer:
-            return False
+        # Calling model.eval as we are evaluating the model only
+        self.__model.eval()
 
-        try:
-            # Calling the get_optimizer method to details of the optimizer
-            optimizer_details = optimizer.get_optimizer()
+        # Initializing an empty list to store the predictions
+        # pylint: disable=not-callable,no-member
+        predictions = torch.Tensor()
 
-            # Checking the optimizer_details, it should return a dict
-            if not isinstance(optimizer_details, dict):
-                return False
+        # Converting the input X to PyTorch Tensor
+        X = torch.tensor(X)
 
-            # checking all the keys of object returned from the get_optimizer method
-            optimizer_arguments = optimizer_details["keyword_arguments"]
-            optimizer_function_ref = optimizer_details["optimizer"]
+        if batch_size:
+            # If batch_size is there then checking the length
+            # and comparing it with the length of input
+            if X.shape[0] < batch_size:
+                # Batch size can not be greater that sample size
+                raise ValueError(
+                    "Batch size is greater than total number of samples")
 
-            # Checking the optimizer_arguments, it should return a dict or None
-            if optimizer_arguments and not isinstance(optimizer_arguments, dict):
-                return False
+            # Predicting, so no grad
+            with torch.no_grad():
+                # Splitting the data into batches
+                for i in range(0, len(X), batch_size):
+                    # Generating the batch from X
+                    batch_x = X[i:i+batch_size].float()
 
-            # Checking the optimizer_function_ref
-            if not optimizer_function_ref:
-                return False
+                    # Feeding the batch into the model for predictions
+                    outputs = self.__model(batch_x)
 
-            # All good
-            return True
-
-        # If there is some missing architecture in the optimizer, then returning False
-        except AttributeError:
-            return False
-        # If the optimizer_details dict does not contains a key that it supposed to have
-        except KeyError:
-            return False
-
-    def __is_valid_loss_function(self, loss_function):
-        """
-            Checks if a loss function is valid or not
-        """
-        # If the loss_function is None returning False
-        if not loss_function:
-            return False
-
-        try:
-            # Calling the get_loss_function method to details of the loss_function
-            loss_function_details = loss_function.get_loss_function()
-
-            # Checking the loss_function_details, it should return a dict
-            if not isinstance(loss_function_details, dict):
-                return False
-
-            # Here im checking all the keys of object returned from the get_loss_function method
-            loss_function_arguments = loss_function_details["keyword_arguments"]
-            loss_function_function_ref = loss_function_details["loss_function"]
-
-            # Checking the loss_function_arguments, it should return a dict or None
-            if loss_function_arguments and not isinstance(loss_function_arguments, dict):
-                return False
-
-            # Checking the loss_function_function_ref
-            if not loss_function_function_ref:
-                return False
-
-            # All good
-            return True
-
-        # If there is some missing architecture in the loss_function, then returning False
-        except AttributeError:
-            return False
-        # If the loss_function_details dict does not contains a key that it supposed to have
-        except KeyError:
-            return False
-
-    def __build_optimizer_from_ref_and_details(self, optimizer_ref):
-        """
-            Builds optimizer from ref and details
-        """
-        # Getting the details of the optimizer using get_optimizer method
-        optimizer_details = optimizer_ref.get_optimizer()
-
-        # Storing the optimizer details
-        optimizer_func = optimizer_details["optimizer"]
-        optimizer_arguments = optimizer_details["keyword_arguments"]
-
-        # Creating a variable for the optimizer
-        optimizer = None
-
-        # Checking the optimizer_arguments, if it is not None then passing it to the optimizer
-        if optimizer_arguments:
-            # Initializing the optimizer with optimizer_arguments and models parameters
-            optimizer = optimizer_func(
-                **optimizer_arguments, params=self.__model.parameters())
+                    # Appending the data into the predictions tensor
+                    # pylint: disable=not-callable,no-member
+                    predictions = torch.cat((predictions, outputs))
         else:
-            # Initializing the optimizer with models parameters only
-            optimizer = optimizer_func(params=self.__model.parameters())
+            # Predicting, so no grad
+            with torch.no_grad():
+                # Feeding the full data into the model for predictions tensor
+                outputs = self.__model(X.float())
 
-        return optimizer
+                # saving the outputs in the predictions
+                predictions = outputs
 
-    def __build_loss_function_from_ref_and_details(self, loss_function_ref):
-        """
-            Builds loss function
-        """
-        # Getting the details of the loss_function using get_loss_function method
-        loss_function_details = loss_function_ref.get_loss_function()
-
-        # Storing the loss_function details
-        loss_function_func = loss_function_details["loss_function"]
-        loss_function_arguments = loss_function_details["keyword_arguments"]
-
-        # Creating a variable for the loss function
-        loss_function = None
-
-        # Checking the loss_function_arguments, if not None and passing it to the loss function
-        if loss_function_arguments:
-            # Passing the loss_function_arguments to the loss function
-            loss_function = loss_function_func(**loss_function_arguments)
-        else:
-            # Not passing the loss_function_arguments to the loss function
-            loss_function = loss_function_func()
-
-        return loss_function
+        # returning predictions tensor
+        return predictions
 
     def compile(self, optimizer, loss_function, metrics=None):
         """
@@ -145,11 +89,11 @@ class Model:
         """
 
         # Checking the optimizer using the method is_valid_optimizer
-        if not self.__is_valid_optimizer(optimizer):
+        if not is_valid_optimizer(optimizer):
             raise ValueError("Please provide a value neuralpy optimizer")
 
         # Checking the loss_function using the method is_valid_loss_function
-        if not self.__is_valid_loss_function(loss_function):
+        if not is_valid_loss_function(loss_function):
             raise ValueError("Please provide a value neuralpy loss function")
 
         if metrics and not isinstance(metrics, list):
@@ -158,12 +102,309 @@ class Model:
         # Setting metrics
         if metrics:
             self.__metrics = ["loss"] + metrics
-        else:
-            self.__metrics = ["loss"]
 
         # Storing the loss function and optimizer for future use
-        self.__optimizer = build_optimizer_from_ref_and_details(optimizer)
+        self.__optimizer = build_optimizer_from_ref_and_details(optimizer, self.__model.parameters())
         self.__loss_function = build_loss_function_from_ref_and_details(loss_function)
+
+    def fit(self, train_data, test_data, epochs=10, batch_size=32):
+        """
+            The `.fit()` method is used for training the NeuralPy model.
+
+            Supported Arguments
+                train_data: (Tuple(NumPy Array, NumPy Array)) Pass the training data
+                    as a tuple like (X, y) where X is training data and y is the
+                    labels for the training the model.
+                test_data:(Tuple(NumPy Array, NumPy Array)) Pass the validation data
+                    as a tuple like (X, y) where X is test data and y is the labels
+                    for the validating the model.
+                epochs=10: (Integer) Number of epochs
+                batch_size=32: (Integer) Batch size for training.
+
+
+        """
+        # Extracting the train and test data from the tuples
+        x_train, y_train = train_data
+        x_test, y_test = test_data
+
+        # If batch_size is there then checking the
+        # length and comparing it with the length of training data
+        if x_train.shape[0] < batch_size:
+            # Batch size can not be greater that train data size
+            raise ValueError(
+                "Batch size is greater than total number of training samples")
+
+        # If batch_size is there then checking the length and
+        # comparing it with the length of training data
+        if x_test.shape[0] < batch_size:
+            # Batch size can not be greater that test data size
+            raise ValueError(
+                "Batch size is greater than total number of testing samples")
+
+        # Checking the length of input and output
+        if x_train.shape[0] != y_train.shape[0]:
+            # length of X and y should be same
+            raise ValueError(
+                "Length of training Input data and training output data should be same")
+
+        # Checking the length of input and output
+        if x_test.shape[0] != y_test.shape[0]:
+            # length of X and y should be same
+            raise ValueError(
+                "Length of testing Input data and testing output data should be same")
+
+        # Converting the data into PyTorch tensor
+        # pylint: disable=not-callable,no-member
+        x_train = torch.tensor(x_train)
+        y_train = torch.tensor(y_train)
+
+        x_test = torch.tensor(x_test)
+        y_test = torch.tensor(y_test)
+
+        # Building the history object
+        history = build_history_object_for_training(self.__metrics)
+
+        # Running the epochs
+        for epoch in range(epochs):
+            # Initializing the loss and accuracy with 0
+            training_loss_score = 0
+            validation_loss_score = 0
+
+            correct_training = 0
+            correct_val = 0
+
+            # Training model :)
+            self.__model.train()
+
+            # Splitting the data into batches
+            for i in range(0, len(x_train), batch_size):
+                # Making the batches
+                batch_x = x_train[i:i+batch_size].float()
+                if "accuracy" in metrics:
+                    batch_y = y_train[i:i+batch_size]
+                else:
+                    batch_y = y_train[i:i+batch_size].float()
+
+                # Moving the batches to device
+                batch_x, batch_y = batch_x.to(
+                    self.__device), batch_y.to(self.__device)
+
+                # Zero grad
+                self.__model.zero_grad()
+
+                # Feeding the data into the model
+                outputs = self.__model(batch_x)
+
+                # Calculating the loss
+                train_loss = self.__loss_function(outputs, batch_y)
+
+                # Training
+                train_loss.backward()
+                self.__optimizer.step()
+
+                # Storing the loss val, batchwise data
+                training_loss_score = train_loss.item()
+                history["batchwise"]["training_loss"].append(train_loss.item())
+
+                # Calculating accuracy
+                # Checking if accuracy is there in metrics
+                if "accuracy" in metrics:
+                    corrects = calculate_accuracy(batch_y, outputs)
+
+                    correct_training += corrects
+
+                    history["batchwise"]["training_accuracy"].append(
+                        corrects/batch_size*100)
+
+                    print_training_progress(epoch, epochs, i, batch_size, len(
+                        x_train), train_loss.item(), corrects)
+                else:
+                    print_training_progress(
+                        epoch, epochs, i, batch_size, len(x_train), train_loss.item())
+
+            # Evaluating model
+            self.__model.eval()
+
+            # no grad, no training
+            with torch.no_grad():
+                # Splitting the data into batches
+                for i in range(0, len(x_test), batch_size):
+                    # Making the batches
+                    batch_x = x_train[i:i+batch_size].float()
+                    if "accuracy" in metrics:
+                        batch_y = y_train[i:i+batch_size]
+                    else:
+                        batch_y = y_train[i:i+batch_size].float()
+
+                    # Moving the batches to device
+                    batch_x, batch_y = batch_x.to(
+                        self.__device), batch_y.to(self.__device)
+
+                    # Feeding the data into the model
+                    outputs = self.__model(batch_x)
+
+                    # Calculating the loss
+                    validation_loss = self.__loss_function(outputs, batch_y)
+
+                    # Storing the loss val, batchwise data
+                    validation_loss_score += validation_loss.item()
+                    history["batchwise"]["validation_loss"].append(
+                        validation_loss.item())
+
+                    # Calculating accuracy
+                    # Checking if accuracy is there in metrics
+                    if "accuracy" in metrics:
+                        corrects = corrects = calculate_accuracy(
+                            batch_y, outputs)
+
+                        correct_val += corrects
+
+                        history["batchwise"]["validation_accuracy"].append(
+                            corrects/batch_size*100)
+
+            # Calculating the mean val loss score for all batches
+            validation_loss_score /= batch_size
+
+            # Added the epochwise value to the history dictionary
+            history["epochwise"]["training_loss"].append(training_loss_score)
+            history["epochwise"]["validation_loss"].append(
+                validation_loss_score)
+
+            # Checking if accuracy is there in metrics
+            if "accuracy" in metrics:
+                # Adding data into history dictionary
+                history["epochwise"]["training_accuracy"].append(
+                    correct_training/len(x_train)*100)
+                history["epochwise"]["training_accuracy"].append(
+                    correct_val/len(x_test)*100)
+
+                # Printing a friendly message to the console
+                print_validation_progress(
+                    validation_loss_score, len(x_train), correct_val)
+            else:
+                # Printing a friendly message to the console
+                print_validation_progress(
+                    validation_loss_score, len(x_train))
+
+        # Returning history
+        return history
+
+    def predict(self, X, batch_size=None):
+        """
+            The .predict()method is used for predicting using the trained mode.
+
+            Supported Arguments
+                X: (NumPy Array) Data to be predicted
+                batch_size=None: (Integer) Batch size for predicting.
+                If not provided, then the entire data is predicted once.
+        """
+        # Calling the __predict method to get the predicts
+        predictions = self.__predict(X, batch_size)
+
+        # Returning an numpy array of predictions
+        return predictions.numpy()
+
+    def predict_classes(self, X, batch_size=None):
+        """
+            The .predict_clas()method is used for predicting classes using the trained mode.
+            This method works only if accuracy is passed in the metrics parameter on the
+            .compile()method.
+
+            Supported Arguments
+                X: (NumPy Array) Data to be predicted
+                batch_size=None: (Integer) Batch size for predicting.
+                If not provided, then the entire data is predicted once.
+        """
+        # Checking if the model is for classification
+        if self.__metrics and "accuracy" in self.__metrics:
+            # Calling the __predict method to get the predicts
+            predictions = self.__predict(X, batch_size)
+
+            # Detecting the classes
+            predictions = predictions.argmax(dim=1, keepdim=True)
+
+            return predictions.numpy()
+        else:
+            raise ValueError(
+                "Cannot predict classes as this is not a classification problem")
+
+    def evaluate(self, X, y, batch_size=None):
+        """
+            The .evaluate()method is used for evaluating models using the test dataset.
+
+            Supported Arguments
+                X: (NumPy Array) Data to be predicted
+                y: (NumPy Array) Original labels of X
+                batch_size=None: (Integer) Batch size for predicting.
+                    If not provided, then the entire data is predicted once.
+        """
+        # If batch_size is there then checking the length and comparing
+        # it with the length of training data
+        if batch_size and X.shape[0] < batch_size:
+            # Batch size can not be greater that train data size
+            raise ValueError(
+                "Batch size is greater than total number of training samples")
+
+        # Checking the length of input and output
+        if X.shape[0] != y.shape[0]:
+            # length of X and y should be same
+            raise ValueError(
+                "Length of training Input data and training output data should be same")
+
+        # Calling the __predict method to get the predicts
+        predictions = self.__predict(X, batch_size)
+
+        # Converting to tensor
+        # pylint: disable=not-callable,no-member
+        if self.__metrics and "accuracy" in self.__metrics:
+            y_tensor = torch.tensor(y)
+        else:
+            y_tensor = torch.tensor(y).float()
+
+        # Calculating the loss
+        loss = self.__loss_function(predictions, y_tensor)
+
+        # if metrics has accuracy, then calculating accuracy
+        if self.__metrics and "accuracy" in self.__metrics:
+            # Calculating no of corrects
+            corrects = calculate_accuracy(y_tensor, predictions)
+
+            # Calculating accuracy
+            accuracy = corrects / len(X) * 100
+
+            # Returning loss and accuracy
+            return {
+                'loss': loss.item(),
+                'accuracy': accuracy
+            }
+
+        # Returning loss
+        return {
+            'loss': loss
+        }
+
+    def summary(self):
+        """
+            The .summary() method is getting a summary of the model.
+
+            Supported Arguments
+                None
+        """
+        # Printing the model summary using PyTorch model
+        if self.__build:
+            # Printing models summary
+            print(self.__model)
+
+            # Calculating total number of params
+            print("Total Number of Parameters: ", sum(p.numel()
+                                                      for p in self.__model.parameters()))
+
+            # Calculating total number of trainable params
+            print("Total Number of Trainable Parameters: ", sum(p.numel()
+                                                                for p in self.__model.parameters()
+                                                                if p.requires_grad))
+        else:
+            raise Exception("You need to build the model first")
 
     def get_model(self):
         """
