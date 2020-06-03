@@ -15,11 +15,50 @@ class Model:
     """
         NeuralPy Model Class
     """
-    def __init__(self):
+    def __init__(self, force_cpu, training_device, random_state):
         self.__model = None
         self.__metrics = ["loss"]
         self.__loss_function = None
         self.__optimizer = None
+
+        # Checking the force_cpu parameter
+        if not isinstance(force_cpu, bool):
+            raise ValueError(
+                f"You have provided an invalid value for the parameter force_cpu")
+
+        # Checking the training_device parameter and comparing it with pytorch device class
+        # pylint: disable=no-member
+        if training_device and not isinstance(training_device, torch.device):
+            raise ValueError("Please provide a valid neuralpy device class")
+
+        # Validating random state
+        if random_state and not isinstance(random_state, int):
+            raise ValueError("Please provide a valid random state")
+
+        # if force_cpu then using CPU
+        # if device provided, then using it
+        # else auto detecting the device, if cuda available then using it (default option)
+
+        # there is a issue pylint, because of that, disabling the no-member check
+        # for more info, have the look at the link below
+        # https://github.com/pytorch/pytorch/issues/701
+
+        if training_device:
+            self.__device = training_device
+        elif force_cpu:
+            # pylint: disable=no-member
+            self.__device = torch.device("cpu")
+        else:
+            if torch.cuda.is_available():
+                # pylint: disable=no-member
+                self.__device = torch.device("cuda:0")
+            else:
+                # pylint: disable=no-member
+                self.__device = torch.device("cpu")
+
+        # Setting random state if given
+        if random_state:
+            torch.manual_seed(random_state)
 
     # pylint: disable=invalid-name
     def __predict(self, X, batch_size=None):
