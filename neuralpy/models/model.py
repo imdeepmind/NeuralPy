@@ -1,9 +1,9 @@
+"""NeuralPy Model Class"""
+
 import torch
 
-from .model_helper import (is_valid_layer,
-                           is_valid_optimizer,
+from .model_helper import (is_valid_optimizer,
                            is_valid_loss_function,
-                           build_layer_from_ref_and_details,
                            build_optimizer_from_ref_and_details,
                            build_loss_function_from_ref_and_details,
                            build_history_object_for_training,
@@ -12,13 +12,15 @@ from .model_helper import (is_valid_layer,
                            print_validation_progress)
 
 class Model:
+    """
+        NeuralPy Model Class
+    """
     def __init__(self):
         self.__model = None
         self.__metrics = ["loss"]
         self.__loss_function = None
         self.__optimizer = None
 
-    
     # pylint: disable=invalid-name
     def __predict(self, X, batch_size=None):
         """
@@ -104,7 +106,8 @@ class Model:
             self.__metrics = ["loss"] + metrics
 
         # Storing the loss function and optimizer for future use
-        self.__optimizer = build_optimizer_from_ref_and_details(optimizer, self.__model.parameters())
+        self.__optimizer = build_optimizer_from_ref_and_details(optimizer,
+                                                                self.__model.parameters())
         self.__loss_function = build_loss_function_from_ref_and_details(loss_function)
 
     def fit(self, train_data, test_data, epochs=10, batch_size=32):
@@ -180,7 +183,7 @@ class Model:
             for i in range(0, len(x_train), batch_size):
                 # Making the batches
                 batch_x = x_train[i:i+batch_size].float()
-                if "accuracy" in metrics:
+                if "accuracy" in self.__metrics:
                     batch_y = y_train[i:i+batch_size]
                 else:
                     batch_y = y_train[i:i+batch_size].float()
@@ -208,7 +211,7 @@ class Model:
 
                 # Calculating accuracy
                 # Checking if accuracy is there in metrics
-                if "accuracy" in metrics:
+                if "accuracy" in self.__metrics:
                     corrects = calculate_accuracy(batch_y, outputs)
 
                     correct_training += corrects
@@ -231,7 +234,7 @@ class Model:
                 for i in range(0, len(x_test), batch_size):
                     # Making the batches
                     batch_x = x_train[i:i+batch_size].float()
-                    if "accuracy" in metrics:
+                    if "accuracy" in self.__metrics:
                         batch_y = y_train[i:i+batch_size]
                     else:
                         batch_y = y_train[i:i+batch_size].float()
@@ -253,7 +256,7 @@ class Model:
 
                     # Calculating accuracy
                     # Checking if accuracy is there in metrics
-                    if "accuracy" in metrics:
+                    if "accuracy" in self.__metrics:
                         corrects = corrects = calculate_accuracy(
                             batch_y, outputs)
 
@@ -271,7 +274,7 @@ class Model:
                 validation_loss_score)
 
             # Checking if accuracy is there in metrics
-            if "accuracy" in metrics:
+            if "accuracy" in self.__metrics:
                 # Adding data into history dictionary
                 history["epochwise"]["training_accuracy"].append(
                     correct_training/len(x_train)*100)
@@ -391,7 +394,7 @@ class Model:
                 None
         """
         # Printing the model summary using PyTorch model
-        if self.__build:
+        if self.__model:
             # Printing models summary
             print(self.__model)
 
