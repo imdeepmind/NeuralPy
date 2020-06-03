@@ -157,13 +157,13 @@ def build_layer_from_ref_and_details(layer_refs):
 
     # Strong the output dimension, for the next layer,
     # we need this to calculate the next input layer dim
-    prev_output_dim = 0
+    prev_output_dim = None
 
     # Iterating through the layers
     for index, layer_ref in enumerate(layer_refs):
 
         # Generating n_input if not present
-        if isinstance(prev_output_dim, int) and prev_output_dim is not 0:
+        if isinstance(prev_output_dim, int):
             # For each layer, we have this method that returns the new input layer for next dim
             # based on the previous output dim
             layer_ref.get_input_dim(prev_output_dim)
@@ -198,7 +198,7 @@ def build_layer_from_ref_and_details(layer_refs):
 
         # Checking layer_nodes value against some condition,
         # and then storing the n_nodes to calculate the input dim of next layer
-        if layer_nodes is not None and layer_nodes >= 0:
+        if layer_nodes is not None:
             prev_output_dim = layer_nodes
 
     return layers
