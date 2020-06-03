@@ -4,7 +4,7 @@ from collections import OrderedDict
 import torch
 
 from .model import Model
-from .model_helper import (is_valid_layer, build_layer_from_ref_and_details)
+from .model_helper import (is_valid_layer, build_layer_from_dict)
 
 class Sequential(Model):
     """
@@ -69,7 +69,7 @@ class Sequential(Model):
                 There is no argument for this model
         """
         # Building the layers from the layer refs and details
-        layers = build_layer_from_ref_and_details(self.__layers)
+        layers = build_layer_from_dict(self.__layers)
 
         # Making the PyTorch model using nn.Sequential
         model = torch.nn.Sequential(OrderedDict(layers))

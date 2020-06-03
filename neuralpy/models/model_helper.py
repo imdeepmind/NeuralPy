@@ -101,11 +101,9 @@ def is_valid_optimizer(optimizer):
         # All good
         return True
 
-    # If there is some missing architecture in the optimizer, then returning False
-    except AttributeError:
-        return False
-    # If the optimizer_details dict does not contains a key that it supposed to have
-    except KeyError:
+    # Handling exception
+    # pylint: disable=broad-except
+    except Exception:
         return False
 
 
@@ -140,15 +138,13 @@ def is_valid_loss_function(loss_function):
         # All good
         return True
 
-    # If there is some missing architecture in the loss_function, then returning False
-    except AttributeError:
-        return False
-    # If the loss_function_details dict does not contains a key that it supposed to have
-    except KeyError:
+    # Handling exception
+    # pylint: disable=broad-except
+    except Exception:
         return False
 
 
-def build_layer_from_ref_and_details(layer_refs):
+def build_layer_from_dict(layer_refs):
     """
         Builds model from layers ref and details
     """
@@ -204,7 +200,7 @@ def build_layer_from_ref_and_details(layer_refs):
     return layers
 
 
-def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
+def build_optimizer_from_dict(optimizer_ref, parameters):
     """
         Builds optimizer from ref and details
     """
@@ -230,7 +226,7 @@ def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
     return optimizer
 
 
-def build_loss_function_from_ref_and_details(loss_function_ref):
+def build_loss_function_from_dict(loss_function_ref):
     """
         Builds loss function
     """
@@ -255,7 +251,7 @@ def build_loss_function_from_ref_and_details(loss_function_ref):
     return loss_function
 
 
-def build_history_object_for_training(metrics):
+def build_history_object(metrics):
     """
         Builds history object
     """

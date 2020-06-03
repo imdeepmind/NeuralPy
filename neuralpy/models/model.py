@@ -4,9 +4,9 @@ import torch
 
 from .model_helper import (is_valid_optimizer,
                            is_valid_loss_function,
-                           build_optimizer_from_ref_and_details,
-                           build_loss_function_from_ref_and_details,
-                           build_history_object_for_training,
+                           build_optimizer_from_dict,
+                           build_loss_function_from_dict,
+                           build_history_object,
                            calculate_accuracy,
                            print_training_progress,
                            print_validation_progress)
@@ -145,9 +145,9 @@ class Model:
             self.__metrics = ["loss"] + metrics
 
         # Storing the loss function and optimizer for future use
-        self.__optimizer = build_optimizer_from_ref_and_details(optimizer,
-                                                                self.__model.parameters())
-        self.__loss_function = build_loss_function_from_ref_and_details(loss_function)
+        self.__optimizer = build_optimizer_from_dict(optimizer,
+                                                     self.__model.parameters())
+        self.__loss_function = build_loss_function_from_dict(loss_function)
 
     def fit(self, train_data, test_data, epochs=10, batch_size=32):
         """
@@ -204,7 +204,7 @@ class Model:
         y_test = torch.tensor(y_test)
 
         # Building the history object
-        history = build_history_object_for_training(self.__metrics)
+        history = build_history_object(self.__metrics)
 
         # Running the epochs
         for epoch in range(epochs):
