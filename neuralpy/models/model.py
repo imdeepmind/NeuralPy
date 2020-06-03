@@ -16,7 +16,7 @@ class Model:
         NeuralPy Model Class
     """
     def __init__(self, force_cpu, training_device, random_state):
-        self.__model = None
+        self.model = None
         self.__metrics = ["loss"]
         self.__loss_function = None
         self.__optimizer = None
@@ -44,17 +44,17 @@ class Model:
         # https://github.com/pytorch/pytorch/issues/701
 
         if training_device:
-            self.__device = training_device
+            self.device = training_device
         elif force_cpu:
             # pylint: disable=no-member
-            self.__device = torch.device("cpu")
+            self.device = torch.device("cpu")
         else:
             if torch.cuda.is_available():
                 # pylint: disable=no-member
-                self.__device = torch.device("cuda:0")
+                self.device = torch.device("cuda:0")
             else:
                 # pylint: disable=no-member
-                self.__device = torch.device("cpu")
+                self.device = torch.device("cpu")
 
         # Setting random state if given
         if random_state:
@@ -70,7 +70,7 @@ class Model:
                 batch_size=None: (Integer) Batch size for predicting
         """
         # Calling model.eval as we are evaluating the model only
-        self.__model.eval()
+        self.model.eval()
 
         # Initializing an empty list to store the predictions
         # pylint: disable=not-callable,no-member
@@ -95,7 +95,7 @@ class Model:
                     batch_x = X[i:i+batch_size].float()
 
                     # Feeding the batch into the model for predictions
-                    outputs = self.__model(batch_x)
+                    outputs = self.model(batch_x)
 
                     # Appending the data into the predictions tensor
                     # pylint: disable=not-callable,no-member
@@ -104,7 +104,7 @@ class Model:
             # Predicting, so no grad
             with torch.no_grad():
                 # Feeding the full data into the model for predictions tensor
-                outputs = self.__model(X.float())
+                outputs = self.model(X.float())
 
                 # saving the outputs in the predictions
                 predictions = outputs
@@ -146,7 +146,7 @@ class Model:
 
         # Storing the loss function and optimizer for future use
         self.__optimizer = build_optimizer_from_ref_and_details(optimizer,
-                                                                self.__model.parameters())
+                                                                self.model.parameters())
         self.__loss_function = build_loss_function_from_ref_and_details(loss_function)
 
     def fit(self, train_data, test_data, epochs=10, batch_size=32):
@@ -216,7 +216,7 @@ class Model:
             correct_val = 0
 
             # Training model :)
-            self.__model.train()
+            self.model.train()
 
             # Splitting the data into batches
             for i in range(0, len(x_train), batch_size):
@@ -229,13 +229,13 @@ class Model:
 
                 # Moving the batches to device
                 batch_x, batch_y = batch_x.to(
-                    self.__device), batch_y.to(self.__device)
+                    self.device), batch_y.to(self.device)
 
                 # Zero grad
-                self.__model.zero_grad()
+                self.model.zero_grad()
 
                 # Feeding the data into the model
-                outputs = self.__model(batch_x)
+                outputs = self.model(batch_x)
 
                 # Calculating the loss
                 train_loss = self.__loss_function(outputs, batch_y)
@@ -265,7 +265,7 @@ class Model:
                         epoch, epochs, i, batch_size, len(x_train), train_loss.item())
 
             # Evaluating model
-            self.__model.eval()
+            self.model.eval()
 
             # no grad, no training
             with torch.no_grad():
@@ -280,10 +280,10 @@ class Model:
 
                     # Moving the batches to device
                     batch_x, batch_y = batch_x.to(
-                        self.__device), batch_y.to(self.__device)
+                        self.device), batch_y.to(self.device)
 
                     # Feeding the data into the model
-                    outputs = self.__model(batch_x)
+                    outputs = self.model(batch_x)
 
                     # Calculating the loss
                     validation_loss = self.__loss_function(outputs, batch_y)
@@ -433,17 +433,17 @@ class Model:
                 None
         """
         # Printing the model summary using PyTorch model
-        if self.__model:
+        if self.model:
             # Printing models summary
-            print(self.__model)
+            print(self.model)
 
             # Calculating total number of params
             print("Total Number of Parameters: ", sum(p.numel()
-                                                      for p in self.__model.parameters()))
+                                                      for p in self.model.parameters()))
 
             # Calculating total number of trainable params
             print("Total Number of Trainable Parameters: ", sum(p.numel()
-                                                                for p in self.__model.parameters()
+                                                                for p in self.model.parameters()
                                                                 if p.requires_grad))
         else:
             raise Exception("You need to build the model first")
@@ -458,7 +458,7 @@ class Model:
                 None
         """
         # Returning the PyTorch model
-        return self.__model
+        return self.model
 
     def set_model(self, model):
         """
@@ -476,7 +476,7 @@ class Model:
             raise ValueError("Please provide a valid PyTorch model")
 
         # Saving the model
-        self.__model = model
+        self.model = model
 
         # Transferring the model to device
-        self.__model.to(self.__device)
+        self.model.to(self.device)
