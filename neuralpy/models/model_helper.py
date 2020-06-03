@@ -1,15 +1,17 @@
 """Sequential Helper functions"""
 
+
 def generate_layer_name(layer_type, index):
     """
-    	Generates a unique layer name
+        Generates a unique layer name
     """
     # Generating a unique name for the layer
     return f"{layer_type.lower()}_layer_{index+1}"
 
+
 def is_valid_layer(layer):
     """
-    	Check if layer is valid for not
+        Check if layer is valid for not
     """
     # if the layer is none, returning False
     if not layer:
@@ -70,7 +72,7 @@ def is_valid_layer(layer):
 
 def is_valid_optimizer(optimizer):
     """
-    	Checks if optimizer is valid or not
+        Checks if optimizer is valid or not
     """
     # If the optimizer is None returning False
     if not optimizer:
@@ -99,17 +101,15 @@ def is_valid_optimizer(optimizer):
         # All good
         return True
 
-    # If there is some missing architecture in the optimizer, then returning False
-    except AttributeError:
-        return False
-    # If the optimizer_details dict does not contains a key that it supposed to have
-    except KeyError:
+    # Handling exception
+    # pylint: disable=broad-except
+    except Exception:
         return False
 
 
 def is_valid_loss_function(loss_function):
     """
-    	Checks if a loss function is valid or not
+        Checks if a loss function is valid or not
     """
     # If the loss_function is None returning False
     if not loss_function:
@@ -138,30 +138,28 @@ def is_valid_loss_function(loss_function):
         # All good
         return True
 
-    # If there is some missing architecture in the loss_function, then returning False
-    except AttributeError:
-        return False
-    # If the loss_function_details dict does not contains a key that it supposed to have
-    except KeyError:
+    # Handling exception
+    # pylint: disable=broad-except
+    except Exception:
         return False
 
 
-def build_layer_from_ref_and_details(layer_refs):
+def build_layer_from_dict(layer_refs):
     """
-    	Builds model from layers ref and details
+        Builds model from layers ref and details
     """
     # Storing the layer here to build the Sequential layer
     layers = []
 
     # Strong the output dimension, for the next layer,
     # we need this to calculate the next input layer dim
-    prev_output_dim = 0
+    prev_output_dim = None
 
     # Iterating through the layers
     for index, layer_ref in enumerate(layer_refs):
 
         # Generating n_input if not present
-        if isinstance(prev_output_dim, int) and prev_output_dim is not 0:
+        if isinstance(prev_output_dim, int):
             # For each layer, we have this method that returns the new input layer for next dim
             # based on the previous output dim
             layer_ref.get_input_dim(prev_output_dim)
@@ -196,15 +194,15 @@ def build_layer_from_ref_and_details(layer_refs):
 
         # Checking layer_nodes value against some condition,
         # and then storing the n_nodes to calculate the input dim of next layer
-        if layer_nodes is not None and layer_nodes >= 0:
+        if layer_nodes is not None:
             prev_output_dim = layer_nodes
 
     return layers
 
 
-def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
+def build_optimizer_from_dict(optimizer_ref, parameters):
     """
-    	Builds optimizer from ref and details
+        Builds optimizer from ref and details
     """
     # Getting the details of the optimizer using get_optimizer method
     optimizer_details = optimizer_ref.get_optimizer()
@@ -228,9 +226,9 @@ def build_optimizer_from_ref_and_details(optimizer_ref, parameters):
     return optimizer
 
 
-def build_loss_function_from_ref_and_details(loss_function_ref):
+def build_loss_function_from_dict(loss_function_ref):
     """
-    	Builds loss function
+        Builds loss function
     """
     # Getting the details of the loss_function using get_loss_function method
     loss_function_details = loss_function_ref.get_loss_function()
@@ -253,9 +251,9 @@ def build_loss_function_from_ref_and_details(loss_function_ref):
     return loss_function
 
 
-def build_history_object_for_training(metrics):
+def build_history_object(metrics):
     """
-    	Builds history object
+        Builds history object
     """
     history = {
         'batchwise': {},
@@ -274,7 +272,7 @@ def build_history_object_for_training(metrics):
 # pylint: disable=invalid-name
 def calculate_accuracy(y, y_pred):
     """
-    	Calculates accuracy from real labels and predicted labels
+        Calculates accuracy from real labels and predicted labels
     """
     pred = y_pred.argmax(dim=1, keepdim=True)
 
@@ -286,14 +284,14 @@ def calculate_accuracy(y, y_pred):
 def print_training_progress(epoch, epochs, batch, batches, no_samples,
                             training_loss, training_corrects=None):
     """
-    	Show a training progress text
+        Show a training progress text
     """
     # Printing a friendly message to the console
     message = (
-    		  f"Epoch: {epoch+1}/{epochs} - "
-    		  f"Batch: {batch//batches+1}/{no_samples//batches} - "
-    		  f"Training Loss: {training_loss:0.4f}"
-    		  )
+        f"Epoch: {epoch+1}/{epochs} - "
+        f"Batch: {batch//batches+1}/{no_samples//batches} - "
+        f"Training Loss: {training_loss:0.4f}"
+    )
 
     if training_corrects:
         message += f" - Training Accuracy: {training_corrects/batches*100:.4f}%"
@@ -303,13 +301,13 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
 
 def print_validation_progress(validation_loss, no_samples, validtion_corrects=None):
     """
-    	Show a validation progress text
+        Show a validation progress text
     """
     if validtion_corrects:
         print(
             (
-            	   f"\nValidation Loss: {validation_loss:.4f} - "
-            	   f"Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%"
+                f"\nValidation Loss: {validation_loss:.4f} - "
+                f"Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%"
             )
         )
     else:
