@@ -89,7 +89,7 @@ model.add(Dense(n_nodes=1, n_inputs=1))
 ```
 
 #### Building the model
-Once the model archeitectre is ready, we can build the model. This build methods a PyTorch model inernally.
+Once the model architecture is ready, we can build the model. This build method a PyTorch model internally.
 
 ```python
 # Building the model
@@ -105,14 +105,14 @@ model.compile(optimizer=Adam(), loss_function=MSELoss())
 ```
 
 #### Training the model
-To train we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method.
+To train, we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method.
 
 ```python
 model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)
 ```
 
 #### Predicting Results
-Main purpose of model is predict. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
+Main purpose of the model is predict. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
 
 ```python
 # Predicting
@@ -120,7 +120,7 @@ preds = model.predict(X=X_test, batch_size=4)
 ```
 
 #### Evaluating the models
-After training, one importent step is to evaluate the model on the test dataset. To do that, we have, in NeuralPy, we've a `.evaluate()` method.
+After training, one important step is to evaluate the model on the test dataset. To do that, we have, in NeuralPy, we have a `.evaluate()` method.
 
 ```python
 # Evaluating
@@ -1067,6 +1067,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc5NTM0NTY5OCwtMTY5MTEzNTc1NywxNz
+eyJoaXN0b3J5IjpbMTU4ODYzMDE5MiwtMTY5MTEzNTc1NywxNz
 gwNTA4NzIzXX0=
 -->
