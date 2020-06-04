@@ -116,8 +116,11 @@ Main purpose of model is predict. In NeuralPy models, there are two methods for 
 
 ```python
 # Predicting
-model.predict(X=X_test, batch)
+preds = model.predict(X=X_test, batch_size=4)
 ```
+
+#### Evaluating the models
+After training, one importent step is to evaluate the model on the test dataset. To do that, we have, in NeuralPy, we've a `.evaluate()`
 
 ---
 
@@ -1059,6 +1062,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjgxMDEyMzIwLC0xNjkxMTM1NzU3LDE3OD
+eyJoaXN0b3J5IjpbNDUzNTc0ODAyLC0xNjkxMTM1NzU3LDE3OD
 A1MDg3MjNdfQ==
 -->
