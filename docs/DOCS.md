@@ -124,7 +124,7 @@ After training, one importent step is to evaluate the model on the test dataset.
 
 ```python
 # Evaluating
-model.eva
+ev = model.evaluate(X=X_test, y=y_test, batch_size=4)
 ```
 
 ---
@@ -1067,6 +1067,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDk0NjMzMzAzLC0xNjkxMTM1NzU3LDE3OD
-A1MDg3MjNdfQ==
+eyJoaXN0b3J5IjpbLTc5NTM0NTY5OCwtMTY5MTEzNTc1NywxNz
+gwNTA4NzIzXX0=
 -->
