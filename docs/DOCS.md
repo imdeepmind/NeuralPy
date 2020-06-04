@@ -85,10 +85,15 @@ model.add(Dense(n_nodes=1, n_inputs=1))
 ```
 
 #### Building the model
-Once the model archeitectre is ready, we can build the model. This build methods a PyTorch model inernally from
+Once the model archeitectre is ready, we can build the model. This build methods a PyTorch model inernally.
+
+```python
+# Building the model
+model.build()
+```
 
 #### Compiling the model
-Once the model architecture is ready, we can compile with the optimizer and loss function. The Sequential class provides an easy compile method for that. We just need to pass the optimizer and loss function in the compile method.
+Once the model architecture is ready, we can compile with the optimizer and loss function. NeuralPy models provide an easy compile method for that. We just need to pass the optimizer and loss function in the compile method. It also accepts a metrics parameter, for this case, we don't need it.
 
 ```python
 # Compiling the model
@@ -1042,6 +1047,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNDY5NDE1ODcsLTE2OTExMzU3NTcsMT
-c4MDUwODcyM119
+eyJoaXN0b3J5IjpbLTY4MjkxMDM4MywtMTY5MTEzNTc1NywxNz
+gwNTA4NzIzXX0=
 -->
