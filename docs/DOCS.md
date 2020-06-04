@@ -84,6 +84,8 @@ model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1))
 ```
 
+####
+
 #### Compiling the model
 Once the model architecture is ready, we can compile with the optimizer and loss function. The Sequential class provides an easy compile method for that. We just need to pass the optimizer and loss function in the compile method.
 
@@ -1039,5 +1041,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2OTExMzU3NTcsMTc4MDUwODcyM119
+eyJoaXN0b3J5IjpbNjc0Njc2MDcsLTE2OTExMzU3NTcsMTc4MD
+UwODcyM119
 -->
