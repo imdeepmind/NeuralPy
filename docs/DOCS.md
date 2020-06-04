@@ -1,6 +1,6 @@
 
 # Introduction
-NeuralPy is a Keras like, machine learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library, cross-compatible with PyTorch models, suitable for all kinds of machine learning experiments, learning, research, etc.
+NeuralPy is a Keras like, deep learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library, cross-compatible with PyTorch models, suitable for all kinds of machine learning experiments, learning, research, etc.
 
 ## PyTorch in NeuralPy
 PyTorch is an open-source machine learning framework that accelerates the path from research prototyping to production deployment developed by Facebook runs on both CPU and GPU.
@@ -1038,3 +1038,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 
 ---
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTc4MDUwODcyM119
+-->
