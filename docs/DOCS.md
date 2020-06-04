@@ -59,6 +59,10 @@ y_train = X_train + 5 * np.random.rand(100, 1)
 # Validation data
 X_validation = np.random.rand(100, 1) * 10
 y_validation = X_validation + 5 * np.random.rand(100, 1)
+
+# Test data
+X_test = np.random.rand(100, 1) * 10
+y_test = X_test + 5 * np.random.rand(100, 1)
 ```
 
 #### Importing dependencies from NeuralPy
@@ -108,7 +112,12 @@ model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation),
 ```
 
 #### Predicting Results
-Main purpose of model is predict. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. As it is a p
+Main purpose of model is predict. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
+
+```python
+# Predicting
+model.predict(X=X_test, batch)
+```
 
 ---
 
@@ -1050,6 +1059,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NzA1NjEyMDEsLTE2OTExMzU3NTcsMT
-c4MDUwODcyM119
+eyJoaXN0b3J5IjpbMjgxMDEyMzIwLC0xNjkxMTM1NzU3LDE3OD
+A1MDg3MjNdfQ==
 -->
