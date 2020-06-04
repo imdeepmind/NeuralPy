@@ -120,7 +120,12 @@ preds = model.predict(X=X_test, batch_size=4)
 ```
 
 #### Evaluating the models
-After training, one importent step is to evaluate the model on the test dataset. To do that, we have, in NeuralPy, we've a `.evaluate()`
+After training, one importent step is to evaluate the model on the test dataset. To do that, we have, in NeuralPy, we've a `.evaluate()` method.
+
+```python
+# Evaluating
+model.eva
+```
 
 ---
 
@@ -1062,6 +1067,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDUzNTc0ODAyLC0xNjkxMTM1NzU3LDE3OD
+eyJoaXN0b3J5IjpbNDk0NjMzMzAzLC0xNjkxMTM1NzU3LDE3OD
 A1MDg3MjNdfQ==
 -->
