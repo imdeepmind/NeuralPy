@@ -23,14 +23,16 @@ Here are some highlights of NeuralPy:
 Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NerualPy, we need to install some additional dependencies.
 
 ### Prerequisites 
-NeuralPy runs on Python 3, so first install Python 3. Please check the python documentation for installation instructions. After that install PyTorch and Numpy. For instructions, please check their official documentation and installation guides.
+NeuralPy runs on Python 3.6+, so first install Python 3. Please check the python documentation for installation instructions. After that install PyTorch and Numpy. For instructions, please check their official documentation and installation guides.
+
+> NeuralPy runs on Python 3.6+, there is no version for Python 2
 
 ### Installation
 To install NeuralPy run the following command on terminal.
 ```bash
 pip install neuralpy-torch
 ```
-If you have multiple versions of it, then you might need to use pip3.
+If you have multiple versions of python, then you might need to use pip3.
 
 ```bash
 pip3 install neuralpy-torch
@@ -1067,6 +1069,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU4ODYzMDE5MiwtMTY5MTEzNTc1NywxNz
-gwNTA4NzIzXX0=
+eyJoaXN0b3J5IjpbLTEzNTAwMDU3NzEsMTU4ODYzMDE5MiwtMT
+Y5MTEzNTc1NywxNzgwNTA4NzIzXX0=
 -->
