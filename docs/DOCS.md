@@ -107,6 +107,9 @@ To train we have the fit method. We need to pass the training and validation dat
 model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)
 ```
 
+#### Predicting Results
+Main purpose of model is predict. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. As it is a p
+
 ---
 
 # Models
@@ -1047,6 +1050,6 @@ Here the `get_loss_function` is similar to the `get_layer` method. Just returns 
 
 ---
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY4MjkxMDM4MywtMTY5MTEzNTc1NywxNz
-gwNTA4NzIzXX0=
+eyJoaXN0b3J5IjpbLTE1NzA1NjEyMDEsLTE2OTExMzU3NTcsMT
+c4MDUwODcyM119
 -->
