@@ -322,11 +322,11 @@ class Model:
 
                 # Printing a friendly message to the console
                 print_validation_progress(
-                    validation_loss_score, len(x_train), correct_val)
+                    validation_loss_score, len(x_test), correct_val)
             else:
                 # Printing a friendly message to the console
                 print_validation_progress(
-                    validation_loss_score, len(x_train))
+                    validation_loss_score, len(x_test))
 
         # Returning history
         return history
