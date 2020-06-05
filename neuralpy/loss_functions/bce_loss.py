@@ -56,13 +56,25 @@ class BCELoss:
             There is no need to call this method as this is used by the
             Sequential model to build the model
         """
+        # If weight provided, then converting it into torch tensor
+        weight = None
+
+        if self.__weight is not None:
+            weight = torch.tensor(self.__weight).float()
+
+        # pos_weight provided, then converting in into torch tensor
+        pos_weight = None
+
+        if self.__pos_weight is not None:
+            pos_weight = torch.tensor(self.__pos_weight).float()
+
         return {
             'loss_function': _BCEWithLogitsLoss,
             'keyword_arguments': {
                 # pylint: disable=not-callable
-                'weight': torch.tensor(self.__weight).float(),
+                'weight': weight,
                 'reduction': self.__reduction,
                 # pylint: disable=not-callable
-                'pos_weight': torch.tensor(self.__pos_weight).float()
+                'pos_weight': pos_weight
             }
         }
