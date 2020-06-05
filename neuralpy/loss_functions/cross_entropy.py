@@ -56,6 +56,7 @@ class CrossEntropyLoss:
             Sequential model to build the model
         """
         # If weight provided, then converting it into torch tensor
+        # pylint: disable=not-callable
         weight = None
 
         if self.__weight is not None:

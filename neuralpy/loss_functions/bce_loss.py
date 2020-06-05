@@ -57,6 +57,7 @@ class BCELoss:
             Sequential model to build the model
         """
         # If weight provided, then converting it into torch tensor
+        # pylint: disable=not-callable
         weight = None
 
         if self.__weight is not None:
@@ -71,10 +72,8 @@ class BCELoss:
         return {
             'loss_function': _BCEWithLogitsLoss,
             'keyword_arguments': {
-                # pylint: disable=not-callable
                 'weight': weight,
                 'reduction': self.__reduction,
-                # pylint: disable=not-callable
                 'pos_weight': pos_weight
             }
         }
