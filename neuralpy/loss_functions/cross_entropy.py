@@ -55,11 +55,17 @@ class CrossEntropyLoss:
             There is no need to call this method as this is used by the
             Sequential model to build the model
         """
+        # If weight provided, then converting it into torch tensor
+        weight = None
+
+        if self.__weight is not None:
+            weight = torch.tensor(self.__weight).float()
+
         return {
             'loss_function': _CrossEntrypyLoss,
             'keyword_arguments': {
                 # pylint: disable=not-callable
-                'weight': torch.tensor(self.__weight).float(),
+                'weight': weight,
                 'ignore_index': self.__ignore_index,
                 'reduction': self.__reduction
             }
