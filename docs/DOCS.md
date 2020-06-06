@@ -135,7 +135,7 @@ ev = model.evaluate(X=X_test, y=y_test, batch_size=4)
 ```python
 neuralpy.models
 ```
-Models are one of the most important API supported in NeuralPy. Models are used to create different architecture. In NeuralPy, currently Sequential is the only type of model that is supported.
+Models are one of the most important API supported in NeuralPy. Models are used for create, training, predicting and evaluating models.
 
 ## Model
 
@@ -143,7 +143,7 @@ Models are one of the most important API supported in NeuralPy. Models are used 
 neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
 ```
 
-The Model class on NeuralPy is a wrapper class that wraps a PyTorch model, and provides some simple methods to train, predict, evaluate, etc. In NeuralPy every model in based on this class and it works as a parent class for other Model classes.
+The Model class on NeuralPy is a wrapper class that wraps a PyTorch model and provides some simple methods to train, predict, evaluate, etc. In NeuralPy every model is based on this class and it works as a parent class for other Model classes.
 
 The Model class can be used for training any PyTorch model.
 
@@ -212,7 +212,7 @@ model.fit(train_data, test_data, epochs=10, batch_size=32)
 
 #### `.predict()` Method
 
-The `.predict()`method is used for predicting outputs from the model.
+The `.predict()` method is used for predicting outputs from the model.
 
 ##### Supported Arguments
 
@@ -326,7 +326,7 @@ The `.set_model()` method is used for converting a PyTorch model to a NeuralPy m
 
 ##### Supported Arguments
 
-- `model`: (PyTorch model) A valid class based on Sequential PyTorch model.
+- `model`: (PyTorch model) A valid class based on the Sequential PyTorch model.
 
 ##### Example Code
 
@@ -342,14 +342,17 @@ model.set_model(pytorch_model)
 
 
 ## Sequential
+
 ```python
 neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
 ```
+
 Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
 
 > The Sequential model works on top of Model class, so all the methods that are available on the Model is also available here in Sequential class
 
 ### Supported Arguments
+
 - `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
 - `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
 - `random_state`: (Integer) Random state for the device
@@ -357,11 +360,15 @@ Sequential is a linear stack of layers with single input and output layer. It is
 ### Supported Methods
 
 #### `.add()` method: 
+
 In a Sequential model, the `.add()` method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
 
 ##### Supported Arguments
+
 - `layer`: (NeuralPy layer classes) Adds a layer into the model
+
 ##### Example Codes
+
 ```python
 from neuralpy.models import Sequential
 from neuralpy.layers import Dense
@@ -379,6 +386,7 @@ model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
 model.add(ReLU())
 model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
 ```
+
 #### `.build()` method:
 
 In a Sequential model, the `.build()` method is responsible for building the PyTorch model from the NeuralPy model.
@@ -386,9 +394,11 @@ In a Sequential model, the `.build()` method is responsible for building the PyT
 After finishing the architecture of the model, the model needed to be built before training.
 
 ##### Supported Arguments:
+
 - There is no argument for this model
 
 #### Example Code
+
 ```python
 from neuralpy.models import Sequential
 ...
@@ -406,8 +416,8 @@ model.build()
 
 ---
 
-
 # Layers
+
 ```python
 neuralpy.layers
 ```
