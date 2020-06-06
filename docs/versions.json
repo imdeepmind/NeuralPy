@@ -1,6 +1,6 @@
 [
   {
-    "name": "Latest",
-    "id": "master"
+    "label": "Latest",
+    "value": "master"
   }
 ]
