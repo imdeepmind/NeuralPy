@@ -76,7 +76,7 @@ class Model:
         # pylint: disable=not-callable,no-member
         predictions = torch.Tensor().to(self.__device)
 
-        # Converting the input X to PyTorch Tensor
+        # Converting the input X to PyTorch tensor
         X = torch.tensor(X)
 
         if batch_size:
