@@ -18,7 +18,7 @@ Here are some highlights of NeuralPy:
 - Works on top of PyTorch
 - Can run on both CPU and GPU
 - Cross-Compatible with PyTorch models
-    
+  
 ## Get Started with NeuralPy
 Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NerualPy, we need to install some additional dependencies.
 
@@ -41,7 +41,7 @@ python3 -m pip install neuralpy-torch
 ```
 
 ### First Model
-Here, in this example, we’ll create a simple linear regression model. The model accepts X (independent variable) and predicts the y(dependent variable). The model basically leans the relation between X and y. 
+Here, in this example, we’ll create a simple linear regression model. The model accepts X (independent variable) and predicts the y(dependent variable). The model basically learns the relation between X and y. 
 
 #### Dataset for the model
 Here we’ll create some synthetic data for our model, we’ll use numpy to generate random numbers.
@@ -114,7 +114,7 @@ model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation),
 ```
 
 #### Predicting Results
-Main purpose of the model is predict. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
+Main purpose of the model is to predict results. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
 
 ```python
 # Predicting
@@ -204,7 +204,7 @@ In the Sequential model, the compile method is responsible for attaching a loss 
 
 > The `.compile()` method internally calls the `.build()`, so there is no need to call 	`.build()`.
 
-	 
+
 ##### Supported Arguments:
 - `optimizer`: (NeuralPy Optimizer class) Adds an optimizer to the model
 - `loss_function`: (NeuralPy Loss Function class) Adds a loss function to the model
@@ -240,7 +240,7 @@ The `.fit()` method is used for training the NeuralPy model.
 
 ##### Example Code
 ```python
-```python
+​```python
 from neuralpy.models import Sequential
 ...
 # Rest of the code
