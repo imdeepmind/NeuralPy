@@ -341,19 +341,13 @@ model.set_model(pytorch_model)
 ```
 
 
-
-
-
-
-
-
-
-
 ## Sequential
 ```python
 neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
 ```
 Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
+
+> The Sequential model works on top of Model class, so all the methods that are available on the Model is also available here in Sequential class
 
 ### Supported Arguments
 - `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
@@ -394,7 +388,7 @@ After finishing the architecture of the model, the model needed to be built befo
 ##### Supported Arguments:
 - There is no argument for this model
 
-#### Exaample Code
+#### Example Code
 ```python
 from neuralpy.models import Sequential
 ...
@@ -409,11 +403,6 @@ model = Sequential()
 # Calling .build to build the model
 model.build()
 ```
-
-#### 
-#### 
-##### 
-
 
 ---
 
