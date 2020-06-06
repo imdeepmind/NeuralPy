@@ -77,7 +77,7 @@ class Model:
         predictions = torch.Tensor().to(self.__device)
 
         # Converting the input X to PyTorch Tensor
-        X = torch.tensor(X).to(self.__device)
+        X = torch.tensor(X)
 
         if batch_size:
             # If batch_size is there then checking the length
@@ -92,7 +92,7 @@ class Model:
                 # Splitting the data into batches
                 for i in range(0, len(X), batch_size):
                     # Generating the batch from X
-                    batch_x = X[i:i+batch_size].float()
+                    batch_x = X[i:i+batch_size].float().to(self.__device)
 
                     # Feeding the batch into the model for predictions
                     outputs = self.__model(batch_x)
@@ -104,7 +104,7 @@ class Model:
             # Predicting, so no grad
             with torch.no_grad():
                 # Feeding the full data into the model for predictions tensor
-                outputs = self.__model(X.float())
+                outputs = self.__model(X.float().to(self.__device))
 
                 # saving the outputs in the predictions
                 predictions = outputs
