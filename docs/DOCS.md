@@ -140,7 +140,7 @@ Models are one of the most important API supported in NeuralPy. Models are used 
 ## Model
 
 ```python
-neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
+neuralpy.models.Model(force_cpu=False, training_device=None, random_state=None)
 ```
 
 The Model class on NeuralPy is a wrapper class that wraps a PyTorch model and provides some simple methods to train, predict, evaluate, etc. In NeuralPy every model is based on this class and it works as a parent class for other Model classes.
