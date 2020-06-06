@@ -74,9 +74,9 @@ class Model:
 
         # Initializing an empty list to store the predictions
         # pylint: disable=not-callable,no-member
-        predictions = torch.Tensor()
+        predictions = torch.Tensor().to(self.__device)
 
-        # Converting the input X to PyTorch Tensor
+        # Converting the input X to PyTorch tensor
         X = torch.tensor(X)
 
         if batch_size:
@@ -92,7 +92,7 @@ class Model:
                 # Splitting the data into batches
                 for i in range(0, len(X), batch_size):
                     # Generating the batch from X
-                    batch_x = X[i:i+batch_size].float()
+                    batch_x = X[i:i+batch_size].float().to(self.__device)
 
                     # Feeding the batch into the model for predictions
                     outputs = self.__model(batch_x)
@@ -104,7 +104,7 @@ class Model:
             # Predicting, so no grad
             with torch.no_grad():
                 # Feeding the full data into the model for predictions tensor
-                outputs = self.__model(X.float())
+                outputs = self.__model(X.float().to(self.__device))
 
                 # saving the outputs in the predictions
                 predictions = outputs
@@ -322,11 +322,11 @@ class Model:
 
                 # Printing a friendly message to the console
                 print_validation_progress(
-                    validation_loss_score, len(x_train), correct_val)
+                    validation_loss_score, len(x_test), correct_val)
             else:
                 # Printing a friendly message to the console
                 print_validation_progress(
-                    validation_loss_score, len(x_train))
+                    validation_loss_score, len(x_test))
 
         # Returning history
         return history
@@ -399,9 +399,9 @@ class Model:
         # Converting to tensor
         # pylint: disable=not-callable,no-member
         if self.__metrics and "accuracy" in self.__metrics:
-            y_tensor = torch.tensor(y)
+            y_tensor = torch.tensor(y).to(self.__device)
         else:
-            y_tensor = torch.tensor(y).float()
+            y_tensor = torch.tensor(y).float().to(self.__device)
 
         # Calculating the loss
         loss = self.__loss_function(predictions, y_tensor)
