@@ -74,10 +74,10 @@ class Model:
 
         # Initializing an empty list to store the predictions
         # pylint: disable=not-callable,no-member
-        predictions = torch.Tensor()
+        predictions = torch.Tensor().to(self.__device)
 
         # Converting the input X to PyTorch Tensor
-        X = torch.tensor(X)
+        X = torch.tensor(X).to(self.__device)
 
         if batch_size:
             # If batch_size is there then checking the length
@@ -399,9 +399,9 @@ class Model:
         # Converting to tensor
         # pylint: disable=not-callable,no-member
         if self.__metrics and "accuracy" in self.__metrics:
-            y_tensor = torch.tensor(y)
+            y_tensor = torch.tensor(y).to(self.__device)
         else:
-            y_tensor = torch.tensor(y).float()
+            y_tensor = torch.tensor(y).float().to(self.__device)
 
         # Calculating the loss
         loss = self.__loss_function(predictions, y_tensor)
