@@ -296,7 +296,7 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
     if training_corrects:
         message += f" - Training Accuracy: {training_corrects/batches*100:.4f}%"
 
-    print(message, end="\r")
+    print("\r" + message, end="")
 
 
 def print_validation_progress(validation_loss, no_samples, validtion_corrects=None):
