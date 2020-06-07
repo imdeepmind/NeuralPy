@@ -47,3 +47,20 @@ def test_cce_get_layer_method(weight, reduction, ignore_index):
 	assert details["keyword_arguments"]["reduction"] == reduction
 
 	assert details["keyword_arguments"]["ignore_index"] == ignore_index
+
+def test_CrossEntropyLoss_get_layer_method_with_default_parameters():
+	x = CrossEntropyLoss()
+		
+	details = x.get_loss_function()
+
+	assert isinstance(details, dict) == True
+
+	assert issubclass(details["loss_function"], _CrossEntropyLoss) == True
+
+	assert isinstance(details["keyword_arguments"], dict) == True
+
+	assert details["keyword_arguments"]["weight"] == None
+
+	assert details["keyword_arguments"]["reduction"] == 'mean'
+
+	assert details["keyword_arguments"]["ignore_index"] == -100
