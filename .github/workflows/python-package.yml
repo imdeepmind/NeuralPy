@@ -38,4 +38,4 @@ jobs:
       run: |
         pip install pytest
         pip install pytest-cov
-        python tests.py
+        pytest --cov=neuralpy tests/
