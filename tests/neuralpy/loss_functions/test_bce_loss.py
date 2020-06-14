@@ -47,3 +47,20 @@ def test_bce_get_layer_method(weight, reduction, pos_weight):
 	assert details["keyword_arguments"]["reduction"] == reduction
 
 	assert torch.all(torch.eq(details["keyword_arguments"]["pos_weight"], torch.tensor(pos_weight).float())) == True
+
+def test_bce_get_layer_method_with_default_parameters():
+	x = BCELoss()
+		
+	details = x.get_loss_function()
+
+	assert isinstance(details, dict) == True
+
+	assert issubclass(details["loss_function"], _BCEWithLogitsLoss) == True
+
+	assert isinstance(details["keyword_arguments"], dict) == True
+
+	assert details["keyword_arguments"]["weight"] == None
+
+	assert details["keyword_arguments"]["reduction"] == 'mean'
+
+	assert details["keyword_arguments"]["pos_weight"] == None

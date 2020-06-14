@@ -23,7 +23,7 @@ reductions=["mean"]
 	"reduction", 
 	[(reduction) for reduction in reductions]
 )
-def test_cce_get_layer_method(reduction):
+def test_mse_get_layer_method(reduction):
 	x = MSELoss(reduction=reduction)
 		
 	details = x.get_loss_function()
@@ -35,3 +35,16 @@ def test_cce_get_layer_method(reduction):
 	assert isinstance(details["keyword_arguments"], dict) == True
 
 	assert details["keyword_arguments"]["reduction"] == reduction
+
+def test_mse_get_layer_method_without_parameters():
+	x = MSELoss()
+
+	details = x.get_loss_function()
+
+	assert isinstance(details, dict) == True
+
+	assert issubclass(details["loss_function"], _MSELoss) == True
+
+	assert isinstance(details["keyword_arguments"], dict) == True
+
+	assert details["keyword_arguments"]["reduction"] == 'mean'
