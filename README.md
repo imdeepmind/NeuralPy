@@ -98,6 +98,9 @@ y_test = X_test + 5 * np.random.rand(10, 1)
 model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
 
+# Building the model
+model.build()
+
 # Compiling the model
 model.compile(optimizer=Adam(), loss_function=MSELoss())
 
