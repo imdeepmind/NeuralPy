@@ -1,5 +1,9 @@
 [
   {
+    "label": "v0.1.0-alpha",
+    "value": "release-v0.1.0-alpha"
+  },
+  {
     "label": "Latest",
     "value": "master"
   }
