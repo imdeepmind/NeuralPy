@@ -1,6 +1,6 @@
 
 # Introduction
-NeuralPy is a Keras like, machine learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library, cross-compatible with PyTorch models, suitable for all kinds of machine learning experiments, learning, research, etc.
+NeuralPy is a Keras like, deep learning library that works on top of PyTorch written purely in Python. It is a simple, easy to use library that is cross-compatible with PyTorch models and suitable for all kinds of machine learning experiments, learning, research, etc.
 
 ## PyTorch in NeuralPy
 PyTorch is an open-source machine learning framework that accelerates the path from research prototyping to production deployment developed by Facebook runs on both CPU and GPU.
@@ -11,26 +11,28 @@ Following are some highlights of PyTorch:
 - Robust Ecosystem
 - Cloud Support
 
-NeuralPy is a high-level library that works on top of PyTorch. It provides easy to use, powerful and interactive APIs that can be used to build state-of-the-art models. As it works on top of PyTorch, NerualPy supports both CPU and GPU and can perform numerical operations very efficiently.
+NeuralPy is a high-level library that works on top of PyTorch. It provides easy to use, powerful and interactive APIs that can be used to build state-of-the-art models. As it works on top of PyTorch, NeuralPy supports both CPU and GPU and can perform numerical operations very efficiently.
 
 Here are some highlights of NeuralPy:
 - Provides an easy interface that is suitable for fast prototyping, learning, and research
 - Works on top of PyTorch
 - Can run on both CPU and GPU
 - Cross-Compatible with PyTorch models
-    
+  
 ## Get Started with NeuralPy
-Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NerualPy, we need to install some additional dependencies.
+Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NeuralPy, we need to install some additional dependencies.
 
 ### Prerequisites 
-NeuralPy runs on Python 3, so first install Python 3. Please check the python documentation for installation instructions. After that install PyTorch and Numpy. For instructions, please check their official documentation and installation guides.
+NeuralPy runs on Python 3.6+, so first install Python 3. Please check the python documentation for installation instructions. After that install PyTorch and Numpy. For instructions, please check their official documentation and installation guides.
+
+> NeuralPy runs on Python 3.6+, there is no version for Python 2
 
 ### Installation
 To install NeuralPy run the following command on terminal.
 ```bash
 pip install neuralpy-torch
 ```
-If you have multiple versions of it, then you might need to use pip3.
+If you have multiple versions of python, then you might need to use pip3.
 
 ```bash
 pip3 install neuralpy-torch
@@ -39,7 +41,7 @@ python3 -m pip install neuralpy-torch
 ```
 
 ### First Model
-Here, in this example, we’ll create a simple linear regression model. The model accepts X (independent variable) and predicts the y(dependent variable). The model basically leans the relation between X and y. 
+Here, in this example, we’ll create a simple linear regression model. The model accepts X (independent variable) and predicts the y(dependent variable). The model basically learns the relation between X and y. 
 
 #### Dataset for the model
 Here we’ll create some synthetic data for our model, we’ll use numpy to generate random numbers.
@@ -59,6 +61,10 @@ y_train = X_train + 5 * np.random.rand(100, 1)
 # Validation data
 X_validation = np.random.rand(100, 1) * 10
 y_validation = X_validation + 5 * np.random.rand(100, 1)
+
+# Test data
+X_test = np.random.rand(100, 1) * 10
+y_test = X_test + 5 * np.random.rand(100, 1)
 ```
 
 #### Importing dependencies from NeuralPy
@@ -84,8 +90,16 @@ model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1))
 ```
 
+#### Building the model
+Once the model architecture is ready, we can build the model. This build method a PyTorch model internally.
+
+```python
+# Building the model
+model.build()
+```
+
 #### Compiling the model
-Once the model architecture is ready, we can compile with the optimizer and loss function. The Sequential class provides an easy compile method for that. We just need to pass the optimizer and loss function in the compile method.
+Once the model architecture is ready, we can compile with the optimizer and loss function. NeuralPy models provide an easy compile method for that. We just need to pass the optimizer and loss function in the compile method. It also accepts a metrics parameter, for this case, we don't need it.
 
 ```python
 # Compiling the model
@@ -93,10 +107,26 @@ model.compile(optimizer=Adam(), loss_function=MSELoss())
 ```
 
 #### Training the model
-To train we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method.
+To train, we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method.
 
 ```python
 model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)
+```
+
+#### Predicting Results
+Main purpose of the model is to predict results. In NeuralPy models, there are two methods for prediction,  `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
+
+```python
+# Predicting
+preds = model.predict(X=X_test, batch_size=4)
+```
+
+#### Evaluating the models
+After training, one important step is to evaluate the model on the test dataset. To do that, we have, in NeuralPy, we have a `.evaluate()` method.
+
+```python
+# Evaluating
+ev = model.evaluate(X=X_test, y=y_test, batch_size=4)
 ```
 
 ---
@@ -105,82 +135,39 @@ model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation),
 ```python
 neuralpy.models
 ```
-Models are one of the most important API supported in NeuralPy. Models are used to create different architecture. In NeuralPy, currently Sequential is the only type of model that is supported.
+Models are one of the most important API supported in NeuralPy. Models are used for create, training, predicting and evaluating models.
 
+## Model
 
-## Sequential
 ```python
-neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
+neuralpy.models.Model(force_cpu=False, training_device=None, random_state=None)
 ```
-Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
+
+The Model class on NeuralPy is a wrapper class that wraps a PyTorch model and provides some simple methods to train, predict, evaluate, etc. In NeuralPy every model is based on this class and they inherits the Model class.
+
+>  The Model class can be used for training any PyTorch model.
 
 ### Supported Arguments
+
 - `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
-- `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
+- `training_device=None`: (NeuralPy device class) Device that will be used for training predictions. If you use `training_device` then it ignores the `force_cpu` parameter
 - `random_state`: (Integer) Random state for the device
 
 ### Supported Methods
 
-#### `.add()` method: 
-In a Sequential model, the `.add()` method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
+#### `.compile()` method:
 
-##### Supported Arguments
-- `layer`: (NeuralPy layer classes) Adds a layer into the model
-##### Example Codes
-```python
-from neuralpy.models import Sequential
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import ReLU
-from neuralpy import device
+In the NeuralPy Model, the compile method is responsible for attaching a loss function and optimizer with the model and this method needs to be called before training. This method can also be used for setting metrics for the model so that NeuralPy Model can evaluate those during training.
 
-# Setting a training device
-training_device = device('cpu')
-
-# Initializing the Sequential models
-model = Sequential(force_cpu=False, training_device=training_device, random_state=1969)
-
-# Adding layers to the model
-model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
-model.add(ReLU())
-model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
-```
-#### `.build()` method:
-
-In a Sequential model, the `.build()` method is responsible for building the PyTorch model from the NeuralPy model.
-
-After finishing the architecture of the model, the model needed to be built before training.
 
 ##### Supported Arguments:
-- There is no argument for this model
 
-#### Exaample Code
-```python
-from neuralpy.models import Sequential
-...
-# Rest of the imports
-...
-
-model = Sequential()
-...
-# Model Architecture
-...
-
-# Calling .build to build the model
-model.build()
-```
-
-#### `.compile()` mehod:
-In the Sequential model, the compile method is responsible for attaching a loss function and optimizer with the model and this method needs to be called before training.
-
-> The `.compile()` method internally calls the `.build()`, so there is no need to call 	`.build()`.
-
-	 
-##### Supported Arguments:
 - `optimizer`: (NeuralPy Optimizer class) Adds an optimizer to the model
 - `loss_function`: (NeuralPy Loss Function class) Adds a loss function to the model
-- `metrics`: ([String]) Metrics that will be evaluated by the model. Currently only supports `accuracy`. 
+- `metrics`: (String[]) Metrics that will be evaluated by the model. Currently only supports `accuracy`. 
 
-#### Exaample Code
+#### Example Code
+
 ```python
 from neuralpy.models import Sequential
 from neuralpy.optimizer import Adam
@@ -200,16 +187,18 @@ model.compile(optimizer=Adam(), loss_function=MSELoss(),metrics=["accuracy"])
 ```
 
 #### `.fit()` Method	
+
 The `.fit()` method is used for training the NeuralPy model. 
 
 ##### Supported Arguments
+
 - `train_data`: (Tuple(NumPy Array, NumPy Array)) Pass the training data as a tuple like `(X, y)` where `X` is training data and `y` is the labels for the training the model.
 - `test_data`:(Tuple(NumPy Array, NumPy Array)) Pass the validation data as a tuple like `(X, y)` where `X` is test data and `y` is the labels for the validating the model.
 - `epochs=10`: (Integer) Number of epochs
 - `batch_size=32`: (Integer) Batch size for training.
 
 ##### Example Code
-```python
+
 ```python
 from neuralpy.models import Sequential
 ...
@@ -219,14 +208,18 @@ from neuralpy.models import Sequential
 # Training the model
 model.fit(train_data, test_data, epochs=10, batch_size=32)
 ```
+
 #### `.predict()` Method
-The `.predict()`method is used for predicting using the trained mode.
+
+The `.predict()` method is used for predicting outputs from the model.
 
 ##### Supported Arguments
+
 - `X`: (NumPy Array) Data to be predicted
 - `batch_size=None`: (Integer) Batch size for predicting. If not provided, then the entire data is predicted once.
 
 ##### Example Code
+
 ```python
 from neuralpy.models import Sequential
 ...
@@ -238,13 +231,16 @@ y_pred = model.predict(X, batch_size=32)
 ```
 
 #### `.predict_class()` Method
-The `.predict_clas()` method is used for predicting classes using the trained model. This method works only if `accuracy` is passed in the `metrics` parameter on the `.compile()` method.
+
+The `.predict_class()` method is used for predicting classes using the trained model. This method works only if `accuracy` is passed in the `metrics` parameter on the `.compile()` method.
 
 ##### Supported Arguments
+
 - `X`: (NumPy Array) Data to be predicted
 - `batch_size=None`: (Integer) Batch size for predicting. If not provided, then the entire data is predicted once.
 
 ##### Example Code
+
 ```python
 from neuralpy.models import Sequential
 ...
@@ -252,19 +248,22 @@ from neuralpy.models import Sequential
 ...
 
 # Predicting the labels using the trained model
-y_pred = model.predict_clas(X, batch_size=32)
+y_pred = model.predict_class(X, batch_size=32)
 ```
 
 
 #### `.evaluate()` Method
+
 The `.evaluate()` method is used for evaluating models using the test dataset.
 
 ##### Supported Arguments
+
 - `X`: (NumPy Array) Data to be predicted
 - `y`: (NumPy Array) Original labels of `X`
 - `batch_size=None`: (Integer) Batch size for predicting. If not provided, then the entire data is predicted once.
 
 ##### Example Code
+
 ```python
 from neuralpy.models import Sequential
 ...
@@ -276,15 +275,16 @@ results = model.evaluate(X, batch_size=32)
 ```
 
 
-
-
 #### `.summary()` Method
-The `.summary()` method is getting a summary of the model
+
+The `.summary()` method is for getting a summary of the model
 
 ##### Supported Arguments
+
 - None
 
 ##### Example Code
+
 ```python
 from neuralpy.models import Sequential
 ...
@@ -296,15 +296,16 @@ print(model.summary())
 ```
 
 
-
-
 #### `.get_model()` Method
+
 The `.get_model()` method is used for getting the PyTorch model from the NeuralPy model. After extracting the model, the model can be treated just like a regular PyTorch model. 
 
 ##### Supported Arguments
+
 - None
 
 ##### Example Code
+
 ```python
 from neuralpy.models import Sequential
 ...
@@ -317,30 +318,107 @@ pytorch_model = model.get_model()
 
 
 #### `.set_model()` Method
+
 The `.set_model()` method is used for converting a PyTorch model to a NeuralPy model. After this conversion, the model can be trained using NeuralPy optimizer and loss_functions.
 
 ##### Supported Arguments
-- `model`: (PyTorch model) A valid class based on Sequential PyTorch model.
+
+- `model`: (PyTorch model) A valid class based on the Sequential PyTorch model.
 
 ##### Example Code
+
 ```python
 from neuralpy.models import Sequential
 ...
 # Rest of the code
 ...
 
-# Conveting the PyTorch model to NeuralPy model
+# Converting the PyTorch model to NeuralPy model
 model.set_model(pytorch_model)
+```
+
+
+## Sequential
+
+```python
+neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
+```
+
+Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
+
+> The Sequential model works on top of Model class, so all the methods that are available on the Model is also available here in Sequential class
+
+### Supported Arguments
+
+- `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
+- `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
+- `random_state`: (Integer) Random state for the device
+
+### Supported Methods
+
+#### `.add()` method: 
+
+In a Sequential model, the `.add()` method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
+
+##### Supported Arguments
+
+- `layer`: (NeuralPy layer classes) Adds a layer into the model
+
+##### Example Codes
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import ReLU
+from neuralpy import device
+
+# Setting a training device
+training_device = device('cpu')
+
+# Initializing the Sequential models
+model = Sequential(force_cpu=False, training_device=training_device, random_state=1969)
+
+# Adding layers to the model
+model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
+model.add(ReLU())
+model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
+```
+
+#### `.build()` method:
+
+In a Sequential model, the `.build()` method is responsible for building the PyTorch model from the NeuralPy model.
+
+After finishing the architecture of the model, the model needed to be built before training.
+
+##### Supported Arguments:
+
+- There is no argument for this model
+
+#### Example Code
+
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Model Architecture
+...
+
+# Calling .build to build the model
+model.build()
 ```
 
 ---
 
-
 # Layers
+
 ```python
 neuralpy.layers
 ```
-Layers are the building blocks of a Neural Network. A complete Neural Network model consists of several layers. A Layer is a function that receives a tensor as output, computes something out of it, and finally outputs a tensor.
+Layers are the building blocks of a Neural Network. A complete Neural Network model consists of several layers. A Layer is a function that receives a tensor as output, computes something out of it, and finally outputs another transformed tensor.
 
 NeuralPy currently supports only one type of Layer and that is the Dense layer. 
 
@@ -675,8 +753,6 @@ model = Sequential()
 model.compile(optimizer=Adam(), loss_function=MSELoss(reduction='mean'))
 ```
 
-
-
 ---
 
 # Optimizers 
@@ -760,7 +836,7 @@ Implements Adagrad optimizer.
 
 ### Supported Arguments
 - `learning_rate=0.001`: (Float) Learning Rate for the optimizer
-- `learning_rate_decay=(0.9,0.999)` : (Float) Learningn Rate decay
+- `learning_rate_decay=(0.9,0.999)` : (Float) Learning Rate decay
 - `eps=0` : (Float) Term added to the denominator to improve numerical stability
 - `weight_decay=0` : (Float) Weight decay for the optimizer
 
@@ -792,7 +868,7 @@ Implements RMSProp optimizer.
 
 ### Supported Arguments
 - `learning_rate=0.001`: (Float) Learning Rate for the optimizer
-- `alpha=(0.9,0.999)` : (Float) Learningn Rate decay
+- `alpha=(0.9,0.999)` : (Float) Learning Rate decay
 - `eps=0` : (Float) Term added to the denominator to improve numerical stability
 - `weight_decay=0` : (Float) Weight decay for the optimizer
 - `momentum=0` : (Float) Momentum for the optimizer
@@ -823,9 +899,9 @@ model.compile(
 
 # Advanced Topics
 
-NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regularizers, etc, in NeuralPy.
+NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regulariziers, etc, in NeuralPy.
 
-But there are times when we might need a layer, or an optimizer, or a loss function for a model that is not implimented on NeuralPy.
+But there are times when we might need a layer, or an optimizer, or a loss function for a model that is not implemented on NeuralPy.
 
 In NeuralPy, anyone can build a custom Layer, Optimizer, Loss Function, Regularizer, etc.
 
@@ -918,7 +994,7 @@ Finally, the `get_layer` method returns a dictionary with several fields. Here i
 
 - `keyword_arguments`: It contains a dictionary of all the parameters that the PyTorch layer or your custom layer accepts. If there is no parameter for the layer, send set it as None. For our `Flatten` layer, we need to pass the `start_dim` and `end_dim`.  
 
-> We can create Activation Functions, Regularizers using the same above method also.
+> We can create Activation Functions, Regulariziers using the same above method also.
 
 Check the following links for some more examples:
 - [Dense layer](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/layers/dense.py)
@@ -993,7 +1069,7 @@ Here the `get_optimizer` is similar to the `get_layer` method. Just returns a di
 
 
 ## Building a custom Loss Function
-Steps for making a custom Loss Function is also mosty similar to making a custom Layer. So first we need to import a PyTorch loss function or use a custom PyTorch compatible loss function.
+Steps for making a custom Loss Function is also mostly similar to making a custom Layer. So first we need to import a PyTorch loss function or use a custom PyTorch compatible loss function.
 
 Create a class with one public method `get_loss_function` and an `__init__` method.
 
@@ -1032,9 +1108,3 @@ class MSELoss:
 ```
 
 Here the `get_loss_function` is similar to the `get_layer` method. Just returns a dictionary with all the data. The `loss_function`  field in the dictionary is the main loss function and the `keyword_arguments` contains all the arguments for the PyTorch MSE Loss Function.
-
-
-
-
-
----
