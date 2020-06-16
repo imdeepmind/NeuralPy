@@ -11,7 +11,7 @@ Following are some highlights of PyTorch:
 - Robust Ecosystem
 - Cloud Support
 
-NeuralPy is a high-level library that works on top of PyTorch. It provides easy to use, powerful and interactive APIs that can be used to build state-of-the-art models. As it works on top of PyTorch, NerualPy supports both CPU and GPU and can perform numerical operations very efficiently.
+NeuralPy is a high-level library that works on top of PyTorch. It provides easy to use, powerful and interactive APIs that can be used to build state-of-the-art models. As it works on top of PyTorch, NeuralPy supports both CPU and GPU and can perform numerical operations very efficiently.
 
 Here are some highlights of NeuralPy:
 - Provides an easy interface that is suitable for fast prototyping, learning, and research
@@ -20,7 +20,7 @@ Here are some highlights of NeuralPy:
 - Cross-Compatible with PyTorch models
   
 ## Get Started with NeuralPy
-Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NerualPy, we need to install some additional dependencies.
+Let’s get started with NeuralPy. The first step is to install NeuralPy, but before installing NeuralPy, we need to install some additional dependencies.
 
 ### Prerequisites 
 NeuralPy runs on Python 3.6+, so first install Python 3. Please check the python documentation for installation instructions. After that install PyTorch and Numpy. For instructions, please check their official documentation and installation guides.
@@ -200,7 +200,6 @@ The `.fit()` method is used for training the NeuralPy model.
 ##### Example Code
 
 ```python
-​```python
 from neuralpy.models import Sequential
 ...
 # Rest of the code
@@ -233,7 +232,7 @@ y_pred = model.predict(X, batch_size=32)
 
 #### `.predict_class()` Method
 
-The `.predict_clas()` method is used for predicting classes using the trained model. This method works only if `accuracy` is passed in the `metrics` parameter on the `.compile()` method.
+The `.predict_class()` method is used for predicting classes using the trained model. This method works only if `accuracy` is passed in the `metrics` parameter on the `.compile()` method.
 
 ##### Supported Arguments
 
@@ -249,7 +248,7 @@ from neuralpy.models import Sequential
 ...
 
 # Predicting the labels using the trained model
-y_pred = model.predict_clas(X, batch_size=32)
+y_pred = model.predict_class(X, batch_size=32)
 ```
 
 
@@ -274,8 +273,6 @@ from neuralpy.models import Sequential
 # Evaluating the labels using the trained model
 results = model.evaluate(X, batch_size=32)
 ```
-
-
 
 
 #### `.summary()` Method
@@ -336,7 +333,7 @@ from neuralpy.models import Sequential
 # Rest of the code
 ...
 
-# Conveting the PyTorch model to NeuralPy model
+# Converting the PyTorch model to NeuralPy model
 model.set_model(pytorch_model)
 ```
 
@@ -756,8 +753,6 @@ model = Sequential()
 model.compile(optimizer=Adam(), loss_function=MSELoss(reduction='mean'))
 ```
 
-
-
 ---
 
 # Optimizers 
@@ -841,7 +836,7 @@ Implements Adagrad optimizer.
 
 ### Supported Arguments
 - `learning_rate=0.001`: (Float) Learning Rate for the optimizer
-- `learning_rate_decay=(0.9,0.999)` : (Float) Learningn Rate decay
+- `learning_rate_decay=(0.9,0.999)` : (Float) Learning Rate decay
 - `eps=0` : (Float) Term added to the denominator to improve numerical stability
 - `weight_decay=0` : (Float) Weight decay for the optimizer
 
@@ -873,7 +868,7 @@ Implements RMSProp optimizer.
 
 ### Supported Arguments
 - `learning_rate=0.001`: (Float) Learning Rate for the optimizer
-- `alpha=(0.9,0.999)` : (Float) Learningn Rate decay
+- `alpha=(0.9,0.999)` : (Float) Learning Rate decay
 - `eps=0` : (Float) Term added to the denominator to improve numerical stability
 - `weight_decay=0` : (Float) Weight decay for the optimizer
 - `momentum=0` : (Float) Momentum for the optimizer
@@ -904,9 +899,9 @@ model.compile(
 
 # Advanced Topics
 
-NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regularizers, etc, in NeuralPy.
+NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regulariziers, etc, in NeuralPy.
 
-But there are times when we might need a layer, or an optimizer, or a loss function for a model that is not implimented on NeuralPy.
+But there are times when we might need a layer, or an optimizer, or a loss function for a model that is not implemented on NeuralPy.
 
 In NeuralPy, anyone can build a custom Layer, Optimizer, Loss Function, Regularizer, etc.
 
@@ -999,7 +994,7 @@ Finally, the `get_layer` method returns a dictionary with several fields. Here i
 
 - `keyword_arguments`: It contains a dictionary of all the parameters that the PyTorch layer or your custom layer accepts. If there is no parameter for the layer, send set it as None. For our `Flatten` layer, we need to pass the `start_dim` and `end_dim`.  
 
-> We can create Activation Functions, Regularizers using the same above method also.
+> We can create Activation Functions, Regulariziers using the same above method also.
 
 Check the following links for some more examples:
 - [Dense layer](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/layers/dense.py)
@@ -1074,7 +1069,7 @@ Here the `get_optimizer` is similar to the `get_layer` method. Just returns a di
 
 
 ## Building a custom Loss Function
-Steps for making a custom Loss Function is also mosty similar to making a custom Layer. So first we need to import a PyTorch loss function or use a custom PyTorch compatible loss function.
+Steps for making a custom Loss Function is also mostly similar to making a custom Layer. So first we need to import a PyTorch loss function or use a custom PyTorch compatible loss function.
 
 Create a class with one public method `get_loss_function` and an `__init__` method.
 
@@ -1113,13 +1108,3 @@ class MSELoss:
 ```
 
 Here the `get_loss_function` is similar to the `get_layer` method. Just returns a dictionary with all the data. The `loss_function`  field in the dictionary is the main loss function and the `keyword_arguments` contains all the arguments for the PyTorch MSE Loss Function.
-
-
-
-
-
----
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNTAwMDU3NzEsMTU4ODYzMDE5MiwtMT
-Y5MTEzNTc1NywxNzgwNTA4NzIzXX0=
--->
