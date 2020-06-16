@@ -38,43 +38,43 @@
           "contents": [
             {
               "title": "add method",
-              "id": "add-method"
+              "id": "-add---method-"
             },
             {
               "title": "build method",
-              "id": "build-method"
+              "id": "-build---method-"
             },
             {
               "title": "compile method",
-              "id": "compile-method"
+              "id": "-compile---method-"
             },
             {
               "title": "fit method",
-              "id": "fit-method"
+              "id": "-fit---method"
             },
             {
               "title": "predict method",
-              "id": "predict-method"
+              "id": "-predict---method"
             },
             {
               "title": "predict_classes method",
-              "id": "predict_classes-method"
+              "id": "-predict_classes---method"
             },
             {
               "title": "evaluate method",
-              "id": "evaluate-method"
+              "id": "-evaluate---method"
             },
             {
               "title": "summary method",
-              "id": "summary-method"
+              "id": "-summary---method"
             },
             {
               "title": "get_model method",
-              "id": "get_model-method"
+              "id": "-get_model---method"
             },
             {
               "title": "set_model method",
-              "id": "set_model-method"
+              "id": "-set_model---method"
             }
           ]
         }
