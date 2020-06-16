@@ -13,7 +13,7 @@ setup(
     version="0.1.0",
     description="A Keras like deep learning library works on top of PyTorch",
     long_description=long_description,
-    url="https://github.com/imdeepmind/NeuralPy",
+    url="https://neuralpy.imdeepmind.com/",
     author="Abhishek Chatterjee",
     author_email="abhishek.chatterjee97@protonmail.com",
     license="MIT",
