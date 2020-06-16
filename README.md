@@ -14,11 +14,17 @@
 ![GitHub](https://img.shields.io/github/license/imdeepmind/NeuralPy?style=flat)
 
 ## Table of contents:
+- [Table of contents:](#table-of-contents)
 - [Introduction](#introduction)
 - [PyTorch](#pytorch)
 - [Install](#install)
 - [Dependencies](#dependencies)
 - [Get Started](#get-started)
+  - [Importing the dependencies](#importing-the-dependencies)
+  - [Making some random data](#making-some-random-data)
+  - [Making the model](#making-the-model)
+  - [Training the model](#training-the-model)
+  - [Predicting using the trained model](#predicting-using-the-trained-model)
 - [Documentation](#documentation)
 - [Examples](#examples)
 - [Blogs and Tutorials](#blogs-and-tutorials)
@@ -129,6 +135,8 @@ For now, there are no blogs or tutorials available, I'll update once I post some
 
 ## Support
 If you are facing any issues using NeuralPy, then please raise an issue on GitHub or contact with me. 
+
+Alternatively, you can join the official NeuralPy discord server. Click [here](https://discord.gg/6aTTwbW) to join.
 
 ## Contributing
 Feel free to contribute to this project. If you need some help to get started, then reach me or open a GitHub issue. Check the [CONTRIBUTING.MD](https://github.com/imdeepmind/NeuralPy/blob/master/CONTRIBUTING.md) file for more information and guidelines.
