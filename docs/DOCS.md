@@ -1,6 +1,6 @@
 
 # Introduction
-NeuralPy is a Keras like, deep learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library that is cross-compatible with PyTorch models and suitable for all kinds of machine learning experiments, learning, research, etc.
+NeuralPy is a Keras like, deep learning library that works on top of PyTorch written purely in Python. It is a simple, easy to use library that is cross-compatible with PyTorch models and suitable for all kinds of machine learning experiments, learning, research, etc.
 
 ## PyTorch in NeuralPy
 PyTorch is an open-source machine learning framework that accelerates the path from research prototyping to production deployment developed by Facebook runs on both CPU and GPU.
@@ -150,14 +150,14 @@ The Model class on NeuralPy is a wrapper class that wraps a PyTorch model and pr
 ### Supported Arguments
 
 - `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
-- `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
+- `training_device=None`: (NeuralPy device class) Device that will be used for training predictions. If you use `training_device` then it ignores the `force_cpu` parameter
 - `random_state`: (Integer) Random state for the device
 
 ### Supported Methods
 
 #### `.compile()` method:
 
-In the NeuralPy Model, the compile method is responsible for attaching a loss function and optimizer with the model and this method needs to be called before training. This method can also be used for setting metrics for the model so that it can evaluate those during training.
+In the NeuralPy Model, the compile method is responsible for attaching a loss function and optimizer with the model and this method needs to be called before training. This method can also be used for setting metrics for the model so that NeuralPy Model can evaluate those during training.
 
 
 ##### Supported Arguments:
