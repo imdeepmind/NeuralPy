@@ -131,7 +131,8 @@ The documentation for NeuralPy is available at [https://neuralpy.imdeepmind.com/
 Several example projects in NeuralPy are available at [https://github.com/imdeepmind/NeuralPy-Examples](https://github.com/imdeepmind/NeuralPy-Examples). Please check the above link.
 
 ## Blogs and Tutorials
-For now, there are no blogs or tutorials available, I'll update once I post something. Please also have a look at the examples currently available.
+Following are some links to official blogs and tutorials:
+  - [Introduction to NeuralPy: A Keras like deep learning library works on top of PyTorch](https://medium.com/@imdeepmind/introduction-to-neuralpy-a-keras-like-deep-learning-library-works-on-top-of-pytorch-3bbf1b887561)
 
 ## Support
 If you are facing any issues using NeuralPy, then please raise an issue on GitHub or contact with me. 
