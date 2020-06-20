@@ -149,7 +149,7 @@ class Model:
                                                      self.__model.parameters())
         self.__loss_function = build_loss_function_from_dict(loss_function)
 
-    def fit(self, train_data, test_data, epochs=10, batch_size=32):
+    def fit(self, train_data, test_data=None, epochs=10, batch_size=32):
         """
             The `.fit()` method is used for training the NeuralPy model.
 
@@ -163,11 +163,9 @@ class Model:
                 epochs=10: (Integer) Number of epochs
                 batch_size=32: (Integer) Batch size for training.
 
-
         """
-        # Extracting the train and test data from the tuples
+        # Extracting the train data from the tuples
         x_train, y_train = train_data
-        x_test, y_test = test_data
 
         # If batch_size is there then checking the
         # length and comparing it with the length of training data
@@ -176,32 +174,36 @@ class Model:
             raise ValueError(
                 "Batch size is greater than total number of training samples")
 
-        # If batch_size is there then checking the length and
-        # comparing it with the length of training data
-        if x_test.shape[0] < batch_size:
-            # Batch size can not be greater that test data size
-            raise ValueError(
-                "Batch size is greater than total number of testing samples")
-
         # Checking the length of input and output
         if x_train.shape[0] != y_train.shape[0]:
             # length of X and y should be same
             raise ValueError(
                 "Length of training Input data and training output data should be same")
-
-        # Checking the length of input and output
-        if x_test.shape[0] != y_test.shape[0]:
-            # length of X and y should be same
-            raise ValueError(
-                "Length of testing Input data and testing output data should be same")
-
+        
         # Converting the data into PyTorch tensor
         # pylint: disable=not-callable,no-member
         x_train = torch.tensor(x_train)
         y_train = torch.tensor(y_train)
 
-        x_test = torch.tensor(x_test)
-        y_test = torch.tensor(y_test)
+        if test_data:
+            # Extracting the test data from the tuples
+            x_test, y_test = test_data            
+
+            # If batch_size is there then checking the length and
+            # comparing it with the length of training data
+            if x_test.shape[0] < batch_size:
+                # Batch size can not be greater that test data size
+                raise ValueError(
+                    "Batch size is greater than total number of testing samples")
+
+            # Checking the length of input and output
+            if x_test.shape[0] != y_test.shape[0]:
+                # length of X and y should be same
+                raise ValueError(
+                    "Length of testing Input data and testing output data should be same")
+
+            x_test = torch.tensor(x_test)
+            y_test = torch.tensor(y_test)
 
         # Building the history object
         history = build_history_object(self.__metrics)
@@ -264,70 +266,79 @@ class Model:
                     print_training_progress(
                         epoch, epochs, i, batch_size, len(x_train), train_loss.item())
 
-            # Evaluating model
-            self.__model.eval()
-
-            # no grad, no training
-            with torch.no_grad():
-                # Splitting the data into batches
-                for i in range(0, len(x_test), batch_size):
-                    # Making the batches
-                    batch_x = x_train[i:i+batch_size].float()
-                    if "accuracy" in self.__metrics:
-                        batch_y = y_train[i:i+batch_size]
-                    else:
-                        batch_y = y_train[i:i+batch_size].float()
-
-                    # Moving the batches to device
-                    batch_x, batch_y = batch_x.to(
-                        self.__device), batch_y.to(self.__device)
-
-                    # Feeding the data into the model
-                    outputs = self.__model(batch_x)
-
-                    # Calculating the loss
-                    validation_loss = self.__loss_function(outputs, batch_y)
-
-                    # Storing the loss val, batchwise data
-                    validation_loss_score += validation_loss.item()
-                    history["batchwise"]["validation_loss"].append(
-                        validation_loss.item())
-
-                    # Calculating accuracy
-                    # Checking if accuracy is there in metrics
-                    if "accuracy" in self.__metrics:
-                        corrects = corrects = calculate_accuracy(
-                            batch_y, outputs)
-
-                        correct_val += corrects
-
-                        history["batchwise"]["validation_accuracy"].append(
-                            corrects/batch_size*100)
-
-            # Calculating the mean val loss score for all batches
-            validation_loss_score /= batch_size
 
             # Added the epochwise value to the history dictionary
             history["epochwise"]["training_loss"].append(training_loss_score)
-            history["epochwise"]["validation_loss"].append(
-                validation_loss_score)
 
             # Checking if accuracy is there in metrics
             if "accuracy" in self.__metrics:
                 # Adding data into history dictionary
                 history["epochwise"]["training_accuracy"].append(
                     correct_training/len(x_train)*100)
-                history["epochwise"]["training_accuracy"].append(
-                    correct_val/len(x_test)*100)
 
-                # Printing a friendly message to the console
-                print_validation_progress(
-                    validation_loss_score, len(x_test), correct_val)
+            if test_data:
+                # Evaluating model
+                self.__model.eval()
+
+                # no grad, no training
+                with torch.no_grad():
+                    # Splitting the data into batches
+                    for i in range(0, len(x_test), batch_size):
+                        # Making the batches
+                        batch_x = x_train[i:i+batch_size].float()
+                        if "accuracy" in self.__metrics:
+                            batch_y = y_train[i:i+batch_size]
+                        else:
+                            batch_y = y_train[i:i+batch_size].float()
+
+                        # Moving the batches to device
+                        batch_x, batch_y = batch_x.to(
+                            self.__device), batch_y.to(self.__device)
+
+                        # Feeding the data into the model
+                        outputs = self.__model(batch_x)
+
+                        # Calculating the loss
+                        validation_loss = self.__loss_function(outputs, batch_y)
+
+                        # Storing the loss val, batchwise data
+                        validation_loss_score += validation_loss.item()
+                        history["batchwise"]["validation_loss"].append(
+                            validation_loss.item())
+
+                        # Calculating accuracy
+                        # Checking if accuracy is there in metrics
+                        if "accuracy" in self.__metrics:
+                            corrects = corrects = calculate_accuracy(
+                                batch_y, outputs)
+
+                            correct_val += corrects
+
+                            history["batchwise"]["validation_accuracy"].append(
+                                corrects/batch_size*100)
+
+                # Calculating the mean val loss score for all batches
+                validation_loss_score /= batch_size
+
+                # Added the epochwise value to the history dictionary
+                history["epochwise"]["validation_loss"].append(
+                    validation_loss_score)
+
+                # Checking if accuracy is there in metrics
+                if "accuracy" in self.__metrics:
+                    # Adding data into history dictionary
+                    history["epochwise"]["validation_accuracy"].append(
+                        correct_val/len(x_test)*100)
+
+                    # Printing a friendly message to the console
+                    print_validation_progress(
+                        validation_loss_score, len(x_test), correct_val)
+                else:
+                    # Printing a friendly message to the console
+                    print_validation_progress(
+                        validation_loss_score, len(x_test))
             else:
-                # Printing a friendly message to the console
-                print_validation_progress(
-                    validation_loss_score, len(x_test))
-
+                print("\nValidation Loss: NA")
         # Returning history
         return history
 
