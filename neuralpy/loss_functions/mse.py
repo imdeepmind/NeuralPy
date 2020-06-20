@@ -4,7 +4,6 @@ from torch.nn import MSELoss as _MSELoss
 
 # pylint: disable=too-few-public-methods
 
-
 class MSELoss:
     """
         Applies a Mean Squared Error loss function to the model.
