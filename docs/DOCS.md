@@ -193,7 +193,7 @@ The `.fit()` method is used for training the NeuralPy model.
 ##### Supported Arguments
 
 - `train_data`: (Tuple(NumPy Array, NumPy Array)) Pass the training data as a tuple like `(X, y)` where `X` is training data and `y` is the labels for the training the model.
-- `test_data`:(Tuple(NumPy Array, NumPy Array)) Pass the validation data as a tuple like `(X, y)` where `X` is test data and `y` is the labels for the validating the model.
+- `test_data=None`:(Tuple(NumPy Array, NumPy Array)) Pass the validation data as a tuple like `(X, y)` where `X` is test data and `y` is the labels for the validating the model. This field is optional.
 - `epochs=10`: (Integer) Number of epochs
 - `batch_size=32`: (Integer) Batch size for training.
 

@@ -299,16 +299,19 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
     print("\r" + message, end="")
 
 
-def print_validation_progress(validation_loss, no_samples, validtion_corrects=None):
+def print_validation_progress(validation_loss, no_samples, validation_corrects=None):
     """
         Show a validation progress text
     """
-    if validtion_corrects:
+    if validation_corrects:
         print(
             (
                 f"\nValidation Loss: {validation_loss:.4f} - "
-                f"Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%"
+                f"Validation Accuracy: {validation_corrects/no_samples*100:.4f}%"
             )
         )
     else:
-        print(f"\nValidation Loss: {validation_loss:.4f}")
+        if isinstance(validation_loss, int):
+            print(f"\nValidation Loss: {validation_loss:.4f}")
+        else:
+            print(f"\nValidation Loss: NA")
