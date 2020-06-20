@@ -5,31 +5,24 @@ from neuralpy.loss_functions import BCELoss
 import numpy as np
 import torch
 
-# Possible values that are invalid
-weights=["asd", 12, -.3]
-reductions=["asdas", "", 12, 6.3]
-pos_weights=["asd", 12, -.3]
-
 @pytest.mark.parametrize(
 	"weight, reduction, pos_weight", 
-	[(weight, reduction, pos_weight) for weight in weights
-								     for reduction in reductions
-								     for pos_weight in pos_weights]
+	[("invalid", 12, -.3),
+	(12, 12, -.3),
+	([1.0, 1.0, 1.0], "sump", -.3),
+	([1.0, 1.0, 1.0], 3, -.3),
+	([1.0, 1.0, 1.0], "sum", -.3),
+	([1.0, 1.0, 1.0], "sum", "invalid")]
 )
 def test_bce_should_throw_value_error(weight, reduction, pos_weight):
     with pytest.raises(ValueError) as ex:
         x = BCELoss(weight=weight, reduction=reduction, pos_weight=pos_weight)
 
-# Possible values that are valid
-weights=[[1.0, 1.0, 1.0], [2.0, 1.0, 2.0], np.ones([3])]
-reductions=["mean"]
-pos_weights=[[1.0, 1.0, 1.0], [2.0, 1.0, 2.0], np.ones([3])]
-
 @pytest.mark.parametrize(
 	"weight, reduction, pos_weight", 
-	[(weight, reduction, pos_weight) for weight in weights
-								     for reduction in reductions
-								     for pos_weight in pos_weights]
+	[([1.0, 1.0, 1.0], "mean", np.ones([3])),
+	(np.ones([3]), "mean", [2.0, 1.0, 2.0]),
+	]
 )
 def test_bce_get_layer_method(weight, reduction, pos_weight):
 	x = BCELoss(weight=weight, reduction=reduction, pos_weight=pos_weight)
