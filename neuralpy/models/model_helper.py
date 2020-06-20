@@ -36,6 +36,11 @@ def is_valid_layer(layer):
         layer_function_ref = layer_details["layer"]
 
         # Validating layer_inputs
+        if "n_inputs2" in layer_details.keys():
+            layer_inputs2 = layer_details["n_inputs2"]
+            if layer_inputs2 and not isinstance(
+                    layer_inputs2, int) and layer_inputs2 < 1:
+                return False
         if layer_inputs and not isinstance(layer_inputs, int) and layer_inputs < 1:
             return False
 
