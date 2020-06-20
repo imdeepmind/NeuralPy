@@ -44,3 +44,26 @@ def test_dense_get_layer_method(p, name):
 	assert details["keyword_arguments"]["p"] == p
 
 	assert details["keyword_arguments"]["inplace"] == False
+
+def test_dense_get_layer_method_wit_no_parameter():
+	x = Dropout()
+
+	assert x.get_input_dim(12) == None
+		
+	details = x.get_layer()
+
+	assert isinstance(details, dict) == True
+
+	assert details["n_inputs"] == None
+
+	assert details["n_nodes"] == None
+
+	assert details["name"] == None
+
+	assert issubclass(details["layer"], _Dropout) == True
+
+	assert isinstance(details["keyword_arguments"], dict) == True
+
+	assert details["keyword_arguments"]["p"] == .5
+
+	assert details["keyword_arguments"]["inplace"] == False
