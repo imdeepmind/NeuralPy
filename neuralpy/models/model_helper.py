@@ -311,4 +311,7 @@ def print_validation_progress(validation_loss, no_samples, validtion_corrects=No
             )
         )
     else:
-        print(f"\nValidation Loss: {validation_loss:.4f}")
+        if isinstance(validation_loss, int):
+            print(f"\nValidation Loss: {validation_loss:.4f}")
+        else:
+            print(f"\nValidation Loss: NA")

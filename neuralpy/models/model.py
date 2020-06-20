@@ -338,7 +338,8 @@ class Model:
                     print_validation_progress(
                         validation_loss_score, len(x_test))
             else:
-                print("\nValidation Loss: NA")
+                print_validation_progress("NA", 0)
+                
         # Returning history
         return history
 
