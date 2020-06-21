@@ -15,7 +15,7 @@ class Model:
     """
         NeuralPy Model Class
     """
-    def __init__(self, force_cpu, training_device, random_state):
+    def __init__(self, force_cpu=False, training_device=None, random_state=None):
         self.__model = None
         self.__metrics = ["loss"]
         self.__loss_function = None
