@@ -1,6 +1,6 @@
-"""Dense layer for NeuralPy"""
+"""Bilinear layer for NeuralPy"""
 
-from torch.nn import Bilinear as BiLinear
+from torch.nn import Bilinear as _BiLinear
 
 
 class Bilinear:
@@ -97,7 +97,7 @@ class Bilinear:
             'n_nodes': self.__n_nodes,
             'name': self.__name,
             'type': 'Bilinear',
-            'layer': BiLinear,
+            'layer': _BiLinear,
             'keyword_arguments': {
                     'in_features1': self.__n_inputs,
                     'in_features2': self.__n_inputs2,
