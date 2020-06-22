@@ -45,3 +45,21 @@ def test_adagrad_get_layer_method(learning_rate, learning_rate_decay, eps, weigh
 
 	assert details["keyword_arguments"]["weight_decay"] == weight_decay
 
+def test_adagrad_get_layer_method_without_parameters():
+	x = Adagrad()
+		
+	details = x.get_optimizer()
+
+	assert isinstance(details, dict) == True
+
+	assert issubclass(details["optimizer"], _Adagrad) == True
+
+	assert isinstance(details["keyword_arguments"], dict) == True
+
+	assert details["keyword_arguments"]["lr"] == 0.001
+
+	assert details["keyword_arguments"]["lr_decay"] == 0.0
+
+	# assert details["keyword_arguments"]["eps"] == eps
+
+	assert details["keyword_arguments"]["weight_decay"] == 0.0
