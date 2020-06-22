@@ -11,11 +11,18 @@ amsgrads = [12, "", 30.326]
 
 @pytest.mark.parametrize(
 	"learning_rate, beta, eps, weight_decay, amsgrad", 
-	[(learning_rate, beta, eps, weight_decay, amsgrad) for learning_rate in learning_rates
-														   for beta in betas
-														   for eps in epses
-														   for weight_decay in weight_decays
-												           for amsgrad in amsgrads]
+	[
+		(-6, ("", 1), False, False, 12),
+		(False, ("", 1), False, False, 12),
+		(0.001, ("", 1), False, False, 12),
+		(0.001, (.3, False), False, False, 12),
+		(0.001, (0.10, 2.0), False, False, 12),
+		(0.001, (0.10, 2.0), "Invalid", False, 12),
+		(0.001, (0.10, 2.0), .2, False, 12),
+		(0.001, (0.10, 2.0), .2, "test", 12),
+		(0.001, (0.10, 2.0), .2, .32, 12),
+		(0.001, (0.10, 2.0), .2, .32, "INVALID")
+	]
 )
 def test_adam_should_throw_value_error(learning_rate, beta, eps, weight_decay, amsgrad):
     with pytest.raises(ValueError) as ex:
