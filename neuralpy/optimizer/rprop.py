@@ -2,7 +2,6 @@
 
 from torch.optim import Rprop as _Rprop
 
-
 class Rprop:
     """
     Implements Rprop oprimizer
@@ -29,7 +28,7 @@ class Rprop:
                     maximal allowed step sizes for the optimizer
         """
         if not isinstance(
-                learning_rate, float) or learning_rate < 0.0:
+                learning_rate, float) or learning_rate <= 0.0:
             raise ValueError("Invalid learning_rate")
 
         if not isinstance(etas[0], float):

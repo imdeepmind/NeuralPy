@@ -2,18 +2,21 @@ import pytest
 from torch.optim import Rprop as _Rprop
 from neuralpy.optimizer import Rprop
 
-# Possible values that are invalid
-learning_rates = [-6, False, ""]
-etases = [("", 1), ("", ""), (False, 2)]
-step_sizeses = [("", 1), ("", ""), (False, 2)]
-
-
 @pytest.mark.parametrize(
     "learning_rate, etas, step_sizes",
-    [(learning_rate, etas, step_sizes)
-        for learning_rate in learning_rates
-        for etas in etases
-        for step_sizes in step_sizeses]
+    [
+        (-6, ("", 1.0), ("", 1)),
+        (False, ("", 1.0), ("", 1)),
+        (0.001, ("", 1.0), ("", 1)),
+        (0.001, ("", 1.0), ("", 1)),
+        (0.001, (False, 1.0), ("", 1)),
+        (0.001, (0.1, "invalid"), ("", 1)),
+        (0.001, (0.1, False), ("", 1)),
+        (0.001, (0.1, 0.002), ("", 1)),
+        (0.001, (0.1, 0.002), (False, 1)),
+        (0.001, (0.1, 0.002), (0.001, "invalid")),
+        (0.001, (0.1, 0.002), (0.001, True))
+    ]
 )
 def test_rprop_should_throw_value_error(
         learning_rate, etas, step_sizes):
@@ -22,10 +25,9 @@ def test_rprop_should_throw_value_error(
                 learning_rate=learning_rate, etas=etas, step_sizes=step_sizes)
 
 # Possible values that are valid
-learning_rates = [0.0, 0.1]
+learning_rates = [0.001, 0.1]
 etases = [(0.6, 1.7)]
 step_sizeses = [(0.2, 1.0)]
-
 
 @pytest.mark.parametrize(
     "learning_rate, etas, step_sizes",
