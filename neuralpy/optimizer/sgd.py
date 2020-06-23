@@ -3,6 +3,8 @@
 from torch.optim import SGD as _SGD
 
 # pylint: disable=too-few-public-methods
+
+
 class SGD:
     """
         Applies a SGD (Stochastic Gradient Descent) with momentum.
@@ -15,9 +17,9 @@ class SGD:
             nesterov=False : (Bool) Enables Nesterov momentum
     """
     # pylint: disable=too-many-arguments
+
     def __init__(self, learning_rate=0.001, momentum=0.0,
                  dampening=0.0, weight_decay=0.0, nesterov=False):
-
         """
             __init__ method for SGD
 
@@ -30,17 +32,17 @@ class SGD:
         """
 
         # Validation the input fields
-        if not isinstance(learning_rate, float) or learning_rate < 0.0:
+        if not isinstance(learning_rate, float) or learning_rate <= 0.0:
             raise ValueError("Invalid learning_rate")
 
         if not isinstance(momentum, float) or momentum < 0.0:
             raise ValueError("Invalid momentum value")
 
-        if not isinstance(weight_decay, float) or weight_decay < 0.0:
-            raise ValueError("Invalid weight_decay value")
-
         if not isinstance(dampening, float):
             raise ValueError("Invalid dampening parameter")
+
+        if not isinstance(weight_decay, float) or weight_decay < 0.0:
+            raise ValueError("Invalid weight_decay value")
 
         if not isinstance(nesterov, bool):
             raise ValueError("Invalid nesterov parameter")
