@@ -16,7 +16,7 @@ class Rprop:
     """
     def __init__(
             self, learning_rate=0.01, etas=(0.5, 1.2),
-            step_sizes=(1e-06, 50)):
+            step_sizes=(1e-06, 50.0)):
         """
             __init__ method for Rprop
 
