@@ -5,7 +5,7 @@
  A Keras like deep learning library works on top of PyTorch
 </p>
 
-
+![](https://github.com/imdeepmind/NeuralPy/workflows/Python%20package/badge.svg)
 ![Maitained](https://img.shields.io/badge/Maitained%3F-Yes-brightgreen)
 ![PyPI - Downloads](https://img.shields.io/pypi/dw/neuralpy-torch?style=flat)
 ![PyPI](https://img.shields.io/pypi/v/neuralpy-torch?style=flat)
