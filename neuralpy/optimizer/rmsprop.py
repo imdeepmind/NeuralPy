@@ -31,7 +31,7 @@ class RMSprop:
                 centered=False : (Bool) if True, compute the centered RMSProp,
                     the gradient is normalized by an estimation of its variance
         """
-        if not isinstance(learning_rate, float) or learning_rate < 0.0:
+        if not isinstance(learning_rate, float) or learning_rate <= 0.0:
             raise ValueError("Invalid learning_rate")
 
         if not isinstance(alpha, float):
