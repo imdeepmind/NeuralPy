@@ -65,3 +65,26 @@ def test_rmsprop_get_layer_method(learning_rate, alpha, eps, weight_decay, momen
 	assert details["keyword_arguments"]["weight_decay"] == weight_decay
 
 	assert details["keyword_arguments"]["centered"] == centered
+
+def test_rmsprop_get_layer_method_without_parameter():
+	x = RMSprop()
+		
+	details = x.get_optimizer()
+
+	assert isinstance(details, dict) == True
+
+	assert issubclass(details["optimizer"], _RMSprop) == True
+
+	assert isinstance(details["keyword_arguments"], dict) == True
+
+	assert details["keyword_arguments"]["lr"] == 0.001
+
+	assert details["keyword_arguments"]["alpha"] == 0.99
+
+	assert details["keyword_arguments"]["eps"] == 1e-08
+
+	assert details["keyword_arguments"]["momentum"] == 0.0
+
+	assert details["keyword_arguments"]["weight_decay"] == 0.0
+
+	assert details["keyword_arguments"]["centered"] == False
