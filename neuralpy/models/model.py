@@ -27,7 +27,7 @@ class Model:
         # Checking the force_cpu parameter
         if not isinstance(force_cpu, bool):
             raise ValueError(
-                f"You have provided an invalid value for the parameter force_cpu")
+                "You have provided an invalid value for the parameter force_cpu")
 
         # Checking the training_device parameter and comparing it with pytorch device class
         # pylint: disable=no-member
@@ -62,6 +62,8 @@ class Model:
         # Setting random state if given
         if random_state:
             torch.manual_seed(random_state)
+
+        self.__history = {}
 
     # pylint: disable=invalid-name
     def __predict(self, X, batch_size=None):
@@ -152,6 +154,7 @@ class Model:
                                                      self.__model.parameters())
         self.__loss_function = build_loss_function_from_dict(loss_function)
 
+    # pylint: disable=too-many-arguments
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
         """
             This method training the model on a given training data
@@ -161,7 +164,7 @@ class Model:
                 y_train: (Numpy array): validation data
                 batch_size: (Integer) Batch size of the model
                 epoch: (Integer) Current epoch
-                epochs: (Integer) No of epochs 
+                epochs: (Integer) No of epochs
         """
         # If batch_size is there then checking the
         # length and comparing it with the length of training data
@@ -183,10 +186,7 @@ class Model:
 
         # Initializing the loss and accuracy with 0
         training_loss_score = 0
-        validation_loss_score = 0
-
         correct_training = 0
-        correct_val = 0
 
         # Training model :)
         self.__model.train()
@@ -241,8 +241,7 @@ class Model:
         # Checking if accuracy is there in metrics
         if "accuracy" in self.__metrics:
             return training_loss_score, correct_training/len(x_train)*100
-        else:
-            return training_loss_score, 0
+        return training_loss_score, 0
 
     def __validation_loop(self, x_test, y_test, batch_size):
         """
@@ -266,6 +265,7 @@ class Model:
             raise ValueError(
                 "Length of testing Input data and testing output data should be same")
 
+        # pylint: disable=not-callable,no-member
         x_test = torch.tensor(x_test)
         y_test = torch.tensor(y_test)
 
@@ -322,28 +322,37 @@ class Model:
                 validation_loss_score, len(x_test), correct_val)
 
             return validation_loss_score, correct_val/len(x_test)*100
-        else:
-            # Printing a friendly message to the console
-            print_validation_progress(
-                validation_loss_score, len(x_test))
 
-            return validation_loss_score, 0
+        # Printing a friendly message to the console
+        print_validation_progress(
+            validation_loss_score, len(x_test))
 
-    def fit(self, train_data, validation_data=None, epochs=10, batch_size=32, steps_per_epoch=None, validation_steps=None):
+        return validation_loss_score, 0
+
+    def fit(self,
+            train_data,
+            validation_data=None,
+            epochs=10, batch_size=32,
+            steps_per_epoch=None,
+            validation_steps=None):
         """
             The `.fit()` method is used for training the NeuralPy model.
 
             Supported Arguments
-                train_data: (Tuple(NumPy Array, NumPy Array) | Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the training data
+                train_data: (Tuple(NumPy Array, NumPy Array) |
+                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the training data
                     as a tuple like (X, y) where X is training data and y is the
                     labels for the training the model.
-                validation_data=None:(Tuple(NumPy Array, NumPy Array) | Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the validation data
+                validation_data=None:(Tuple(NumPy Array, NumPy Array) |
+                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the validation data
                     as a tuple like (X, y) where X is test data and y is the labels
                     for the validating the model. This field is optional.
                 epochs=10: (Integer) Number of epochs
                 batch_size=32: (Integer) Batch size for training.
-                steps_per_epoch=None: (Integer) No of steps for each training loop (only needed if use generator)
-                validation_steps=None: (Integer) No of steps for each validation epoch (only needed if use generator)
+                steps_per_epoch=None: (Integer) No of steps for each
+                training loop (only needed if use generator)
+                validation_steps=None: (Integer) No of steps for each
+                validation epoch (only needed if use generator)
         """
         if not epochs or epochs <= 0:
             raise ValueError("Please provide a valid epochs")
@@ -363,7 +372,7 @@ class Model:
                 total_loss = 0
                 total_accuracy = 0
 
-                for i in range(steps_per_epoch):
+                for _ in range(steps_per_epoch):
                     x_train, y_train = next(train_data)
                     loss, accuracy = self.__train_loop(x_train, y_train,
                                                        batch_size, epoch, epochs)
@@ -394,7 +403,7 @@ class Model:
                     validation_loss = 0
                     validation_accuracy = 0
 
-                    for i in range(validation_steps):
+                    for _ in range(validation_steps):
                         x_test, y_test = next(validation_data)
                         loss, accuracy = self.__validation_loop(
                             x_test, y_test, batch_size)
@@ -428,7 +437,8 @@ class Model:
                 if validation_data:
                     if isinstance(validation_data, types.GeneratorType):
                         raise ValueError(
-                            "Please provide a valid test_data, can not mix up with generator and array")
+                            "Please provide a valid test_data,"
+                            "cannot mix up with generator and array")
 
                     x_test, y_test = validation_data
 
@@ -464,7 +474,7 @@ class Model:
 
     def predict_classes(self, X, batch_size=None):
         """
-            The .predict_clas()method is used for predicting classes using the trained mode.
+            The .predict_class()method is used for predicting classes using the trained mode.
             This method works only if accuracy is passed in the metrics parameter on the
             .compile()method.
 
@@ -482,9 +492,9 @@ class Model:
             predictions = predictions.argmax(dim=1, keepdim=True)
 
             return predictions.numpy()
-        else:
-            raise ValueError(
-                "Cannot predict classes as this is not a classification problem")
+
+        raise ValueError(
+            "Cannot predict classes as this is not a classification problem")
 
     def evaluate(self, X, y, batch_size=None):
         """

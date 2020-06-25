@@ -315,9 +315,9 @@ def print_validation_progress(validation_loss, no_samples, validation_corrects=N
             f"Validation Accuracy: {validation_corrects/no_samples*100:.4f}%"
         )
     else:
-        if isinstance(validation_loss, int) or isinstance(validation_loss, float):
+        if isinstance(validation_loss, (int, float)):
             message = f"\rValidation Loss: {validation_loss:.4f}"
         else:
-            message = f"\rValidation Loss: NA"
+            message = "\rValidation Loss: NA"
 
     print("\r" + message, end="")
