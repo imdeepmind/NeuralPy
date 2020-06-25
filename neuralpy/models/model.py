@@ -164,52 +164,59 @@ class Model:
                 batch_size=32: (Integer) Batch size for training.
 
         """
-        # Extracting the train data from the tuples
-        x_train, y_train = train_data
+        if epochs <= 0:
+            raise ValueError("Please provide a valid epochs")
 
-        # If batch_size is there then checking the
-        # length and comparing it with the length of training data
-        if x_train.shape[0] < batch_size:
-            # Batch size can not be greater that train data size
-            raise ValueError(
-                "Batch size is greater than total number of training samples")
-
-        # Checking the length of input and output
-        if x_train.shape[0] != y_train.shape[0]:
-            # length of X and y should be same
-            raise ValueError(
-                "Length of training Input data and training output data should be same")
+        if batch_size <= 0:
+            raise ValueError("Please provide a valid batch size")
         
-        # Converting the data into PyTorch tensor
-        # pylint: disable=not-callable,no-member
-        x_train = torch.tensor(x_train)
-        y_train = torch.tensor(y_train)
-
-        if test_data:
-            # Extracting the test data from the tuples
-            x_test, y_test = test_data            
-
-            # If batch_size is there then checking the length and
-            # comparing it with the length of training data
-            if x_test.shape[0] < batch_size:
-                # Batch size can not be greater that test data size
-                raise ValueError(
-                    "Batch size is greater than total number of testing samples")
-
-            # Checking the length of input and output
-            if x_test.shape[0] != y_test.shape[0]:
-                # length of X and y should be same
-                raise ValueError(
-                    "Length of testing Input data and testing output data should be same")
-
-            x_test = torch.tensor(x_test)
-            y_test = torch.tensor(y_test)
-
         # Building the history object
         history = build_history_object(self.__metrics)
 
         # Running the epochs
         for epoch in range(epochs):
+            # Extracting the train data from the tuples
+            x_train, y_train = train_data
+
+            # If batch_size is there then checking the
+            # length and comparing it with the length of training data
+            if x_train.shape[0] < batch_size:
+                # Batch size can not be greater that train data size
+                raise ValueError(
+                    "Batch size is greater than total number of training samples")
+
+            # Checking the length of input and output
+            if x_train.shape[0] != y_train.shape[0]:
+                # length of X and y should be same
+                raise ValueError(
+                    "Length of training Input data and training output data should be same")
+            
+            # Converting the data into PyTorch tensor
+            # pylint: disable=not-callable,no-member
+            x_train = torch.tensor(x_train)
+            y_train = torch.tensor(y_train)
+
+            if test_data:
+                # Extracting the test data from the tuples
+                x_test, y_test = test_data            
+
+                # If batch_size is there then checking the length and
+                # comparing it with the length of training data
+                if x_test.shape[0] < batch_size:
+                    # Batch size can not be greater that test data size
+                    raise ValueError(
+                        "Batch size is greater than total number of testing samples")
+
+                # Checking the length of input and output
+                if x_test.shape[0] != y_test.shape[0]:
+                    # length of X and y should be same
+                    raise ValueError(
+                        "Length of testing Input data and testing output data should be same")
+
+                x_test = torch.tensor(x_test)
+                y_test = torch.tensor(y_test)
+
+            
             # Initializing the loss and accuracy with 0
             training_loss_score = 0
             validation_loss_score = 0
