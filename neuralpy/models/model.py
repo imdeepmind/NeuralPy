@@ -361,6 +361,8 @@ class Model:
                 if "accuracy" in self.__metrics:
                     self.__history["epochwise"]["training_accuracy"].append(total_accuracy)
                 
+                print("")
+
                 if validation_data:
                     if not isinstance(validation_data, types.GeneratorType):
                         raise ValueError("Please provide a valid test data")
@@ -395,6 +397,8 @@ class Model:
                 if "accuracy" in self.__metrics:
                     self.__history["epochwise"]["training_accuracy"].append(accuracy)
                 
+                print("")
+
                 if validation_data:
                     if isinstance(validation_data, types.GeneratorType):
                         raise ValueError("Please provide a valid test_data, can not mix up with generator and array")
@@ -410,6 +414,7 @@ class Model:
                     # Added the epochwise value to the history dictionary
                     self.__history["epochwise"]["validation_loss"].append(validation_accuracy)
 
+            print("")
         return self.__history
         # Extracting the train data from the tuples
         #         x_train, y_train = train_data
