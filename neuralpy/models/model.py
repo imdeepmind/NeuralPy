@@ -153,6 +153,16 @@ class Model:
         self.__loss_function = build_loss_function_from_dict(loss_function)
 
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
+        """
+            This method training the model on a given training data
+
+            Supported Arguments:
+                x_train: (Numpy Array): Validation data
+                y_train: (Numpy array): validation data
+                batch_size: (Integer) Batch size of the model
+                epoch: (Integer) Current epoch
+                epochs: (Integer) No of epochs 
+        """
         # If batch_size is there then checking the
         # length and comparing it with the length of training data
         if x_train.shape[0] < batch_size:
@@ -235,6 +245,14 @@ class Model:
             return training_loss_score, 0
 
     def __validation_loop(self, x_test, y_test, batch_size):
+        """
+            Method calculates the validation loss and accuracy for a model
+
+            Supported Arguments:
+                x_test: (Numpy Array): Validation data
+                y_test: (Numpy array): validation data
+                batch_size: (Integer) Batch size of the model
+        """
         # If batch_size is there then checking the length and
         # comparing it with the length of training data
         if x_test.shape[0] < batch_size:
@@ -324,7 +342,8 @@ class Model:
                     for the validating the model. This field is optional.
                 epochs=10: (Integer) Number of epochs
                 batch_size=32: (Integer) Batch size for training.
-
+                steps_per_epoch=None: (Integer) No of steps for each training loop (only needed if use generator)
+                validation_steps=None: (Integer) No of steps for each validation epoch (only needed if use generator)
         """
         if not epochs or epochs <= 0:
             raise ValueError("Please provide a valid epochs")
