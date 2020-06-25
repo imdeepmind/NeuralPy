@@ -5,9 +5,9 @@ from torch.nn import Bilinear as _BiLinear
 
 class Bilinear:
     '''
-    A bilinear layer is a function of two inputs x and y 
+    A bilinear layer is a function of two inputs x and y
     that is linear in each input separately.
-    Simple bilinear functions on vectors are the 
+    Simple bilinear functions on vectors are the
     dot product or the element-wise product.
 
     To learn more about Dense layers, please check PyTorch
@@ -23,10 +23,12 @@ class Bilinear:
     name: (String) Name of the layer, if not provided then
         automatically calculates a unique name for the layer
     '''
+
+    # pylint: disable=too-many-arguments
     def __init__(
             self, n_nodes, n1_features=None,
             n2_features=None, bias=True, name=None
-            ):
+    ):
         '''
         __init__ method for bilinear layer
 
@@ -41,7 +43,7 @@ class Bilinear:
             automatically calculates a unique name for the layer
 
         '''
-         # Checking the n_nodes field
+        # Checking the n_nodes field
         if not n_nodes or not isinstance(n_nodes, int) or n_nodes <= 0:
             raise ValueError("Please provide a valid n_nodes")
 
@@ -49,7 +51,7 @@ class Bilinear:
         if n1_features and not isinstance(
                 n1_features, int) and n1_features <= 0:
             raise ValueError("Please provide a valid n1_features")
-        
+
         # Checking the n2_features field
         if n2_features and not isinstance(
                 n2_features, int) and n2_features <= 0:
@@ -99,9 +101,9 @@ class Bilinear:
             'type': 'Bilinear',
             'layer': _BiLinear,
             'keyword_arguments': {
-                    'in_features1': self.__n_inputs,
-                    'in_features2': self.__n_inputs2,
-                    'out_features': self.__n_nodes,
-                    'bias': self.__bias
+                'in_features1': self.__n_inputs,
+                'in_features2': self.__n_inputs2,
+                'out_features': self.__n_nodes,
+                'bias': self.__bias
             }
         }

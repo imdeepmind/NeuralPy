@@ -2,6 +2,7 @@
 
 from torch.nn import Linear
 
+
 class Dense:
     """
         A Dense is a normal densely connected Neural Network.
@@ -18,6 +19,7 @@ class Dense:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
+
     def __init__(self, n_nodes, n_inputs=None, bias=True, name=None):
         """
             __init__ method for the Dense layer
@@ -80,8 +82,8 @@ class Dense:
             'type': 'Dense',
             'layer': Linear,
             "keyword_arguments": {
-    	           'in_features': self.__n_inputs,
-    	           'out_features': self.__n_nodes,
-    	           'bias': self.__bias
+                'in_features': self.__n_inputs,
+                'out_features': self.__n_nodes,
+                'bias': self.__bias
             }
         }
