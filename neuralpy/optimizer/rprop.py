@@ -2,6 +2,7 @@
 
 from torch.optim import Rprop as _Rprop
 
+# pylint: disable=too-few-public-methods
 class Rprop:
     """
     Implements Rprop oprimizer
