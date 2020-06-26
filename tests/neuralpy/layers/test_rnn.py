@@ -1,6 +1,7 @@
 import pytest
 from torch.nn import RNN as _RNN
-from neuralpy.layers import RNN 
+from neuralpy.layers import RNN
+
 
 def test_rnn_should_throws_type_error():
     with pytest.raises(TypeError) as ex:
@@ -15,7 +16,8 @@ biases = [False, True, 2]
 batch_firsts = [False, 0.2, 2]
 dropouts = [1, None, 0.5]
 bidirectionals = [False, True, 2]
-names  = [False, 12, True]
+names = [False, 12, True]
+
 
 @pytest.mark.parametrize(
     "input_size, hidden_size, num_layers, non_linearity,\
@@ -30,7 +32,7 @@ names  = [False, 12, True]
     for batch_first in batch_firsts
     for dropout in dropouts
     for bidirectional in bidirectionals
-    for name in names] 
+    for name in names]
 )
 def test_rnn_should_throw_value_error(
     input_size, hidden_size, num_layers, non_linearity,
@@ -51,7 +53,7 @@ biases = [False, True]
 batch_firsts = [False, True]
 dropouts = [1, 2]
 bidirectionals = [False, True]
-names  = ['Test', None]
+names = ['Test', None]
 
 @pytest.mark.parametrize(
     "input_size, hidden_size, num_layers, non_linearity,\
@@ -66,7 +68,7 @@ names  = ['Test', None]
     for batch_first in batch_firsts
     for dropout in dropouts
     for bidirectional in bidirectionals
-    for name in names] 
+    for name in names]
 )
 def test_rnn_layer_get_method(
     input_size, hidden_size, num_layers, non_linearity,
@@ -78,10 +80,12 @@ def test_rnn_layer_get_method(
                 bias=bias, batch_first=batch_first, dropout=dropout,
                 bidirectional=bidirectional, name=name)
 
+        prev_dim = 6
+
         if input_size is None:
             x.get_input_dim(prev_dim)
 
-        details  = x.get_layer()
+        details = x.get_layer()
 
         assert isinstance(details, dict) == True
 
