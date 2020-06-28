@@ -1,6 +1,6 @@
 """Dropout Layer"""
 
-from torch.nn import Dropout as _Dropout2d
+from torch.nn import Dropout2d as _Dropout2D
 
 class Dropout2D:
     """
@@ -62,7 +62,7 @@ class Dropout2D:
             'n_nodes': None,
             'name': self.__name,
             'type': 'Dropout2D',
-            'layer': _Dropout2d,
+            'layer': _Dropout2D,
             "keyword_arguments": {
                 'p': self.__p,
                 'inplace': False
