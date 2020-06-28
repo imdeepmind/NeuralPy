@@ -6,18 +6,20 @@ def test_dense_should_throw_type_error():
     with pytest.raises(TypeError) as ex:
         x = Dense()
 
-# Possible values
-n_nodes = [0.3, 6.3, -0.36, 'asd', '', False]
-n_inputs = [0.3, 6.3, -0.36, 'asd', '', False]
-biases = [1, "", 0.3]
-names = [False, 12, ""]
-
 @pytest.mark.parametrize(
 	"n_nodes, n_inputs, bias, name", 
-	[(n_node, n_input, bias, name) for n_node in n_nodes
-						           for n_input in n_inputs
-						           for bias in biases
-						           for name in names]
+	[
+		(0.3, 0.3, 0.36, False),
+		(False, 0.3, 0.36, False),
+		(4, 0.3, 0.36, False),
+		(10, False, 0.36, False),
+		(10, "invalid", 0.36, False),
+		(10, 10, 0.36, False),
+		(10, 10, "invalid", False),
+		(10, 10, True, False),
+		(10, 10, True, 19),
+		(10, 10, True, ""),
+	]
 )
 def test_dense_should_throw_value_error(n_nodes, n_inputs, bias, name):
     with pytest.raises(ValueError) as ex:
