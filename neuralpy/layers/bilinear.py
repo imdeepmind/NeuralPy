@@ -48,14 +48,14 @@ class Bilinear:
             raise ValueError("Please provide a valid n_nodes")
 
         # Checking the n1_features field, it is a optional field
-        if n1_features and not isinstance(
-                n1_features, int) and n1_features <= 0:
+        if n1_features is not None and not (isinstance(
+                n1_features, int) and n1_features >= 0):
             raise ValueError("Please provide a valid n1_features")
 
         # Checking the n2_features field
-        if n2_features and not isinstance(
-                n2_features, int) and n2_features <= 0:
-            raise ValueError("Please provice a valid n2_features")
+        if n2_features is not None and not (isinstance(
+                n2_features, int) and n2_features >= 0):
+            raise ValueError("Please provide a valid n2_features")
 
         # Checking the bias field, this is also optional, default to True
         if not isinstance(bias, bool):

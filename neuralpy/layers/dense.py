@@ -37,7 +37,7 @@ class Dense:
             raise ValueError("Please provide a valid n_nodes")
 
         # Checking the n_input field, it is a optional field
-        if n_inputs and isinstance(n_inputs, int) and n_inputs <= 0:
+        if n_inputs is not None and not (isinstance(n_inputs, int) and n_inputs >= 0):
             raise ValueError("Please provide a valid n_inputs")
 
         # Checking the bias field, this is also optional, default to True
