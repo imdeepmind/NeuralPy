@@ -5,3 +5,4 @@
 """
 
 from .dropout import Dropout
+from .dropout2d import Dropout2D
