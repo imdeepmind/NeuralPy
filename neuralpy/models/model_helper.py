@@ -157,7 +157,14 @@ def build_layer_from_dict(layer_refs):
         # Generating n_input if not present
         if prev_layer_details and prev_layer_type:
             # For each layer, we have this method that returns the new input layer for next dim
-            # based on the previous output dim
+            # based on the previous layer details and type
+            # the prev_layer_details is a tuple that contains all the information
+            # need for the layer to predict the input shape
+            # The prev_layer_type is the type of the layer, based on it, 
+            # the layers can calculate the input shape
+            # for example, in cnn, after the conv layers, when the dense layer need to do 
+            # some complicated calculations to get the input shape of the Dense layer 
+            # based on the input shape, stride, padding, etc
             layer_ref.get_input_dim(prev_layer_details, prev_layer_type)
 
         # Getting the details of the layer using the get_layer method

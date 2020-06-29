@@ -66,7 +66,9 @@ class Dense:
         # Checking if n_inputs is there or not, not overwriting the n_input field
         if not self.__n_inputs:
             layer_type = prev_layer_type.lower()
-
+            
+            # based on the prev layer type, predicting the n_inputs
+            # to support more layers, we need to add some more statements
             if layer_type == "dense":
                 self.__n_inputs = prev_input_dim[0]
             else:
