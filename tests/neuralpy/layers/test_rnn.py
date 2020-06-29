@@ -85,33 +85,16 @@ def test_rnn_layer_get_method(
                 bias=bias, batch_first=batch_first, dropout=dropout,
                 bidirectional=bidirectional, name=name)
 
-        prev_dim = 6
+        prev_dim = (6,)
 
         if input_size is None:
-            x.get_input_dim(prev_dim)
+            x.get_input_dim(prev_dim, "rnn")
 
         details = x.get_layer()
 
         assert isinstance(details, dict) == True
 
-        if input_size:
-            assert details['input_size'] == input_size
-        else:
-            assert details['input_size'] == prev_dim
-
-        assert details['hidden_size'] == hidden_size
-
-        assert details['num_layers'] == num_layers
-
-        assert details['non_linearity'] == non_linearity
-
-        assert details['bias'] == bias
-
-        assert details['batch_first'] == batch_first
-
-        assert details['dropout'] == dropout
-
-        assert details['bidirectional'] == bidirectional
+        assert details['layer_details'] == num_layers
 
         assert details['name'] == name
 
@@ -122,8 +105,22 @@ def test_rnn_layer_get_method(
         if input_size:
             assert details['keyword_arguments']['input_size'] == input_size
         else:
-            assert details['keyword_arguments']['input_size'] == prev_dim
+            assert details['keyword_arguments']['input_size'] == prev_dim[0]
 
         assert details['keyword_arguments']['hidden_size'] == hidden_size
 
         assert details['keyword_arguments']['num_layers'] == num_layers
+
+        assert details['keyword_arguments']['hidden_size'] == hidden_size
+
+        assert details['keyword_arguments']['num_layers'] == num_layers
+
+        assert details['keyword_arguments']['non_linearity'] == non_linearity
+
+        assert details['keyword_arguments']['bias'] == bias
+
+        assert details['keyword_arguments']['batch_first'] == batch_first
+
+        assert details['keyword_arguments']['dropout'] == dropout
+
+        assert details['keyword_arguments']['bidirectional'] == bidirectional

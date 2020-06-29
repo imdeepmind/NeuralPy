@@ -113,16 +113,23 @@ class RNN:
         self.__bidirectional = bidirectional
         self.__name = name
 
-    def get_input_dim(self, prev_input_dim):
+    def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-
+        # Checking if n_inputs is there or not, not overwriting the n_input field
         if not self.__input_size:
-            self.__input_size = prev_input_dim
+            layer_type = prev_layer_type.lower()
+            
+            # based on the prev layer type, predicting the n_inputs
+            # to support more layers, we need to add some more statements
+            if layer_type == "rnn":
+                self.__input_size = prev_input_dim[0]
+            else:
+                raise ValueError("Unsupported previos layer, please provide your own input shape for the layer")
 
     def get_layer(self):
         """
@@ -133,20 +140,18 @@ class RNN:
         """
         # Returning all the details of the layer
         return{
-            'input_size': self.__input_size,
-            'hidden_size': self.__hidden_size,
-            'num_layers': self.__num_layers,
-            'non_linearity': self.__non_linearity,
-            'bias': self.__bias,
-            'batch_first': self.__batch_first,
-            'dropout': self.__dropout,
-            'bidirectional': self.__bidirectional,
+            'layer_details': self.__num_layers,
             'name': self.__name,
             'type': 'RNN',
             'layer': _RNN,
             "keyword_arguments": {
                     'input_size': self.__input_size,
                     'hidden_size': self.__hidden_size,
-                    'num_layers': self.__num_layers
+                    'num_layers': self.__num_layers,
+                    'non_linearity': self.__non_linearity,
+                    'bias': self.__bias,
+                    'batch_first': self.__batch_first,
+                    'dropout': self.__dropout,
+                    'bidirectional': self.__bidirectional
             }
         }
