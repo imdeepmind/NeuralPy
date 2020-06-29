@@ -74,7 +74,7 @@ class RNN:
 
         # checking the num_layers
         if not num_layers or not isinstance(
-                num_layers, int) and num_layers <= 0:
+                num_layers, int) or num_layers <= 0:
                 raise ValueError("Please provide a valid num_layers")
 
         # checking the non_linearity, it is an optional field
