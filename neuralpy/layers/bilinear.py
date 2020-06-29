@@ -87,6 +87,8 @@ class Bilinear:
 
             if layer_type == "dense":
                 self.__n_inputs = prev_input_dim[0]
+            elif layer_type == "bilinear":
+                self.__n_inputs = prev_input_dim[0]
             else:
                 raise ValueError("Unsupported previous layer, please provide your own input shape for the layer")
 
@@ -99,7 +101,7 @@ class Bilinear:
         """
         # Returning all the details of the layer
         return {
-            'layer_details': (self.__n_inputs,),
+            'layer_details': (self.__n_nodes,),
             'name': self.__name,
             'type': 'Bilinear',
             'layer': _BiLinear,
