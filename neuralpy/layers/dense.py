@@ -81,8 +81,7 @@ class Dense:
         """
         # Returning all the details of the layer
         return {
-            'n_inputs': self.__n_inputs,
-            'n_nodes': self.__n_nodes,
+            'layer_details': (self.__n_nodes,),
             'name': self.__name,
             'type': 'Dense',
             'layer': Linear,

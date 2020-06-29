@@ -26,7 +26,7 @@ def is_valid_layer(layer):
             return False
 
         # Here im checking all the keys of object returned from the get_layer method
-        layer_details = layer_details["layer_details"]
+        layer_details_info = layer_details["layer_details"]
 
         layer_name = layer_details["name"]
         layer_type = layer_details["type"]
@@ -35,7 +35,7 @@ def is_valid_layer(layer):
         layer_function_ref = layer_details["layer"]
 
         # The layer_details should be tuple with all the information for the next layer
-        if layer_details and not isinstance(layer_details, tuple):
+        if layer_details_info and not isinstance(layer_details_info, tuple):
             return False
 
         # Validating layer_name
