@@ -187,9 +187,10 @@ def build_layer_from_dict(layer_refs):
 
         # Appending the layer to layers array
         layers.append((layer_name, layer))
-
-        prev_layer_details = layer_details_info
-        prev_layer_type = layer_type
+        
+        if layer_details_info: 
+            prev_layer_details = layer_details_info
+            prev_layer_type = layer_type
 
     return layers
 
