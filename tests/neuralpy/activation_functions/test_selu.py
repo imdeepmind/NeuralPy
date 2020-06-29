@@ -25,15 +25,13 @@ names = ["test1", "test2"]
 def test_selu_get_input_dim_and_get_layer_method(name):
     x = SELU(name=name)
 
-    assert x.get_input_dim(23) == None
+    assert x.get_input_dim(23, "dense") == None
 
     details = x.get_layer()
 
     assert isinstance(details, dict) == True
 
-    assert details["n_inputs"] == None
-
-    assert details["n_nodes"] == None
+    assert details["layer_details"] == None
 
     assert details["name"] == name
 
