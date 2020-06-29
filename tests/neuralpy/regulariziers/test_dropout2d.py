@@ -25,15 +25,13 @@ def test_dense_should_throw_value_error(p, name):
 def test_dense_get_layer_method(p, name):
 	x = Dropout2D(p=p, name=name)
 
-	assert x.get_input_dim(12) == None
+	assert x.get_input_dim(12, "dense") == None
 		
 	details = x.get_layer()
 
 	assert isinstance(details, dict) == True
 
-	assert details["n_inputs"] == None
-
-	assert details["n_nodes"] == None
+	assert details["layer_details"] == None
 
 	assert details["name"] == name
 
@@ -48,15 +46,13 @@ def test_dense_get_layer_method(p, name):
 def test_dense_get_layer_method_wit_no_parameter():
 	x = Dropout2D()
 
-	assert x.get_input_dim(12) == None
+	assert x.get_input_dim(12, "dense") == None
 		
 	details = x.get_layer()
 
 	assert isinstance(details, dict) == True
 
-	assert details["n_inputs"] == None
-
-	assert details["n_nodes"] == None
+	assert details["layer_details"] == None
 
 	assert details["name"] == None
 

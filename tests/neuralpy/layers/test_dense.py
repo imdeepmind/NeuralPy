@@ -41,21 +41,16 @@ names = ["Test", None]
 )
 def test_dense_get_layer_method(n_nodes, n_inputs, bias, name):
 	x = Dense(n_nodes=n_nodes, n_inputs=n_inputs, bias=bias, name=name)
-	prev_dim = 6
+	prev_dim = (6,)
 
 	if n_inputs is None:
-		x.get_input_dim(prev_dim)
+		x.get_input_dim(prev_dim, "dense")
 		
 	details = x.get_layer()
 
 	assert isinstance(details, dict) == True
 
-	if n_inputs:
-		assert details["n_inputs"] == n_inputs
-	else:
-		assert details["n_inputs"] == prev_dim
-
-	assert details["n_nodes"] == n_nodes
+	assert details["layer_details"] == (n_nodes,)
 
 	assert details["name"] == name
 
@@ -66,7 +61,7 @@ def test_dense_get_layer_method(n_nodes, n_inputs, bias, name):
 	if n_inputs:
 		assert details["keyword_arguments"]["in_features"] == n_inputs
 	else:
-		assert details["keyword_arguments"]["in_features"] == prev_dim
+		assert details["keyword_arguments"]["in_features"] == prev_dim[0]
 
 	assert details["keyword_arguments"]["out_features"] == n_nodes
 
