@@ -27,7 +27,7 @@ class GELU:
 
         self.__name = name
 
-    def get_input_dim(self, prev_input_dim):
+    def get_input_dim(self, prev_input_dim, layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
             Here for this activation function, we dont need it
@@ -46,5 +46,4 @@ class GELU:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the activation function
-        return get_activation_details(
-                None, None, self.__name, "GELU", _GELU, None)
+        return get_activation_details(self.__name, "GELU", _GELU, None)

@@ -14,6 +14,7 @@ class SELU:
                 name=None: (String) Name of the activation function layer,
                     if not provided then automatically calculates a unique name for the layer
     """
+
     def __init__(self, name=None):
         """
             __init__ method for the SELU Activation Function class
@@ -28,7 +29,7 @@ class SELU:
 
         self.__name = name
 
-    def get_input_dim(self, prev_input_dim):
+    def get_input_dim(self, prev_input_dim, layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
             Here for this activation function, we dont need it
@@ -47,7 +48,6 @@ class SELU:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the activation function
-        return get_activation_details(
-                None, None, self.__name, 'SELU', _SELU, {
-                    'inplace': False
-                    })
+        return get_activation_details(self.__name, 'SELU', _SELU, {
+            'inplace': False
+        })
