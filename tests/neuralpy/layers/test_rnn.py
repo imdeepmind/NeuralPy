@@ -22,17 +22,22 @@ names = [False, 12, True]
 @pytest.mark.parametrize(
     "input_size, hidden_size, num_layers, non_linearity,\
     bias, batch_first, dropout, bidirectional,name",
-    [(input_size, hidden_size, num_layers, non_linearity,\
-    bias, batch_first, dropout, bidirectional,name)
-    for input_size in input_sizes
-    for hidden_size in hidden_sizes
-    for num_layers in num_layerses
-    for non_linearity in non_linearities
-    for bias in biases
-    for batch_first in batch_firsts
-    for dropout in dropouts
-    for bidirectional in bidirectionals
-    for name in names]
+    [
+        (0.3, 0.3, 0.3, 0.36, 0.54, 4, 4.6, 5, False),
+        (False, 3, 0.3, 0.36, 0.54, 4, 4.6, 5, False),
+        (3, False, 0.3, 0.36, 0.54, 4, 4.6, 5, False),
+        (3, 0.3, 0.3, 0.36, 0.54, 4, 4.6, 5, False),
+        (3, 3, "invalid", 0.36, 0.54, 4, 4.6, 5, False),
+        (3, 3, 3, "invalid", 0.54, 4, 4.6, 5, False),
+        (3, 3, 3, 'tanh', "invalid", 4, 4.6, 5, False),
+        (3, 3, 3, 'tanh', False, 4, 4.6, 5, False),
+        (3, 3, 3, 'tanh', False, 4.2, 4.6, 5, False),
+        (3, 3, 3, 'tanh', True, False, 4.6, 5, False),
+        (3, 3, 3, 'tanh', True, True, False, 5, False),
+        (3, 3, 3, False, True, False, 1, 5, False),
+        (3, 3, 3, False, True, False, 1, True, False),
+        (3, 3, 3, False, True, False, 1, 5, ""),
+    ]
 )
 def test_rnn_should_throw_value_error(
     input_size, hidden_size, num_layers, non_linearity,
