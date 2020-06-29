@@ -148,16 +148,17 @@ def build_layer_from_dict(layer_refs):
 
     # Strong the output dimension, for the next layer,
     # we need this to calculate the next input layer dim
-    prev_output_dim = None
+    prev_layer_details = None
+    prev_layer_type = None
 
     # Iterating through the layers
     for index, layer_ref in enumerate(layer_refs):
 
         # Generating n_input if not present
-        if isinstance(prev_output_dim, int):
+        if prev_layer_details and prev_layer_type:
             # For each layer, we have this method that returns the new input layer for next dim
             # based on the previous output dim
-            layer_ref.get_input_dim(prev_output_dim)
+            layer_ref.get_input_dim(prev_layer_details)
 
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
@@ -165,7 +166,7 @@ def build_layer_from_dict(layer_refs):
         # Storing the layer details
         layer_name = layer_details["name"]
         layer_type = layer_details["type"]
-        layer_nodes = layer_details["n_nodes"]
+        layer_details_info = layer_details["layer_details"]
         layer_arguments = layer_details["keyword_arguments"]
 
         # Here we are just storing the ref, not the initialized layer
@@ -187,10 +188,8 @@ def build_layer_from_dict(layer_refs):
         # Appending the layer to layers array
         layers.append((layer_name, layer))
 
-        # Checking layer_nodes value against some condition,
-        # and then storing the n_nodes to calculate the input dim of next layer
-        if layer_nodes is not None:
-            prev_output_dim = layer_nodes
+        prev_layer_details = layer_details_info
+        prev_layer_type = layer_type
 
     return layers
 
