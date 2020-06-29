@@ -26,8 +26,7 @@ def is_valid_layer(layer):
             return False
 
         # Here im checking all the keys of object returned from the get_layer method
-        layer_inputs = layer_details["n_inputs"]
-        layer_nodes = layer_details["n_nodes"]
+        layer_details = layer_details["layer_details"]
 
         layer_name = layer_details["name"]
         layer_type = layer_details["type"]
@@ -35,17 +34,8 @@ def is_valid_layer(layer):
         layer_arguments = layer_details["keyword_arguments"]
         layer_function_ref = layer_details["layer"]
 
-        # Validating layer_inputs
-        if "n_inputs2" in layer_details.keys():
-            layer_inputs2 = layer_details["n_inputs2"]
-            if layer_inputs2 and not isinstance(
-                    layer_inputs2, int) and layer_inputs2 < 1:
-                return False
-        if layer_inputs and not isinstance(layer_inputs, int) and layer_inputs < 1:
-            return False
-
-        # Validating layer_nodes
-        if layer_nodes and not isinstance(layer_nodes, int) and layer_nodes < 1:
+        # The layer_details should be tuple with all the information for the next layer
+        if layer_details and not isinstance(layer_details, tuple):
             return False
 
         # Validating layer_name
