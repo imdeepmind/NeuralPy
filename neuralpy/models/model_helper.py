@@ -158,7 +158,7 @@ def build_layer_from_dict(layer_refs):
         if prev_layer_details and prev_layer_type:
             # For each layer, we have this method that returns the new input layer for next dim
             # based on the previous output dim
-            layer_ref.get_input_dim(prev_layer_details)
+            layer_ref.get_input_dim(prev_layer_details, prev_layer_type)
 
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
