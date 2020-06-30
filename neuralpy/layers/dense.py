@@ -56,7 +56,7 @@ class Dense:
         self.__bias = bias
         self.__name = name
 
-    def get_input_dim(self, prev_input_dim):
+    def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
 
@@ -65,7 +65,14 @@ class Dense:
         """
         # Checking if n_inputs is there or not, not overwriting the n_input field
         if not self.__n_inputs:
-            self.__n_inputs = prev_input_dim
+            layer_type = prev_layer_type.lower()
+            
+            # based on the prev layer type, predicting the n_inputs
+            # to support more layers, we need to add some more statements
+            if layer_type == "dense":
+                self.__n_inputs = prev_input_dim[0]
+            else:
+                raise ValueError("Unsupported previous layer, please provide your own input shape for the layer")
 
     def get_layer(self):
         """
@@ -76,8 +83,7 @@ class Dense:
         """
         # Returning all the details of the layer
         return {
-            'n_inputs': self.__n_inputs,
-            'n_nodes': self.__n_nodes,
+            'layer_details': (self.__n_nodes,),
             'name': self.__name,
             'type': 'Dense',
             'layer': Linear,
