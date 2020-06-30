@@ -45,16 +45,16 @@ class Conv1D:
         # Checking the input_shape field, it is a optional field
         if input_shape is not None and not isinstance(input_shape, tuple):
             raise ValueError("Please provide a valid input_shape")
-        
+
         if input_shape is not None and not (isinstance(input_shape[0], int) and input_shape[0] >= 0):
             raise ValueError("Please provide a valid input_shape")
-        
+
         if input_shape is not None and not (isinstance(input_shape[1], int) and input_shape[1] >= 0):
             raise ValueError("Please provide a valid input_shape")
-        
+
         if input_shape is not None and not (isinstance(input_shape[2], int) and input_shape[2] >= 0):
             raise ValueError("Please provide a valid input_shape")
-        
+
         # Checking the stride field
         if stride is not None and not (
             isinstance(stride, int) or isinstance(stride, tuple)
@@ -66,7 +66,7 @@ class Conv1D:
             isinstance(padding, int) or isinstance(padding, tuple)
         ):
             raise ValueError("Please provide a valid padding")
-        
+
         # Checking the dilation field
         if dilation is not None and not (
             isinstance(dilation, int) or isinstance(dilation, tuple)
@@ -98,6 +98,12 @@ class Conv1D:
         self.__bias = bias
         self.__name = name
 
+    def __get_layer_details(self):
+        # Return tuple structure
+        # (channel, input_shape[1], input_shape[2], kernel_size, stride, padding)
+        return (self.__input_shape[0], self.__input_shape[1], 
+                self.__input_shape[2], self.__kernel_size, self.__stride, self.__padding)
+
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -111,7 +117,7 @@ class Conv1D:
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            if layer_type == "dense":
+            if layer_type == "conv1d":
                 self.__n_inputs = prev_input_dim[0]
             else:
                 raise ValueError(
@@ -126,13 +132,19 @@ class Conv1D:
         """
         # Returning all the details of the layer
         return {
-            'layer_details': (self.__n_nodes,),
+            'layer_details': self.__get_layer_details(),
             'name': self.__name,
-            'type': 'Dense',
-            'layer': Linear,
+            'type': 'Conv1D',
+            'layer': _Conv1d,
             "keyword_arguments": {
-                'in_features': self.__n_inputs,
-                'out_features': self.__n_nodes,
-                'bias': self.__bias
+                'in_channels': self.__input_shape[0],
+                'out_channels': self.__filters,
+                'kernel_size': self.__kernel_size,
+                'stride': self.__stride,
+                'padding': self.__padding,
+                'dilation': self.__dilation,
+                'groups': self.__groups,
+                'bias': self.__bias,
+                'padding_mode': 'zeros'
             }
         }
