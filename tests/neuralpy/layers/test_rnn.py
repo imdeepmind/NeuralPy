@@ -85,7 +85,7 @@ def test_rnn_layer_get_method(
                 bias=bias, batch_first=batch_first, dropout=dropout,
                 bidirectional=bidirectional, name=name)
 
-        prev_dim = (6,)
+        prev_dim = (6,1,3)
 
         if input_size is None:
             x.get_input_dim(prev_dim, "rnn")

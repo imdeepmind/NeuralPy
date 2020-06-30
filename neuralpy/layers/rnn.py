@@ -128,7 +128,7 @@ class RNN:
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
             if layer_type == "rnn":
-                self.__input_size = prev_input_dim[0]
+                self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError("Unsupported previos layer, please provide your own input shape for the layer")
 

@@ -71,6 +71,8 @@ class Dense:
             # to support more layers, we need to add some more statements
             if layer_type == "dense":
                 self.__n_inputs = prev_input_dim[0]
+            elif layer_type == "rnn":
+                self.__n_inputs = prev_input_dim[-1]
             else:
                 raise ValueError("Unsupported previous layer, please provide your own input shape for the layer")
 
