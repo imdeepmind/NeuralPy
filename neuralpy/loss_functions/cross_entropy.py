@@ -41,7 +41,7 @@ class CrossEntropyLoss:
         if reduction not in ["none", "mean", "sum"]:
             raise ValueError("Invalid reduction")
 
-        if not isinstance(ignore_index, int):
+        if isinstance(ignore_index, bool) or not isinstance(ignore_index, int):
             raise ValueError("Invalid ignore index")
 
         self.__weight = weight

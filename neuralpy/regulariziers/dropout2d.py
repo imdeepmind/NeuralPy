@@ -1,12 +1,12 @@
 """Dropout Layer"""
 
-from torch.nn import Dropout as _Dropout
+from torch.nn import Dropout2d as _Dropout2D
 
-class Dropout:
+class Dropout2D:
     """
-        Applies Dropout to the input.
+        Applies Dropout2D to the input.
 
-        The Dropout layer randomly sets input units to 0 with a frequency of `rate`
+        The Dropout2D layer randomly sets input units to 0 with a frequency of `rate`
         at each step during training time, which helps prevent overfitting.
         Inputs not set to 0 are scaled up by 1/(1 - rate)
         such that the sum over all inputs is unchanged.
@@ -19,7 +19,7 @@ class Dropout:
     """
     def __init__(self, p=0.5, name=None):
         """
-            __init__ method for Dropout class
+            __init__ method for Dropout2D class
 
             Supported Arguments
                 p=0.5: (Float) Probability of an element to be zeroed.
@@ -46,7 +46,7 @@ class Dropout:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Dropout does not need to n_input, so returning None
+        # Dropout2D does not need to n_input, so returning None
         return None
 
     def get_layer(self):
@@ -60,8 +60,8 @@ class Dropout:
         return {
             'layer_details': None,
             'name': self.__name,
-            'type': 'Dropout',
-            'layer': _Dropout,
+            'type': 'Dropout2D',
+            'layer': _Dropout2D,
             "keyword_arguments": {
                 'p': self.__p,
                 'inplace': False

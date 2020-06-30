@@ -1,34 +1,32 @@
-"""Sigmoid Activation Function"""
+"""GELU Activation Function"""
 
-from torch.nn import Sigmoid as _Sigmoid
+from torch.nn import GELU as _GELU
 from .utils import get_activation_details, validate_name_field
 
 
-class Sigmoid:
+class GELU:
     """
-        Applies a element-wise Sigmoid or Logistic function to the input tensor.
+    Applies the Gaussian Error Linear Units function to the input tensors.
+    For more information, check https://pytorch.org/docs/stable/nn.html#gelu
 
-        Supported Arguments
-            name=None: (String) Name of the activation function layer,
-                if not provided then automatically calculates a unique name for the layer.
+    Supported Arguments
+        name=None: (String) Name of the activation function layer,
+            if not provided then automatically calculates a unique name for the layer
     """
-
     def __init__(self, name=None):
         """
-            __init__ method for the Sigmoid Activation Function class
+            __init__ method for the GELU Activation Function class
 
             Supported Arguments
                 name=None: (String) Name of the activation function layer,
                     if not provided then automatically calculates a unique name for the layer
         """
-        # Checking the name field,
-        # this is an optional field,
+        # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the activation function
         validate_name_field(name)
 
         self.__name = name
 
-    # pylint: disable=no-self-use,unused-argument
     def get_input_dim(self, prev_input_dim, layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -37,7 +35,7 @@ class Sigmoid:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Sigmoid does not need to n_input, so returning None
+        # GELU does not need to n_input, so returning None
         return None
 
     def get_layer(self):
@@ -48,4 +46,4 @@ class Sigmoid:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the activation function
-        return get_activation_details(self.__name, 'Sigmoid', _Sigmoid, None)
+        return get_activation_details(self.__name, "GELU", _GELU, None)

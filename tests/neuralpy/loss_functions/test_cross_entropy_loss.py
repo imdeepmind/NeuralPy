@@ -5,31 +5,30 @@ from neuralpy.loss_functions import CrossEntropyLoss
 import numpy as np
 import torch
 
-# Possible values that are invalid
-weights=["asd", 12, -.3]
-reductions=["asdas", "", 12, 6.3]
-ignore_indexes=["asd", False, "", 2.36]
-
 @pytest.mark.parametrize(
 	"weight, reduction, ignore_index", 
-	[(weight, reduction, ignore_index) for weight in weights
-								     for reduction in reductions
-								     for ignore_index in ignore_indexes]
+	[
+		("invalid", "invalid", "invalid"),
+		(12, "invalid", "invalid"),
+		(np.ones([3]), "invalid", "invalid"),
+		(np.ones([3]), 12, "invalid"),
+		(np.ones([3]), "mean", "mean"),
+		(np.ones([3]), "sum", "sum"),
+		(np.ones([3]), "none", "asd"),
+		(np.ones([3]), "none", False)
+	]
 )
 def test_cce_should_throw_value_error(weight, reduction, ignore_index):
     with pytest.raises(ValueError) as ex:
         x = CrossEntropyLoss(weight=weight, reduction=reduction, ignore_index=ignore_index)
 
-# Possible values that are valid
-weights=[[1.0, 1.0, 1.0], [2.0, 1.0, 2.0], np.ones([3])]
-reductions=["mean"]
-ignore_indexes=[1, -100, 5]
-
 @pytest.mark.parametrize(
 	"weight, reduction, ignore_index", 
-	[(weight, reduction, ignore_index) for weight in weights
-								     for reduction in reductions
-								     for ignore_index in ignore_indexes]
+	[
+		([2.0, 1.0, 2.0], "mean", -100),
+		(np.ones([3]), "sum", 1),
+		(np.ones([3]), "none", 1),
+	]
 )
 def test_cce_get_layer_method(weight, reduction, ignore_index):
 	x = CrossEntropyLoss(weight=weight, reduction=reduction, ignore_index=ignore_index)

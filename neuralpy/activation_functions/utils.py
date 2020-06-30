@@ -1,13 +1,12 @@
 """Utility functions for activation function"""
 
 # pylint: disable=too-many-arguments
-def get_activation_details(n_inputs, n_nodes, name, layer_type, layer, keyword_arguments):
+def get_activation_details(name, layer_type, layer, keyword_arguments):
     """
     	Creates the layer details data for the activation function
     """
     return {
-        'n_inputs': n_inputs,
-        'n_nodes': n_nodes,
+        'layer_details': None,
         'name': name,
         'type': layer_type,
         'layer': layer,

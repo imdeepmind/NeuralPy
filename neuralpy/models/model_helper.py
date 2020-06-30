@@ -26,8 +26,7 @@ def is_valid_layer(layer):
             return False
 
         # Here im checking all the keys of object returned from the get_layer method
-        layer_inputs = layer_details["n_inputs"]
-        layer_nodes = layer_details["n_nodes"]
+        layer_details_info = layer_details["layer_details"]
 
         layer_name = layer_details["name"]
         layer_type = layer_details["type"]
@@ -35,12 +34,8 @@ def is_valid_layer(layer):
         layer_arguments = layer_details["keyword_arguments"]
         layer_function_ref = layer_details["layer"]
 
-        # Validating layer_inputs
-        if layer_inputs and not isinstance(layer_inputs, int) and layer_inputs < 1:
-            return False
-
-        # Validating layer_nodes
-        if layer_nodes and not isinstance(layer_nodes, int) and layer_nodes < 1:
+        # The layer_details should be tuple with all the information for the next layer
+        if layer_details_info and not isinstance(layer_details_info, tuple):
             return False
 
         # Validating layer_name
@@ -153,16 +148,24 @@ def build_layer_from_dict(layer_refs):
 
     # Strong the output dimension, for the next layer,
     # we need this to calculate the next input layer dim
-    prev_output_dim = None
+    prev_layer_details = None
+    prev_layer_type = None
 
     # Iterating through the layers
     for index, layer_ref in enumerate(layer_refs):
 
         # Generating n_input if not present
-        if isinstance(prev_output_dim, int):
+        if prev_layer_details and prev_layer_type:
             # For each layer, we have this method that returns the new input layer for next dim
-            # based on the previous output dim
-            layer_ref.get_input_dim(prev_output_dim)
+            # based on the previous layer details and type
+            # the prev_layer_details is a tuple that contains all the information
+            # need for the layer to predict the input shape
+            # The prev_layer_type is the type of the layer, based on it, 
+            # the layers can calculate the input shape
+            # for example, in cnn, after the conv layers, when the dense layer need to do 
+            # some complicated calculations to get the input shape of the Dense layer 
+            # based on the input shape, stride, padding, etc
+            layer_ref.get_input_dim(prev_layer_details, prev_layer_type)
 
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
@@ -170,7 +173,7 @@ def build_layer_from_dict(layer_refs):
         # Storing the layer details
         layer_name = layer_details["name"]
         layer_type = layer_details["type"]
-        layer_nodes = layer_details["n_nodes"]
+        layer_details_info = layer_details["layer_details"]
         layer_arguments = layer_details["keyword_arguments"]
 
         # Here we are just storing the ref, not the initialized layer
@@ -191,11 +194,10 @@ def build_layer_from_dict(layer_refs):
 
         # Appending the layer to layers array
         layers.append((layer_name, layer))
-
-        # Checking layer_nodes value against some condition,
-        # and then storing the n_nodes to calculate the input dim of next layer
-        if layer_nodes is not None:
-            prev_output_dim = layer_nodes
+        
+        if layer_details_info: 
+            prev_layer_details = layer_details_info
+            prev_layer_type = layer_type
 
     return layers
 
@@ -299,16 +301,20 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
     print("\r" + message, end="")
 
 
-def print_validation_progress(validation_loss, no_samples, validtion_corrects=None):
+def print_validation_progress(validation_loss, no_samples, validation_corrects=None):
     """
         Show a validation progress text
     """
-    if validtion_corrects:
-        print(
-            (
-                f"\nValidation Loss: {validation_loss:.4f} - "
-                f"Validation Accuracy: {validtion_corrects/no_samples*100:.4f}%"
-            )
+    message = ""
+    if validation_corrects:
+        message = (
+            f"\rValidation Loss: {validation_loss:.4f} - "
+            f"Validation Accuracy: {validation_corrects/no_samples*100:.4f}%"
         )
     else:
-        print(f"\nValidation Loss: {validation_loss:.4f}")
+        if isinstance(validation_loss, (int, float)):
+            message = f"\rValidation Loss: {validation_loss:.4f}"
+        else:
+            message = "\rValidation Loss: NA"
+
+    print("\r" + message, end="")

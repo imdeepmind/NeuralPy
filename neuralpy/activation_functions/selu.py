@@ -1,38 +1,34 @@
-"""Softmax Activation Function"""
+"""SELU Activation Function"""
 
-from torch.nn import Softmax as _Softmax
+from torch.nn import SELU as _SELU
 from .utils import get_activation_details, validate_name_field
 
 
-class Softmax:
+class SELU:
     """
-        Applies the Softmax function to the input Tensor rescaling input to the range [0,1].
+        SELU applies scaled exponential linear units to input tensors
+
+        For more information, check https://pytorch.org/docs/stable/nn.html#selu
 
         Supported Arguments
-            dim=None: (Interger) A dimension along which Softmax will be
-                computed (so every slice along dim will sum to 1).
-            name=None: (String) Name of the activation function layer,
-                if not provided then automatically calculates a unique name for the layer.
+                name=None: (String) Name of the activation function layer,
+                    if not provided then automatically calculates a unique name for the layer
     """
 
-    def __init__(self, dim=None, name=None):
+    def __init__(self, name=None):
         """
-            __init__ method for the Sigmoid Activation Function class
+            __init__ method for the SELU Activation Function class
 
             Supported Arguments
-                dim=None: (Interger) A dimension along which Softmax will be
-                    computed (so every slice along dim will sum to 1).
                 name=None: (String) Name of the activation function layer,
-                    if not provided then automatically calculates a unique name for the layer.
+                    if not provided then automatically calculates a unique name for the layer
         """
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the activation function
         validate_name_field(name)
 
-        self.__dim = dim
         self.__name = name
 
-    # pylint: disable=no-self-use,unused-argument
     def get_input_dim(self, prev_input_dim, layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -41,7 +37,7 @@ class Softmax:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Softmax does not need to n_input, so returning None
+        # SELU does not need to n_input, so returning None
         return None
 
     def get_layer(self):
@@ -52,6 +48,6 @@ class Softmax:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the activation function
-        return get_activation_details(self.__name, 'Softmax', _Softmax, {
-            'dim': self.__dim
+        return get_activation_details(self.__name, 'SELU', _SELU, {
+            'inplace': False
         })

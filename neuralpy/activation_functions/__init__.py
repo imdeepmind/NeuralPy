@@ -11,3 +11,5 @@ from .sigmoid import Sigmoid
 from .softmax import Softmax
 from .tanh import Tanh
 from .leaky_relu import LeakyReLU
+from .selu import SELU
+from .gelu import GELU
