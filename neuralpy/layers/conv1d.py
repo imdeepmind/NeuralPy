@@ -5,16 +5,25 @@ from torch.nn import Conv1d as _Conv1d
 
 class Conv1D:
     """
-        A Dense is a normal densely connected Neural Network.
-        It performs a linear transformation of the input.
+        Applies a 1D convolution over an input signal composed of several input planes.
 
-        To learn more about Dense layers, please check PyTorch
-        documentation at https://pytorch.org/docs/stable/nn.html?highlight=linear
+        To learn more about Conv1D layers, please check PyTorch
+        documentation at https://pytorch.org/docs/stable/nn.html#conv1d
 
         Supported Arguments:
-            n_nodes: (Integer) Size of the output sample
-            n_inputs: (Integer) Size of the input sample,
+            filters: (Integer) Size of the filter
+            kernel_size: (Int | Tuple) Kernel size of the layer
+            input_shape: (Tuple) A tuple with the shape in following format (input_channel, X, y)
                 no need for this argument layers except the initial layer.
+            stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
+                    number or a one-element tuple.
+            padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both 
+                        sides for padding number of points
+            dilation: (Int | Tuple) Controls the spacing between the kernel points; also 
+                        known as the à trous algorithm. It is harder to describe, but this link has 
+                        a nice visualization of what dilation does.
+            groups: (Int) Controls the connections between inputs and outputs. 
+                    input channel and filters must both be divisible by groups
             bias: (Boolean) If true then uses the bias, Defaults to `true`
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
@@ -22,12 +31,22 @@ class Conv1D:
 
     def __init__(self, filters, kernel_size, input_shape=None, stride=1, padding=0, dilation=1, groups=1, bias=True, name=None):
         """
-            __init__ method for the Dense layer
+            __init__ method for the Conv1D layer
 
             Supported Arguments:
-                n_nodes: (Integer) Size of the output sample
-                n_inputs: (Integer) Size of the input sample,
+                filters: (Integer) Size of the filter
+                kernel_size: (Int | Tuple) Kernel size of the layer
+                input_shape: (Tuple) A tuple with the shape in following format (input_channel, X, y)
                     no need for this argument layers except the initial layer.
+                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
+                        number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both 
+                            sides for padding number of points
+                dilation: (Int | Tuple) Controls the spacing between the kernel points; also 
+                            known as the à trous algorithm. It is harder to describe, but this link has 
+                            a nice visualization of what dilation does.
+                groups: (Int) Controls the connections between inputs and outputs. 
+                        input channel and filters must both be divisible by groups
                 bias: (Boolean) If true then uses the bias, Defaults to `true`
                 name: (String) Name of the layer, if not provided then
                     automatically calculates a unique name for the layer
@@ -101,7 +120,7 @@ class Conv1D:
     def __get_layer_details(self):
         # Return tuple structure
         # (channel, input_shape[1], input_shape[2], kernel_size, stride, padding)
-        return (self.__input_shape[0], self.__input_shape[1], 
+        return (self.__input_shape[0], self.__input_shape[1],
                 self.__input_shape[2], self.__kernel_size, self.__stride, self.__padding)
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
