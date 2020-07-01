@@ -9,3 +9,4 @@ that is the Dense layer.
 
 from .dense import Dense
 from .bilinear import Bilinear
+from .conv1d import Conv1D
