@@ -123,6 +123,14 @@
         {
           "title": "Dropout",
           "id": "dropout"
+        },
+        {
+          "title": "Dropout2D",
+          "id": "dropout2d"
+        },
+        {
+          "title": "Dropout3D",
+          "id": "dropout3d"
         }
       ]
     },
