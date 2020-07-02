@@ -650,14 +650,14 @@ model.add(Sigmoid())
 ## Dropout2D
 
 ```python
-neuralpy.regulariziers.Dropout2D(p=0.5, name=None)
+neuralpy.regularizers.Dropout2D(p=0.5, name=None)
 ```
 
 Applies the Dropout2D layer to the input tensor.
 
 The Dropout2D layer randomly sets entire channel units to 0 with a frequency of rate of `p` at each step during training time. It helps prevent overfitting.
 
-Usually the input comes from `nn.Conv2d` modules.
+Usually the input comes from `nn.Conv2D` modules.
 
 For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropout2d) page
 
@@ -672,7 +672,7 @@ For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropo
 from neuralpy.models import Sequential
 from neuralpy.layers import Dense
 from neuralpy.activation_functions import LeakyReLU, Sigmoid
-from neuralpy.regulariziers import Dropout2D
+from neuralpy.regularizers import Dropout2D
 
 # Initializing the Sequential models
 model = Sequential()
@@ -683,14 +683,41 @@ model = Sequential()
 model.add(Dropout2D(p=0.5, name="MyDropoutLayer"))
 ```
 
----
+## Dropout3D
 
+```python
+neuralpy.regularizers.Dropout3D(p=0.5, name=None)
+```
 
-# 
+Applies the Dropout3Dlayer to the input tensor.
 
+The Dropout3D layer randomly sets entire channel units to 0 with a frequency of rate of `p` at each step during training time. It helps prevent overfitting.
 
+Usually the input comes from `nn.Conv3D`modules.
 
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropout3d) page
 
+###  Supported Arguments
+
+- `p=0.5`: (Float) Probability of an element to be zeroed. The value should be between 0.0 and 1.0.
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU, Sigmoid
+from neuralpy.regularizers import Dropout3D
+
+# Initializing the Sequential models
+model = Sequential()
+...
+...
+...
+
+model.add(Dropout3D(p=0.5, name="MyDropoutLayer"))
+```
 
 ---
 
