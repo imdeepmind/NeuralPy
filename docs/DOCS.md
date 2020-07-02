@@ -647,10 +647,55 @@ model.add(Dense(n_nodes=1, bias=True))
 model.add(Sigmoid())
 ```
 
+## Dropout2D
+
+```python
+neuralpy.regulariziers.Dropout2D(p=0.5, name=None)
+```
+
+Applies the Dropout2D layer to the input tensor.
+
+The Dropout2D layer randomly sets entire channel units to 0 with a frequency of rate of `p` at each step during training time. It helps prevent overfitting.
+
+Usually the input comes from `nn.Conv2d` modules.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropout2d) page
+
+###  Supported Arguments
+
+- `p=0.5`: (Float) Probability of an element to be zeroed. The value should be between 0.0 and 1.0.
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU, Sigmoid
+from neuralpy.regulariziers import Dropout2D
+
+# Initializing the Sequential models
+model = Sequential()
+...
+...
+...
+
+model.add(Dropout2D(p=0.5, name="MyDropoutLayer"))
+```
+
 ---
 
 
+# 
+
+
+
+
+
+---
+
 # Loss Functions
+
 ```python
 neuralpy.loss_functions
 ```
