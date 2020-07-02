@@ -618,6 +618,9 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is to be stored
         """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+        
         torch.save(self.__model, path)
     
     def load(self, path):
@@ -627,6 +630,9 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is stored
         """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+        
         self.__model = torch.load(path)
     
     def save_for_inference(self, path):
@@ -637,6 +643,9 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is to be stored
         """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+        
         torch.save(self.__model.state_dict(), path)
     
     def load_for_inference(self, path):
@@ -646,6 +655,9 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is stored
         """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+
         if self.__model:
             self.__model.load_state_dict(torch.load(path))
         else:
