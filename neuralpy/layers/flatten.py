@@ -35,7 +35,7 @@ class Flatten:
         self.__start_dim = start_dim
         self.__end_dim = end_dim
 
-    def get_input_dim(self, prev_input_dim):
+    def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
 
@@ -54,9 +54,9 @@ class Flatten:
         """
         # Returning all the details of the layer
         return{
-            'start_dim': self.__start_dim,
-            'end_dim': self.__end_dim,
+            'layer_details': (self.__start_dim, self.__end_dim),
             'layer': _Flatten,
+            'type': 'Flatten',
             'keyword_arguments': {
                 'start_dim': self.__start_dim,
                 'end_dim': self.__end_dim
