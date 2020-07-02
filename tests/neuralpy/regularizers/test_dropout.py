@@ -1,6 +1,6 @@
 import pytest
 from torch.nn import Dropout as _Dropout
-from neuralpy.regulariziers import Dropout
+from neuralpy.regularizers import Dropout
 
 @pytest.mark.parametrize(
 	"p, name", 

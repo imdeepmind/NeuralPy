@@ -117,8 +117,8 @@
       ]
     },
     {
-      "title": "Regulariziers",
-      "id": "regulariziers",
+      "title": "regularizers",
+      "id": "regularizers",
       "contents": [
         {
           "title": "Dropout",
