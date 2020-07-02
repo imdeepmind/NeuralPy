@@ -609,3 +609,22 @@ class Model:
 
         # Printing a message with the device name
         print("The model is running on", self.__device)
+    
+    def save(self, path):
+        """
+            The .save() method is responsible for saving a trained model. This method is
+            to be shared with someone without any code access.
+
+            Supported Parameters:
+                path: (String) Path where the model is to be stored
+        """
+        torch.save(self.__model, path)
+    
+    def load(self, path):
+        """
+            The .save() method is responsible for loading a model saved using the .save() method.
+
+            Supported Parameters:
+                path: (String) Path where the model is to be stored
+        """
+        self.__model = torch.load(path)
