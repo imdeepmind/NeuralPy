@@ -604,15 +604,15 @@ model.add(Tanh())
 
 ---
 
-# Regulariziers
+# Regularizers
 ```python
-neuralpy.regulariziers
+neuralpy.regularizers
 ```
 Regularization is a technique that helps a model to generalize well on datasets, and it helps to overcome the problem of Overfitting.
 
 ## Dropout
 ```python
-neuralpy.regulariziers.Dropout(p=0.5, name=None)
+neuralpy.regularizers.Dropout(p=0.5, name=None)
 ```
 Applies the Dropout layer to the input tensor.
 
@@ -629,7 +629,7 @@ For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropo
 from neuralpy.models import Sequential
 from neuralpy.layers import Dense
 from neuralpy.activation_functions import LeakyReLU, Sigmoid
-from neuralpy.regulariziers import Dropout
+from neuralpy.regularizers import Dropout
 
 # Initializing the Sequential models
 model = Sequential()
@@ -899,7 +899,7 @@ model.compile(
 
 # Advanced Topics
 
-NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regulariziers, etc, in NeuralPy.
+NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regularizers, etc, in NeuralPy.
 
 But there are times when we might need a layer, or an optimizer, or a loss function for a model that is not implemented on NeuralPy.
 
@@ -994,12 +994,12 @@ Finally, the `get_layer` method returns a dictionary with several fields. Here i
 
 - `keyword_arguments`: It contains a dictionary of all the parameters that the PyTorch layer or your custom layer accepts. If there is no parameter for the layer, send set it as None. For our `Flatten` layer, we need to pass the `start_dim` and `end_dim`.  
 
-> We can create Activation Functions, Regulariziers using the same above method also.
+> We can create Activation Functions, Regularizers using the same above method also.
 
 Check the following links for some more examples:
 - [Dense layer](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/layers/dense.py)
 - [ReLU Activation Function](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/activation_functions/relu.py)
-- [Dropout](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/regulariziers/dropout.py)
+- [Dropout](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/regularizers/dropout.py)
 
 ## Building a custom Optimizer
 Steps for making a custom Optimizer is mostly similar to making a custom Layer. So first we need to import a PyTorch optimizer or use a custom PyTorch compatible optimizer.
