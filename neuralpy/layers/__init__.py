@@ -10,3 +10,4 @@ that is the Dense layer.
 from .dense import Dense
 from .bilinear import Bilinear
 from .rnn import RNN
+from .gru import GRU
