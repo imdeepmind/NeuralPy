@@ -54,7 +54,7 @@ class Flatten:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': (self.__start_dim, self.__end_dim),
+            'layer_details': None,
             'layer': _Flatten,
             'type': 'Flatten',
             'keyword_arguments': {
