@@ -151,9 +151,10 @@ class Model:
 
         # Storing the loss function and optimizer for future use
         self.__optimizer, self.__optimizer_parameters = build_optimizer_from_dict(optimizer,
-                                                     self.__model.parameters())
-        self.__loss_function, self.__loss_function_parameters = build_loss_function_from_dict(loss_function)
-        
+                                                                                  self.__model.parameters())
+        self.__loss_function, self.__loss_function_parameters = build_loss_function_from_dict(
+            loss_function)
+
     # pylint: disable=too-many-arguments
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
         """
@@ -334,7 +335,8 @@ class Model:
             validation_data=None,
             epochs=10, batch_size=32,
             steps_per_epoch=None,
-            validation_steps=None):
+            validation_steps=None,
+            callbacks=None):
         """
             The `.fit()` method is used for training the NeuralPy model.
 
@@ -359,6 +361,9 @@ class Model:
 
         if not batch_size or batch_size <= 0:
             raise ValueError("Please provide a valid batch size")
+
+        if callbacks and not isinstance(callbacks, list):
+            raise ValueError("Please provide the callbacks as an array")
 
         # Building the history object
         self.__history = build_history_object(self.__metrics)
@@ -455,6 +460,12 @@ class Model:
                         validation_accuracy)
 
             print("")
+            
+            # Calling the callbacks and passing some details to it
+            for callback in callbacks:
+                callback(epochs, epoch, self.__loss_function_parameters,
+                         self.__optimizer_parameters, self.__history["epochwise"][epoch])
+
         return self.__history
 
     def predict(self, X, batch_size=None):
@@ -609,7 +620,7 @@ class Model:
 
         # Printing a message with the device name
         print("The model is running on", self.__device)
-    
+
     def save(self, path):
         """
             The .save() method is responsible for saving a trained model. This method is
@@ -620,9 +631,9 @@ class Model:
         """
         if not path and not isinstance(path, str):
             raise ValueError("Please provide a valid path")
-        
+
         torch.save(self.__model, path)
-    
+
     def load(self, path):
         """
             The .load() method is responsible for loading a model saved using the .save() method.
@@ -632,9 +643,9 @@ class Model:
         """
         if not path and not isinstance(path, str):
             raise ValueError("Please provide a valid path")
-        
+
         self.__model = torch.load(path)
-    
+
     def save_for_inference(self, path):
         """
             The .save_for_inference() method is responsible for saving a trained model.
@@ -645,9 +656,9 @@ class Model:
         """
         if not path and not isinstance(path, str):
             raise ValueError("Please provide a valid path")
-        
+
         torch.save(self.__model.state_dict(), path)
-    
+
     def load_for_inference(self, path):
         """
             The .load_for_inference() method is responsible for loading a trained model only for inference.
@@ -661,4 +672,5 @@ class Model:
         if self.__model:
             self.__model.load_state_dict(torch.load(path))
         else:
-            raise ValueError("To load the model state, you need to have a model first")
+            raise ValueError(
+                "To load the model state, you need to have a model first")
