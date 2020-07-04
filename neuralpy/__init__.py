@@ -13,4 +13,4 @@ from . import layers
 from . import loss_functions
 from . import models
 from . import optimizer
-from . import regulariziers
+from . import regularizers
