@@ -423,7 +423,7 @@ class Model:
 
                     # Added the epochwise value to the history dictionary
                     self.__history["epochwise"]["validation_loss"].append(
-                        validation_accuracy)
+                        validation_loss)
 
             else:
                 x_train, y_train = train_data
@@ -447,7 +447,7 @@ class Model:
 
                     x_test, y_test = validation_data
 
-                    validation_accuracy, validation_accuracy = self.__validation_loop(
+                    validation_loss_score, validation_accuracy = self.__validation_loop(
                         x_test, y_test, batch_size)
 
                     if "accuracy" in self.__metrics:
@@ -457,14 +457,20 @@ class Model:
 
                     # Added the epochwise value to the history dictionary
                     self.__history["epochwise"]["validation_loss"].append(
-                        validation_accuracy)
+                        validation_loss_score)
 
             print("")
-            
+
             # Calling the callbacks and passing some details to it
             for callback in callbacks:
-                callback(epochs, epoch, self.__loss_function_parameters,
-                         self.__optimizer_parameters, self.__history["epochwise"][epoch])
+                training_progress_data = {}
+
+                for m in self.__metrics:
+                    training_progress_data[f"training_{m}"] = self.__history["epochwise"][f"training_{m}"][epoch]
+                    training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
+
+                callback.callback(epochs, epoch, self.__loss_function_parameters,
+                         self.__optimizer_parameters, training_progress_data)
 
         return self.__history
 
