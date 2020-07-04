@@ -225,7 +225,7 @@ def build_optimizer_from_dict(optimizer_ref, parameters):
         # Initializing the optimizer with models parameters only
         optimizer = optimizer_func(params=parameters)
 
-    return optimizer
+    return optimizer, optimizer_arguments
 
 
 def build_loss_function_from_dict(loss_function_ref):
@@ -250,7 +250,7 @@ def build_loss_function_from_dict(loss_function_ref):
         # Not passing the loss_function_arguments to the loss function
         loss_function = loss_function_func()
 
-    return loss_function
+    return loss_function, loss_function_arguments
 
 
 def build_history_object(metrics):

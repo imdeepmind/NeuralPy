@@ -150,10 +150,10 @@ class Model:
             self.__metrics = ["loss"] + metrics
 
         # Storing the loss function and optimizer for future use
-        self.__optimizer = build_optimizer_from_dict(optimizer,
+        self.__optimizer, self.__optimizer_parameters = build_optimizer_from_dict(optimizer,
                                                      self.__model.parameters())
-        self.__loss_function = build_loss_function_from_dict(loss_function)
-
+        self.__loss_function, self.__loss_function_parameters = build_loss_function_from_dict(loss_function)
+        
     # pylint: disable=too-many-arguments
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
         """
