@@ -127,9 +127,10 @@ class Conv1D:
         else:
             k = self.__kernel_size[0]
 
-        w = (self.__input_shape[1] -k + (2  * self.__padding) / self.__stride) + 1
-        
-        return (self.__input_shape[0], w)
+        w = (self.__input_shape[1] - k +
+             (2 * self.__padding) / self.__stride) + 1
+
+        return (self.__input_shape[0], w*w*self.__filters)
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

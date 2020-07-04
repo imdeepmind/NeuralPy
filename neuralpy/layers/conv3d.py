@@ -5,10 +5,10 @@ from torch.nn import Conv3d as _Conv3d
 
 class Conv3D:
     """
-        Applies a 1D convolution over an input signal composed of several input planes.
+        Applies a 3D convolution over an input signal composed of several input planes.
 
         To learn more about Conv3D layers, please check PyTorch
-        documentation at https://pytorch.org/docs/stable/nn.html#Conv3D
+        documentation at https://pytorch.org/docs/stable/nn.html#Conv3d
 
         Supported Arguments:
             filters: (Integer) Size of the filter
@@ -127,9 +127,10 @@ class Conv3D:
         else:
             k = self.__kernel_size[0]
 
-        w = (self.__input_shape[1] -k + (2  * self.__padding) / self.__stride) + 1
-        
-        return (self.__input_shape[0], w)
+        w = (self.__input_shape[1] - k +
+             (2 * self.__padding) / self.__stride) + 1
+
+        return (self.__input_shape[0], w*w*self.__filters)
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
