@@ -125,7 +125,7 @@ model.predict(X=X_test, batch_size=4)
 ```
 
 ## Documentation
-The documentation for NeuralPy is available at [https://neuralpy.imdeepmind.com/](https://neuralpy.imdeepmind.com/)
+The documentation for NeuralPy is available at [https://www.neuralpy.xyz/](https://www.neuralpy.xyz/)
 
 ## Examples  
 Several example projects in NeuralPy are available at [https://github.com/imdeepmind/NeuralPy-Examples](https://github.com/imdeepmind/NeuralPy-Examples). Please check the above link.

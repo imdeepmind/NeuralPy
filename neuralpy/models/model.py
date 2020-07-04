@@ -609,3 +609,56 @@ class Model:
 
         # Printing a message with the device name
         print("The model is running on", self.__device)
+    
+    def save(self, path):
+        """
+            The .save() method is responsible for saving a trained model. This method is
+            to be shared with someone without any code access.
+
+            Supported Parameters:
+                path: (String) Path where the model is to be stored
+        """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+        
+        torch.save(self.__model, path)
+    
+    def load(self, path):
+        """
+            The .load() method is responsible for loading a model saved using the .save() method.
+
+            Supported Parameters:
+                path: (String) Path where the model is stored
+        """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+        
+        self.__model = torch.load(path)
+    
+    def save_for_inference(self, path):
+        """
+            The .save_for_inference() method is responsible for saving a trained model.
+            This method saves the method only for inference.
+
+            Supported Parameters:
+                path: (String) Path where the model is to be stored
+        """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+        
+        torch.save(self.__model.state_dict(), path)
+    
+    def load_for_inference(self, path):
+        """
+            The .load_for_inference() method is responsible for loading a trained model only for inference.
+
+            Supported Parameters:
+                path: (String) Path where the model is stored
+        """
+        if not path and not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+
+        if self.__model:
+            self.__model.load_state_dict(torch.load(path))
+        else:
+            raise ValueError("To load the model state, you need to have a model first")

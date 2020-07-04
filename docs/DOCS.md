@@ -604,15 +604,15 @@ model.add(Tanh())
 
 ---
 
-# Regulariziers
+# Regularizers
 ```python
-neuralpy.regulariziers
+neuralpy.regularizers
 ```
 Regularization is a technique that helps a model to generalize well on datasets, and it helps to overcome the problem of Overfitting.
 
 ## Dropout
 ```python
-neuralpy.regulariziers.Dropout(p=0.5, name=None)
+neuralpy.regularizers.Dropout(p=0.5, name=None)
 ```
 Applies the Dropout layer to the input tensor.
 
@@ -629,7 +629,7 @@ For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropo
 from neuralpy.models import Sequential
 from neuralpy.layers import Dense
 from neuralpy.activation_functions import LeakyReLU, Sigmoid
-from neuralpy.regulariziers import Dropout
+from neuralpy.regularizers import Dropout
 
 # Initializing the Sequential models
 model = Sequential()
@@ -647,10 +647,82 @@ model.add(Dense(n_nodes=1, bias=True))
 model.add(Sigmoid())
 ```
 
+## Dropout2D
+
+```python
+neuralpy.regularizers.Dropout2D(p=0.5, name=None)
+```
+
+Applies the Dropout2D layer to the input tensor.
+
+The Dropout2D layer randomly sets entire channel units to 0 with a frequency of rate of `p` at each step during training time. It helps prevent overfitting.
+
+Usually the input comes from `nn.Conv2D` modules.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropout2d) page
+
+###  Supported Arguments
+
+- `p=0.5`: (Float) Probability of an element to be zeroed. The value should be between 0.0 and 1.0.
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU, Sigmoid
+from neuralpy.regularizers import Dropout2D
+
+# Initializing the Sequential models
+model = Sequential()
+...
+...
+...
+
+model.add(Dropout2D(p=0.5, name="MyDropoutLayer"))
+```
+
+## Dropout3D
+
+```python
+neuralpy.regularizers.Dropout3D(p=0.5, name=None)
+```
+
+Applies the Dropout3Dlayer to the input tensor.
+
+The Dropout3D layer randomly sets entire channel units to 0 with a frequency of rate of `p` at each step during training time. It helps prevent overfitting.
+
+Usually the input comes from `nn.Conv3D`modules.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropout3d) page
+
+###  Supported Arguments
+
+- `p=0.5`: (Float) Probability of an element to be zeroed. The value should be between 0.0 and 1.0.
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import LeakyReLU, Sigmoid
+from neuralpy.regularizers import Dropout3D
+
+# Initializing the Sequential models
+model = Sequential()
+...
+...
+...
+
+model.add(Dropout3D(p=0.5, name="MyDropoutLayer"))
+```
+
 ---
 
-
 # Loss Functions
+
 ```python
 neuralpy.loss_functions
 ```
@@ -899,7 +971,7 @@ model.compile(
 
 # Advanced Topics
 
-NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regulariziers, etc, in NeuralPy.
+NeuralPy is limited because there are limited types of Layers, Loss Functions, Optimizers, Regularizers, etc, in NeuralPy.
 
 But there are times when we might need a layer, or an optimizer, or a loss function for a model that is not implemented on NeuralPy.
 
@@ -994,12 +1066,12 @@ Finally, the `get_layer` method returns a dictionary with several fields. Here i
 
 - `keyword_arguments`: It contains a dictionary of all the parameters that the PyTorch layer or your custom layer accepts. If there is no parameter for the layer, send set it as None. For our `Flatten` layer, we need to pass the `start_dim` and `end_dim`.  
 
-> We can create Activation Functions, Regulariziers using the same above method also.
+> We can create Activation Functions, Regularizers using the same above method also.
 
 Check the following links for some more examples:
 - [Dense layer](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/layers/dense.py)
 - [ReLU Activation Function](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/activation_functions/relu.py)
-- [Dropout](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/regulariziers/dropout.py)
+- [Dropout](https://github.com/imdeepmind/NeuralPy/blob/master/neuralpy/regularizers/dropout.py)
 
 ## Building a custom Optimizer
 Steps for making a custom Optimizer is mostly similar to making a custom Layer. So first we need to import a PyTorch optimizer or use a custom PyTorch compatible optimizer.

@@ -1,6 +1,6 @@
 import pytest
-from torch.nn import Dropout as _Dropout
-from neuralpy.regulariziers import Dropout
+from torch.nn import Dropout3d as _Dropout3D
+from neuralpy.regularizers import Dropout3D
 
 @pytest.mark.parametrize(
 	"p, name", 
@@ -13,7 +13,7 @@ from neuralpy.regulariziers import Dropout
 )
 def test_dense_should_throw_value_error(p, name):
     with pytest.raises(ValueError) as ex:
-        x = Dropout(p=p, name=name)
+        x = Dropout3D(p=p, name=name)
 
 @pytest.mark.parametrize(
 	"p, name", 
@@ -23,7 +23,7 @@ def test_dense_should_throw_value_error(p, name):
 	]
 )
 def test_dense_get_layer_method(p, name):
-	x = Dropout(p=p, name=name)
+	x = Dropout3D(p=p, name=name)
 
 	assert x.get_input_dim(12, "dense") == None
 		
@@ -35,7 +35,7 @@ def test_dense_get_layer_method(p, name):
 
 	assert details["name"] == name
 
-	assert issubclass(details["layer"], _Dropout) == True
+	assert issubclass(details["layer"], _Dropout3D) == True
 
 	assert isinstance(details["keyword_arguments"], dict) == True
 
@@ -44,7 +44,7 @@ def test_dense_get_layer_method(p, name):
 	assert details["keyword_arguments"]["inplace"] == False
 
 def test_dense_get_layer_method_wit_no_parameter():
-	x = Dropout()
+	x = Dropout3D()
 
 	assert x.get_input_dim(12, "dense") == None
 		
@@ -56,7 +56,7 @@ def test_dense_get_layer_method_wit_no_parameter():
 
 	assert details["name"] == None
 
-	assert issubclass(details["layer"], _Dropout) == True
+	assert issubclass(details["layer"], _Dropout3D) == True
 
 	assert isinstance(details["keyword_arguments"], dict) == True
 

@@ -117,12 +117,20 @@
       ]
     },
     {
-      "title": "Regulariziers",
-      "id": "regulariziers",
+      "title": "regularizers",
+      "id": "regularizers",
       "contents": [
         {
           "title": "Dropout",
           "id": "dropout"
+        },
+        {
+          "title": "Dropout2D",
+          "id": "dropout2d"
+        },
+        {
+          "title": "Dropout3D",
+          "id": "dropout3d"
         }
       ]
     },
