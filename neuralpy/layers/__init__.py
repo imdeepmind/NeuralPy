@@ -17,4 +17,4 @@ from .conv3d import Conv3D
 
 from .avg_pool2d import AvgPool2D
 from .rnn import RNN
-
+from .lstm import LSTM

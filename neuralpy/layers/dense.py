@@ -71,7 +71,7 @@ class Dense:
             # to support more layers, we need to add some more statements
             if layer_type == "dense":
                 self.__n_inputs = prev_input_dim[0]
-            elif layer_type == "rnn":
+            elif layer_type == "rnn" or layer_type == "lstm":
                 self.__n_inputs = prev_input_dim[-1]
             elif layer_type == 'conv1d' or layer_type == 'conv2d' or layer_type == 'conv3d' or layer_type == 'avgpool2d':
                 self.__n_inputs = prev_input_dim[1]
