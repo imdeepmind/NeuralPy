@@ -22,7 +22,7 @@ class AvgPool2d:
 
     """
 
-    def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, divisor_override=True, name=None):
+    def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, divisor_override=None, name=None):
         """
             __init__ method for AvgPool2d
 
@@ -64,7 +64,7 @@ class AvgPool2d:
             raise ValueError("Please provide a valid count_include_pad")
 
         # Checking divisor_override
-        if not isinstance(divisor_override, bool):
+        if divisor_override is not None and not isinstance(divisor_override, int):
             raise ValueError("Please provide a valid divisor_override")
 
         # Checking the name field, this is an optional field,
@@ -90,7 +90,21 @@ class AvgPool2d:
             No need to call this method for using NeuralPy.
         """
         # AvgPool2d does not need to n_input, so returning None
-        return None
+        layer_type = prev_layer_type.lower()
+
+        if layer_type == 'conv2d':
+            x, y, z = prev_input_dim[2]
+
+            k = 0
+            if isinstance(self.__kernel_size, int):
+                k = self.__kernel_size
+            else:
+                k = self.__kernel_size[0]
+
+            y = y // k
+            z = z // k
+
+            self.__layer_details = (x, x*y*z, (x, y, z))
 
     def get_layer(self):
         """
@@ -101,7 +115,7 @@ class AvgPool2d:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': None,
+            'layer_details': self.__layer_details,
             'layer': _AvgPool2d,
             'name': self.__name,
             'type': 'AvgPool2d',
