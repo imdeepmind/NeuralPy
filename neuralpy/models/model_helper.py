@@ -171,6 +171,8 @@ def build_layer_from_dict(layer_refs):
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
 
+        print("layer_details", layer_details)
+
         # Storing the layer details
         layer_name = layer_details["name"]
         layer_type = layer_details["type"]
