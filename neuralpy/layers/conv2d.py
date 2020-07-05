@@ -106,21 +106,19 @@ class Conv2D:
             raise ValueError("Please provide a valid name")
 
         # Storing the data
-        self.__filters = filter
+        self.__filters = filters
         self.__kernel_size = kernel_size
         self.__input_shape = input_shape
         self.__stride = stride
         self.__padding = padding
         self.__dilation = dilation
-        self.__groups = groups,
+        self.__groups = groups
 
         self.__bias = bias
         self.__name = name
 
     def __get_layer_details(self):
         # Return tuple structure
-        return (self.__input_shape[0], self.__input_shape[1],
-                self.__input_shape[2], self.__kernel_size, self.__stride, self.__padding)
         k = 0
         if isinstance(self.__kernel_size, int):
             k = self.__kernel_size
@@ -128,9 +126,9 @@ class Conv2D:
             k = self.__kernel_size[0]
 
         w = (self.__input_shape[1] - k +
-             (2 * self.__padding) / self.__stride) + 1
+             (2 * self.__padding) // self.__stride) + 1
 
-        return (self.__input_shape[0], w*w*self.__filters)
+        return (self.__input_shape[0], w*w*self.__filters, (self.__filters, w, w))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -139,14 +137,14 @@ class Conv2D:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Checking if n_inputs is there or not, not overwriting the n_input field
-        if not self.__n_inputs:
+        # Checking if n_inputs is there or not, not overwriting the __input_shape field
+        if not self.__input_shape:
             layer_type = prev_layer_type.lower()
 
-            # based on the prev layer type, predicting the n_inputs
+            # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type == "Conv2D":
-                self.__n_inputs = prev_input_dim[0]
+            if layer_type == "conv2d" or layer_type == 'avgpool2d':
+                self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(
                     "Unsupported previous layer, please provide your own input shape for the layer")

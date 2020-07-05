@@ -462,15 +462,16 @@ class Model:
             print("")
 
             # Calling the callbacks and passing some details to it
-            for callback in callbacks:
-                training_progress_data = {}
+            if callbacks:
+                for callback in callbacks:
+                    training_progress_data = {}
 
-                for m in self.__metrics:
-                    training_progress_data[f"training_{m}"] = self.__history["epochwise"][f"training_{m}"][epoch]
-                    training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
+                    for m in self.__metrics:
+                        training_progress_data[f"training_{m}"] = self.__history["epochwise"][f"training_{m}"][epoch]
+                        training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
 
-                callback.callback(epochs, epoch, self.__loss_function_parameters,
-                         self.__optimizer_parameters, training_progress_data)
+                    callback.callback(epochs, epoch, self.__loss_function_parameters,
+                            self.__optimizer_parameters, training_progress_data)
 
         return self.__history
 
