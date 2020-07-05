@@ -128,7 +128,7 @@ class Conv2D:
         w = (self.__input_shape[1] - k +
              (2 * self.__padding) // self.__stride) + 1
 
-        return (self.__input_shape[0], w*w*self.__filters, (self.__input_shape[0], w, w))
+        return (self.__input_shape[0], w*w*self.__filters, (self.__filters, w, w))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -140,8 +140,6 @@ class Conv2D:
         # Checking if n_inputs is there or not, not overwriting the __input_shape field
         if not self.__input_shape:
             layer_type = prev_layer_type.lower()
-
-            print("From get_input_dim", prev_input_dim, prev_layer_type)
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
@@ -159,7 +157,6 @@ class Conv2D:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        print("HAHA", self.__name, self.__get_layer_details())
         return {
             'layer_details': self.__get_layer_details(),
             'name': self.__name,

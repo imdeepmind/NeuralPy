@@ -152,8 +152,7 @@ def build_layer_from_dict(layer_refs):
     prev_layer_type = None
 
     # Iterating through the layers
-    for index, layer_ref in enumerate(layer_refs):
-        print("From build layer", index, prev_layer_details)
+    for index, layer_ref in enumerate(layer_refs):\
 
         # Generating n_input if not present
         if prev_layer_details and prev_layer_type:
@@ -170,8 +169,6 @@ def build_layer_from_dict(layer_refs):
 
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
-
-        print("layer_details", layer_details)
 
         # Storing the layer details
         layer_name = layer_details["name"]
