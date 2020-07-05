@@ -119,8 +119,6 @@ class Conv2D:
 
     def __get_layer_details(self):
         # Return tuple structure
-        return (self.__input_shape[0], self.__input_shape[1],
-                self.__input_shape[2], self.__kernel_size, self.__stride, self.__padding)
         k = 0
         if isinstance(self.__kernel_size, int):
             k = self.__kernel_size
@@ -128,7 +126,7 @@ class Conv2D:
             k = self.__kernel_size[0]
 
         w = (self.__input_shape[1] - k +
-             (2 * self.__padding) / self.__stride) + 1
+             (2 * self.__padding) // self.__stride) + 1
 
         return (self.__input_shape[0], w*w*self.__filters, (self.__input_shape[0], w, w))
 
@@ -147,7 +145,7 @@ class Conv2D:
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type == "Conv2D":
+            if layer_type == "conv2d":
                 self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(
@@ -161,6 +159,7 @@ class Conv2D:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
+        print("HAHA", self.__name, self.__get_layer_details())
         return {
             'layer_details': self.__get_layer_details(),
             'name': self.__name,
