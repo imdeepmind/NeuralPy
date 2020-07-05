@@ -152,7 +152,7 @@ def build_layer_from_dict(layer_refs):
     prev_layer_type = None
 
     # Iterating through the layers
-    for index, layer_ref in enumerate(layer_refs):
+    for index, layer_ref in enumerate(layer_refs):\
 
         # Generating n_input if not present
         if prev_layer_details and prev_layer_type:
