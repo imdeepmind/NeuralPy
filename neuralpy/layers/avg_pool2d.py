@@ -11,8 +11,15 @@ class AvgPool2d:
         documentation https://pytorch.org/docs/stable/nn.html?highlight=AvgPool2d#torch.nn.AvgPool2d
 
         Supported Arguments:
-            start_dim: (Integer) first dim to AvgPool2d (default = 1)
-            end_dim: (Integer)  last dim to AvgPool2d (default = -1)
+            kernel_size: (Int | Tuple) Kernel size of the layer
+                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
+                        number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both 
+                            sides for padding number of points
+                ceil_mode: (Bool) when True, will use ceil instead of floor to compute the output shape
+                count_include_pad: (Bool) when True, will include the zero-padding in the averaging calculation
+                divisor_override: (Bool) if specified, it will be used as divisor, otherwise attr:kernel_size will be used
+
     """
 
     def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, divisor_override=True, name=None):
@@ -20,8 +27,14 @@ class AvgPool2d:
             __init__ method for AvgPool2d
 
             Supported Arguments:
-                start_dim: (Integer) first dim to AvgPool2d (default = 1)
-                end_dim: (Integer)  last dim to AvgPool2d (default = -1)
+                kernel_size: (Int | Tuple) Kernel size of the layer
+                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
+                        number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both 
+                            sides for padding number of points
+                ceil_mode: (Bool) when True, will use ceil instead of floor to compute the output shape
+                count_include_pad: (Bool) when True, will include the zero-padding in the averaging calculation
+                divisor_override: (Bool) if specified, it will be used as divisor, otherwise attr:kernel_size will be used
 
         """
         # Checking the kernel_size field
