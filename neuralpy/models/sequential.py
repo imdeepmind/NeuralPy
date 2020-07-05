@@ -51,8 +51,8 @@ class Sequential(Model):
                 "You have built this model already, you can not make any changes in this model")
 
         # Layer verification using the method is_valid_layer
-        if not is_valid_layer(layer):
-            raise ValueError("Please provide a valid neuralpy layer")
+        # if not is_valid_layer(layer):
+        #     raise ValueError("Please provide a valid neuralpy layer")
 
         # Finally adding the layer for layers array
         self.__layers.append(layer)

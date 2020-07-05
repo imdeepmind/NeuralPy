@@ -73,7 +73,7 @@ class Dense:
                 self.__n_inputs = prev_input_dim[0]
             elif layer_type == "rnn" or layer_type == "lstm":
                 self.__n_inputs = prev_input_dim[-1]
-            elif layer_type == 'conv1d' or layer_type == 'conv2d' or layer_type == 'conv3d':
+            elif layer_type == 'conv1d' or layer_type == 'conv2d' or layer_type == 'conv3d' or layer_type == 'avgpool2d':
                 self.__n_inputs = prev_input_dim[1]
             else:
                 raise ValueError("Unsupported previous layer, please provide your own input shape for the layer")

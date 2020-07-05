@@ -39,7 +39,8 @@ setup(
         "neuralpy.loss_functions",
         "neuralpy.models",
         "neuralpy.optimizer",
-        "neuralpy.regularizers"
+        "neuralpy.regularizers",
+        "neuralpy.callbacks"
     ],
     install_requires=["torch"],
     extras_require={
