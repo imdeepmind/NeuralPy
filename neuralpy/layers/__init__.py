@@ -16,5 +16,7 @@ from .conv2d import Conv2D
 from .conv3d import Conv3D
 
 from .avg_pool2d import AvgPool2D
+
 from .rnn import RNN
+from .gru import GRU
 from .lstm import LSTM
