@@ -3,7 +3,7 @@
 from torch.nn import AvgPool2d as _AvgPool2d
 
 
-class AvgPool2d:
+class AvgPool2D:
     """
         Applies a 2D average pooling over an input signal composed of several input planes.
 
@@ -118,7 +118,7 @@ class AvgPool2d:
             'layer_details': self.__layer_details,
             'layer': _AvgPool2d,
             'name': self.__name,
-            'type': 'AvgPool2d',
+            'type': 'AvgPool2D',
             'keyword_arguments': {
                 'kernel_size': self.__kernel_size,
                 'stride': self.__stride,
