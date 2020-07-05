@@ -106,13 +106,13 @@ class Conv2D:
             raise ValueError("Please provide a valid name")
 
         # Storing the data
-        self.__filters = filter
+        self.__filters = filters
         self.__kernel_size = kernel_size
         self.__input_shape = input_shape
         self.__stride = stride
         self.__padding = padding
         self.__dilation = dilation
-        self.__groups = groups,
+        self.__groups = groups
 
         self.__bias = bias
         self.__name = name
