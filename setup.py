@@ -5,7 +5,7 @@ NeuralPy
 
 NeuralPy is a Keras like, deep learning library that works on top of PyTorch written purely in Python. It is simple, easy to use library, cross-compatible with PyTorch models, suitable for all kinds of machine learning experiments, learning, research, etc.
 
-Check the docs for more info: https://neuralpy.imdeepmind.com/
+Check the docs for more info: https://www.neuralpy.xyz/
 """
 
 setup(
@@ -13,13 +13,13 @@ setup(
     version="0.1.1",
     description="A Keras like deep learning library works on top of PyTorch",
     long_description=long_description,
-    url="https://neuralpy.imdeepmind.com/",
+    url="https://www.neuralpy.xyz/",
     author="Abhishek Chatterjee",
     author_email="abhishek.chatterjee97@protonmail.com",
     license="MIT",
     project_urls={
             "Bug Tracker": "https://github.com/imdeepmind/NeuralPy/issues",
-            "Documentation": "https://neuralpy.imdeepmind.com/",
+            "Documentation": "https://www.neuralpy.xyz/",
             "Source Code": "https://github.com/imdeepmind/NeuralPy",
     },
     classifiers=[
