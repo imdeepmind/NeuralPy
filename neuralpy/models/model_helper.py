@@ -153,6 +153,7 @@ def build_layer_from_dict(layer_refs):
 
     # Iterating through the layers
     for index, layer_ref in enumerate(layer_refs):
+        print("From build layer", index, prev_layer_details)
 
         # Generating n_input if not present
         if prev_layer_details and prev_layer_type:
@@ -175,6 +176,8 @@ def build_layer_from_dict(layer_refs):
         layer_type = layer_details["type"]
         layer_details_info = layer_details["layer_details"]
         layer_arguments = layer_details["keyword_arguments"]
+
+        print(layer_arguments)
 
         # Here we are just storing the ref, not the initialized layer
         layer_function_ref = layer_details["layer"]
