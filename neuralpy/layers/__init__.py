@@ -11,3 +11,5 @@ from .dense import Dense
 from .bilinear import Bilinear
 from .rnn import RNN
 from .maxpool1d import MaxPool1d
+from .maxpool2d import MaxPool2d
+from .maxpool3d import MaxPool3d

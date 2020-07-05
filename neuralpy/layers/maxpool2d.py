@@ -1,13 +1,13 @@
-""" MaxPool1D for NeuralPy """
+""" MaxPool2d for NeuralPy """
 
-from torch.nn import MaxPool1d as _MaxPool1d
+from torch.nn import MaxPool2d as _MaxPool2d
 
 
-class MaxPool1d:
+class MaxPool2d:
     """
-        MaxPool1d Applies a 1D max pooling over an input
-        To learn more about MaxPool1d, please check pytorch
-        documentation at https://pytorch.org/docs/stable/nn.html#maxpool1d
+        MaxPool2d Applies a 2D max pooling over an input
+        To learn more about MaxPool2d, please check pytorch
+        documentation at https://pytorch.org/docs/stable/nn.html#maxpool2d
 
         Supported Arguments:
 
@@ -22,8 +22,6 @@ class MaxPool1d:
                 max indices along with the outputs
             ceil_mode: (Boolean) when True, will use ceil instead
                 of floor to compute the output shape
-            name: (String) Name of the layer, if not provided then
-                automatically calculates a unique name for the layer
     """
 
     def __init__(
@@ -31,7 +29,7 @@ class MaxPool1d:
             return_indices=False, ceil_mode=False, name=None
             ):
         """
-            __init__ method for MaxPool1d
+            __init__ method for MaxPool2d
 
             Supported Arguments:
 
@@ -46,6 +44,8 @@ class MaxPool1d:
                 max indices along with the outputs
             ceil_mode: (Boolean) when True, will use ceil instead
                 of floor to compute the output shape
+            name: (String) Name of the layer, if not provided then
+                automatically calculates a unique name for the layer
         """
 
         # Checking the kernel_size
@@ -99,7 +99,7 @@ class MaxPool1d:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # MaxPool1d does not need to n_input, so returning None
+        # MaxPool2d does not need to n_input, so returning None
         return None
 
     def get_layer(self):
@@ -113,8 +113,8 @@ class MaxPool1d:
         return{
             'layer_details': self.__kernel_size,
             'name': self.__name,
-            'type': 'MaxPool1D',
-            'layer': _MaxPool1d,
+            'type': 'MaxPool2D',
+            'layer': _MaxPool2d,
             'keyword_arguments': {
                     'kernel_size': self.__kernel_size,
                     'stride': self.__stride,

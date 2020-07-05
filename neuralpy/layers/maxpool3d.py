@@ -1,13 +1,13 @@
-""" MaxPool1D for NeuralPy """
+""" MaxPool2d for NeuralPy """
 
-from torch.nn import MaxPool1d as _MaxPool1d
+from torch.nn import MaxPool3d as _MaxPool3d
 
 
-class MaxPool1d:
+class MaxPool3d:
     """
-        MaxPool1d Applies a 1D max pooling over an input
-        To learn more about MaxPool1d, please check pytorch
-        documentation at https://pytorch.org/docs/stable/nn.html#maxpool1d
+        MaxPool3d Applies a 3D max pooling over an input
+        To learn more about MaxPool3d, please check pytorch
+        documentation at https://pytorch.org/docs/stable/nn.html#maxpool3d
 
         Supported Arguments:
 
@@ -31,7 +31,7 @@ class MaxPool1d:
             return_indices=False, ceil_mode=False, name=None
             ):
         """
-            __init__ method for MaxPool1d
+            __init__ method for MaxPool3d
 
             Supported Arguments:
 
@@ -99,7 +99,7 @@ class MaxPool1d:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # MaxPool1d does not need to n_input, so returning None
+        # MaxPool3d does not need to n_input, so returning None
         return None
 
     def get_layer(self):
@@ -113,8 +113,8 @@ class MaxPool1d:
         return{
             'layer_details': self.__kernel_size,
             'name': self.__name,
-            'type': 'MaxPool1D',
-            'layer': _MaxPool1d,
+            'type': 'MaxPool3D',
+            'layer': _MaxPool3d,
             'keyword_arguments': {
                     'kernel_size': self.__kernel_size,
                     'stride': self.__stride,
