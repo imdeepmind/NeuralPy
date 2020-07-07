@@ -17,8 +17,11 @@ from .conv3d import Conv3D
 
 from .avg_pool2d import AvgPool2D
 
-from .rnn import RNN
-
 from .maxpool1d import MaxPool1d
 from .maxpool2d import MaxPool2d
 from .maxpool3d import MaxPool3d
+
+from .rnn import RNN
+from .gru import GRU
+from .lstm import LSTM
+
