@@ -1,4 +1,4 @@
-""" MaxPool2d for NeuralPy """
+"""MaxPool3d for NeuralPy"""
 
 from torch.nn import MaxPool3d as _MaxPool3d
 
@@ -11,10 +11,10 @@ class MaxPool3d:
 
         Supported Arguments:
 
-            kernel_size: (Integer) the size of the window to take a max over
-            stride: (Integer) the stride of the window.
+            kernel_size: (Int | Tuple) the size of the window to take a max over
+            stride: (Int | Tuple) the stride of the window.
                 Default value is kernel_size
-            padding: (Integer) implicit zero padding to be
+            padding: (Int | Tuple) implicit zero padding to be
                 added on both sides
             dilation: (Integer) a parameter that controls the
                 stride of elements in the window
@@ -49,19 +49,19 @@ class MaxPool3d:
         """
 
         # Checking the kernel_size
-        if not kernel_size and not isinstance(kernel_size, int):
-            raise ValueError(
-                "Please provide a valid value for kernel_size")
+        if not kernel_size or not (isinstance(kernel_size, int) or
+            isinstance(kernel_size, tuple)):
+                raise ValueError("Please provide a valid kernel_size")
 
         # Checking the stride
-        if stride and not isinstance(stride, int):
-            raise ValueError(
-                "Please provide a valid value for stride")
+        if stride is not None and not (isinstance(stride, int) or
+            isinstance(stride, tuple)):
+                raise ValueError("Please provide a valid stride")
 
         # Checking the padding,  it is an optional filed
-        if padding and not isinstance(padding, int):
-            raise ValueError(
-                "Please provide a valid value for padding")
+        if padding is not None and not (isinstance(padding, int) or
+            isinstance(padding, tuple)):
+                raise ValueError("Please provide a valid padding")
 
         # Checking the dilation, it is an optional filed
         if dilation and not isinstance(dilation, int):
@@ -100,7 +100,21 @@ class MaxPool3d:
             No need to call this method for using NeuralPy.
         """
         # MaxPool3d does not need to n_input, so returning None
-        return None
+        if prev_layer_type == 'conv3d':
+            x, y, z, a = prev_input_dim[2]
+
+            k = 0
+
+            if isinstance(self.__kernel_size, int):
+                k = self.__kernel_size
+            else:
+                k = self.__kernel_size[0]
+
+            y = y // k
+            z = z // k
+            a = a // k
+
+            self.__layer_details = (x, x*y*z*a, (x, y, z, a))
 
     def get_layer(self):
         """
@@ -111,7 +125,7 @@ class MaxPool3d:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': self.__kernel_size,
+            'layer_details': self.__layer_details,
             'name': self.__name,
             'type': 'MaxPool3D',
             'layer': _MaxPool3d,

@@ -22,14 +22,14 @@ def test_maxpool1d_should_throws_type_error():
     ]
 )
 def test_maxpool1d_throws_value_error(
-        kernel_size, stride, padding, dilation,
-        return_indices, ceil_mode, name):
-            with pytest.raises(ValueError) as ex:
-                x = MaxPool1d(
-                        kernel_size=kernel_size, stride=stride,
-                        padding=padding, dilation=dilation,
-                        return_indices=return_indices,
-                        ceil_mode=ceil_mode, name=name)
+    kernel_size, stride, padding, dilation,
+    return_indices, ceil_mode, name):
+        with pytest.raises(ValueError) as ex:
+            x = MaxPool1d(
+                    kernel_size=kernel_size, stride=stride,
+                    padding=padding, dilation=dilation,
+                    return_indices=return_indices,
+                    ceil_mode=ceil_mode, name=name)
 
 # Possible values
 kernel_sizes = [1, 3]
@@ -55,38 +55,37 @@ names = [None, 'Test']
     for name in names]
 )
 def test_maxpool1d_get_layer_method(
-        kernel_size, stride, padding, dilation,
-        return_indices, ceil_mode, name):
+    kernel_size, stride, padding, dilation,
+    return_indices, ceil_mode, name):
 
-            x = MaxPool1d(
-                    kernel_size=kernel_size, stride=stride,
-                    padding=padding, dilation=dilation,
-                    return_indices=return_indices,
-                    ceil_mode=ceil_mode, name=name
-            )
+        x = MaxPool1d(
+                kernel_size=kernel_size, stride=stride,
+                padding=padding, dilation=dilation,
+                return_indices=return_indices,
+                ceil_mode=ceil_mode, name=name)
 
-            details = x.get_layer()
+        details = x.get_layer()
 
-            assert isinstance(details, dict) == True
+        assert isinstance(details, dict) == True
 
-            assert details['layer_details'] == kernel_size
+        assert details['layer_details'] == kernel_size
 
-            assert details['name'] == name
+        assert details['name'] == name
 
-            assert issubclass(details['layer'], _MaxPool1d) == True
+        assert issubclass(details['layer'], _MaxPool1d) == True
 
-            assert isinstance(
-                    details['keyword_arguments'], dict) == True
+        assert isinstance(
+                details['keyword_arguments'], dict) == True
 
-            assert details['keyword_arguments']['kernel_size'] == kernel_size
+        assert details['keyword_arguments']['kernel_size'] == kernel_size
 
-            assert details['keyword_arguments']['stride'] == stride
+        assert details['keyword_arguments']['stride'] == stride
 
-            assert details['keyword_arguments']['padding'] == padding
+        assert details['keyword_arguments']['padding'] == padding
 
-            assert details['keyword_arguments']['dilation'] == dilation
+        assert details['keyword_arguments']['dilation'] == dilation
 
-            assert details[
-                    'keyword_arguments']['return_indices'] == return_indices
+        assert details[
+                'keyword_arguments']['return_indices'] == return_indices
 
-            assert details['keyword_arguments']['ceil_mode'] == ceil_mode
+        assert details['keyword_arguments']['ceil_mode'] == ceil_mode

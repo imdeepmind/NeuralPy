@@ -1,4 +1,4 @@
-""" MaxPool1D for NeuralPy """
+"""MaxPool1D for NeuralPy"""
 
 from torch.nn import MaxPool1d as _MaxPool1d
 
@@ -100,7 +100,16 @@ class MaxPool1d:
             No need to call this method for using NeuralPy.
         """
         # MaxPool1d does not need to n_input, so returning None
-        return None
+        layer_type = prev_layer_type
+
+        if layer_type == 'conv1d':
+            x, y = prev_input_dim[2]
+
+            k = self.__kernel_size
+
+            y = y // k
+
+            self.__layer_details = (x, x*y, (x, y)) 
 
     def get_layer(self):
         """
@@ -111,7 +120,7 @@ class MaxPool1d:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': self.__kernel_size,
+            'layer_details': self.__layer_details,
             'name': self.__name,
             'type': 'MaxPool1D',
             'layer': _MaxPool1d,
