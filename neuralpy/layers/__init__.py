@@ -17,6 +17,7 @@ from .conv3d import Conv3D
 
 from .avg_pool2d import AvgPool2D
 from .avg_pool1d import AvgPool1D
+from .avg_pool3d import AvgPool3D
 
 from .rnn import RNN
 from .gru import GRU

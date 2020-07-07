@@ -66,7 +66,7 @@ class Dense:
         # Checking if n_inputs is there or not, not overwriting the n_input field
         if not self.__n_inputs:
             layer_type = prev_layer_type.lower()
-            
+
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
             if layer_type == "dense":
@@ -75,10 +75,18 @@ class Dense:
                 self.__n_inputs = prev_input_dim[-1]
             elif layer_type == "rnn" or layer_type == "lstm":
                 self.__n_inputs = prev_input_dim[-1]
-            elif layer_type == 'conv1d' or layer_type == 'conv2d' or layer_type == 'conv3d' or layer_type == 'avgpool2d' or layer_type == 'avgpool1d':
+            elif (
+                layer_type == 'conv1d' or
+                layer_type == 'conv2d' or
+                layer_type == 'conv3d' or
+                layer_type == 'avgpool1d' or
+                layer_type == 'avgpool2d' or
+                layer_type == "avgpool3d"
+            ):
                 self.__n_inputs = prev_input_dim[1]
             else:
-                raise ValueError("Unsupported previous layer, please provide your own input shape for the layer")
+                raise ValueError(
+                    "Unsupported previous layer, please provide your own input shape for the layer")
 
     def get_layer(self):
         """
