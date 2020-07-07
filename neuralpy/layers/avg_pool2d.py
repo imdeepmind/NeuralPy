@@ -43,17 +43,41 @@ class AvgPool2D:
         ):
             raise ValueError("Please provide a valid kernel_size")
 
+        if isinstance(kernel_size, tuple):
+            if isinstance(kernel_size[0], int):
+                raise ValueError("Please provide a valid kernel_size")
+
+            if isinstance(kernel_size[1], int):
+                raise ValueError("Please provide a valid kernel_size")
+
         # Checking the stride field
         if stride is not None and not (
             isinstance(stride, int) or isinstance(stride, tuple)
         ):
             raise ValueError("Please provide a valid stride")
 
+        if isinstance(stride, tuple):
+            if isinstance(stride[0], int):
+                raise ValueError("Please provide a valid stride")
+
+            if isinstance(stride[1], int):
+                raise ValueError("Please provide a valid stride")
+
+        if stride is None:
+            stride = kernel_size
+
         # Checking the padding field
         if padding is not None and not (
             isinstance(padding, int) or isinstance(padding, tuple)
         ):
             raise ValueError("Please provide a valid padding")
+
+        if isinstance(padding, tuple):
+            if isinstance(padding[0], int):
+                raise ValueError("Please provide a valid padding")
+
+            if isinstance(padding[1], int):
+                raise ValueError("Please provide a valid padding")
 
         # Checking ceil_mode
         if not isinstance(ceil_mode, bool):
@@ -82,6 +106,35 @@ class AvgPool2D:
 
         self.__name = name
 
+    def __get_layer_details(self):
+        depth, width, height = self.__prev_layer_data
+
+        # Getting the kernel_size
+        k1 = k2 = 0
+        if isinstance(self.__kernel_size, int):
+            k1 = k2 = self.__kernel_size
+        else:
+            k1, k2 = self.__kernel_size
+
+        # Getting the padding values
+        p1 = p2 = 0
+        if isinstance(self.__padding, int):
+            p1 = p2 = self.__padding
+        else:
+            p1, p2 = self.__padding
+
+        # Getting the stride values
+        s1 = s2 = 0
+        if isinstance(self.__stride, int):
+            s1 = s2 = self.__stride
+        else:
+            s1, s2 = self.__stride
+
+        w1 = ((width + 2 * p1 - k1) // s1) + 1
+        w2 = ((height + 2 * p2 - k2) // s2) + 1
+
+        return (depth, depth * w1 * w2, (depth, w1, w2))
+
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -93,18 +146,7 @@ class AvgPool2D:
         layer_type = prev_layer_type.lower()
 
         if layer_type == 'conv2d':
-            x, y, z = prev_input_dim[2]
-
-            k = 0
-            if isinstance(self.__kernel_size, int):
-                k = self.__kernel_size
-            else:
-                k = self.__kernel_size[0]
-
-            y = y // k
-            z = z // k
-
-            self.__layer_details = (x, x*y*z, (x, y, z))
+            self.__prev_layer_data = prev_input_dim[2]
 
     def get_layer(self):
         """
@@ -115,7 +157,7 @@ class AvgPool2D:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': self.__layer_details,
+            'layer_details': self.__get_layer_details(),
             'layer': _AvgPool2d,
             'name': self.__name,
             'type': 'AvgPool2D',

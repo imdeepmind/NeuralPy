@@ -176,8 +176,8 @@ class Conv2D:
             d1, d2 = self.__dilation
 
         # Calculating the width and height of the conv output
-        w1 = (self.__input_shape[1] + 2 * p1 - d1 * (k1 - 1) - 1 // s1) + 1
-        w2 = (self.__input_shape[2] + 2 * p2 - d2 * (k2 - 1) - 1 // s2) + 1
+        w1 = ((self.__input_shape[1] + 2 * p1 - d1 * (k1 - 1) - 1) // s1) + 1
+        w2 = ((self.__input_shape[2] + 2 * p2 - d2 * (k2 - 1) - 1) // s2) + 1
 
         # Returning for the next layers
         return (self.__input_shape[0], w1*w2*self.__filters, (self.__filters, w1, w2))
