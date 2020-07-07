@@ -132,18 +132,6 @@ class Conv1D:
 
     def __get_layer_details(self):
         # Return tuple structure
-        k = 0
-        if isinstance(self.__kernel_size, int):
-            k = self.__kernel_size
-        else:
-            k = self.__kernel_size[0]
-
-        w = (self.__input_shape[1] - k +
-             (2 * self.__padding) // self.__stride) + 1
-
-        return (self.__input_shape[0], w*self.__filters, (self.__filters, w))
-
-        # Return tuple structure
         # Getting the kernel values
         k1 = k2 = 0
         if isinstance(self.__kernel_size, int):
