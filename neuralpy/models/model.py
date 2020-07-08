@@ -2,6 +2,7 @@
 
 import types
 import torch
+import numpy as np
 
 from .model_helper import (is_valid_optimizer,
                            is_valid_loss_function,
@@ -471,58 +472,87 @@ class Model:
                         training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
 
                     callback.callback(epochs, epoch, self.__loss_function_parameters,
-                            self.__optimizer_parameters, training_progress_data)
+                                      self.__optimizer_parameters, training_progress_data)
 
         return self.__history
 
-    def predict(self, X, batch_size=None):
+    def predict(self, predict_data, predict_steps=None, batch_size=None):
         """
             The .predict()method is used for predicting using the trained mode.
 
             Supported Arguments
-                X: (NumPy Array) Data to be predicted
+                predict_data: (NumPy Array | Python Generator) Data to be predicted
+                predict_steps: (Integer) Number of steps in the generator
                 batch_size=None: (Integer) Batch size for predicting.
-                If not provided, then the entire data is predicted once.
+                            If not provided, then the entire data is predicted once.
         """
-        # Calling the __predict method to get the predicts
-        predictions = self.__predict(X, batch_size)
+        if isinstance(predict_data, types.GeneratorType):
+            predictions = None
+
+            for _ in range(predict_steps):
+                data = next(predict_data)
+
+                print("len(data)", len(data))
+
+                # Calling the __predict method to get the predicts
+                temp = self.__predict(data, batch_size).numpy()
+                if predictions is not None:
+                    predictions = np.hstack((predictions, temp))
+                else:
+                    predictions = temp
+        else:
+            # Calling the __predict method to get the predicts
+            predictions = self.__predict(predict_data, batch_size).numpy()
 
         # Returning an numpy array of predictions
-        return predictions.numpy()
+        return predictions.flatten()
 
-    def predict_classes(self, X, batch_size=None):
+    def predict_classes(self, predict_data, predict_steps=None, batch_size=None):
         """
             The .predict_class()method is used for predicting classes using the trained mode.
             This method works only if accuracy is passed in the metrics parameter on the
             .compile()method.
 
             Supported Arguments
-                X: (NumPy Array) Data to be predicted
+                predict_data: (NumPy Array | Python Generator) Data to be predicted
+                predict_steps: (Integer) Number of steps in the generator
                 batch_size=None: (Integer) Batch size for predicting.
                 If not provided, then the entire data is predicted once.
         """
         # Checking if the model is for classification
         if self.__metrics and "accuracy" in self.__metrics:
-            # Calling the __predict method to get the predicts
-            predictions = self.__predict(X, batch_size)
+            if isinstance(predict_data, types.GeneratorType):
+                predictions = None
 
-            # Detecting the classes
-            predictions = predictions.argmax(dim=1, keepdim=True)
+                for _ in range(predict_steps):
+                    data = next(predict_data)
 
-            return predictions.numpy()
+                    # Calling the __predict method to get the predicts
+                    preds = self.__predict(data, batch_size)
+
+                    # Detecting the classes
+                    temp = preds.argmax(dim=1, keepdim=True).numpy()
+
+                    if predictions is not None:
+                        predictions = np.hstack((predictions, temp))
+                    else:
+                        predictions = temp
+            else:
+                # Calling the __predict method to get the predicts
+                predictions = self.__predict(predict_data, batch_size)
+
+                # Detecting the classes
+                predictions = predictions.argmax(dim=1, keepdim=True).numpy()
+
+            return predictions.flatten()
 
         raise ValueError(
             "Cannot predict classes as this is not a classification problem")
 
-    def evaluate(self, X, y, batch_size=None):
+    def __evaluate(self, X, y, batch_size=None):
         """
-            The .evaluate()method is used for evaluating models using the test dataset.
+            helper method for __evaluate 
 
-            Supported Arguments
-                X: (NumPy Array) Data to be predicted
-                y: (NumPy Array) Original labels of X
-                batch_size=None: (Integer) Batch size for predicting.
-                    If not provided, then the entire data is predicted once.
         """
         # If batch_size is there then checking the length and comparing
         # it with the length of training data
@@ -569,6 +599,44 @@ class Model:
             'loss': loss.item()
         }
 
+
+    def evaluate(self, test_data, tests_steps=None, batch_size=None):
+        """
+            The .evaluate()method is used for evaluating models using the test dataset.
+
+            Supported Arguments
+                tests_data: (NumPy Array | Python Generator) Data to be predicted
+                tests_steps: (Integer) Number of steps in the generator
+                batch_size=None: (Integer) Batch size for predicting.
+                    If not provided, then the entire data is predicted once.
+        """
+        if isinstance(test_data, types.GeneratorType):
+            loss = 0
+            accuracy = 0
+
+            for _ in range(tests_steps):
+                X_data, y_data = next(test_data)
+
+                data = self.__evaluate(X_data, y_data, batch_size)
+
+                loss += data['loss']
+                if "accuracy" in self.__metrics:
+                    accuracy += data['accuracy']
+            
+            if "accuracy" in self.__metrics:
+                return {
+                    'loss': loss / tests_steps,
+                    'accuracy': accuracy / tests_steps
+                }
+
+            return {
+                'loss': loss / tests_steps
+            }
+            
+        else:
+            X_data, y_data = test_data
+            return self.__evaluate(X_data, y_data, batch_size)
+            
     def summary(self):
         """
             The .summary() method is getting a summary of the model.
