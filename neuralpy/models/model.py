@@ -492,6 +492,8 @@ class Model:
             for _ in range(predict_steps):
                 data = next(predict_data)
 
+                print("len(data)", len(data))
+
                 # Calling the __predict method to get the predicts
                 temp = self.__predict(data, batch_size).numpy()
                 if predictions is not None:
@@ -503,7 +505,7 @@ class Model:
             predictions = self.__predict(predict_data, batch_size).numpy()
 
         # Returning an numpy array of predictions
-        return predictions
+        return predictions.flatten()
 
     def predict_classes(self, predict_data, predict_steps=None, batch_size=None):
         """
@@ -541,7 +543,7 @@ class Model:
                 # Detecting the classes
                 predictions = predictions.argmax(dim=1, keepdim=True).numpy()
 
-            return predictions
+            return predictions.flatten()
 
         raise ValueError(
             "Cannot predict classes as this is not a classification problem")
