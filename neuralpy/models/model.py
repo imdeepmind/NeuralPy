@@ -482,7 +482,7 @@ class Model:
 
             Supported Arguments
                 predict_data: (NumPy Array | Python Generator) Data to be predicted
-                predict_steps: (Integer) Number of steps for 
+                predict_steps: (Integer) Number of steps in the generator
                 batch_size=None: (Integer) Batch size for predicting.
                             If not provided, then the entire data is predicted once.
         """
@@ -514,7 +514,8 @@ class Model:
             .compile()method.
 
             Supported Arguments
-                X: (NumPy Array) Data to be predicted
+                predict_data: (NumPy Array | Python Generator) Data to be predicted
+                predict_steps: (Integer) Number of steps in the generator
                 batch_size=None: (Integer) Batch size for predicting.
                 If not provided, then the entire data is predicted once.
         """
@@ -548,15 +549,10 @@ class Model:
         raise ValueError(
             "Cannot predict classes as this is not a classification problem")
 
-    def evaluate(self, X, y, batch_size=None):
+    def __evaluate(self, X, y, batch_size=None):
         """
-            The .evaluate()method is used for evaluating models using the test dataset.
+            helper method for __evaluate 
 
-            Supported Arguments
-                X: (NumPy Array) Data to be predicted
-                y: (NumPy Array) Original labels of X
-                batch_size=None: (Integer) Batch size for predicting.
-                    If not provided, then the entire data is predicted once.
         """
         # If batch_size is there then checking the length and comparing
         # it with the length of training data
@@ -603,6 +599,44 @@ class Model:
             'loss': loss.item()
         }
 
+
+    def evaluate(self, test_data, tests_steps=None, batch_size=None):
+        """
+            The .evaluate()method is used for evaluating models using the test dataset.
+
+            Supported Arguments
+                tests_data: (NumPy Array | Python Generator) Data to be predicted
+                tests_steps: (Integer) Number of steps in the generator
+                batch_size=None: (Integer) Batch size for predicting.
+                    If not provided, then the entire data is predicted once.
+        """
+        if isinstance(test_data, types.GeneratorType):
+            loss = 0
+            accuracy = 0
+
+            for _ in range(tests_steps):
+                X_data, y_data = next(test_data)
+
+                data = self.__evaluate(X_data, y_data, batch_size)
+
+                loss += data['loss']
+                if "accuracy" in self.__metrics:
+                    accuracy += data['accuracy']
+            
+            if "accuracy" in self.__metrics:
+                return {
+                    'loss': loss / tests_steps,
+                    'accuracy': accuracy / tests_steps
+                }
+
+            return {
+                'loss': loss / tests_steps
+            }
+            
+        else:
+            X_data, y_data = test_data
+            return self.__evaluate(X_data, y_data, batch_size)
+            
     def summary(self):
         """
             The .summary() method is getting a summary of the model.
