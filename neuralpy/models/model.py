@@ -505,7 +505,7 @@ class Model:
         # Returning an numpy array of predictions
         return predictions
 
-    def predict_classes(self, X, batch_size=None):
+    def predict_classes(self, predict_data, predict_steps=None, batch_size=None):
         """
             The .predict_class()method is used for predicting classes using the trained mode.
             This method works only if accuracy is passed in the metrics parameter on the
@@ -518,13 +518,30 @@ class Model:
         """
         # Checking if the model is for classification
         if self.__metrics and "accuracy" in self.__metrics:
-            # Calling the __predict method to get the predicts
-            predictions = self.__predict(X, batch_size)
+            if isinstance(predict_data, types.GeneratorType):
+                predictions = None
 
-            # Detecting the classes
-            predictions = predictions.argmax(dim=1, keepdim=True)
+                for _ in range(predict_steps):
+                    data = next(predict_data)
 
-            return predictions.numpy()
+                    # Calling the __predict method to get the predicts
+                    preds = self.__predict(data, batch_size)
+
+                    # Detecting the classes
+                    temp = preds.argmax(dim=1, keepdim=True).numpy()
+
+                    if predictions is not None:
+                        predictions = np.hstack((predictions, temp))
+                    else:
+                        predictions = temp
+            else:
+                # Calling the __predict method to get the predicts
+                predictions = self.__predict(predict_data, batch_size)
+
+                # Detecting the classes
+                predictions = predictions.argmax(dim=1, keepdim=True).numpy()
+
+            return predictions
 
         raise ValueError(
             "Cannot predict classes as this is not a classification problem")
