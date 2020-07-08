@@ -61,6 +61,16 @@ class Conv3D:
         ):
             raise ValueError("Please provide a valid kernel_size")
 
+        if isinstance(kernel_size, tuple):
+            if isinstance(kernel_size[0], int):
+                raise ValueError("Please provide a valid kernel_size")
+
+            if isinstance(kernel_size[1], int):
+                raise ValueError("Please provide a valid kernel_size")
+
+            if isinstance(kernel_size[2], int):
+                raise ValueError("Please provide a valid kernel_size")
+
         # Checking the input_shape field, it is a optional field
         if input_shape is not None and not isinstance(input_shape, tuple):
             raise ValueError("Please provide a valid input_shape")
@@ -83,17 +93,47 @@ class Conv3D:
         ):
             raise ValueError("Please provide a valid stride")
 
+        if isinstance(stride, tuple):
+            if isinstance(stride[0], int):
+                raise ValueError("Please provide a valid stride")
+
+            if isinstance(stride[1], int):
+                raise ValueError("Please provide a valid stride")
+
+            if isinstance(stride[2], int):
+                raise ValueError("Please provide a valid stride")
+
         # Checking the padding field
         if padding is not None and not (
             isinstance(padding, int) or isinstance(padding, tuple)
         ):
             raise ValueError("Please provide a valid padding")
 
+        if isinstance(padding, tuple):
+            if isinstance(padding[0], int):
+                raise ValueError("Please provide a valid padding")
+
+            if isinstance(padding[1], int):
+                raise ValueError("Please provide a valid padding")
+
+            if isinstance(padding[2], int):
+                raise ValueError("Please provide a valid padding")
+
         # Checking the dilation field
         if dilation is not None and not (
             isinstance(dilation, int) or isinstance(dilation, tuple)
         ):
             raise ValueError("Please provide a valid dilation")
+
+        if isinstance(dilation, tuple):
+            if isinstance(dilation[0], int):
+                raise ValueError("Please provide a valid dilation")
+
+            if isinstance(dilation[1], int):
+                raise ValueError("Please provide a valid dilation")
+
+            if isinstance(dilation[2], int):
+                raise ValueError("Please provide a valid dilation")
 
         # Checking the groups field
         if groups is not None and not isinstance(groups, int) or groups <= 0:
@@ -109,7 +149,7 @@ class Conv3D:
             raise ValueError("Please provide a valid name")
 
         # Storing the data
-        self.__filters = filter
+        self.__filters = filters
         self.__kernel_size = kernel_size
         self.__input_shape = input_shape
         self.__stride = stride
@@ -122,16 +162,41 @@ class Conv3D:
 
     def __get_layer_details(self):
         # Return tuple structure
-        k = 0
+        # Getting the kernel values
+        k1 = k2 = k3 = 0
         if isinstance(self.__kernel_size, int):
-            k = self.__kernel_size
+            k1 = k2 = k3 = self.__kernel_size
         else:
-            k = self.__kernel_size[0]
+            k1, k2, k3 = self.__kernel_size
 
-        w = (self.__input_shape[1] - k +
-             (2 * self.__padding) // self.__stride) + 1
+        # Getting the padding values
+        p1 = p2 = p3 = 0
+        if isinstance(self.__padding, int):
+            p1 = p2 = p3 = self.__padding
+        else:
+            p1, p2, p3 = self.__padding
 
-        return (self.__input_shape[0], w*w*w*self.__filters, (self.__filters, w, w, w))
+        # Getting the stride values
+        s1 = s2 = s3 = 0
+        if isinstance(self.__stride, int):
+            s1 = s2 = s3 = self.__stride
+        else:
+            s1, s2, s3 = self.__stride
+
+        # Getting the dilation  values
+        d1 = d2 = d3 = 0
+        if isinstance(self.__dilation, int):
+            d1 = d2 = d3 = self.__dilation
+        else:
+            d1, d2, d3 = self.__dilation
+
+        # Calculating the width and height of the conv output
+        w1 = ((self.__input_shape[1] + 2 * p1 - d1 * (k1 - 1) - 1) // s1) + 1
+        w2 = ((self.__input_shape[2] + 2 * p2 - d2 * (k2 - 1) - 1) // s2) + 1
+        w3 = ((self.__input_shape[3] + 2 * p3 - d3 * (k3 - 1) - 1) // s3) + 1
+
+        # Returning for the next layers
+        return (self.__input_shape[0], w1*w2*w3*self.__filters, (self.__filters, w1, w2, w3))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -146,7 +211,7 @@ class Conv3D:
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type == "conv3d" or layer_type == "maxpool3d":
+            if layer_type == "conv3d" or layer_type == "avgpool3d":
                 self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(

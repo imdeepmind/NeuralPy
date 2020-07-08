@@ -1,14 +1,14 @@
-"""AvgPool2d layer for NeuralPy"""
+"""AvgPool1D layer for NeuralPy"""
 
-from torch.nn import AvgPool2d as _AvgPool2d
+from torch.nn import AvgPool1d as _AvgPool1d
 
 
-class AvgPool2D:
+class AvgPool1D:
     """
         Applies a 2D average pooling over an input signal composed of several input planes.
 
         To learn more about Dense layers, please check PyTorch
-        documentation https://pytorch.org/docs/stable/nn.html?highlight=AvgPool2d#torch.nn.AvgPool2d
+        documentation https://pytorch.org/docs/stable/nn.html?highlight=AvgPool1D#torch.nn.AvgPool1d
 
         Supported Arguments:
             kernel_size: (Int | Tuple) Kernel size of the layer
@@ -22,9 +22,9 @@ class AvgPool2D:
 
     """
 
-    def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, divisor_override=None, name=None):
+    def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, name=None):
         """
-            __init__ method for AvgPool2d
+            __init__ method for AvgPool1D
 
             Supported Arguments:
                 kernel_size: (Int | Tuple) Kernel size of the layer
@@ -47,9 +47,6 @@ class AvgPool2D:
             if isinstance(kernel_size[0], int):
                 raise ValueError("Please provide a valid kernel_size")
 
-            if isinstance(kernel_size[1], int):
-                raise ValueError("Please provide a valid kernel_size")
-
         # Checking the stride field
         if stride is not None and not (
             isinstance(stride, int) or isinstance(stride, tuple)
@@ -58,9 +55,6 @@ class AvgPool2D:
 
         if isinstance(stride, tuple):
             if isinstance(stride[0], int):
-                raise ValueError("Please provide a valid stride")
-
-            if isinstance(stride[1], int):
                 raise ValueError("Please provide a valid stride")
 
         if stride is None:
@@ -76,9 +70,6 @@ class AvgPool2D:
             if isinstance(padding[0], int):
                 raise ValueError("Please provide a valid padding")
 
-            if isinstance(padding[1], int):
-                raise ValueError("Please provide a valid padding")
-
         # Checking ceil_mode
         if not isinstance(ceil_mode, bool):
             raise ValueError("Please provide a valid ceil_mode")
@@ -86,10 +77,6 @@ class AvgPool2D:
         # Checking count_include_pad
         if not isinstance(count_include_pad, bool):
             raise ValueError("Please provide a valid count_include_pad")
-
-        # Checking divisor_override
-        if divisor_override is not None and not isinstance(divisor_override, int):
-            raise ValueError("Please provide a valid divisor_override")
 
         # Checking the name field, this is an optional field,
         # if not provided generates a unique name for the layer
@@ -102,38 +89,36 @@ class AvgPool2D:
         self.__padding = padding
         self.__ceil_mode = ceil_mode
         self.__count_include_pad = count_include_pad
-        self.__divisor_override = divisor_override
 
         self.__name = name
 
     def __get_layer_details(self):
-        depth, width, height = self.__prev_layer_data
+        depth, width = self.__prev_layer_data
 
         # Getting the kernel_size
-        k1 = k2 = 0
+        k1 = 0
         if isinstance(self.__kernel_size, int):
-            k1 = k2 = self.__kernel_size
+            k1 = self.__kernel_size
         else:
-            k1, k2 = self.__kernel_size
+            k1 = self.__kernel_size
 
         # Getting the padding values
-        p1 = p2 = 0
+        p1 = 0
         if isinstance(self.__padding, int):
-            p1 = p2 = self.__padding
+            p1 = self.__padding
         else:
-            p1, p2 = self.__padding
+            p1 = self.__padding
 
         # Getting the stride values
-        s1 = s2 = 0
+        s1 = 0
         if isinstance(self.__stride, int):
-            s1 = s2 = self.__stride
+            s1 = self.__stride
         else:
-            s1, s2 = self.__stride
+            s1 = self.__stride
 
         w1 = ((width + 2 * p1 - k1) // s1) + 1
-        w2 = ((height + 2 * p2 - k2) // s2) + 1
 
-        return (depth, depth * w1 * w2, (depth, w1, w2))
+        return (depth, depth * w1, (depth, w1))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -142,10 +127,10 @@ class AvgPool2D:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # AvgPool2d does not need to n_input, so returning None
+        # AvgPool1D does not need to n_input, so returning None
         layer_type = prev_layer_type.lower()
 
-        if layer_type == 'conv2d':
+        if layer_type == 'conv1d':
             self.__prev_layer_data = prev_input_dim[2]
 
     def get_layer(self):
@@ -158,15 +143,14 @@ class AvgPool2D:
         # Returning all the details of the layer
         return{
             'layer_details': self.__get_layer_details(),
-            'layer': _AvgPool2d,
+            'layer': _AvgPool1d,
             'name': self.__name,
-            'type': 'AvgPool2D',
+            'type': 'AvgPool1D',
             'keyword_arguments': {
                 'kernel_size': self.__kernel_size,
                 'stride': self.__stride,
                 'padding': self.__padding,
                 'ceil_mode': self.__ceil_mode,
-                'count_include_pad': self.__count_include_pad,
-                'divisor_override': self.__divisor_override
+                'count_include_pad': self.__count_include_pad
             }
         }
