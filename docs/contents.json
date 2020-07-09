@@ -81,6 +81,16 @@
       ]
     },
     {
+      "title": "Callbacks",
+      "id": "callbacks",
+      "contents": [
+        {
+          "title": "TrainLogger",
+          "id": "trainlogger"
+        }
+      ]
+    },
+    {
       "title": "Layers",
       "id": "layers",
       "contents": [
