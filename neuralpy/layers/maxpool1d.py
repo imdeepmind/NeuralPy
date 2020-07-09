@@ -49,19 +49,37 @@ class MaxPool1d:
         """
 
         # Checking the kernel_size
-        if not kernel_size and not isinstance(kernel_size, int):
-            raise ValueError(
-                "Please provide a valid value for kernel_size")
+        if not kernel_size or not (
+            isinstance(kernel_size, int) or isinstance(kernel_size, tuple)
+        ):
+            raise ValueError("Please provide a valid kernel_size")
+
+        if isinstance(kernel_size, tuple):
+            if isinstance(kernel_size[0], int):
+                raise ValueError("Please provide a valid kernel_size")
 
         # Checking the stride
-        if stride and not isinstance(stride, int):
-            raise ValueError(
-                "Please provide a valid value for stride")
+        if stride is not None and not (
+            isinstance(stride, int) or isinstance(stride, tuple)
+        ):
+            raise ValueError("Please provide a valid stride")
+
+        if isinstance(stride, tuple):
+            if isinstance(stride[0], int):
+                raise ValueError("Please provide a valid stride")
+
+        if stride is None:
+            stride = kernel_size
 
         # Checking the padding,  it is an optional filed
-        if padding and not isinstance(padding, int):
-            raise ValueError(
-                "Please provide a valid value for padding")
+        if padding is not None and not (
+            isinstance(padding, int) or isinstance(padding, tuple)
+        ):
+            raise ValueError("Please provide a valid padding")
+
+        if isinstance(padding, tuple):
+            if isinstance(padding[0], int):
+                raise ValueError("Please provide a valid padding")
 
         # Checking the dilation, it is an optional filed
         if dilation and not isinstance(dilation, int):
@@ -92,6 +110,35 @@ class MaxPool1d:
         self.__ceil_mode = ceil_mode
         self.__name = name
 
+    def __get_layer_details(self):
+        
+        depth, width = self.__prev_layer_data
+
+        # Getting the kernel_size
+        k1 = 0
+        if isinstance(self.__kernel_size, int):
+            k1 = self.__kernel_size
+        else:
+            k1 = self.__kernel_size
+
+        # Getting the padding values
+        p1 = 0
+        if isinstance(self.__padding, int):
+            p1 = self.__padding
+        else:
+            p1 = self.__padding
+
+        # Getting the stride values
+        s1 = 0
+        if isinstance(self.__stride, int):
+            s1 = self.__stride
+        else:
+            s1 = self.__stride
+
+        w1 = ((width + 2 * p1 - k1) // s1) + 1
+
+        return (depth, depth * w1, (depth, w1))
+
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -100,16 +147,10 @@ class MaxPool1d:
             No need to call this method for using NeuralPy.
         """
         # MaxPool1d does not need to n_input, so returning None
-        layer_type = prev_layer_type
+        layer_type = prev_layer_type.lower()
 
         if layer_type == 'conv1d':
-            x, y = prev_input_dim[2]
-
-            k = self.__kernel_size
-
-            y = y // k
-
-            self.__layer_details = (x, x*y, (x, y)) 
+            self.__prev_layer_data = prev_input_dim[2]
 
     def get_layer(self):
         """
@@ -120,7 +161,7 @@ class MaxPool1d:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': self.__layer_details,
+            'layer_details': self.__get_layer_details(),
             'name': self.__name,
             'type': 'MaxPool1D',
             'layer': _MaxPool1d,

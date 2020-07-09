@@ -92,6 +92,36 @@ class MaxPool3d:
         self.__ceil_mode = ceil_mode
         self.__name = name
 
+    def __get_layer_details(self):
+        depth, width, height, fourth = self.__prev_layer_data
+
+        # Getting the kernel_size
+        k1 = k2 = k3 = 0
+        if isinstance(self.__kernel_size, int):
+            k1 = k2 = k3 = self.__kernel_size
+        else:
+            k1, k2, k3 = self.__kernel_size
+
+        # Getting the padding values
+        p1 = p2 = p3 = 0
+        if isinstance(self.__padding, int):
+            p1 = p2 = p3 = self.__padding
+        else:
+            p1, p2, p3 = self.__padding
+
+        # Getting the stride values
+        s1 = s2 = s3 = 0
+        if isinstance(self.__stride, int):
+            s1 = s2 = s3 = self.__stride
+        else:
+            s1, s2, s3 = self.__stride
+
+        w1 = ((width + 2 * p1 - k1) // s1) + 1
+        w2 = ((height + 2 * p2 - k2) // s2) + 1
+        w3 = ((fourth + 2 * p3 - k3) // s3) + 1
+
+        return (depth, depth * w1 * w2 * w3, (depth, w1, w2, w3))
+
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -100,21 +130,10 @@ class MaxPool3d:
             No need to call this method for using NeuralPy.
         """
         # MaxPool3d does not need to n_input, so returning None
-        if prev_layer_type == 'conv3d':
-            x, y, z, a = prev_input_dim[2]
+        layer_type = prev_layer_type.lower()
 
-            k = 0
-
-            if isinstance(self.__kernel_size, int):
-                k = self.__kernel_size
-            else:
-                k = self.__kernel_size[0]
-
-            y = y // k
-            z = z // k
-            a = a // k
-
-            self.__layer_details = (x, x*y*z*a, (x, y, z, a))
+        if layer_type == 'conv3d':
+            self.__prev_layer_data = prev_input_dim[2]
 
     def get_layer(self):
         """
@@ -125,7 +144,7 @@ class MaxPool3d:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': self.__layer_details,
+            'layer_details': self.__get_layer_details(),
             'name': self.__name,
             'type': 'MaxPool3D',
             'layer': _MaxPool3d,

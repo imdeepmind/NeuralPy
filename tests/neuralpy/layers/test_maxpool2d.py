@@ -58,6 +58,7 @@ def test_maxpool2d_get_layer_method(
     kernel_size, stride, padding, dilation,
     return_indices, ceil_mode, name):
 
+
         x = MaxPool2d(
                 kernel_size=kernel_size, stride=stride,
                 padding=padding, dilation=dilation,
@@ -65,11 +66,12 @@ def test_maxpool2d_get_layer_method(
                 ceil_mode=ceil_mode, name=name
         )
 
+        prev_dim = (3, 6, (6, 18, 32) )
+        layer_details = x.get_input_dim(prev_dim, "conv2d")
+
         details = x.get_layer()
 
         assert isinstance(details, dict) == True
-
-        assert details['layer_details'] == kernel_size
 
         assert details['name'] == name
 

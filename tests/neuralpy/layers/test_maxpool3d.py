@@ -65,11 +65,11 @@ def test_maxpool3d_get_layer_method(
                 ceil_mode=ceil_mode, name=name
         )
 
+        prev_dim = (3, 6, (6, 18, 32, 64) )
+        layer_details = x.get_input_dim(prev_dim, "conv3d")
         details = x.get_layer()
 
         assert isinstance(details, dict) == True
-
-        assert details['layer_details'] == kernel_size
 
         assert details['name'] == name
 

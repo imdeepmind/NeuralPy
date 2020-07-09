@@ -64,11 +64,12 @@ def test_maxpool1d_get_layer_method(
                 return_indices=return_indices,
                 ceil_mode=ceil_mode, name=name)
 
+        prev_dim = (3, 6, (6, 18) )
+        layer_details = x.get_input_dim(prev_dim, "conv1d")
+        
         details = x.get_layer()
 
         assert isinstance(details, dict) == True
-
-        assert details['layer_details'] == kernel_size
 
         assert details['name'] == name
 

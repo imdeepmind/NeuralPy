@@ -179,7 +179,7 @@ class Conv1D:
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type == "conv1d" or layer_type == 'avgpool1d':
+            if layer_type == "conv1d" or layer_type == 'avgpool1d' or layer_type == 'maxpool1d':
                 self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(
