@@ -413,6 +413,48 @@ model.build()
 
 ---
 
+# Callbacks
+
+```python
+neuralpy.callbacks
+```
+
+Callbacks are classes that perform tasks when we train a model at the end of every epoch. NeuralPy currently supports only one type of Callback, and that is TrainLogger.
+
+## TrainLogger
+
+```python
+neuralpy.callbacks.TrainLogger
+```
+
+TrainLogger is a NeuralPy Callback class that generates training logs. It generates CSV files of training logs with all the parameters,  other model configuration, and the model loss accuracy.
+
+### Supported Arguments
+
+	- `path`: (String)  Directory where the logs will be stored
+
+### Example Code
+
+```python
+from neuralpy.models import Sequential
+...
+...
+...
+from neuralpy.callbacks import TrainLogger
+
+model = Sequential()
+...
+...
+...
+
+logger = TrainLogger("logs/")
+
+# Here the fit method accepts callbacks as array
+history = model.fit(train_data=(X_train, y_train), validation_data=(X_validation, y_validation), epochs=2, batch_size=32, callbacks=[logger])
+```
+
+---
+
 # Layers
 
 ```python
