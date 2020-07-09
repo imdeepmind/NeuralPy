@@ -28,38 +28,38 @@ def test_conv1d_should_throw_type_error():
         (256, (3,), ("",3), "invalid","invalid", "invalid", "groups", False, ""),
         
         # Checking stride validation
-        (256, (3,), ("",3), "invalid","invalid", "invalid", "groups", False, ""),
-        (256, (3,), ("",3), 4.5,"invalid", "invalid", "groups", False, ""),
-        (256, (3,), ("",3), False,"invalid", "invalid", "groups", False, ""),
-        (256, (3,), ("",3), ("",),"invalid", "invalid", "groups", False, ""),
-        (256, (3,), ("",3), (3.4,),"invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), "invalid","invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), 4.5,"invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), False,"invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), ("",),"invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3.4,),"invalid", "invalid", "groups", False, ""),
 
         # Checking padding validation
-        (256, (3,), ("",3), (3,), "invalid", "invalid", "groups", False, ""),
-        (256, (3,), ("",3), (3,), False, "invalid", "groups", False, ""),
-        (256, (3,), ("",3), (3,), 6.5, "invalid", "groups", False, ""),
-        (256, (3,), ("",3), (3,), ("",), "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), "invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), False, "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), 6.5, "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), ("",), "invalid", "groups", False, ""),
 
         # Checking the dilation
-        (256, (3,), ("",3), (3,), ("",), "invalid", "groups", False, ""),
-        (256, (3,), ("",3), (3,), ("",), False, "groups", False, ""),
-        (256, (3,), ("",3), (3,), ("",), 4.5, "groups", False, ""),
-        (256, (3,), ("",3), (3,), ("",), ("",), "groups", False, ""),
-        (256, (3,), ("",3), (3,), ("",), (4.5,), "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), False, "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), 4.5, "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), ("",), "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4.5,), "groups", False, ""),
 
         # Checking the groups
-        (256, (3,), ("",3), (3,), ("",), (4,), "groups", False, ""),
-        (256, (3,), ("",3), (3,), ("",), (4,), 4.5, False, ""),
-        (256, (3,), ("",3), (3,), ("",), (4,), False, False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 4.5, False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), False, False, ""),
 
         # Checking the bias
-        (256, (3,), ("",3), (3,), ("",), (4,), 12, 12, ""),
-        (256, (3,), ("",3), (3,), ("",), (4,), 12, "invalid", ""),
-        (256, (3,), ("",3), (3,), ("",), (4,), 12, .45, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, 12, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, "invalid", ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, .45, ""),
 
         # Checking name validation
-        (256, (3,), ("",3), (3,), ("",), (4,), 12, False, ""),
-        (256, (3,), ("",3), (3,), ("",), (4,), 12, False, 12),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, False, 12),
     ]
 )
 def test_conv1d_should_throw_value_error(filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name):
