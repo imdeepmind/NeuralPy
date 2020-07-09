@@ -62,9 +62,9 @@ class Conv1D:
             raise ValueError("Please provide a valid kernel_size")
 
         if isinstance(kernel_size, tuple):
-            if isinstance(kernel_size[0], int):
+            if not isinstance(kernel_size[0], int):
                 raise ValueError("Please provide a valid kernel_size")
-
+        
         # Checking the input_shape field, it is a optional field
         if input_shape is not None and not isinstance(input_shape, tuple):
             raise ValueError("Please provide a valid input_shape")
@@ -82,7 +82,7 @@ class Conv1D:
             raise ValueError("Please provide a valid stride")
 
         if isinstance(stride, tuple):
-            if isinstance(stride[0], int):
+            if not isinstance(stride[0], int):
                 raise ValueError("Please provide a valid stride")
 
         # Checking the padding field
@@ -92,7 +92,7 @@ class Conv1D:
             raise ValueError("Please provide a valid padding")
 
         if isinstance(padding, tuple):
-            if isinstance(padding[0], int):
+            if not isinstance(padding[0], int):
                 raise ValueError("Please provide a valid padding")
 
         # Checking the dilation field
@@ -102,7 +102,7 @@ class Conv1D:
             raise ValueError("Please provide a valid dilation")
 
         if isinstance(dilation, tuple):
-            if isinstance(dilation[0], int):
+            if not isinstance(dilation[0], int):
                 raise ValueError("Please provide a valid dilation")
 
         # Checking the groups field

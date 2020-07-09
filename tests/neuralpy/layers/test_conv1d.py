@@ -11,25 +11,55 @@ def test_conv1d_should_throw_type_error():
 @pytest.mark.parametrize(
     "filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name",
     [
+        # Checking Filters validation
         (0.3, 0.3, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
         (0.3, 0.3, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
+        
+        # Chaking kernel size validation
         (16, 2, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, ("", 26, 26), "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, (3, "", 26), "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, (3, 26, ""), "invalid", "invalid", "invalid", "groups", False, ""),
-        (64, 4, (3, 26, 26), "invalid", "invalid", "invalid", "groups", False, ""),
-        (128, 4, (3, 26, 26), 4.6, "invalid", "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), "invalid", "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), "invalid", "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), 7.5, "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), 4.7, "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), False, False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), 1, "invalid", ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), 1, False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), 1, False, 34),
+        (32, False, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
+        (32, "", "", "invalid", "invalid", "invalid", "groups", False, ""),
+        (32, ("",), "invalid", "invalid", "invalid", "invalid", "groups", False, ""),
+
+        # Chaking input shape validation
+        (64, (3,), "invalid","invalid", "invalid", "invalid", "groups", False, ""),
+        (128, (3,), False, 4.6, "invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,""), "invalid","invalid", "invalid", "groups", False, ""),
+        (256, (3,), ("",3), "invalid","invalid", "invalid", "groups", False, ""),
+        
+        # Checking stride validation
+        (256, (3,), ("",3), "invalid","invalid", "invalid", "groups", False, ""),
+        (256, (3,), ("",3), 4.5,"invalid", "invalid", "groups", False, ""),
+        (256, (3,), ("",3), False,"invalid", "invalid", "groups", False, ""),
+        (256, (3,), ("",3), ("",),"invalid", "invalid", "groups", False, ""),
+        (256, (3,), ("",3), (3.4,),"invalid", "invalid", "groups", False, ""),
+
+        # Checking padding validation
+        (256, (3,), ("",3), (3,), "invalid", "invalid", "groups", False, ""),
+        (256, (3,), ("",3), (3,), False, "invalid", "groups", False, ""),
+        (256, (3,), ("",3), (3,), 6.5, "invalid", "groups", False, ""),
+        (256, (3,), ("",3), (3,), ("",), "invalid", "groups", False, ""),
+
+        # Checking the dilation
+        (256, (3,), ("",3), (3,), ("",), "invalid", "groups", False, ""),
+        (256, (3,), ("",3), (3,), ("",), False, "groups", False, ""),
+        (256, (3,), ("",3), (3,), ("",), 4.5, "groups", False, ""),
+        (256, (3,), ("",3), (3,), ("",), ("",), "groups", False, ""),
+        (256, (3,), ("",3), (3,), ("",), (4.5,), "groups", False, ""),
+
+        # Checking the groups
+        (256, (3,), ("",3), (3,), ("",), (4,), "groups", False, ""),
+        (256, (3,), ("",3), (3,), ("",), (4,), 4.5, False, ""),
+        (256, (3,), ("",3), (3,), ("",), (4,), False, False, ""),
+
+        # Checking the bias
+        (256, (3,), ("",3), (3,), ("",), (4,), 12, 12, ""),
+        (256, (3,), ("",3), (3,), ("",), (4,), 12, "invalid", ""),
+        (256, (3,), ("",3), (3,), ("",), (4,), 12, .45, ""),
+
+        # Checking name validation
+        (256, (3,), ("",3), (3,), ("",), (4,), 12, False, ""),
+        (256, (3,), ("",3), (3,), ("",), (4,), 12, False, 12),
     ]
 )
 def test_conv1d_should_throw_value_error(filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name):
