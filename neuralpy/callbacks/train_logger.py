@@ -22,6 +22,9 @@ class TrainLogger:
             Supported Arguments:
                 path: (String) path where the log files will be stored
         """
+        if not path or not isinstance(path, str):
+            raise ValueError("Please provide a valid path")
+
         self.__headers = []
         self.__rows = []
 
