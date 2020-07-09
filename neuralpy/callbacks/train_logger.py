@@ -43,7 +43,7 @@ class TrainLogger:
         with open(self.__path, "w") as file:
             file.write(text)
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,unused-argument
     def callback(self, epochs, epoch, loss_function_parameters, optimizer_parameters,
                  traning_progress, model):
         """
