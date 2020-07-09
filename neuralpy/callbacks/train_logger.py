@@ -34,6 +34,9 @@ class TrainLogger:
 
         self.__path = os.path.join(path, filename)
 
+        if not os.path.exists(path):
+            os.makedirs(path)
+
     def __generate_log_file(self):
         text = ",".join(self.__headers) + "\n"
 
