@@ -1,5 +1,5 @@
 import pytest
-from torch.nn import Conv1d
+from torch.nn import Conv1d as _Conv1D
 from neuralpy.layers import Conv1D
 
 
@@ -11,25 +11,55 @@ def test_conv1d_should_throw_type_error():
 @pytest.mark.parametrize(
     "filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name",
     [
+        # Checking Filters validation
         (0.3, 0.3, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
         (0.3, 0.3, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
+        
+        # Chaking kernel size validation
         (16, 2, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, ("", 26, 26), "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, (3, "", 26), "invalid", "invalid", "invalid", "groups", False, ""),
-        (32, 3, (3, 26, ""), "invalid", "invalid", "invalid", "groups", False, ""),
-        (64, 4, (3, 26, 26), "invalid", "invalid", "invalid", "groups", False, ""),
-        (128, 4, (3, 26, 26), 4.6, "invalid", "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), "invalid", "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), "invalid", "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), 7.5, "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), "invalid", "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), 4.7, "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), "groups", False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), False, False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), 1, "invalid", ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), 1, False, ""),
-        (256, 4, (3, 26, 26), (34,), (34,), (34,), 1, False, 34),
+        (32, False, 0.36, "invalid", "invalid", "invalid", "groups", False, ""),
+        (32, "", "", "invalid", "invalid", "invalid", "groups", False, ""),
+        (32, ("",), "invalid", "invalid", "invalid", "invalid", "groups", False, ""),
+
+        # Chaking input shape validation
+        (64, (3,), "invalid","invalid", "invalid", "invalid", "groups", False, ""),
+        (128, (3,), False, 4.6, "invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,""), "invalid","invalid", "invalid", "groups", False, ""),
+        (256, (3,), ("",3), "invalid","invalid", "invalid", "groups", False, ""),
+        
+        # Checking stride validation
+        (256, (3,), (3,3), "invalid","invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), 4.5,"invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), False,"invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), ("",),"invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3.4,),"invalid", "invalid", "groups", False, ""),
+
+        # Checking padding validation
+        (256, (3,), (3,3), (3,), "invalid", "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), False, "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), 6.5, "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), ("",), "invalid", "groups", False, ""),
+
+        # Checking the dilation
+        (256, (3,), (3,3), (3,), (3,), "invalid", "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), False, "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), 4.5, "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), ("",), "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4.5,), "groups", False, ""),
+
+        # Checking the groups
+        (256, (3,), (3,3), (3,), (3,), (4,), "groups", False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 4.5, False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), False, False, ""),
+
+        # Checking the bias
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, 12, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, "invalid", ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, .45, ""),
+
+        # Checking name validation
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, False, ""),
+        (256, (3,), (3,3), (3,), (3,), (4,), 12, False, 12),
     ]
 )
 def test_conv1d_should_throw_value_error(filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name):
@@ -38,56 +68,62 @@ def test_conv1d_should_throw_value_error(filters, kernel_size, input_shape, stri
                    stride=stride, padding=padding, dilation=dilation, groups=groups, bias=bias, name=name)
 
 
+
 # Possible values
-filters = [23, 64]
-kernel_size = [4]
-input_shape = [(3, 26, 26)]
-stride = [(34,)]
-padding = [(34,)]
-dilation = [(34,)]
-groups = 1
-biases = [True, False]
+filters = [23]
+kernel_size = [4, (4,)]
+input_shape = [(3, 2), None]
+stride = [(34,), 34]
+padding = [(34,), 34]
+dilation = [(34,), 34]
+groups = [1]
+biases = [True]
 names = ["Test", None]
 
 
-# @pytest.mark.parametrize(
-#     "filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name",
-#     [(filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name)
-#      for _filters in filters
-#      for _kernel_size in kernel_size
-#      for _input_shape in input_shape
-#      for _stride in stride
-#      for _padding in padding
-#      for _dilation in dilation
-#      for _groups in groups
-#      for _bias in biases
-#      for _name in names]
-# )
-# def test_conv1d_get_layer_method(filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name):
-#     x = Conv1D(filters=filters, kernel_size=kernel_size, input_shape=input_shape,
-#                stride=stride, padding=padding, dilation=dilation, groups=groups, bias=bias, name=name)
-#     prev_dim = (3, 26, 26),
+@pytest.mark.parametrize(
+    "_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name",
+    [(_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name)
+     for _filters in filters
+     for _kernel_size in kernel_size
+     for _input_shape in input_shape
+     for _stride in stride
+     for _padding in padding
+     for _dilation in dilation
+     for _groups in groups
+     for _bias in biases
+     for _name in names]
+)
+def test_conv1d_get_layer_method(_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name):
+    x = Conv1D(filters=_filters, kernel_size=_kernel_size, input_shape=_input_shape,
+               stride=_stride, padding=_padding, dilation=_dilation, groups=_groups, bias=_bias, name=_name)
 
-#     if input_shape is None:
-#         x.get_input_dim(prev_dim, "conv1d")
+    if _input_shape is None:
+        prev_dim = (3, 3*32, (3, 32))
+        x.get_input_dim(prev_dim, "conv1d")
 
-#     details = x.get_layer()
+    details = x.get_layer()
 
-#     assert isinstance(details, dict) == True
+    assert isinstance(details, dict) == True
 
-#     assert details["layer_details"] == (n_nodes,)
+    # TODO: Need to check the formula
+    # if input_shape is None:
+        # assert details["layer_details"] == (n_nodes,)
+    # else:
+        # assert details["layer_details"] == (n_nodes,)
 
-#     assert details["name"] == name
+    assert details["name"] == _name
 
-#     assert issubclass(details["layer"], Linear) == True
+    assert issubclass(details["layer"], _Conv1D) == True
 
-#     assert isinstance(details["keyword_arguments"], dict) == True
+    assert details["type"] == "Conv1D"
 
-#     if n_inputs:
-#         assert details["keyword_arguments"]["in_features"] == n_inputs
-#     else:
-#         assert details["keyword_arguments"]["in_features"] == prev_dim[0]
+    assert isinstance(details["keyword_arguments"], dict) == True
 
-#     assert details["keyword_arguments"]["out_features"] == n_nodes
+def test_conv1d_get_layer_method_invlaid_layer():
+    x = Conv1D(filters=32, kernel_size=2, input_shape=None)
 
-#     assert details["keyword_arguments"]["bias"] == bias
+    prev_dim = (3, 3*32, (3, 32))
+
+    with pytest.raises(ValueError) as ex:
+        x.get_input_dim(prev_dim, "conv2d")
