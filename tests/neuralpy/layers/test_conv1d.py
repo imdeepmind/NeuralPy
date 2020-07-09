@@ -106,6 +106,7 @@ def test_conv1d_get_layer_method(_filters, _kernel_size, _input_shape, _stride, 
 
     assert isinstance(details, dict) == True
 
+    # TODO: Need to check the formula
     # if input_shape is None:
         # assert details["layer_details"] == (n_nodes,)
     # else:
