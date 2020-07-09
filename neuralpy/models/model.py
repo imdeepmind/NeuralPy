@@ -472,7 +472,7 @@ class Model:
                         training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
 
                     callback.callback(epochs, epoch, self.__loss_function_parameters,
-                                      self.__optimizer_parameters, training_progress_data)
+                                      self.__optimizer_parameters, training_progress_data, self.__model)
 
         return self.__history
 

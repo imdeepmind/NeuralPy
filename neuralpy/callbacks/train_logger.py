@@ -45,7 +45,7 @@ class TrainLogger:
 
     # pylint: disable=too-many-arguments
     def callback(self, epochs, epoch, loss_function_parameters, optimizer_parameters,
-                 traning_progress):
+                 traning_progress, model):
         """
             The callback method is called from the model class once it completes an epoch
 
