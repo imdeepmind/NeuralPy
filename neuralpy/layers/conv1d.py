@@ -133,32 +133,32 @@ class Conv1D:
     def __get_layer_details(self):
         # Return tuple structure
         # Getting the kernel values
-        k1 = k2 = 0
+        k1 = 0
         if isinstance(self.__kernel_size, int):
-            k1 = k2 = self.__kernel_size
+            k1 = self.__kernel_size
         else:
-            k1, k2 = self.__kernel_size
+            k1, = self.__kernel_size
 
         # Getting the padding values
-        p1 = p2 = 0
+        p1 = 0
         if isinstance(self.__padding, int):
-            p1 = p2 = self.__padding
+            p1 = self.__padding
         else:
-            p1, p2 = self.__padding
+            p1, = self.__padding
 
         # Getting the stride values
         s1 = 0
         if isinstance(self.__stride, int):
             s1 = self.__stride
         else:
-            s1 = self.__stride
+            s1, = self.__stride
 
         # Getting the dilation  values
         d1 = 0
         if isinstance(self.__dilation, int):
             d1 = self.__dilation
         else:
-            d1 = self.__dilation
+            d1, = self.__dilation
 
         # Calculating the width and height of the conv output
         w1 = ((self.__input_shape[1] + 2 * p1 - d1 * (k1 - 1) - 1) // s1) + 1

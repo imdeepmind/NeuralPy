@@ -1,5 +1,5 @@
 import pytest
-from torch.nn import Conv1d
+from torch.nn import Conv1d as _Conv1D
 from neuralpy.layers import Conv1D
 
 
@@ -68,56 +68,61 @@ def test_conv1d_should_throw_value_error(filters, kernel_size, input_shape, stri
                    stride=stride, padding=padding, dilation=dilation, groups=groups, bias=bias, name=name)
 
 
+
 # Possible values
-filters = [23, 64]
-kernel_size = [4]
-input_shape = [(3, 26, 26)]
-stride = [(34,)]
-padding = [(34,)]
-dilation = [(34,)]
-groups = 1
-biases = [True, False]
+filters = [23]
+kernel_size = [4, (4,)]
+input_shape = [(3, 2), None]
+stride = [(34,), 34]
+padding = [(34,), 34]
+dilation = [(34,), 34]
+groups = [1]
+biases = [True]
 names = ["Test", None]
 
 
-# @pytest.mark.parametrize(
-#     "filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name",
-#     [(filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name)
-#      for _filters in filters
-#      for _kernel_size in kernel_size
-#      for _input_shape in input_shape
-#      for _stride in stride
-#      for _padding in padding
-#      for _dilation in dilation
-#      for _groups in groups
-#      for _bias in biases
-#      for _name in names]
-# )
-# def test_conv1d_get_layer_method(filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name):
-#     x = Conv1D(filters=filters, kernel_size=kernel_size, input_shape=input_shape,
-#                stride=stride, padding=padding, dilation=dilation, groups=groups, bias=bias, name=name)
-#     prev_dim = (3, 26, 26),
+@pytest.mark.parametrize(
+    "_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name",
+    [(_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name)
+     for _filters in filters
+     for _kernel_size in kernel_size
+     for _input_shape in input_shape
+     for _stride in stride
+     for _padding in padding
+     for _dilation in dilation
+     for _groups in groups
+     for _bias in biases
+     for _name in names]
+)
+def test_conv1d_get_layer_method(_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name):
+    x = Conv1D(filters=_filters, kernel_size=_kernel_size, input_shape=_input_shape,
+               stride=_stride, padding=_padding, dilation=_dilation, groups=_groups, bias=_bias, name=_name)
 
-#     if input_shape is None:
-#         x.get_input_dim(prev_dim, "conv1d")
+    if _input_shape is None:
+        prev_dim = (3, 3*32, (3, 32))
+        x.get_input_dim(prev_dim, "conv1d")
 
-#     details = x.get_layer()
+    details = x.get_layer()
 
-#     assert isinstance(details, dict) == True
+    assert isinstance(details, dict) == True
 
-#     assert details["layer_details"] == (n_nodes,)
+    # if input_shape is None:
+        # assert details["layer_details"] == (n_nodes,)
+    # else:
+        # assert details["layer_details"] == (n_nodes,)
 
-#     assert details["name"] == name
+    assert details["name"] == _name
 
-#     assert issubclass(details["layer"], Linear) == True
+    assert issubclass(details["layer"], _Conv1D) == True
 
-#     assert isinstance(details["keyword_arguments"], dict) == True
+    assert details["type"] == "Conv1D"
 
-#     if n_inputs:
-#         assert details["keyword_arguments"]["in_features"] == n_inputs
-#     else:
-#         assert details["keyword_arguments"]["in_features"] == prev_dim[0]
+    assert isinstance(details["keyword_arguments"], dict) == True
 
-#     assert details["keyword_arguments"]["out_features"] == n_nodes
+def test_conv1d_get_layer_method_invlaid_layer():
+    x = Conv1D(filters=32, kernel_size=2, input_shape=None)
 
-#     assert details["keyword_arguments"]["bias"] == bias
+    prev_dim = (3, 3*32, (3, 32))
+
+    with pytest.raises(ValueError) as ex:
+        x.get_input_dim(prev_dim, "conv2d")
