@@ -57,6 +57,9 @@ class MaxPool2D:
         if stride is not None and not (isinstance(stride, int) or
             isinstance(stride, tuple)):
                 raise ValueError("Please provide a valid stride")
+        
+        if stride is None:
+            stride = kernel_size
 
         # Checking the padding,  it is an optional filed
         if padding is not None and not (isinstance(padding, int) or
