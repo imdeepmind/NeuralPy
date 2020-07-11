@@ -44,7 +44,6 @@ class AvgPool2D:
                                 otherwise attr:kernel_size will be used
         """
         # Checking the kernel_size field
-        # Checking the kernel_size field
         if not isinstance(kernel_size, (int, tuple)):
             raise ValueError("Please provide a valid kernel_size")
 
