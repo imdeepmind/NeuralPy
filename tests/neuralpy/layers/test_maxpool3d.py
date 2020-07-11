@@ -1,11 +1,11 @@
 import pytest
-from torch.nn import MaxPool3d as _MaxPool3d
-from neuralpy.layers import MaxPool3d
+from torch.nn import MaxPool3d as _MaxPool3D
+from neuralpy.layers import MaxPool3D
 
 
-def test_maxpool3d_should_throws_type_error():
+def test_MaxPool3D_should_throws_type_error():
     with pytest.raises(TypeError) as ex:
-        x = MaxPool3d()
+        x = MaxPool3D()
 
 
 @pytest.mark.parametrize(
@@ -21,11 +21,11 @@ def test_maxpool3d_should_throws_type_error():
         (False, 12, (2,2,2), 0.9, 3, 2.1, True)
     ]
 )
-def test_maxpool3d_throws_value_error(
+def test_MaxPool3D_throws_value_error(
         kernel_size, stride, padding, dilation,
         return_indices, ceil_mode, name):
             with pytest.raises(ValueError) as ex:
-                x = MaxPool3d(
+                x = MaxPool3D(
                         kernel_size=kernel_size, stride=stride,
                         padding=padding, dilation=dilation,
                         return_indices=return_indices,
@@ -54,11 +54,11 @@ names = [None, 'Test']
     for ceil_mode in ceil_modes
     for name in names]
 )
-def test_maxpool3d_get_layer_method(
+def test_MaxPool3D_get_layer_method(
     kernel_size, stride, padding, dilation,
     return_indices, ceil_mode, name):
 
-        x = MaxPool3d(
+        x = MaxPool3D(
                 kernel_size=kernel_size, stride=stride,
                 padding=padding, dilation=dilation,
                 return_indices=return_indices,
@@ -73,7 +73,7 @@ def test_maxpool3d_get_layer_method(
 
         assert details['name'] == name
 
-        assert issubclass(details['layer'], _MaxPool3d) == True
+        assert issubclass(details['layer'], _MaxPool3D) == True
 
         assert isinstance(
                 details['keyword_arguments'], dict) == True

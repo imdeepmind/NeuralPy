@@ -49,7 +49,7 @@ class MaxPool2D:
         """
 
         # Checking the kernel_size field
-        if kernel_size is not None and not isinstance(kernel_size, (int, tuple)):
+        if not isinstance(kernel_size, (int, tuple)):
             raise ValueError("Please provide a valid kernel_size")
 
         if isinstance(kernel_size, tuple):
@@ -74,7 +74,7 @@ class MaxPool2D:
             stride = kernel_size
 
         # Checking the padding field
-        if padding is not None and not isinstance(padding, (int, tuple)):
+        if not isinstance(padding, (int, tuple)):
             raise ValueError("Please provide a valid padding")
 
         if isinstance(padding, tuple):
@@ -85,7 +85,7 @@ class MaxPool2D:
                 raise ValueError("Please provide a valid padding")
 
         # Checking the dilation field
-        if dilation is not None and not isinstance(dilation, (int, tuple)):
+        if not isinstance(dilation, (int, tuple)):
             raise ValueError("Please provide a valid dilation")
 
         if isinstance(dilation, tuple):
@@ -96,12 +96,12 @@ class MaxPool2D:
                 raise ValueError("Please provide a valid dilation")
 
         # Checking the return_indices, it is an optional filed
-        if return_indices and not isinstance(return_indices, bool):
+        if  not isinstance(return_indices, bool):
             raise ValueError(
                 "Please provide a valid value for return_indices")
 
         # Checking the ceil_mode, it is an optional filed
-        if ceil_mode and not isinstance(ceil_mode, bool):
+        if not isinstance(ceil_mode, bool):
             raise ValueError(
                 "Please provide a valid value for ceil_mode")
 
