@@ -14,15 +14,20 @@ class AvgPool1D:
             kernel_size: (Int | Tuple) Kernel size of the layer
                 stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
                         number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both 
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
                             sides for padding number of points
-                ceil_mode: (Bool) when True, will use ceil instead of floor to compute the output shape
-                count_include_pad: (Bool) when True, will include the zero-padding in the averaging calculation
-                divisor_override: (Bool) if specified, it will be used as divisor, otherwise attr:kernel_size will be used
+                ceil_mode: (Bool) when True, will use ceil instead of floor to compute
+                            the output shape
+                count_include_pad: (Bool) when True, will include the zero-padding
+                                in the averaging calculation
+                divisor_override: (Bool) if specified, it will be used as divisor,
+                                    otherwise attr:kernel_size will be used
 
     """
+    # pylint: disable=too-many-branches
 
-    def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, name=None):
+    def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False,
+                 count_include_pad=True, name=None):
         """
             __init__ method for AvgPool1D
 
@@ -30,44 +35,41 @@ class AvgPool1D:
                 kernel_size: (Int | Tuple) Kernel size of the layer
                 stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
                         number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both 
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
                             sides for padding number of points
-                ceil_mode: (Bool) when True, will use ceil instead of floor to compute the output shape
-                count_include_pad: (Bool) when True, will include the zero-padding in the averaging calculation
-                divisor_override: (Bool) if specified, it will be used as divisor, otherwise attr:kernel_size will be used
+                ceil_mode: (Bool) when True, will use ceil instead of floor to compute the
+                           output shape
+                count_include_pad: (Bool) when True, will include the zero-padding in the
+                                    averaging calculation
+                divisor_override: (Bool) if specified, it will be used as divisor,
+                                    otherwise attr:kernel_size will be used
 
         """
         # Checking the kernel_size field
-        if not kernel_size or not (
-            isinstance(kernel_size, int) or isinstance(kernel_size, tuple)
-        ):
+        if not isinstance(kernel_size, (int, tuple)):
             raise ValueError("Please provide a valid kernel_size")
 
         if isinstance(kernel_size, tuple):
-            if isinstance(kernel_size[0], int):
+            if not isinstance(kernel_size[0], int):
                 raise ValueError("Please provide a valid kernel_size")
 
         # Checking the stride field
-        if stride is not None and not (
-            isinstance(stride, int) or isinstance(stride, tuple)
-        ):
+        if stride is not None and not isinstance(stride, (int, tuple)):
             raise ValueError("Please provide a valid stride")
 
         if isinstance(stride, tuple):
-            if isinstance(stride[0], int):
+            if not isinstance(stride[0], int):
                 raise ValueError("Please provide a valid stride")
 
         if stride is None:
             stride = kernel_size
 
         # Checking the padding field
-        if padding is not None and not (
-            isinstance(padding, int) or isinstance(padding, tuple)
-        ):
+        if not isinstance(padding, (int, tuple)):
             raise ValueError("Please provide a valid padding")
 
         if isinstance(padding, tuple):
-            if isinstance(padding[0], int):
+            if not isinstance(padding[0], int):
                 raise ValueError("Please provide a valid padding")
 
         # Checking ceil_mode
@@ -92,33 +94,35 @@ class AvgPool1D:
 
         self.__name = name
 
+        self.__prev_layer_data = None
+
     def __get_layer_details(self):
         depth, width = self.__prev_layer_data
 
         # Getting the kernel_size
-        k1 = 0
+        kernel_1 = 0
         if isinstance(self.__kernel_size, int):
-            k1 = self.__kernel_size
+            kernel_1 = self.__kernel_size
         else:
-            k1 = self.__kernel_size
+            kernel_1 = self.__kernel_size
 
         # Getting the padding values
-        p1 = 0
+        padding_1 = 0
         if isinstance(self.__padding, int):
-            p1 = self.__padding
+            padding_1 = self.__padding
         else:
-            p1 = self.__padding
+            padding_1 = self.__padding
 
         # Getting the stride values
-        s1 = 0
+        stride_1 = 0
         if isinstance(self.__stride, int):
-            s1 = self.__stride
+            stride_1 = self.__stride
         else:
-            s1 = self.__stride
+            stride_1 = self.__stride
 
-        w1 = ((width + 2 * p1 - k1) // s1) + 1
+        dim_1 = ((width + 2 * padding_1 - kernel_1) // stride_1) + 1
 
-        return (depth, depth * w1, (depth, w1))
+        return (depth, depth * dim_1, (depth, dim_1))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
