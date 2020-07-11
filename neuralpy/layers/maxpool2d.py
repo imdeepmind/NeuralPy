@@ -27,7 +27,7 @@ class MaxPool2D:
     def __init__(
             self, kernel_size, stride=None, padding=0, dilation=1,
             return_indices=False, ceil_mode=False, name=None
-            ):
+    ):
         """
             __init__ method for MaxPool2d
 
@@ -48,28 +48,52 @@ class MaxPool2D:
                 automatically calculates a unique name for the layer
         """
 
-        # Checking the kernel_size
-        if not kernel_size or not (isinstance(kernel_size, int) or
-            isinstance(kernel_size, tuple)):
+        # Checking the kernel_size field
+        if kernel_size is not None and not isinstance(kernel_size, (int, tuple)):
+            raise ValueError("Please provide a valid kernel_size")
+
+        if isinstance(kernel_size, tuple):
+            if not isinstance(kernel_size[0], int):
                 raise ValueError("Please provide a valid kernel_size")
 
-        # Checking the stride
-        if stride is not None and not (isinstance(stride, int) or
-            isinstance(stride, tuple)):
+            if not isinstance(kernel_size[1], int):
+                raise ValueError("Please provide a valid kernel_size")
+
+        # Checking the stride field
+        if stride is not None and not isinstance(stride, (int, tuple)):
+            raise ValueError("Please provide a valid stride")
+
+        if isinstance(stride, tuple):
+            if not isinstance(stride[0], int):
                 raise ValueError("Please provide a valid stride")
-        
+
+            if not isinstance(stride[1], int):
+                raise ValueError("Please provide a valid stride")
+
         if stride is None:
             stride = kernel_size
 
-        # Checking the padding,  it is an optional filed
-        if padding is not None and not (isinstance(padding, int) or
-            isinstance(padding, tuple)):
+        # Checking the padding field
+        if padding is not None and not isinstance(padding, (int, tuple)):
+            raise ValueError("Please provide a valid padding")
+
+        if isinstance(padding, tuple):
+            if not isinstance(padding[0], int):
                 raise ValueError("Please provide a valid padding")
 
-        # Checking the dilation, it is an optional filed
-        if dilation and not isinstance(dilation, int):
-            raise ValueError(
-                "Please provide a valid value for dialtion")
+            if not isinstance(padding[1], int):
+                raise ValueError("Please provide a valid padding")
+
+        # Checking the dilation field
+        if dilation is not None and not isinstance(dilation, (int, tuple)):
+            raise ValueError("Please provide a valid dilation")
+
+        if isinstance(dilation, tuple):
+            if not isinstance(dilation[0], int):
+                raise ValueError("Please provide a valid dilation")
+
+            if not isinstance(dilation[1], int):
+                raise ValueError("Please provide a valid dilation")
 
         # Checking the return_indices, it is an optional filed
         if return_indices and not isinstance(return_indices, bool):
@@ -95,34 +119,36 @@ class MaxPool2D:
         self.__ceil_mode = ceil_mode
         self.__name = name
 
+        self.__prev_layer_data = None
+
     def __get_layer_details(self):
         depth, width, height = self.__prev_layer_data
 
         # Getting the kernel_size
-        k1 = k2 = 0
+        kernel_1 = kernel_2 = 0
         if isinstance(self.__kernel_size, int):
-            k1 = k2 = self.__kernel_size
+            kernel_1 = kernel_2 = self.__kernel_size
         else:
-            k1, k2 = self.__kernel_size
+            kernel_1, kernel_2 = self.__kernel_size
 
         # Getting the padding values
-        p1 = p2 = 0
+        padding_1 = padding_2 = 0
         if isinstance(self.__padding, int):
-            p1 = p2 = self.__padding
+            padding_1 = padding_2 = self.__padding
         else:
-            p1, p2 = self.__padding
+            padding_1, padding_2 = self.__padding
 
         # Getting the stride values
-        s1 = s2 = 0
+        stride_1 = stride_2 = 0
         if isinstance(self.__stride, int):
-            s1 = s2 = self.__stride
+            stride_1 = stride_2 = self.__stride
         else:
-            s1, s2 = self.__stride
+            stride_1, stride_2 = self.__stride
 
-        w1 = ((width + 2 * p1 - k1) // s1) + 1
-        w2 = ((height + 2 * p2 - k2) // s2) + 1
+        dim_1 = ((width + 2 * padding_1 - kernel_1) // stride_1) + 1
+        dim_2 = ((height + 2 * padding_2 - kernel_2) // stride_2) + 1
 
-        return (depth, depth * w1 * w2, (depth, w1, w2))
+        return (depth, depth * dim_1 * dim_2, (depth, dim_1, dim_2))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -151,11 +177,11 @@ class MaxPool2D:
             'type': 'MaxPool2D',
             'layer': _MaxPool2d,
             'keyword_arguments': {
-                    'kernel_size': self.__kernel_size,
-                    'stride': self.__stride,
-                    'padding': self.__padding,
-                    'dilation': self.__dilation,
-                    'return_indices': self.__return_indices,
-                    'ceil_mode': self.__ceil_mode
+                'kernel_size': self.__kernel_size,
+                'stride': self.__stride,
+                'padding': self.__padding,
+                'dilation': self.__dilation,
+                'return_indices': self.__return_indices,
+                'ceil_mode': self.__ceil_mode
             }
         }
