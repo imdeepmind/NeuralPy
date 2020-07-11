@@ -4,7 +4,7 @@ from collections import OrderedDict
 import torch
 
 from .model import Model
-from .model_helper import (is_valid_layer, build_layer_from_dict)
+from .model_helper import build_layer_from_dict
 
 class Sequential(Model):
     """
@@ -49,10 +49,6 @@ class Sequential(Model):
         if self.__build:
             raise Exception(
                 "You have built this model already, you can not make any changes in this model")
-
-        # Layer verification using the method is_valid_layer
-        # if not is_valid_layer(layer):
-        #     raise ValueError("Please provide a valid neuralpy layer")
 
         # Finally adding the layer for layers array
         self.__layers.append(layer)
