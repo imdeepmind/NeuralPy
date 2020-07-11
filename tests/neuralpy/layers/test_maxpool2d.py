@@ -1,43 +1,67 @@
 import pytest
-from torch.nn import MaxPool2d as _MaxPool2d
-from neuralpy.layers import MaxPool2d
+from torch.nn import MaxPool2d as _MaxPool2D
+from neuralpy.layers import MaxPool2D
 
 
-def test_maxpool2d_should_throws_type_error():
+def test_MaxPool2D_should_throws_type_error():
     with pytest.raises(TypeError) as ex:
-        x = MaxPool2d()
+        x = MaxPool2D()
 
 
 @pytest.mark.parametrize(
     'kernel_size, stride, padding, dilation, return_indices, \
     ceil_mode, name',
     [
-        (1, '', 0.8, False, 2, 3.6, True),
-        ((2,2), '', 0.2, True, 3, 2.4, False),
-        (1, 0.2, '', False, 3, 3.4, True),
-        (1, (1,1), '', False, 4, 2.2, True),
-        (True, '', 9, 0.9, 3, 4.3, False),
-        (2, False, '', 0.9, 1, 3.1, True),
-        (False, 12, (2,2), 0.9, 3, 2.1, True)
+        # Checking kernel size validation
+        ("invalid", 3, 3, 3,  False, False, "test"),
+        (("", 3), 3, 3, 3,  False, False, "test"),
+        ((3, ""), 3, 3, 3,  False, False, "test"),
+
+        # Checking stride validation
+        ((3, 3), "invalid", 3, 3,  False, False, "test"),
+        ((3, 3), ("", 3), 3, 3,  False, False, "test"),
+        ((3, 3), (3, ""), 3, 3,  False, False, "test"),
+
+        # Checking padding validation
+        ((3, 3), (3, 3), "invalid", 3,  False, False, "test"),
+        ((3, 3), (3, 3), ("", 3), 3,  False, False, "test"),
+        ((3, 3), (3, 3), (3, ""), 3,  False, False, "test"),
+
+        # Checking dilation validation
+        ((3, 3), (3, 3), (3, 3), "invalid",  False, False, "test"),
+        ((3, 3), (3, 3), (3, 3), ("", 3), False, False, "test"),
+        ((3, 3), (3, 3), (3, 3), (3, ""), False, False, "test"),
+
+        # Checking return indices validation
+        ((3, 3), (3, 3), (3, 3), (3, 3), "invalid", False, "test"),
+        ((3, 3), (3, 3), (3, 3), (3, 3), 12.5, False, "test"),
+
+        # Checking ceil mode validation
+        ((3, 3), (3, 3), (3, 3), (3, 3), False, "test", "test"),
+        ((3, 3), (3, 3), (3, 3), (3, 3), False, 23.4, "test"),
+
+        # Checking name validation
+        ((3, 3), (3, 3), (3, 3), (3, 3), False, False, False),
+        ((3, 3), (3, 3), (3, 3), (3, 3), False, False, 12),
     ]
 )
-def test_maxpool2d_throws_value_error(
+def test_MaxPool2D_throws_value_error(
     kernel_size, stride, padding, dilation,
     return_indices, ceil_mode, name):
         with pytest.raises(ValueError) as ex:
-            x = MaxPool2d(
+            x = MaxPool2D(
                     kernel_size=kernel_size, stride=stride,
                     padding=padding, dilation=dilation,
                     return_indices=return_indices,
                     ceil_mode=ceil_mode, name=name)
 
 # Possible values
-kernel_sizes = [1, 3, (1,1)]
-strides = [2, 1, (2,2)]
-paddings = [1, 0, (1,1)]
-dilations = [1, 3]
-return_indicess = [True, False]
-ceil_modes = [False, True]
+kernel_sizes = [3, (1,1)]
+strides = [2, (2,2), None]
+paddings = [1, (1,1)]
+dilations = [1]
+return_indicess = [False]
+ceil_modes = [True]
 names = [None, 'Test']
 
 
@@ -54,12 +78,12 @@ names = [None, 'Test']
     for ceil_mode in ceil_modes
     for name in names]
 )
-def test_maxpool2d_get_layer_method(
+def test_MaxPool2D_get_layer_method(
     kernel_size, stride, padding, dilation,
     return_indices, ceil_mode, name):
 
 
-        x = MaxPool2d(
+        x = MaxPool2D(
                 kernel_size=kernel_size, stride=stride,
                 padding=padding, dilation=dilation,
                 return_indices=return_indices,
@@ -75,14 +99,17 @@ def test_maxpool2d_get_layer_method(
 
         assert details['name'] == name
 
-        assert issubclass(details['layer'], _MaxPool2d) == True
+        assert issubclass(details['layer'], _MaxPool2D) == True
 
         assert isinstance(
                 details['keyword_arguments'], dict) == True
 
         assert details['keyword_arguments']['kernel_size'] == kernel_size
 
-        assert details['keyword_arguments']['stride'] == stride
+        if stride is None:
+            assert details['keyword_arguments']['stride'] == kernel_size
+        else:    
+            assert details['keyword_arguments']['stride'] == stride
 
         assert details['keyword_arguments']['padding'] == padding
 
