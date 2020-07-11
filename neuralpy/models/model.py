@@ -4,9 +4,7 @@ import types
 import torch
 import numpy as np
 
-from .model_helper import (is_valid_optimizer,
-                           is_valid_loss_function,
-                           build_optimizer_from_dict,
+from .model_helper import (build_optimizer_from_dict,
                            build_loss_function_from_dict,
                            build_history_object,
                            calculate_accuracy,
@@ -134,15 +132,6 @@ class Model:
                 metrics: ([String]) Metrics that will be evaluated by the model.
                     Currently only supports "accuracy".
         """
-
-        # Checking the optimizer using the method is_valid_optimizer
-        if not is_valid_optimizer(optimizer):
-            raise ValueError("Please provide a value neuralpy optimizer")
-
-        # Checking the loss_function using the method is_valid_loss_function
-        if not is_valid_loss_function(loss_function):
-            raise ValueError("Please provide a value neuralpy loss function")
-
         if metrics and not isinstance(metrics, list):
             raise ValueError("Please provide a valid metrics")
 
