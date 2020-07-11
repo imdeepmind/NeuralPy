@@ -12,13 +12,33 @@ def test_MaxPool1D_should_throws_type_error():
     'kernel_size, stride, padding, dilation, return_indices, \
     ceil_mode, name',
     [
-        (1, '', 0.8, False, 2, 3.6, True),
-        (2, '', 0.2, True, 3, 2.4, False),
-        (1, 0.2, '', False, 3, 3.4, True),
-        (1, 0.9, '', False, 4, 2.2, True),
-        (True, '', 9, 0.9, 3, 4.3, False),
-        (2, False, '', 0.9, 1, 3.1, True),
-        (False, 12, '', 0.9, 3, 2.1, True)
+        # Checking kernel size validation
+        ("invalid", 3, 3, 3,  False, False, "test"),
+        (("",), 3, 3, 3,  False, False, "test"),
+
+        # Checking stride validation
+        ((3,), "invalid", 3, 3,  False, False, "test"),
+        ((3,), ("",), 3, 3,  False, False, "test"),
+
+        # Checking padding validation
+        ((3,), (3,), "invalid", 3,  False, False, "test"),
+        ((3,), (3,), ("",), 3,  False, False, "test"),
+
+        # Checking dilation validation
+        ((3,), (3,), (3,), "invalid", False, False, "test"),
+        ((3,), (3,), (3,), ("",), False, False, "test"),
+
+        # Checking return indices validation
+        ((3,), (3,), (3,), (3,), "invalid", False, "test"),
+        ((3,), (3,), (3,), (3,), 12.5, False, "test"),
+
+        # Checking ceil mode validation
+        ((3,), (3,), (3,), (3,), False, "test", "test"),
+        ((3,), (3,), (3,), (3,), False, 23.4, "test"),
+
+        # Checking name validation
+        ((3,), (3,), (3,), (3,), False, False, False),
+        ((3,), (3,), (3,), (3,), False, False, 12),
     ]
 )
 def test_MaxPool1D_throws_value_error(
@@ -32,12 +52,12 @@ def test_MaxPool1D_throws_value_error(
                     ceil_mode=ceil_mode, name=name)
 
 # Possible values
-kernel_sizes = [1, 3]
-strides = [2, 1]
-paddings = [1, 0]
-dilations = [1, 3]
-return_indicess = [True, False]
-ceil_modes = [False, True]
+kernel_sizes = [3, (1,)]
+strides = [2, (2,), None]
+paddings = [1, (1,)]
+dilations = [1]
+return_indicess = [False]
+ceil_modes = [True]
 names = [None, 'Test']
 
 
@@ -58,15 +78,17 @@ def test_MaxPool1D_get_layer_method(
     kernel_size, stride, padding, dilation,
     return_indices, ceil_mode, name):
 
+
         x = MaxPool1D(
                 kernel_size=kernel_size, stride=stride,
                 padding=padding, dilation=dilation,
                 return_indices=return_indices,
-                ceil_mode=ceil_mode, name=name)
+                ceil_mode=ceil_mode, name=name
+        )
 
         prev_dim = (3, 6, (6, 18) )
         layer_details = x.get_input_dim(prev_dim, "conv1d")
-        
+
         details = x.get_layer()
 
         assert isinstance(details, dict) == True
@@ -80,13 +102,15 @@ def test_MaxPool1D_get_layer_method(
 
         assert details['keyword_arguments']['kernel_size'] == kernel_size
 
-        assert details['keyword_arguments']['stride'] == stride
+        if stride is None:
+            assert details['keyword_arguments']['stride'] == kernel_size
+        else:    
+            assert details['keyword_arguments']['stride'] == stride
 
         assert details['keyword_arguments']['padding'] == padding
 
         assert details['keyword_arguments']['dilation'] == dilation
 
-        assert details[
-                'keyword_arguments']['return_indices'] == return_indices
+        assert details['keyword_arguments']['return_indices'] == return_indices
 
         assert details['keyword_arguments']['ceil_mode'] == ceil_mode

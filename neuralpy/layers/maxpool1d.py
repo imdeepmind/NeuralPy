@@ -118,21 +118,21 @@ class MaxPool1D:
         if isinstance(self.__kernel_size, int):
             kernel_1 = self.__kernel_size
         else:
-            kernel_1 = self.__kernel_size
+            kernel_1, = self.__kernel_size
 
         # Getting the padding values
         padding_1 = 0
         if isinstance(self.__padding, int):
             padding_1 = self.__padding
         else:
-            padding_1 = self.__padding
+            padding_1, = self.__padding
 
         # Getting the stride values
         stride_1 = 0
         if isinstance(self.__stride, int):
             stride_1 = self.__stride
         else:
-            stride_1 = self.__stride
+            stride_1, = self.__stride
 
         dim_1 = ((width + 2 * padding_1 - kernel_1) // stride_1) + 1
 
