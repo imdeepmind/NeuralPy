@@ -57,5 +57,21 @@ model.add(Dense(n_nodes=10, bias=True, name="Output Layer"))
 
 ## Other Layers
 
+Other utility layers used in a variety of models.
+
 ### Flatten Layer
+
+```python
+neuralpy.layers.Flatten(start_dim=1, end_dim=-1, name=None)
+```
+
+Flattens the output from a layer. Usually used after Conv layers.
+
+To learn more about Dense layers, please check [PyTorch documentation](https://pytorch.org/docs/stable/nn.html?highlight=flatten#torch.nn.Flatten)
+
+Supported Arguments:
+
+- `start_dim=1`: (Integer) Start dim for flatten
+- `end_dim=-1`: (Integer) End dim for flatten
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
 

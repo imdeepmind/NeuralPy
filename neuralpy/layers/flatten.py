@@ -5,23 +5,28 @@ from torch.nn import Flatten as _Flatten
 
 class Flatten:
     """
-        Flattens a contiguous range of dims into a tensor
+        Flattens the output from a layer. Usually used after Conv layers.
 
         To learn more about Dense layers, please check PyTorch
         documentation https://pytorch.org/docs/stable/nn.html?highlight=flatten#torch.nn.Flatten
 
         Supported Arguments:
-            start_dim: (Integer) first dim to flatten (default = 1)
-            end_dim: (Integer)  last dim to flatten (default = -1)
+            start_dim=1: (Integer) Start dim for flatten
+            end_dim=-1: (Integer) End dim for flatten
+            name=None: (String) Name of the layer, if not provided then 
+                                automatically calculates a unique name 
+                                for the layer
     """
     def __init__(self, start_dim=1, end_dim=-1, name=None):
         """
             __init__ method for Flatten
 
             Supported Arguments:
-                start_dim: (Integer) first dim to flatten (default = 1)
-                end_dim: (Integer)  last dim to flatten (default = -1)
-
+                start_dim=1: (Integer) Start dim for flatten
+                end_dim=-1: (Integer) End dim for flatten
+                name=None: (String) Name of the layer, if not provided then 
+                                    automatically calculates a unique name 
+                                    for the layer
         """
         # Checking start_dim
         if start_dim and not(isinstance(start_dim, int)):
