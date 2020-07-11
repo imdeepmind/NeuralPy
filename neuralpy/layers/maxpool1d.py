@@ -3,7 +3,7 @@
 from torch.nn import MaxPool1d as _MaxPool1d
 
 
-class MaxPool1d:
+class MaxPool1D:
     """
         MaxPool1d Applies a 1D max pooling over an input
         To learn more about MaxPool1d, please check pytorch

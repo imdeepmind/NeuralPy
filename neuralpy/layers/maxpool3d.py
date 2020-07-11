@@ -3,7 +3,7 @@
 from torch.nn import MaxPool3d as _MaxPool3d
 
 
-class MaxPool3d:
+class MaxPool3D:
     """
         MaxPool3d Applies a 3D max pooling over an input
         To learn more about MaxPool3d, please check pytorch
