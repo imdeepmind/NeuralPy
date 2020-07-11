@@ -8,63 +8,6 @@ def generate_layer_name(layer_type, index):
     # Generating a unique name for the layer
     return f"{layer_type.lower()}_layer_{index+1}"
 
-
-def is_valid_layer(layer):
-    """
-        Check if layer is valid for not
-    """
-    # if the layer is none, returning False
-    if not layer:
-        return False
-
-    try:
-        # Calling the get_layer method to details of the layer
-        layer_details = layer.get_layer()
-
-        # Checking the layer_details, it should return a dict
-        if not isinstance(layer_details, dict):
-            return False
-
-        # Here im checking all the keys of object returned from the get_layer method
-        layer_details_info = layer_details["layer_details"]
-
-        layer_name = layer_details["name"]
-        layer_type = layer_details["type"]
-
-        layer_arguments = layer_details["keyword_arguments"]
-        layer_function_ref = layer_details["layer"]
-
-        # The layer_details should be tuple with all the information for the next layer
-        if layer_details_info and not isinstance(layer_details_info, tuple):
-            return False
-
-        # Validating layer_name
-        if layer_name and not isinstance(layer_name, str):
-            return False
-
-        # Validating layer_type
-        if not isinstance(layer_type, str):
-            return False
-
-        # Checking the layer_arguments, it should return a dict or None
-        if layer_arguments and not isinstance(layer_arguments, dict):
-            return False
-
-        # Checking the layer_function_ref
-        if not layer_function_ref:
-            return False
-
-        # All good
-        return True
-
-    # If there is some missing architecture in the layer, then returning False
-    except AttributeError:
-        return False
-    # If the layer_details dict does not contains a key that it supposed to have
-    except KeyError:
-        return False
-
-
 def is_valid_optimizer(optimizer):
     """
         Checks if optimizer is valid or not
