@@ -27,3 +27,4 @@ from .rnn import RNN
 from .gru import GRU
 from .lstm import LSTM
 
+from .batchnorm1d import BatchNorm1d
