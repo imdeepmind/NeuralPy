@@ -80,6 +80,8 @@ class BatchNorm2d:
         """
         # based on the prev layer type, predicting the __input_shape
         # to support more layers, we need to add some more statements
+        layer_type = prev_layer_type.lower()
+
         if layer_type == "conv3d":
             self.__num_features = prev_input_dim[1]
         else:

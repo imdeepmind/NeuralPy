@@ -80,6 +80,8 @@ class BatchNorm3d:
         """
         # based on the prev layer type, predicting the __input_shape
         # to support more layers, we need to add some more statements
+        layer_type = prev_layer_type.lower()
+
         raise ValueError(
             "Unsupported previous layer, please provide your own input shape for the layer")
     
