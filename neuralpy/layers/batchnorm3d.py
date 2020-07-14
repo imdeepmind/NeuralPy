@@ -1,17 +1,16 @@
-"""BatchNorm1d layer for NeuralPy"""
+"""BatchNorm3d layer for NeuralPy"""
 
-from torch.nn import BatchNorm1d as _BatchNorm1d
+from torch.nn import BatchNorm3d as _BatchNorm3d
 
 
-class BatchNorm1d:
+class BatchNorm3d:
     """
-        Applies Batch Normalization over a 2D or 3D input 
+        Applies Batch Normalization over a 5D input
         To learn more about BatchNorm1d layers, please check PyTorch
-        documentation at https://pytorch.org/docs/stable/nn.html#batchnorm1d
+        documentation at https://pytorch.org/docs/stable/nn.html#batchnorm3d
 
         Supported Arguments:
-            num_features: (Integer) C from an expected input of size (N,C,L) or 
-                L from input of size (N,L)
+            num_features: (Integer) C from an expected input of size (N,C,D,H,W) 
             eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
             momentum: (Float) the value used for the running_mean and running_var computation.
                 Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
@@ -28,22 +27,21 @@ class BatchNorm1d:
         self, num_features, eps=1e-05, momentum=0.1, affine=True,
         track_running_status=True, name=None):
         """
-            __init__ method for BatchNorm1d
+            __init__ method for BatchNorm3d
 
             Supported Arguments:
-                num_features: (Integer) C from an expected input of size (N,C,L) or 
-                    L from input of size (N,L)
-                eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
-                momentum: (Float) the value used for the running_mean and running_var computation.
-                    Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
-                affine: (Boolean) a boolean value that when set to True,
-                    this module has learnable affine parameters. Default: True
-                track_running_status: (Boolean) a boolean value that when set to True,
-                    this module tracks the running mean and variance, and when set to False,
-                    this module does not track such statistics and always uses batch statistics 
-                    in both training and eval modes. Default: True
-                name: (String) Name of the layer, if not provided then
-                    automatically calculates a unique name for the layer
+            num_features: (Integer) C from an expected input of size (N,C,D,H,W) 
+            eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
+            momentum: (Float) the value used for the running_mean and running_var computation.
+                Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
+            affine: (Boolean) a boolean value that when set to True,
+                this module has learnable affine parameters. Default: True
+            track_running_status: (Boolean) a boolean value that when set to True,
+                this module tracks the running mean and variance, and when set to False,
+                this module does not track such statistics and always uses batch statistics 
+                in both training and eval modes. Default: True
+            name: (String) Name of the layer, if not provided then
+                automatically calculates a unique name for the layer
         """
         # Checking num_features field
         if not num_features and not isinstance(num_features, int):
@@ -82,14 +80,8 @@ class BatchNorm1d:
         """
         # based on the prev layer type, predicting the __input_shape
         # to support more layers, we need to add some more statements
-        if layer_type in (
-                "dense", "bilinear", "rnn", "gru", "lstm", "conv1d"):
-            self.__num_features = prev_input_dim[-1]
-        elif layer_type == "conv2d":
-            self.__num_features = prev_input_dim[1]
-        else:
-            raise ValueError(
-                "Unsupported previous layer, please provide your own input shape for the layer")
+        raise ValueError(
+            "Unsupported previous layer, please provide your own input shape for the layer")
     
     def get_layer(self):
         """
@@ -102,8 +94,8 @@ class BatchNorm1d:
         return{
             "layer_details": self.__num_features,
             "name": self.__name,
-            "layer": _BatchNorm1d,
-            "type": "BatchNorm1d",
+            "layer": _BatchNorm3d,
+            "type": "BatchNorm3d",
             "keyword_arguments":{
                 "num_features": self.__num_features,
                 "eps": self.__eps,
