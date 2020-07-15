@@ -1,9 +1,9 @@
 from neuralpy.models.model_helper import (
     generate_layer_name,
     build_layer_from_dict,
-    build_optimizer_from_dict, 
-    build_loss_function_from_dict, 
-    build_history_object, 
+    build_optimizer_from_dict,
+    build_loss_function_from_dict,
+    build_history_object,
     calculate_accuracy,
     print_training_progress,
     print_validation_progress
@@ -91,8 +91,9 @@ def test_build_history_object():
     assert isinstance(history_obj["batchwise"]
                       ["validation_loss"], list) == True
 
+
 def test_calculate_accuracy1():
-    y = Tensor([1,1,2,2,1]).view(-1, 1)
+    y = Tensor([1, 1, 2, 2, 1]).view(-1, 1)
     y_pred = Tensor([
         [.98, .12, .12],
         [.12, .98, .11],
@@ -105,8 +106,9 @@ def test_calculate_accuracy1():
 
     assert score == 4
 
+
 def test_calculate_accuracy2():
-    y = Tensor([1,1,2,2,1]).view(-1, 1)
+    y = Tensor([1, 1, 2, 2, 1]).view(-1, 1)
     y_pred = Tensor([
         [.98, .12, .12],
         [.12, .11, .91],
@@ -119,8 +121,10 @@ def test_calculate_accuracy2():
 
     assert score == 3
 
+
 def test_print_training_progress():
     print_training_progress(5, 10, 12, 20, 100, 20, 12)
+
 
 def test_print_validation_progress():
     print_validation_progress(.23423, 100, 43)
