@@ -36,8 +36,7 @@ class Bilinear:
         n_nodes: (Integer) Size of the output sample
         n1_features: (Integer) Size of the input sample1,
             no need for this argument layers except the initial layer.
-        n2_features: (Integer) Size of the input sample2,
-            no need for this argument layers except the initial layer
+        n2_features: (Integer) Size of the input sample2
         bias: (Boolean) If true then uses the bias, Defaults to `true`
         name: (String) Name of the layer, if not provided then
             automatically calculates a unique name for the layer
