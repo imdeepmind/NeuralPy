@@ -11,13 +11,12 @@ def test_batchnorm1d_should_throw_type_error():
 	"num_features, eps, momentum, affine, \
     track_running_status, name", 
 	[
-		(0.3, 1, "invalid", 2, 3, None),
-		(1, "invalid", False, 0.1, 0.3, 0.2),
-		(1, 0.4, False, 0.1, 3, True),
-		(1, 0.4, 0.3, 1, "invalid", False),
-		(1, 0.4, 0.3, "invalid", True, 3),
-		(1, 0.4, 0.3, False, True, ""),
-		(1, 1e-04, 0.3, True, False, ""),
+		(0.3, 1.1, 3.4, True, False, "test"),
+        (1, 1, 3.4, True, False, "test"),
+        (1, 1.1, 3, True, False, "test"),
+        (1, 1.1, 3.1, "invalid", False, "test"),
+        (1, 1.1, 3.1, True, "invalid", "test"),
+        (1, 1.1, 3.1, True, False, 1)
 	]
 )
 def test_batchnorm1d_should_throw_value_error(
@@ -59,8 +58,14 @@ def test_batchnorm1d_get_layer_method(
             num_features=num_features, eps=eps, momentum=momentum,
             affine=affine, track_running_status=track_running_status,
             name=name)
+
+        prev_dim = (3, 6, (6, 18))
         
-        prev_dim = (6,)
+        x.get_input_dim(prev_dim, "conv1d")
+
+        prev_dim = (3, 6, (6, 18, 32))
+
+        x.get_input_dim(prev_dim, "conv2d")
 
         details = x.get_layer()
 

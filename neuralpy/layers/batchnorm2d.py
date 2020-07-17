@@ -44,19 +44,19 @@ class BatchNorm2d:
                 automatically calculates a unique name for the layer
         """
         # Checking num_features field
-        if not num_features and not isinstance(num_features, int):
+        if not num_features or not isinstance(num_features, int):
             raise ValueError("Please provide a valid num_features")
         # Checking eps field
-        if eps and not isinstance(eps, float):
+        if not isinstance(eps, float):
             raise ValueError("Please provide a valid eps")
         # Checking momentum field
-        if momentum and not isinstance(momentum, float):
+        if not isinstance(momentum, float):
             raise ValueError("Please provide a valid momentum")
         # Checking affine field
-        if affine and not isinstance(affine, bool):
+        if not isinstance(affine, bool):
             raise ValueError("Please provide a valid affine")
         # Checking test_running_status field
-        if track_running_status and not isinstance(track_running_status, bool):
+        if not isinstance(track_running_status, bool):
             raise ValueError("Please provide a vlaid track_running_status")
         # Checking name field
         if name is not None and not (isinstance(name, str) and name):
@@ -79,14 +79,8 @@ class BatchNorm2d:
             No need to call this method for using NeuralPy.
         """
         # based on the prev layer type, predicting the __input_shape
-        # to support more layers, we need to add some more statements
-        layer_type = prev_layer_type.lower()
-
-        if layer_type == "conv3d":
-            self.__num_features = prev_input_dim[1]
-        else:
-            raise ValueError(
-                "Unsupported previous layer, please provide your own input shape for the layer")
+        # batchnorm2d does not need to n_input, so returning None
+        return None
     
     def get_layer(self):
         """
