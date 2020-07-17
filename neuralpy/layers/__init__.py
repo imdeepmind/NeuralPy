@@ -27,3 +27,5 @@ from .rnn import RNN
 from .gru import GRU
 from .lstm import LSTM
 
+from .embedding import Embedding
+
