@@ -31,7 +31,7 @@ class RNN:
 
 
     """
-
+    # pylint: disable=too-many-instance-attributes,too-many-arguments
     def __init__(
             self, hidden_size, num_layers=1, input_size=None,
             non_linearity='tanh', bias=True, batch_first=False,
@@ -126,7 +126,7 @@ class RNN:
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            if layer_type == "rnn" or layer_type == "embedding":
+            if layer_type in ("rnn", "embedding"):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(

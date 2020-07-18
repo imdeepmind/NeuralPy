@@ -30,7 +30,7 @@ class GRU:
 
 
     """
-
+    # pylint: disable=too-many-instance-attributes,too-many-arguments
     def __init__(
             self, hidden_size, num_layers=1, input_size=None,
             bias=True, batch_first=False, dropout=0,
@@ -118,7 +118,7 @@ class GRU:
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            if layer_type == "gru" or layer_type == "embedding":
+            if layer_type in ("gru", "embedding"):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
@@ -138,12 +138,12 @@ class GRU:
             'type': 'GRU',
             'layer': _GRU,
             "keyword_arguments": {
-                    'input_size': self.__input_size,
-                    'hidden_size': self.__hidden_size,
-                    'num_layers': self.__num_layers,
-                    'bias': self.__bias,
-                    'batch_first': self.__batch_first,
-                    'dropout': self.__dropout,
-                    'bidirectional': self.__bidirectional
+                'input_size': self.__input_size,
+                'hidden_size': self.__hidden_size,
+                'num_layers': self.__num_layers,
+                'bias': self.__bias,
+                'batch_first': self.__batch_first,
+                'dropout': self.__dropout,
+                'bidirectional': self.__bidirectional
             }
         }

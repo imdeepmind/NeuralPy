@@ -30,9 +30,9 @@ class LSTM:
 
 
     """
-
+    # pylint: disable=too-many-instance-attributes,too-many-arguments
     def __init__(
-            self, hidden_size, num_layers=1, input_size=None, 
+            self, hidden_size, num_layers=1, input_size=None,
             bias=True, batch_first=False, dropout=0,
             bidirectional=False, name=None
     ):
@@ -118,7 +118,7 @@ class LSTM:
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            if layer_type == "lstm" or layer_type == "embedding":
+            if layer_type in ("lstm", "embedding"):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
