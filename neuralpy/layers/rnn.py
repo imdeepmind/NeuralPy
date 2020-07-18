@@ -33,10 +33,10 @@ class RNN:
     """
 
     def __init__(
-            self, input_size, hidden_size, num_layers=1,
+            self, hidden_size, num_layers=1, input_size=None,
             non_linearity='tanh', bias=True, batch_first=False,
             dropout=0, bidirectional=False, name=None
-            ):
+    ):
         """
             __init__ method for RNN
 
@@ -63,19 +63,20 @@ class RNN:
         """
 
         # checking the input_size, it is a optional field
-        if not input_size or not isinstance(
+        if input_size is not None and not isinstance(
                 input_size, int) and input_size <= 0:
-                raise ValueError("Please provide a valid input_size")
+            print('here')
+            raise ValueError("Please provide a valid input_size")
 
         # checking the hidden_size
         if not hidden_size or not isinstance(
                 hidden_size, int) and hidden_size <= 0:
-                raise ValueError("Please provide a valid hidden_size")
+            raise ValueError("Please provide a valid hidden_size")
 
         # checking the num_layers
         if not num_layers or not isinstance(
                 num_layers, int) or num_layers <= 0:
-                raise ValueError("Please provide a valid num_layers")
+            raise ValueError("Please provide a valid num_layers")
 
         # checking the non_linearity, it is an optional field
         if non_linearity and not isinstance(non_linearity, str):
@@ -90,12 +91,12 @@ class RNN:
             raise ValueError("Please provide a valid batch_first")
 
         # checking the dropout, it is an optional field
-        if not dropout or not isinstance(dropout, int) and dropout < 0:
+        if not isinstance(dropout, int):
             raise ValueError("Please provide a valid dropout")
 
         # checking bidirectional, it is an optional field
         if not isinstance(bidirectional, bool):
-            raise ValueError("Please provide a valid bidirectonal")
+            raise ValueError("Please provide a valid bidirectional")
 
         # checking the name, it is an optional field
         if name is not None and not (isinstance(name, str) and name):
@@ -113,7 +114,6 @@ class RNN:
         self.__bidirectional = bidirectional
         self.__name = name
 
-
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -124,13 +124,14 @@ class RNN:
         # Checking if n_inputs is there or not, not overwriting the n_input field
         if not self.__input_size:
             layer_type = prev_layer_type.lower()
-            
+
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
             if layer_type == "rnn" or layer_type == "embedding":
                 self.__input_size = prev_input_dim[-1]
             else:
-                raise ValueError("Unsupported previos layer, please provide your own input shape for the layer")
+                raise ValueError(
+                    "Unsupported previous layer, please provide your own input shape for the layer")
 
     def get_layer(self):
         """
@@ -141,18 +142,18 @@ class RNN:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': self.__num_layers,
+            'layer_details': (self.__hidden_size, ),
             'name': self.__name,
             'type': 'RNN',
             'layer': _RNN,
             "keyword_arguments": {
-                    'input_size': self.__input_size,
-                    'hidden_size': self.__hidden_size,
-                    'num_layers': self.__num_layers,
-                    'non_linearity': self.__non_linearity,
-                    'bias': self.__bias,
-                    'batch_first': self.__batch_first,
-                    'dropout': self.__dropout,
-                    'bidirectional': self.__bidirectional
+                'input_size': self.__input_size,
+                'hidden_size': self.__hidden_size,
+                'num_layers': self.__num_layers,
+                'nonlinearity': self.__non_linearity,
+                'bias': self.__bias,
+                'batch_first': self.__batch_first,
+                'dropout': self.__dropout,
+                'bidirectional': self.__bidirectional
             }
         }
