@@ -63,13 +63,13 @@ class RNN:
         """
 
         # checking the input_size, it is a optional field
-        if input_size is not None and not isinstance(
-                input_size, int) and input_size <= 0:
+        if input_size is not None and not (isinstance(
+                input_size, int) and input_size > 0):
             raise ValueError("Please provide a valid input_size")
 
         # checking the hidden_size
         if not hidden_size or not isinstance(
-                hidden_size, int) and hidden_size <= 0:
+                hidden_size, int) or hidden_size <= 0:
             raise ValueError("Please provide a valid hidden_size")
 
         # checking the num_layers
@@ -78,7 +78,7 @@ class RNN:
             raise ValueError("Please provide a valid num_layers")
 
         # checking the non_linearity, it is an optional field
-        if non_linearity and not isinstance(non_linearity, str):
+        if non_linearity not in ("tanh", "relu"):
             raise ValueError("Please provide a valid non_linearity")
 
         # checking bias, it is an optional field
