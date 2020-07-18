@@ -108,7 +108,7 @@ class Model:
             # Predicting, so no grad
             with torch.no_grad():
                 # Feeding the full data into the model for predictions tensor
-                outputs = self.__model(X.float().to(self.__device))
+                outputs = self.__model(X.long().to(self.__device))
 
                 # saving the outputs in the predictions
                 predictions = outputs
