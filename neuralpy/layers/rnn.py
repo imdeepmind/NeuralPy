@@ -65,7 +65,6 @@ class RNN:
         # checking the input_size, it is a optional field
         if input_size is not None and not isinstance(
                 input_size, int) and input_size <= 0:
-            print('here')
             raise ValueError("Please provide a valid input_size")
 
         # checking the hidden_size
