@@ -60,13 +60,13 @@ class LSTM:
         """
 
         # checking the input_size, it is a optional field
-        if input_size is not None and not isinstance(
-                input_size, int) and input_size <= 0:
+        if input_size is not None and not (isinstance(
+                input_size, int) and input_size > 0):
             raise ValueError("Please provide a valid input_size")
 
         # checking the hidden_size
         if not hidden_size or not isinstance(
-                hidden_size, int) and hidden_size <= 0:
+                hidden_size, int) or hidden_size <= 0:
             raise ValueError("Please provide a valid hidden_size")
 
         # checking the num_layers
@@ -118,7 +118,6 @@ class LSTM:
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            print(prev_input_dim)
             if layer_type == "lstm" or layer_type == "embedding":
                 self.__input_size = prev_input_dim[-1]
             else:
@@ -139,12 +138,12 @@ class LSTM:
             'type': 'LSTM',
             'layer': _LSTM,
             "keyword_arguments": {
-                    'input_size': self.__input_size,
-                    'hidden_size': self.__hidden_size,
-                    'num_layers': self.__num_layers,
-                    'bias': self.__bias,
-                    'batch_first': self.__batch_first,
-                    'dropout': self.__dropout,
-                    'bidirectional': self.__bidirectional
+                'input_size': self.__input_size,
+                'hidden_size': self.__hidden_size,
+                'num_layers': self.__num_layers,
+                'bias': self.__bias,
+                'batch_first': self.__batch_first,
+                'dropout': self.__dropout,
+                'bidirectional': self.__bidirectional
             }
         }
