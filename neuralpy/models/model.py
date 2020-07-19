@@ -30,11 +30,11 @@ class Model:
 
         # Checking the training_device parameter and comparing it with pytorch device class
         # pylint: disable=no-member
-        if training_device and not isinstance(training_device, torch.device):
+        if training_device is not None and not isinstance(training_device, torch.device):
             raise ValueError("Please provide a valid neuralpy device class")
 
         # Validating random state
-        if random_state and not isinstance(random_state, int):
+        if random_state is not None and not isinstance(random_state, int):
             raise ValueError("Please provide a valid random state")
 
         # if force_cpu then using CPU
