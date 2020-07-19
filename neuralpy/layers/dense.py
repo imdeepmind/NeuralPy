@@ -84,7 +84,8 @@ class Dense:
                 layer_type == "avgpool3d" or
                 layer_type == "maxpool1d" or
                 layer_type == "maxpool2d" or
-                layer_type == "maxpool3d"
+                layer_type == "maxpool3d" or
+                layer_type == "batchnorm1d"
             ):
                 self.__n_inputs = prev_input_dim[1]
             else:

@@ -85,7 +85,7 @@ class Bilinear:
         if not self.__n_inputs:
             layer_type = prev_layer_type.lower()
 
-            if layer_type == "dense":
+            if layer_type == "dense" or "batchnorm1d":
                 self.__n_inputs = prev_input_dim[0]
             elif layer_type == "bilinear":
                 self.__n_inputs = prev_input_dim[0]
