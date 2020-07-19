@@ -101,7 +101,7 @@ class BatchNorm2d:
         """
         # Returning all the details of the layer
         return{
-            "layer_details": self.__num_features,
+            "layer_details": (self.__num_features,),
             "name": self.__name,
             "layer": _BatchNorm2d,
             "type": "BatchNorm2d",

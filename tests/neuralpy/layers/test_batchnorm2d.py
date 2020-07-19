@@ -69,7 +69,7 @@ def test_batchnorm2d_get_layer_method(
 
         assert isinstance(details, dict) == True
 
-        assert details["layer_details"] == num_features
+        assert details["layer_details"] == (num_features, )
 
         assert details["name"] == name
 
