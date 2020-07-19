@@ -22,6 +22,7 @@ class Model:
         self.__metrics = ["loss"]
         self.__loss_function = None
         self.__optimizer = None
+        self.__valid_metrics = ["loss", "accuracy"]
 
         # Checking the force_cpu parameter
         if not isinstance(force_cpu, bool):
@@ -30,11 +31,11 @@ class Model:
 
         # Checking the training_device parameter and comparing it with pytorch device class
         # pylint: disable=no-member
-        if training_device and not isinstance(training_device, torch.device):
+        if training_device is not None and not isinstance(training_device, torch.device):
             raise ValueError("Please provide a valid neuralpy device class")
 
         # Validating random state
-        if random_state and not isinstance(random_state, int):
+        if random_state is not None and not isinstance(random_state, int):
             raise ValueError("Please provide a valid random state")
 
         # if force_cpu then using CPU
@@ -138,6 +139,11 @@ class Model:
         # Setting metrics
         if metrics:
             self.__metrics = ["loss"] + metrics
+        else:
+            self.__metrics = ["loss"]
+        
+        if not all(item in self.__valid_metrics for item in self.__metrics):
+            raise ValueError("Please provide valid metrics")
 
         # Storing the loss function and optimizer for future use
         self.__optimizer, self.__optimizer_parameters = build_optimizer_from_dict(optimizer,
@@ -361,7 +367,7 @@ class Model:
         # Running the epochs
         for epoch in range(epochs):
             if isinstance(train_data, types.GeneratorType):
-                if not steps_per_epoch or steps_per_epoch <= 0:
+                if not isinstance(steps_per_epoch, int) or steps_per_epoch <= 0:
                     raise ValueError("Please provide a valid steps_per_epoch")
 
                 total_loss = 0
@@ -391,7 +397,7 @@ class Model:
                     if not isinstance(validation_data, types.GeneratorType):
                         raise ValueError("Please provide a valid test data")
 
-                    if not validation_steps and validation_steps <= 0:
+                    if not isinstance(validation_steps, int) or validation_steps <= 0:
                         raise ValueError(
                             "Please provide a valid validation_steps")
 
@@ -480,8 +486,6 @@ class Model:
 
             for _ in range(predict_steps):
                 data = next(predict_data)
-
-                print("len(data)", len(data))
 
                 # Calling the __predict method to get the predicts
                 temp = self.__predict(data, batch_size).numpy()
@@ -588,7 +592,6 @@ class Model:
             'loss': loss.item()
         }
 
-
     def evaluate(self, test_data, tests_steps=None, batch_size=None):
         """
             The .evaluate()method is used for evaluating models using the test dataset.
@@ -693,7 +696,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is to be stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         torch.save(self.__model, path)
@@ -705,7 +708,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         self.__model = torch.load(path)
@@ -718,7 +721,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is to be stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         torch.save(self.__model.state_dict(), path)
@@ -730,7 +733,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         if self.__model:
