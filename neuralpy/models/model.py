@@ -367,7 +367,7 @@ class Model:
         # Running the epochs
         for epoch in range(epochs):
             if isinstance(train_data, types.GeneratorType):
-                if not steps_per_epoch or steps_per_epoch <= 0:
+                if not isinstance(steps_per_epoch, int) or steps_per_epoch <= 0:
                     raise ValueError("Please provide a valid steps_per_epoch")
 
                 total_loss = 0
@@ -397,7 +397,7 @@ class Model:
                     if not isinstance(validation_data, types.GeneratorType):
                         raise ValueError("Please provide a valid test data")
 
-                    if not validation_steps and validation_steps <= 0:
+                    if not isinstance(validation_steps, int) or validation_steps <= 0:
                         raise ValueError(
                             "Please provide a valid validation_steps")
 
