@@ -588,7 +588,6 @@ class Model:
             'loss': loss.item()
         }
 
-
     def evaluate(self, test_data, tests_steps=None, batch_size=None):
         """
             The .evaluate()method is used for evaluating models using the test dataset.
