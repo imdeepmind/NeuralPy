@@ -24,9 +24,9 @@ class Embedding:
     """
 
     def __init__(
-        self, num_embeddings, embedding_dim, padding_idx=None,
-        max_norm=None, norm_type=2.0, scale_grad_by_freq=False,
-        sparse=False, name=None):
+            self, num_embeddings, embedding_dim, padding_idx=None,
+            max_norm=None, norm_type=2.0, scale_grad_by_freq=False,
+            sparse=False, name=None):
         """
             __init__ method for Embedding
             Supported Arguments:
@@ -57,12 +57,12 @@ class Embedding:
             raise ValueError("Please provide a valid padding_idx")
 
         # Checking max_norm, It is an optional field
-        if max_norm is not None and  not isinstance(max_norm, float):
+        if max_norm is not None and not isinstance(max_norm, float):
             raise ValueError("Please provide a valid max_norm")
 
         # Checking norm_type, It is an optional field
-        if not norm_type  or not isinstance(norm_type, float):
-            raise ValueError("please provide a vlaid norm_type")
+        if not norm_type or not isinstance(norm_type, float):
+            raise ValueError("please provide a valid norm_type")
 
         # Checking scale_grad_by_freq, It is an optional field
         if not isinstance(scale_grad_by_freq, bool):
@@ -88,7 +88,6 @@ class Embedding:
         self.__sparse = sparse
         self.__name = name
 
-    
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -108,11 +107,11 @@ class Embedding:
         """
         # Returning all the details of the layer
         return{
-            'layer_details': self.__embedding_dim,
+            'layer_details': (self.__embedding_dim, ),
             'name': self.__name,
             'type': 'Embedding',
             'layer': _Embedding,
-            'keyword_arguments':{
+            'keyword_arguments': {
                 'num_embeddings': self.__num_embeddings,
                 'embedding_dim': self.__embedding_dim,
                 'padding_idx': self.__padding_idx,

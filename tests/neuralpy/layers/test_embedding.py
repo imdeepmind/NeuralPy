@@ -11,14 +11,40 @@ def test_embedding_should_throw_type_error():
     "num_embeddings, embedding_dim, padding_idx, \
     max_norm, norm_type, scale_grad_by_freq, sparse, name",
     [
-        (2, 0.3, 0.2, 2.1, 1.0, False, True, None),
-        (0.2, 3, 0.2, 2.1, 1.0, False, True, None),
-        (2, 3, 2, 2.1, 1.0, "invalid", True, False),
-        (2, 3, 2, 1, 1.0, False, "invalid", "test"),
-        (2, 3, 2, 1, 0, None, False, "test"),
-        (2, 3, 2, 2.1, 0, True, None, "test"),
-        (2, 3, 2, 2.1, 0, True, False, "test"),
-        (2, 3, 2, 2.1, 1.0, False, True, ""),
+        # Checking num_embeddings validations
+        ("invalid", 80, 4, 5.6, 4.5, False, False, None),
+        (False, 80, 4, 5.6, 4.5, False, False, None),
+
+        # Checking embedding_dim validations
+        (300, "invalid", 4, 5.6, 4.5, False, False, None),
+        (300, False, 4, 5.6, 4.5, False, False, None),
+
+        # Checking padding_idx validations
+        (300, 80, "invalid", 5.6, 4.5, False, False, None),
+        (300, 80, 234.53, 5.6, 4.5, False, False, None),
+
+        # Checking max_norm validations
+        (300, 80, 4, False, 4.5, False, False, None),
+        (300, 80, 4, 5, 4.5, False, False, None),
+        (300, 80, 4, "invalid", 4.5, False, False, None),
+
+        # Checking norm_type validations
+        (300, 80, 4, 5.4, False, False, False, None),
+        (300, 80, 4, 5.4, 4, False, False, None),
+        (300, 80, 4, 5.4, "test", False, False, None),
+
+        # Checking scale_grad_by_freq validations
+        (300, 80, 4, 5.4, 5.6, 234, False, None),
+        (300, 80, 4, 5.4, 4.4, "test", False, None),
+
+        # Checking sparse validations
+        (300, 80, 4, 5.4, 4.4, False, 324, None),
+        (300, 80, 4, 5.4, 4.4, False, "test", None),
+
+        # Checking name
+        (300, 80, 4, 5.4, 4.4, False, False, False),
+        (300, 80, 4, 5.4, 4.4, False, False, ""),
+        (300, 80, 4, 5.4, 4.4, False, False, 24),
     ]
 )
 def test_embedding_should_throw_value_error(
@@ -29,6 +55,7 @@ def test_embedding_should_throw_value_error(
 
         x = Embedding(
             num_embeddings=num_embeddings, embedding_dim=embedding_dim,
+            padding_idx=padding_idx,
             max_norm=max_norm, norm_type=norm_type,
             scale_grad_by_freq=scale_grad_by_freq, sparse=sparse,
             name=name
@@ -76,7 +103,7 @@ def test_embedding_get_layer_method(
 
     assert isinstance(details, dict) == True
 
-    assert details['layer_details'] == embedding_dim
+    assert details['layer_details'] == (embedding_dim, )
 
     assert details['name'] == name
 
