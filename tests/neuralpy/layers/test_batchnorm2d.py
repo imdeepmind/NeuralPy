@@ -30,7 +30,7 @@ def test_batchnorm3d_should_throw_value_error(
         )
 
 # Possible values
-num_featuress = [1,4]
+num_featuress = [1, 4, None]
 epss = [1e-03, 1e-04]
 momentums = [0.3, 0.4]
 affines = [True, False]
@@ -61,7 +61,9 @@ def test_batchnorm2d_get_layer_method(
         
         prev_dim = (3, 6, (6, 18, 32, 32))
 
-        x.get_input_dim(prev_dim, "conv3d")
+        if num_features is None:
+
+             num_features = x.get_input_dim(prev_dim, "conv2d")
 
         details = x.get_layer()
 

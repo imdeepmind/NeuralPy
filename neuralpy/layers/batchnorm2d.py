@@ -44,7 +44,7 @@ class BatchNorm2d:
                 automatically calculates a unique name for the layer
         """
         # Checking num_features field
-        if not num_features or not isinstance(num_features, int):
+        if num_features is not None and not isinstance(num_features, int):
             raise ValueError("Please provide a valid num_features")
         # Checking eps field
         if not isinstance(eps, float):
@@ -80,8 +80,16 @@ class BatchNorm2d:
         """
         # based on the prev layer type, predicting the __input_shape
         # batchnorm2d does not need to n_input, so returning None
-        return None
-    
+        if not self.__num_features:
+            
+            layer_type = prev_layer_type.lower()
+            if layer_type in ("conv2d"):
+                self.__num_features = prev_input_dim[1]
+            else:
+                raise ValueError("Unsupported previos layer, please provide your own input shape for the layer")
+
+        return self.__num_features
+
     def get_layer(self):
         """
             This method returns the details as dict of the layer.

@@ -30,7 +30,7 @@ def test_batchnorm1d_should_throw_value_error(
         )
 
 # Possible values
-num_featuress = [1,4]
+num_featuress = [1, 4, None]
 epss = [1e-03, 1e-04]
 momentums = [0.3, 0.4]
 affines = [True, False]
@@ -60,18 +60,16 @@ def test_batchnorm1d_get_layer_method(
             name=name)
 
         prev_dim = (3, 6, (6, 18))
+
+        if num_features is None:
         
-        x.get_input_dim(prev_dim, "conv1d")
-
-        prev_dim = (3, 6, (6, 18, 32))
-
-        x.get_input_dim(prev_dim, "conv2d")
+            num_features = x.get_input_dim(prev_dim, "conv1d")
 
         details = x.get_layer()
 
         assert isinstance(details, dict) == True
 
-        assert details["layer_details"] == num_features
+        assert details["layer_details"] == (num_features,)
 
         assert details["name"] == name
 
