@@ -487,8 +487,6 @@ class Model:
             for _ in range(predict_steps):
                 data = next(predict_data)
 
-                print("len(data)", len(data))
-
                 # Calling the __predict method to get the predicts
                 temp = self.__predict(data, batch_size).numpy()
                 if predictions is not None:
@@ -698,7 +696,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is to be stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         torch.save(self.__model, path)
@@ -710,7 +708,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         self.__model = torch.load(path)
@@ -723,7 +721,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is to be stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         torch.save(self.__model.state_dict(), path)
@@ -735,7 +733,7 @@ class Model:
             Supported Parameters:
                 path: (String) Path where the model is stored
         """
-        if not path and not isinstance(path, str):
+        if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
 
         if self.__model:
