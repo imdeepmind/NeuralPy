@@ -26,6 +26,7 @@ from .maxpool3d import MaxPool3D
 from .rnn import RNN
 from .gru import GRU
 from .lstm import LSTM
+from .rnn_cell import RNNCell
 
 from .embedding import Embedding
 
