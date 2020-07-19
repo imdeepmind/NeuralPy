@@ -22,6 +22,7 @@ class Model:
         self.__metrics = ["loss"]
         self.__loss_function = None
         self.__optimizer = None
+        self.__valid_metrics = ["loss", "accuracy"]
 
         # Checking the force_cpu parameter
         if not isinstance(force_cpu, bool):
@@ -138,6 +139,11 @@ class Model:
         # Setting metrics
         if metrics:
             self.__metrics = ["loss"] + metrics
+        else:
+            self.__metrics = ["loss"]
+        
+        if not all(item in self.__valid_metrics for item in self.__metrics):
+            raise ValueError("Please provide valid metrics")
 
         # Storing the loss function and optimizer for future use
         self.__optimizer, self.__optimizer_parameters = build_optimizer_from_dict(optimizer,

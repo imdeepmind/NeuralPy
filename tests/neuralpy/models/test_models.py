@@ -40,17 +40,34 @@ def test_model():
     x1 = Model(force_cpu=False, training_device=training_device, random_state=1969)
     x2 = Model(force_cpu=False, training_device=None, random_state=1969)
     x3 = Model(force_cpu=True, training_device=None, random_state=1969)
-    
-def test_model_fit_method():
+
+def test_models_compile_method():
     model = Model()
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
 
-    model.fit(train_data=(X_train, y_train), validation_data=(
-    X_validation, y_validation), epochs=1, batch_size=32)
-
     with pytest.raises(ValueError) as ex:
-        model.fit(train_data=(X_train, y_train), validation_data=(X_validation, y_validation), epochs=1, batch_size=1024)
+        model = Model()
+        model.set_model(pytorch_model)
+
+        model.compile(optimizer=Adam(), loss_function=MSELoss(), metrics=["test"])
     
     with pytest.raises(ValueError) as ex:
-        model.fit(train_data=(X_train, y_train[:-1]), validation_data=(X_validation, y_validation), epochs=1, batch_size=1024)    
+        model = Model()
+        model.set_model(pytorch_model)
+
+        model.compile(optimizer=Adam(), loss_function=MSELoss(), metrics="test")
+    
+# def test_model_fit_method():
+#     model = Model()
+#     model.set_model(pytorch_model)
+#     model.compile(optimizer=Adam(), loss_function=MSELoss())
+
+#     model.fit(train_data=(X_train, y_train), validation_data=(
+#     X_validation, y_validation), epochs=1, batch_size=32)
+
+#     with pytest.raises(ValueError) as ex:
+#         model.fit(train_data=(X_train, y_train), validation_data=(X_validation, y_validation), epochs=1, batch_size=1024)
+    
+#     with pytest.raises(ValueError) as ex:
+#         model.fit(train_data=(X_train, y_train[:-1]), validation_data=(X_validation, y_validation), epochs=1, batch_size=1024)    
