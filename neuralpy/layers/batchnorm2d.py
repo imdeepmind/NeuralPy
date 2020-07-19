@@ -78,10 +78,12 @@ class BatchNorm2d:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # based on the prev layer type, predicting the __input_shape
-        # batchnorm2d does not need to n_input, so returning None
+        # based on the prev layer type, predicting the __num_features
+        # Checking if num_features is there or not, not overwriting the num_features field
         if not self.__num_features:
-            
+
+            # based on the prev layer type, predicting the __num_features
+            # to support more layers, we need to add some more statements
             layer_type = prev_layer_type.lower()
             if layer_type in ("conv2d"):
                 self.__num_features = prev_input_dim[1]
