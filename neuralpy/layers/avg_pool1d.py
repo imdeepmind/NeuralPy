@@ -5,7 +5,7 @@ from torch.nn import AvgPool1d as _AvgPool1d
 
 class AvgPool1D:
     """
-        Applies a 2D average pooling over an input signal composed of several input planes.
+        Applies a 1D average pooling over an input signal composed of several input planes.
 
         To learn more about Dense layers, please check PyTorch
         documentation https://pytorch.org/docs/stable/nn.html?highlight=AvgPool1D#torch.nn.AvgPool1d
