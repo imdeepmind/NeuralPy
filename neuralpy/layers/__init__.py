@@ -29,3 +29,7 @@ from .lstm import LSTM
 
 from .embedding import Embedding
 
+from .batchnorm1d import BatchNorm1d
+from .batchnorm2d import BatchNorm2d
+from .batchnorm3d import BatchNorm3d
+
