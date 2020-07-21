@@ -1,3 +1,7 @@
+---
+title: "Conv3D Layer | NeuralPy Deep Learning Library"
+description: "Applies a 3D convolution over an input signal composed of several input planes."
+---
 # Conv1D
 
 ```python
@@ -12,13 +16,13 @@ To learn more about Conv3D layers, please check PyTorch [documentation](https://
 
   - `filters`: (Integer) Size of the filter
   - `kernel_size`: (Integer | Tuple) Kernel size of the layer
-  - `input_shape`: (Tuple) A tuple with the shape in following format (input_channel, X, Y, Z). No need of this argument layers except the initial layer.
-  - `stride`: (Integer | Tuple) Stride for the conv.
-  - `padding`: (Integer | Tuple) Padding for the conv layer.
-  - `dilation`: (Integer | Tuple) Controls the spacing between the kernel elements
-  - `groups`: (Integer) Controls the connections between inputs and outputs.
-  - `bias`: (Boolean) If true then uses the bias, Defaults to `true`
-  - `name`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+  - `input_shape=None`: (Tuple) A tuple with the shape in following format (input_channel, X, Y, Z). No need of this argument layers except the initial layer.
+  - `stride=1`: (Integer | Tuple) Stride for the conv.
+  - `padding=0`: (Integer | Tuple) Padding for the conv layer.
+  - `dilation=1`: (Integer | Tuple) Controls the spacing between the kernel elements
+  - `groups=1`: (Integer) Controls the connections between inputs and outputs.
+  - `bias=True`: (Boolean) If true then uses the bias, Defaults to `true`
+  - `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
 
 ### Example Code
 
