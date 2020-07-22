@@ -27,7 +27,9 @@ class GELU:
 
         self.__name = name
 
-    def get_input_dim(self, prev_input_dim, layer_type):
+    # pylint: disable=W0613
+    @classmethod
+    def get_input_dim(cls, prev_input_dim, layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
             Here for this activation function, we dont need it
