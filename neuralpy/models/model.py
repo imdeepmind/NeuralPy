@@ -23,6 +23,9 @@ class Model:
         self.__loss_function = None
         self.__optimizer = None
         self.__valid_metrics = ["loss", "accuracy"]
+        self.__optimizer_parameters = None
+        self.__loss_function = None
+        self.__loss_function_parameters = None
 
         # Checking the force_cpu parameter
         if not isinstance(force_cpu, bool):
@@ -141,15 +144,17 @@ class Model:
             self.__metrics = ["loss"] + metrics
         else:
             self.__metrics = ["loss"]
-        
+
         if not all(item in self.__valid_metrics for item in self.__metrics):
             raise ValueError("Please provide valid metrics")
 
         # Storing the loss function and optimizer for future use
-        self.__optimizer, self.__optimizer_parameters = build_optimizer_from_dict(optimizer,
-                                                                                  self.__model.parameters())
-        self.__loss_function, self.__loss_function_parameters = build_loss_function_from_dict(
-            loss_function)
+        (self.__optimizer,
+         self.__optimizer_parameters) = build_optimizer_from_dict(optimizer,
+                                                                  self.__model.parameters())
+
+        (self.__loss_function,
+         self.__loss_function_parameters) = build_loss_function_from_dict(loss_function)
 
     # pylint: disable=too-many-arguments
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
@@ -466,8 +471,12 @@ class Model:
                         training_progress_data[f"training_{m}"] = self.__history["epochwise"][f"training_{m}"][epoch]
                         training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
 
-                    callback.callback(epochs, epoch, self.__loss_function_parameters,
-                                      self.__optimizer_parameters, training_progress_data, self.__model)
+                    callback.callback(epochs,
+                                      epoch,
+                                      self.__loss_function_parameters,
+                                      self.__optimizer_parameters,
+                                      training_progress_data,
+                                      self.__model)
 
         return self.__history
 
@@ -544,7 +553,7 @@ class Model:
 
     def __evaluate(self, X, y, batch_size=None):
         """
-            helper method for __evaluate 
+            helper method for __evaluate
 
         """
         # If batch_size is there then checking the length and comparing
@@ -614,7 +623,7 @@ class Model:
                 loss += data['loss']
                 if "accuracy" in self.__metrics:
                     accuracy += data['accuracy']
-            
+
             if "accuracy" in self.__metrics:
                 return {
                     'loss': loss / tests_steps,
@@ -624,11 +633,10 @@ class Model:
             return {
                 'loss': loss / tests_steps
             }
-            
-        else:
-            X_data, y_data = test_data
-            return self.__evaluate(X_data, y_data, batch_size)
-            
+
+        X_data, y_data = test_data
+        return self.__evaluate(X_data, y_data, batch_size)
+
     def summary(self):
         """
             The .summary() method is getting a summary of the model.
