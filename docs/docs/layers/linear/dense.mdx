@@ -1,0 +1,34 @@
+---
+title: "Dense Layer"
+metaTitle: "Dense Layer | Linear Layers | NeuralPy Deep Learning Library"
+description: "A Dense layer is a densely connected Neural Network layer. It performs a linear transformation of the input."
+---
+# Dense
+
+```python
+neuralpy.layers.Dense(n_nodes, n_inputs=None, bias=True, name=None)
+```
+
+A Dense layer is a densely connected Neural Network layer. It performs a linear transformation of the input.
+
+To learn more about Dense layers, please check [pytorch documentation](https://pytorch.org/docs/stable/nn.html?highlight=linear#torch.nn.Linear) for it.
+
+## Supported Arguments
+
+- `n_nodes`: (Integer) Size of the output sample
+- `n_inputs=None`: (Integer) Size of the input sample, no need for this argument layers except the initial layer
+- `bias=True`: (Boolean) If true then uses the bias
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+## Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+
+# Making the model
+model = Sequential()
+model.add(Dense(n_nodes=256, n_inputs=28, bias=True, name="Input Layer"))
+model.add(Dense(n_nodes=512, bias=True, name="Hidden Layer 1"))
+model.add(Dense(n_nodes=10, bias=True, name="Output Layer"))
+```

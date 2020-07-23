@@ -1,0 +1,36 @@
+---
+title: "MaxPool1D Layer"
+metaTitle: "MaxPool1D Layer | Pooling Layers | NeuralPy Deep Learning Library"
+description: "MaxPool1d Applies a 1D max pooling over an input."
+---
+# MaxPool1D
+
+```python
+neuralpy.layers.MaxPool1D(kernel_size, stride=None, padding=0, dilation=1, return_indices=False, ceil_mode=False, name=None)
+```
+
+MaxPool1D Applies a 1D max pooling over an input.
+
+To learn more about MaxPool1D layers, please check PyTorch [documentation](https://pytorch.org/docs/stable/nn.html#maxpool1d)
+
+## Supported Arguments:
+
+  - `kernel_size`: (Integer | Tuple) Kernel size of the layer
+  - `stride=None`: (Integer | Tuple) Stride for the conv.
+  - `padding=0`: (Integer | Tuple) Padding for the conv layer.
+  - `dilation=1`: (Integer | Tuple) Controls the spacing between the kernel elements
+  - `return_indices=False`: (Boolean) If True, will return the max indices along with the outputs.
+  - `ceil_mode=False`: (Boolean) When True, will use ceil instead of floor to compute the output shape
+  - `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Conv1D, MaxPool1D
+
+# Making the model
+model = Sequential()
+model.add(Conv1D(filters=8, kernel_size=3, input_shape=(1, 28), stride=1, name="first cnn"))
+model.add(MaxPool1D(kernel_size=2, stride=2, padding=0, dilation=1, return_indices=False, ceil_mode=False, name="Pool Layer"))
+```

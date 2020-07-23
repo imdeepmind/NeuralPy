@@ -30,18 +30,18 @@ class BatchNorm2d:
             __init__ method for BatchNorm2d
 
             Supported Arguments:
-            num_features: (Integer) C from an expected input of size (N,C,H,W) 
-            eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
-            momentum: (Float) the value used for the running_mean and running_var computation.
-                Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
-            affine: (Boolean) a boolean value that when set to True,
-                this module has learnable affine parameters. Default: True
-            track_running_status: (Boolean) a boolean value that when set to True,
-                this module tracks the running mean and variance, and when set to False,
-                this module does not track such statistics and always uses batch statistics 
-                in both training and eval modes. Default: True
-            name: (String) Name of the layer, if not provided then
-                automatically calculates a unique name for the layer
+                num_features: (Integer) C from an expected input of size (N,C,H,W) 
+                eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
+                momentum: (Float) the value used for the running_mean and running_var computation.
+                    Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
+                affine: (Boolean) a boolean value that when set to True,
+                    this module has learnable affine parameters. Default: True
+                track_running_status: (Boolean) a boolean value that when set to True,
+                    this module tracks the running mean and variance, and when set to False,
+                    this module does not track such statistics and always uses batch statistics 
+                    in both training and eval modes. Default: True
+                name: (String) Name of the layer, if not provided then
+                    automatically calculates a unique name for the layer
         """
         # Checking num_features field
         if num_features is not None and not isinstance(num_features, int):

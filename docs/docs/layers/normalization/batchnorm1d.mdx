@@ -1,0 +1,36 @@
+---
+title: "BatchNorm1D Layer"
+metaTitle: "BatchNorm1D Layer | Normalization Layers | NeuralPy Deep Learning Library"
+description: "Applies Batch Normalization over a 2D or 3D input."
+---
+
+# BatchNorm1D
+
+```python
+neuralpy.layers.BatchNorm1D(num_features, eps=1e-05, momentum=0.1, affine=True, track_running_status=True, name=None)
+```
+
+Applies Batch Normalization over a 2D or 3D input
+
+To learn more about BatchNorm1D layers, please check [pytorch documentation](https://pytorch.org/docs/stable/nn.html#batchnorm1d).
+
+## Supported Arguments
+
+  - `num_features`: (Integer) C from an expected input of size (N,C,L) or L from input of size (N,L)
+  - `eps=1e-05`: (Integer) A value added to the denominator for numerical stability.Default: 1e-5
+  - `momentum=0.1`: (Integer) The value used for the running_mean and running_var computation. Can be set to None for cumulative moving average(i.e. simple average).
+  - `affine=True`: (Integer) A boolean value that when set to True, this module has learnable affine parameters.
+  - `track_running_status=True`: (Boolean) A boolean value that when set to True, this module tracks the running mean and variance, and when set to False, this module does not track such statistics and always uses batch statistics in both training and eval modes.
+  - `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+## Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Conv1D, BatchNorm1D
+
+# Making the model
+model = Sequential()
+model.add(Conv1D(filters=8, kernel_size=3, input_shape=(1, 28), stride=1, name="first cnn"))
+model.add(BatchNorm1D(eps=1e-05, momentum=0.1, affine=True, track_running_status=True, name="batch norm"))
+```

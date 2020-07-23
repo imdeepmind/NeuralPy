@@ -1,0 +1,33 @@
+---
+title: "Bilinear Layer | NeuralPy Deep Learning Library"
+metaTitle: "Bilinear Layer | Linear Layers | NeuralPy Deep Learning Library"
+description: "Bilinear layer performs a bilinear transformation of the input."
+---
+# Bilinear
+
+```python
+neuralpy.layers.Bilinear(n_nodes, n1_features=None, n2_features=None, bias=True, name=None)
+```
+
+Bilinear layer performs a bilinear transformation of the input.
+
+To learn more about Bilinear layers, please check [pytorch documentation](https://pytorch.org/docs/stable/nn.html?highlight=bilinear) for it.
+
+## Supported Arguments
+
+- `n_nodes`: (Integer) Size of the output sample
+- `n1_features=None`: (Integer) Size of the input sample 1, no need for this argument layers except the initial layer
+- `n2_features=None`: (Integer) Size of the input sample 2, no need for this argument layers except the initial layer
+- `bias=True`: (Boolean) If true then uses the bias
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+## Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Bilinear
+
+# Making the model
+model = Sequential()
+model.add(Bilinear(n_nodes=256, n1_features=30, n2_features=40, bias=True, name="Input Layer"))
+```
