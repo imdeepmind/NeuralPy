@@ -118,7 +118,7 @@ class GRU:
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            if layer_type in ("gru", "embedding"):
+            if layer_type in ("gru", "embedding", "grucell"):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
