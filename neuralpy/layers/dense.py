@@ -71,9 +71,9 @@ class Dense:
             # to support more layers, we need to add some more statements
             if layer_type == "dense":
                 self.__n_inputs = prev_input_dim[0]
-            elif layer_type == "rnn" or layer_type == "gru":
-                self.__n_inputs = prev_input_dim[-1]
-            elif layer_type == "rnn" or layer_type == "lstm":
+            elif layer_type in (
+                    "rnn", "lstm", "gru",
+                    "rnncell", "lstmcell", "grucell"):
                 self.__n_inputs = prev_input_dim[-1]
             elif (
                 layer_type == 'conv1d' or

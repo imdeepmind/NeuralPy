@@ -90,4 +90,4 @@ def test_RNNCell_with_invalid_layer():
     with pytest.raises(ValueError) as ex:
         x = RNNCell(hidden_size=128, input_size=None)
 
-        x.get_input_dim((64, ), "dense")
+        x.get_input_dim((64, ), "conv1d")

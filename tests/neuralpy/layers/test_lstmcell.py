@@ -85,4 +85,4 @@ def test_LSTMCell_with_invalid_layer():
     with pytest.raises(ValueError) as ex:
         x = LSTMCell(hidden_size=128, input_size=None)
 
-        x.get_input_dim((64, ), "dense")
+        x.get_input_dim((64, ), "conv1d")
