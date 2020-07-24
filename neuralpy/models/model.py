@@ -85,7 +85,7 @@ class Model:
         predictions = torch.Tensor().to(self.__device)
 
         # Converting the input X to PyTorch tensor
-        X = torch.tensor(X)
+        X = torch.from_numpy(X)
 
         if batch_size:
             # If batch_size is there then checking the length
@@ -183,8 +183,8 @@ class Model:
 
         # Converting the data into PyTorch tensor
         # pylint: disable=not-callable,no-member
-        x_train = torch.tensor(x_train)
-        y_train = torch.tensor(y_train)
+        x_train = torch.from_numpy(x_train)
+        y_train = torch.from_numpy(y_train)
 
         # Initializing the loss and accuracy with 0
         training_loss_score = 0
@@ -268,8 +268,8 @@ class Model:
                 "Length of testing Input data and testing output data should be same")
 
         # pylint: disable=not-callable,no-member
-        x_test = torch.tensor(x_test)
-        y_test = torch.tensor(y_test)
+        x_test = torch.from_numpy(x_test)
+        y_test = torch.from_numpy(y_test)
 
         validation_loss_score = 0
         correct_val = 0
@@ -575,9 +575,9 @@ class Model:
         # Converting to tensor
         # pylint: disable=not-callable,no-member
         if self.__metrics and "accuracy" in self.__metrics:
-            y_tensor = torch.tensor(y).to(self.__device)
+            y_tensor = torch.from_numpy(y).to(self.__device)
         else:
-            y_tensor = torch.tensor(y).float().to(self.__device)
+            y_tensor = torch.from_numpy(y).float().to(self.__device)
 
         # Calculating the loss
         loss = self.__loss_function(predictions, y_tensor)
