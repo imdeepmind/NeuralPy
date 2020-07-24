@@ -1,0 +1,35 @@
+---
+title: "AlphaDropout Layer"
+metaTitle: "AlphaDropout Layer | Regularizers | NeuralPy Deep Learning Library"
+description: "Applies Alpha Dropout over the input."
+---
+
+## AlphaDropout
+
+```python
+neuralpy.regularizers.AlphaDropout(p=0.5, name=None)
+```
+
+Applies Alpha Dropout over the input.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#alphadropout) page
+
+### Supported Arguments
+
+- `p=0.5`: (Float) Probability of an element to be zeroed. The value should be between 0.0 and 1.0.
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.regularizers import AlphaDropout
+
+# Initializing the Sequential models
+model = Sequential()
+...
+...
+...
+
+model.add(AlphaDropout(p=0.5, name="MyDropoutLayer"))
+```
