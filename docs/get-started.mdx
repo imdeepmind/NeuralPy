@@ -1,0 +1,103 @@
+---
+title: "Get Started"
+metaTitle: "Get Started | NeuralPy Deep Learning Library"
+metametaDescription: "Get Started for NeuralPy Deep Learning Library."
+---
+
+# Get Started
+
+Here, in this example, we’ll create a simple linear regression model. The model accepts X (independent variable) and predicts the y(dependent variable). The model basically learns the relation between X and y.
+
+## Dataset for the model
+
+Here we’ll create some synthetic data for our model, we’ll use numpy to generate random numbers.
+
+```python
+# Importing dependencies
+import numpy as np
+
+# Random seed for numpy
+np.random.seed(1969)
+
+# Generating the data
+# Training data
+X_train = np.random.rand(100, 1) * 10
+y_train = X_train + 5 * np.random.rand(100, 1)
+
+# Validation data
+X_validation = np.random.rand(100, 1) * 10
+y_validation = X_validation + 5 * np.random.rand(100, 1)
+
+# Test data
+X_test = np.random.rand(100, 1) * 10
+y_test = X_test + 5 * np.random.rand(100, 1)
+```
+
+## Importing dependencies from NeuralPy
+
+Let’s import the dependencies from NeuralPy.
+
+Here we’ll use the Sequential model. Sequential is basically a linear stack of layers. Dense as a layer, Adam as an optimizer and MSELoss for calculating the loss.
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import MSELoss
+```
+
+## Making the model
+
+Sequential provides an easy .add() method to add layers in the sequential model. We’ll use it to build the model.
+
+```python
+# Making the model
+model = Sequential()
+
+# Adding the layer
+model.add(Dense(n_nodes=1, n_inputs=1))
+```
+
+## Building the model
+
+Once the model architecture is ready, we can build the model. This build method a PyTorch model internally.
+
+```python
+# Building the model
+model.build()
+```
+
+## Compiling the model
+
+Once the model architecture is ready, we can compile with the optimizer and loss function. NeuralPy models provide an easy compile method for that. We just need to pass the optimizer and loss function in the compile method. It also accepts a metrics parameter, for this case, we don't need it.
+
+```python
+# Compiling the model
+model.compile(optimizer=Adam(), loss_function=MSELoss())
+```
+
+## Training the model
+
+To train, we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method.
+
+```python
+model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)
+```
+
+## Predicting Results
+
+Main purpose of the model is to predict results. In NeuralPy models, there are two methods for prediction, `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
+
+```python
+# Predicting
+preds = model.predict(X=X_test, batch_size=4)
+```
+
+## Evaluating the models
+
+After training, one important step is to evaluate the model on the test dataset. To do that, we have, in NeuralPy, we have a `.evaluate()` method.
+
+```python
+# Evaluating
+ev = model.evaluate(X=X_test, y=y_test, batch_size=4)
+```
