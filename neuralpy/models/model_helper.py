@@ -8,6 +8,7 @@ def generate_layer_name(layer_type, index):
     # Generating a unique name for the layer
     return f"{layer_type.lower()}_layer_{index+1}"
 
+
 def build_layer_from_dict(layer_refs):
     """
         Builds model from layers ref and details
@@ -29,10 +30,10 @@ def build_layer_from_dict(layer_refs):
             # based on the previous layer details and type
             # the prev_layer_details is a tuple that contains all the information
             # need for the layer to predict the input shape
-            # The prev_layer_type is the type of the layer, based on it, 
+            # The prev_layer_type is the type of the layer, based on it,
             # the layers can calculate the input shape
-            # for example, in cnn, after the conv layers, when the dense layer need to do 
-            # some complicated calculations to get the input shape of the Dense layer 
+            # for example, in cnn, after the conv layers, when the dense layer need to do
+            # some complicated calculations to get the input shape of the Dense layer
             # based on the input shape, stride, padding, etc
             layer_ref.get_input_dim(prev_layer_details, prev_layer_type)
 
@@ -63,8 +64,8 @@ def build_layer_from_dict(layer_refs):
 
         # Appending the layer to layers array
         layers.append((layer_name, layer))
-        
-        if layer_details_info: 
+
+        if layer_details_info:
             prev_layer_details = layer_details_info
             prev_layer_type = layer_type
 

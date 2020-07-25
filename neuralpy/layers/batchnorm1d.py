@@ -33,12 +33,12 @@ class BatchNorm1d:
             Supported Arguments:
                 num_features: (Integer) C from an expected input of size (N,C,L) or 
                     L from input of size (N,L)
-                eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
-                momentum: (Float) the value used for the running_mean and running_var computation.
+                eps: (Float) A value added to the denominator for numerical stability.Default: 1e-5
+                momentum: (Float) The value used for the running_mean and running_var computation.
                     Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
-                affine: (Boolean) a boolean value that when set to True,
+                affine: (Boolean) A boolean value that when set to True,
                     this module has learnable affine parameters. Default: True
-                track_running_status: (Boolean) a boolean value that when set to True,
+                track_running_status: (Boolean) A boolean value that when set to True,
                     this module tracks the running mean and variance, and when set to False,
                     this module does not track such statistics and always uses batch statistics 
                     in both training and eval modes. Default: True
