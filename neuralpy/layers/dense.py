@@ -19,7 +19,7 @@ class Dense:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
-    
+
     def __init__(self, n_nodes, n_inputs=None, bias=True, name=None):
         """
             __init__ method for the Dense layer
@@ -73,8 +73,9 @@ class Dense:
                 self.__n_inputs = prev_input_dim[0]
             elif layer_type in ("rnn", "lstm", "gru", "rnncell", "lstmcell", "grucell"):
                 self.__n_inputs = prev_input_dim[-1]
-            elif layer_type in ('conv1d', 'conv2d', 'conv3d', 'avgpool1d', 'avgpool2d', "avgpool3d", "maxpool1d",
-                                "maxpool2d", "maxpool3d", "batchnorm1d", "batchnorm2d", "batchnorm3d"):
+            elif layer_type in ('conv1d', 'conv2d', 'conv3d', 'avgpool1d', 'avgpool2d',
+                                "avgpool3d", "maxpool1d", "maxpool2d", "maxpool3d", "batchnorm1d",
+                                "batchnorm2d", "batchnorm3d"):
                 self.__n_inputs = prev_input_dim[1]
             else:
                 raise ValueError(
