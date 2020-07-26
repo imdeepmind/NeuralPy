@@ -17,6 +17,7 @@ class Dropout:
             name=None: (String) Name of the layer, if not provided
                         then automatically calculates a unique name for the layer
     """
+    #pylint: disable=R1716
     def __init__(self, p=0.5, name=None):
         """
             __init__ method for Dropout class

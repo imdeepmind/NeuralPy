@@ -29,6 +29,7 @@ class SELU:
 
         self.__name = name
 
+    # pylint: disable=W0613, disable=R0201
     def get_input_dim(self, prev_input_dim, layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
