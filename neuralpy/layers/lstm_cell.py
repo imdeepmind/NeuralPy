@@ -24,7 +24,7 @@ class LSTMCell:
     def __init__(
             self, input_size, hidden_size, bias=True, name=None
         ):
-        
+
         """
             __init__ method for LSTMCell
 
@@ -46,17 +46,17 @@ class LSTMCell:
         if not hidden_size or not isinstance(
                 hidden_size, int) or hidden_size <= 0:
             raise ValueError("Please provide a valid hidden_size")
-        
+
         if not isinstance(bias, bool):
             raise ValueError("Please provide a valid bias")
 
         if name is not None and not (isinstance(name, str) and name):
             raise ValueError("Please provide a valid name")
-        
+
         self.__input_size = input_size
         self.__hidden_size = hidden_size
 
-        self.__bias  = bias
+        self.__bias = bias
         self.__name = name
 
 
@@ -93,9 +93,8 @@ class LSTMCell:
             'type': 'LSTMCell',
             'layer': _LSTMCell,
             'keyword_arguments': {
-                    'input_size': self.__input_size,
-                    'hidden_size': self.__hidden_size,
-                    'bias': self.__bias
+                'input_size': self.__input_size,
+                'hidden_size': self.__hidden_size,
+                'bias': self.__bias
             }
         }
-

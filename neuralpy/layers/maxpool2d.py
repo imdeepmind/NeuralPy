@@ -24,10 +24,10 @@ class MaxPool2D:
                 of floor to compute the output shape
     """
 
+    # pylint: disable=R0912
     def __init__(
             self, kernel_size, stride=None, padding=0, dilation=1,
-            return_indices=False, ceil_mode=False, name=None
-    ):
+            return_indices=False, ceil_mode=False, name=None):
         """
             __init__ method for MaxPool2d
 

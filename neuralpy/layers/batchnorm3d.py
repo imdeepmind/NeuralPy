@@ -10,7 +10,7 @@ class BatchNorm3d:
         documentation at https://pytorch.org/docs/stable/nn.html#batchnorm3d
 
         Supported Arguments:
-            num_features: (Integer) C from an expected input of size (N,C,D,H,W) 
+            num_features: (Integer) C from an expected input of size (N,C,D,H,W)
             eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
             momentum: (Float) the value used for the running_mean and running_var computation.
                 Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
@@ -18,19 +18,19 @@ class BatchNorm3d:
                 this module has learnable affine parameters. Default: True
             track_running_status: (Boolean) a boolean value that when set to True,
                 this module tracks the running mean and variance, and when set to False,
-                this module does not track such statistics and always uses batch statistics 
+                this module does not track such statistics and always uses batch statistics
                 in both training and eval modes. Default: True
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
     def __init__(
-        self, num_features, eps=1e-05, momentum=0.1, affine=True,
-        track_running_status=True, name=None):
+            self, num_features, eps=1e-05, momentum=0.1, affine=True,
+            track_running_status=True, name=None):
         """
             __init__ method for BatchNorm3d
 
             Supported Arguments:
-            num_features: (Integer) C from an expected input of size (N,C,D,H,W) 
+            num_features: (Integer) C from an expected input of size (N,C,D,H,W)
             eps: (Float) a value added to the denominator for numerical stability.Default: 1e-5
             momentum: (Float) the value used for the running_mean and running_var computation.
                 Can be set to None for cumulative moving average(i.e. simple average).Default: 0.1
@@ -38,7 +38,7 @@ class BatchNorm3d:
                 this module has learnable affine parameters. Default: True
             track_running_status: (Boolean) a boolean value that when set to True,
                 this module tracks the running mean and variance, and when set to False,
-                this module does not track such statistics and always uses batch statistics 
+                this module does not track such statistics and always uses batch statistics
                 in both training and eval modes. Default: True
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
@@ -64,13 +64,14 @@ class BatchNorm3d:
 
         # Storing Values
         self.__num_features = num_features
-        
+
         self.__eps = eps
         self.__momentum = momentum
         self.__affine = affine
         self.__track_running_status = track_running_status
         self.__name = name
 
+    # pylint: disable=W0612
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
@@ -83,12 +84,13 @@ class BatchNorm3d:
         if not self.__num_features:
 
             # based on the prev layer type, predicting the __num_features
-            # to support more layers, we need to add some more statements            
+            # to support more layers, we need to add some more statements
             layer_type = prev_layer_type.lower()
             if len(prev_input_dim) == 5:
                 self.__num_features = prev_input_dim[1]
             else:
-                raise ValueError("Unsupported previos layer, please provide your own input shape for the layer")
+                raise ValueError(
+                    "Unsupported previos layer, please provide your own input shape for the layer")
 
         return self.__num_features
 

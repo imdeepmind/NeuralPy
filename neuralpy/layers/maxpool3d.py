@@ -25,8 +25,8 @@ class MaxPool3D:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
-    # pylint: disable=too-many-branches
 
+    # pylint: disable=too-many-branches,too-many-statements
     def __init__(
             self, kernel_size, stride=None, padding=0, dilation=1,
             return_indices=False, ceil_mode=False, name=None

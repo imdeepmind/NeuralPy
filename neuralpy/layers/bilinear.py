@@ -2,7 +2,7 @@
 
 from torch.nn import Bilinear as _BiLinear
 
-
+# pylint: disable=duplicate-code
 class Bilinear:
     '''
     A bilinear layer is a function of two inputs x and y
@@ -90,7 +90,8 @@ class Bilinear:
             elif layer_type == "bilinear":
                 self.__n_inputs = prev_input_dim[0]
             else:
-                raise ValueError("Unsupported previous layer, please provide your own input shape for the layer")
+                raise ValueError(
+                    "Unsupported previous layer, please provide your own input shape for the layer")
 
     def get_layer(self):
         """

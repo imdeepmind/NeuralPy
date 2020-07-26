@@ -138,6 +138,7 @@ class MaxPool1D:
 
         return (depth, depth * dim_1, (depth, dim_1))
 
+    # pylint: disable=W0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.

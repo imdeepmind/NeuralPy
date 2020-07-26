@@ -12,13 +12,13 @@ class Embedding:
         Supported Arguments:
             num_embeddings: (Integer) size of the dictionary of embeddings
             embedding_dim: (Integer) the size of each embedding vector
-            padding_idx: (Integer) If given, pads the output with the 
-                embedding vector at padding_idx (initialized to zeros) 
+            padding_idx: (Integer) If given, pads the output with the
+                embedding vector at padding_idx (initialized to zeros)
                 whenever it encounters the index
-            max_norm: (Float) If given, each embedding vector with 
+            max_norm: (Float) If given, each embedding vector with
                 norm larger than max_norm is renormalized to have norm max_norm
             norm_type: (Float) The p of the p-norm to compute for the max_norm option.Default 2
-            scale_grad_by_freq: (Boolean) If given, this will scale gradients by the 
+            scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
                 inverse of frequency of the words in the mini-batch. Default False
             sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse tensor.
     """
@@ -32,13 +32,13 @@ class Embedding:
             Supported Arguments:
                 num_embeddings: (Integer) size of the dictionary of embeddings
                 embedding_dim: (Integer) the size of each embedding vector
-                padding_idx: (Integer) If given, pads the output with the 
-                    embedding vector at padding_idx (initialized to zeros) 
+                padding_idx: (Integer) If given, pads the output with the
+                    embedding vector at padding_idx (initialized to zeros)
                     whenever it encounters the index
-                max_norm: (Float) If given, each embedding vector with 
+                max_norm: (Float) If given, each embedding vector with
                     norm larger than max_norm is renormalized to have norm max_norm
                 norm_type: (Float) The p of the p-norm to compute for the max_norm option.Default 2
-                scale_grad_by_freq: (Boolean) If given, this will scale gradients by the 
+                scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
                     inverse of frequency of the words in the mini-batch. Default False
                 sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse tensor.
 
@@ -88,6 +88,7 @@ class Embedding:
         self.__sparse = sparse
         self.__name = name
 
+    # pylint: disable=W0613,R0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
