@@ -28,8 +28,7 @@ class Conv3D:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
-    # pylint: disable=too-many-instance-attributes,too-many-arguments,too-many-branches
-
+    # pylint: disable=too-many-instance-attributes,too-many-arguments,too-many-branches,too-many-statements
     def __init__(self, filters, kernel_size, input_shape=None,
                  stride=1, padding=0, dilation=1, groups=1, bias=True, name=None):
         """
