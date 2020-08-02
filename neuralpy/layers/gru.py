@@ -13,7 +13,7 @@ class GRU:
         Supported Arguments:
             input_size: (Integer) The number of expected features
                 in the input
-            hidden)size: (Integer) The number of features
+            hidden_size: (Integer) The number of features
                 in the hidden state
             num_layers: (Integer) Number of recurrent layers
             bias: (Boolean) If true then uses the bias,
@@ -27,6 +27,8 @@ class GRU:
                 equal to dropout. Default: 0
             bidirectional: (Boolean) If `true`, becomes a
                 bidirectional GRU. Default: `false`
+            name: (String) Name of the layer, if not provided then
+                automatically calculates a unique name for the layer
 
 
     """
@@ -42,7 +44,7 @@ class GRU:
             Supported Arguments:
                 input_size: (Integer) The number of expected features
                     in the input
-                hidden)size: (Integer) The number of features
+                hidden_size: (Integer) The number of features
                     in the hidden state
                 num_layers: (Integer) Number of recurrent layers
                 bias: (Boolean) If true then uses the bias,
@@ -56,6 +58,8 @@ class GRU:
                     equal to dropout. Default: 0
                 bidirectional: (Boolean) If `true`, becomes a
                     bidirectional GRU. Default: `false`
+                name: (String) Name of the layer, if not provided then
+                    automatically calculates a unique name for the layer
 
         """
 
