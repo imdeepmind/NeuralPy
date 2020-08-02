@@ -23,9 +23,10 @@ class BatchNorm3D:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
+
     def __init__(
-            self, num_features, eps=1e-05, momentum=0.1, affine=True,
-            track_running_status=True, name=None):
+            self, num_features=None, eps=1e-05, momentum=0.1, affine=True,
+            track_running_stats=True, name=None):
         """
             __init__ method for BatchNorm3d
 
@@ -56,8 +57,8 @@ class BatchNorm3D:
         if not isinstance(affine, bool):
             raise ValueError("Please provide a valid affine")
         # Checking test_running_status field
-        if not isinstance(track_running_status, bool):
-            raise ValueError("Please provide a vlaid track_running_status")
+        if not isinstance(track_running_stats, bool):
+            raise ValueError("Please provide a valid track_running_status")
         # Checking name field
         if name is not None and not (isinstance(name, str) and name):
             raise ValueError("Please provide a valid name")
@@ -68,8 +69,10 @@ class BatchNorm3D:
         self.__eps = eps
         self.__momentum = momentum
         self.__affine = affine
-        self.__track_running_status = track_running_status
+        self.__track_running_stats = track_running_stats
         self.__name = name
+
+        self.__prev_layer_details = None
 
     # pylint: disable=W0612
     def get_input_dim(self, prev_input_dim, prev_layer_type):
@@ -86,11 +89,12 @@ class BatchNorm3D:
             # based on the prev layer type, predicting the __num_features
             # to support more layers, we need to add some more statements
             layer_type = prev_layer_type.lower()
-            if len(prev_input_dim) == 5:
-                self.__num_features = prev_input_dim[1]
+            if layer_type == 'conv3d':
+                self.__num_features = prev_input_dim[2][0]
+                self.__prev_layer_details = prev_input_dim
             else:
                 raise ValueError(
-                    "Unsupported previos layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape for the layer")
 
         return self.__num_features
 
@@ -103,16 +107,15 @@ class BatchNorm3D:
         """
         # Returning all the details of the layer
         return{
-            "layer_details": (self.__num_features,),
+            "layer_details": self.__prev_layer_details,
             "name": self.__name,
             "layer": _BatchNorm3d,
             "type": "BatchNorm3d",
-            "keyword_arguments":{
+            "keyword_arguments": {
                 "num_features": self.__num_features,
                 "eps": self.__eps,
                 "momentum": self.__momentum,
                 "affine": self.__affine,
-                "track_running_status": self.__track_running_status
+                "track_running_stats": self.__track_running_stats
             }
-
         }
