@@ -72,8 +72,6 @@ class BatchNorm3D:
         self.__track_running_stats = track_running_stats
         self.__name = name
 
-        self.__prev_layer_details = None
-
     # pylint: disable=W0612
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -91,7 +89,6 @@ class BatchNorm3D:
             layer_type = prev_layer_type.lower()
             if layer_type == 'conv3d':
                 self.__num_features = prev_input_dim[2][0]
-                self.__prev_layer_details = prev_input_dim
             else:
                 raise ValueError(
                     "Unsupported previous layer, please provide your own input shape for the layer")
@@ -107,7 +104,7 @@ class BatchNorm3D:
         """
         # Returning all the details of the layer
         return{
-            "layer_details": self.__prev_layer_details,
+            "layer_details": None,
             "name": self.__name,
             "layer": _BatchNorm3d,
             "type": "BatchNorm3d",
