@@ -3,7 +3,7 @@
 from torch.nn import BatchNorm2d as _BatchNorm2d
 
 
-class BatchNorm2d:
+class BatchNorm2D:
     """
         Applies Batch Normalization over a 4D input
         To learn more about BatchNorm1d layers, please check PyTorch
