@@ -30,6 +30,6 @@ from .gru_cell import GRUCell
 
 from .embedding import Embedding
 
-from .batchnorm1d import BatchNorm1d
-from .batchnorm2d import BatchNorm2d
-from .batchnorm3d import BatchNorm3d
+from .batchnorm1d import BatchNorm1D
+from .batchnorm2d import BatchNorm2D
+from .batchnorm3d import BatchNorm3D
