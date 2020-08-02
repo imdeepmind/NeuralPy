@@ -105,7 +105,7 @@ class LSTM:
         self.__bidirectional = bidirectional
         self.__name = name
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
 

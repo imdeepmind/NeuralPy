@@ -24,10 +24,10 @@ names = ["test1", "test2"]
     [(negative_slope, name) for negative_slope in negative_slopes
                             for name in names]
 )
-def test_leaky_relu_get_input_dim_and_get_layer_method(negative_slope, name):
+def test_leaky_relu_set_input_dim_and_get_layer_method(negative_slope, name):
     x = LeakyReLU(negative_slope=negative_slope, name=name)
 
-    assert x.get_input_dim(12, "dense") == None
+    assert x.set_input_dim(12, "dense") == None
 
     details = x.get_layer()
 

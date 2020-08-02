@@ -106,7 +106,7 @@ def test_Conv3d_get_layer_method(_filters, _kernel_size, _input_shape, _stride, 
 
     if _input_shape is None:
         prev_dim = (3, 3*32*32*32, (3, 32, 32, 32))
-        x.get_input_dim(prev_dim, "Conv3d")
+        x.set_input_dim(prev_dim, "Conv3d")
 
     details = x.get_layer()
 
@@ -132,4 +132,4 @@ def test_Conv3d_get_layer_method_invlaid_layer():
     prev_dim = (3, 3*32*32*32, (3, 32, 32, 32))
 
     with pytest.raises(ValueError) as ex:
-        x.get_input_dim(prev_dim, "conv1d")
+        x.set_input_dim(prev_dim, "conv1d")

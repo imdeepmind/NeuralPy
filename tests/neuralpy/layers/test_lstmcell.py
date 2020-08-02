@@ -56,7 +56,7 @@ def test_LSTMCell_layer_get_method(
     prev_dim = (6,)
 
     if input_size is None:
-        x.get_input_dim(prev_dim, "LSTMCell")
+        x.set_input_dim(prev_dim, "LSTMCell")
     
     details = x.get_layer()
 
@@ -85,4 +85,4 @@ def test_LSTMCell_with_invalid_layer():
     with pytest.raises(ValueError) as ex:
         x = LSTMCell(hidden_size=128, input_size=None)
 
-        x.get_input_dim((64, ), "conv1d")
+        x.set_input_dim((64, ), "conv1d")

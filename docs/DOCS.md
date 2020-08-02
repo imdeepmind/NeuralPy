@@ -1040,14 +1040,14 @@ from torch.nn import Flatten as _Flatten
 ...
 ```
 
-After that, create a class with two public methods `get_input_dim` and `get_layer`. Along with that create an `__init__` method also.
+After that, create a class with two public methods `set_input_dim` and `get_layer`. Along with that create an `__init__` method also.
 
 ```python
 class Flatten:
     def __init__(self):
        pass
 
-    def get_input_dim(self, prev_input_dim):
+    def set_input_dim(self, prev_input_dim):
        pass
 
     def get_layer(self):
@@ -1056,7 +1056,7 @@ class Flatten:
 
 Here the `__init__` method is for setting up the layer. Pass all the parameters that you need for the layer, like input share, output shape, etc.
 
-The `get_input_dim` method is used for calculating input shape based on the output shape of the previous layer. If your layer does not have an input shape, then just return `None`.
+The `set_input_dim` method is used for calculating input shape based on the output shape of the previous layer. If your layer does not have an input shape, then just return `None`.
 
 The `get_layer` method is the most important layer and it returns a dictionary with all the details that NeuralPy Model class needs for building the model.
 
@@ -1074,7 +1074,7 @@ class Flatten:
 	    self.__end_dim = end_dim
 	    self.__name = name
 
-    def get_input_dim(self, prev_input_dim):
+    def set_input_dim(self, prev_input_dim):
 
         # As there is no input shape, returning None
         return None
@@ -1094,11 +1094,11 @@ class Flatten:
 ```
 If you check the PyTorch docs, then Flatten accepts two parameters, `start_dim` and `end_dim`. So in the `__init__` method, I've added these two parameters, along with the `name` parameter. NeuralPy needs a name for every layer, if there is no name provided, then auto generates a layer name.
 
-Flatten does not have an input shape parameter, `get_input_dim` method just returns `None`.
+Flatten does not have an input shape parameter, `set_input_dim` method just returns `None`.
 
 Finally, the `get_layer` method returns a dictionary with several fields. Here is the detail of all the fields.
 
-- `n_inputs`: Pass the input shape of the layer, in the next layer, you'll get this field as `prev_input_dim` parameter in the `get_input_dim`.
+- `n_inputs`: Pass the input shape of the layer, in the next layer, you'll get this field as `prev_input_dim` parameter in the `set_input_dim`.
 
 - `n_nodes`: Is the output dim of the layer
 

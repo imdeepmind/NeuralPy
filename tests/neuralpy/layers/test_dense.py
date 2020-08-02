@@ -44,7 +44,7 @@ def test_dense_get_layer_method(n_nodes, n_inputs, bias, name):
 	prev_dim = (6,)
 
 	if n_inputs is None:
-		x.get_input_dim(prev_dim, "dense")
+		x.set_input_dim(prev_dim, "dense")
 		
 	details = x.get_layer()
 

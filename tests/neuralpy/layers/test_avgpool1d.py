@@ -74,7 +74,7 @@ def test_AvgPool1D_get_layer_method(
         name=name)
 
     prev_dim = (3, 6, (6, 18))
-    layer_details = x.get_input_dim(prev_dim, "conv1d")
+    layer_details = x.set_input_dim(prev_dim, "conv1d")
 
     details = x.get_layer()
 

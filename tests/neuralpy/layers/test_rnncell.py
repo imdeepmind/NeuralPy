@@ -60,7 +60,7 @@ def test_RNNCell_layer_get_method(
     prev_dim = (6,)
 
     if input_size is None:
-        x.get_input_dim(prev_dim, "RNNCell")
+        x.set_input_dim(prev_dim, "RNNCell")
     
     details = x.get_layer()
 
@@ -90,4 +90,4 @@ def test_RNNCell_with_invalid_layer():
     with pytest.raises(ValueError) as ex:
         x = RNNCell(hidden_size=128, input_size=None)
 
-        x.get_input_dim((64, ), "conv1d")
+        x.set_input_dim((64, ), "conv1d")

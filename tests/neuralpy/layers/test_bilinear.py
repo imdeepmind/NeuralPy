@@ -59,7 +59,7 @@ def test_bilinear_get_layer_method(
     prev_dim = (6,)
 
     if n_inputs is None:
-        x.get_input_dim(prev_dim, "dense")
+        x.set_input_dim(prev_dim, "dense")
 
     details = x.get_layer()
 

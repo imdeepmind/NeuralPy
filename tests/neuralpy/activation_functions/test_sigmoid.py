@@ -20,10 +20,10 @@ names = ["test1", "test2"]
     "name", 
     [(name) for name in names]
 )
-def test_get_input_dim_and_get_layer_method(name):
+def test_set_input_dim_and_get_layer_method(name):
     x = Sigmoid(name=name)
 
-    assert x.get_input_dim(12, "dense") == None
+    assert x.set_input_dim(12, "dense") == None
 
     details = x.get_layer()
 

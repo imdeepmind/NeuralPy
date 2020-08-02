@@ -73,7 +73,7 @@ class BatchNorm3D:
         self.__name = name
 
     # pylint: disable=W0612
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
 

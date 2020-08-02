@@ -86,7 +86,7 @@ def test_AvgPool3D_get_layer_method(
         divisor_override=divisor_override, name=name)
 
     prev_dim = (3, 6, (6, 18, 32, 32))
-    layer_details = x.get_input_dim(prev_dim, "conv3d")
+    layer_details = x.set_input_dim(prev_dim, "conv3d")
 
     details = x.get_layer()
 

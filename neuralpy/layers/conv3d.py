@@ -200,7 +200,7 @@ class Conv3D:
         return (self.__input_shape[0], dim_1*dim_2*dim_3*self.__filters,
                 (self.__filters, dim_1, dim_2, dim_3))
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output layer.
 
