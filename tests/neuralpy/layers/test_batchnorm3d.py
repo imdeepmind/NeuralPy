@@ -1,11 +1,11 @@
 import pytest
 from torch.nn import BatchNorm3d as _BatchNorm3d
-from neuralpy.layers import BatchNorm3d
+from neuralpy.layers import BatchNorm3D
 
 
 def test_batchnorm3d_should_throw_type_error():
     with pytest.raises(TypeError) as ex:
-        x = BatchNorm3d()
+        x = BatchNorm3D()
 
 @pytest.mark.parametrize(
 	"num_features, eps, momentum, affine, \
@@ -23,7 +23,7 @@ def test_batchnorm3d_should_throw_value_error(
         num_features, eps, momentum, affine,
         track_running_status, name):
     with pytest.raises(ValueError) as ex:
-        x = BatchNorm3d(
+        x = BatchNorm3D(
             num_features=num_features, eps=eps, momentum=momentum,
             affine=affine, track_running_status=track_running_status,
             name=name
@@ -54,7 +54,7 @@ def test_batchnorm3d_get_layer_method(
         num_features, eps, momentum, affine,
         track_running_status, name):
 
-        x = BatchNorm3d(
+        x = BatchNorm3D(
             num_features=num_features, eps=eps, momentum=momentum,
             affine=affine, track_running_status=track_running_status,
             name=name)
