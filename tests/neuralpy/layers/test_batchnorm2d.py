@@ -2,11 +2,6 @@ import pytest
 from torch.nn import BatchNorm2d as _BatchNorm2d
 from neuralpy.layers import BatchNorm2D
 
-
-def test_batchnorm2d_should_throw_type_error():
-    with pytest.raises(TypeError) as ex:
-        x = BatchNorm2D()
-
 @pytest.mark.parametrize(
 	"num_features, eps, momentum, affine, \
     track_running_stats, name", 
@@ -69,8 +64,7 @@ def test_batchnorm2d_get_layer_method(
 
         assert isinstance(details, dict) == True
 
-        print(details["layer_details"])
-        assert isinstance(details["layer_details"], tuple) == True
+        assert details["layer_details"] == None
 
         assert details["name"] == name
 
@@ -87,3 +81,11 @@ def test_batchnorm2d_get_layer_method(
         assert details["keyword_arguments"]["affine"] == affine
 
         assert details["keyword_arguments"]["track_running_stats"] == track_running_stats
+
+def test_batchnorm_2d_layer_invalid_layer():
+    x = BatchNorm2D()
+    
+    prev_dim = (3, 6, (6, 18, 32))
+
+    with pytest.raises(ValueError):
+        x.get_input_dim(prev_dim, "conv3d")
