@@ -3,6 +3,7 @@ title: "GRUCell Layer"
 metaTitle: "GRUCell Layer | Recurrent Layers | NeuralPy Deep Learning Library"
 metaDescription: "Applies a gated recurrent unit (GRU) cell"
 ---
+
 # GRUCell
 
 ```python
@@ -15,10 +16,10 @@ To learn more about GRUCell, please check pytorch [documentation](https://pytorc
 
 ## Supported Arguments:
 
-  - `input_size`: (Integer) The number of expected features in the input
-  - `hidden_size`: (Integer) The number of features in the hidden state
-  - `bias=True`: (Boolean) If true then uses the bias,Defaults to `true`
-  - `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+- `input_size`: (Integer) The number of expected features in the input
+- `hidden_size`: (Integer) The number of features in the hidden state
+- `bias=True`: (Boolean) If true then uses the bias,Defaults to `true`
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
 
 ### Example Code
 
@@ -33,3 +34,4 @@ output = []
 for i in range(6):
     hx = rnn(input[i], hx)
     output.append(hx)
+```
