@@ -3,19 +3,20 @@ title: "Sigmoid"
 metaTitle: "Sigmoid | Activation Functions | NeuralPy Deep Learning Library"
 metaDescription: "Applies the element-wise function: Sigmoid(x)=σ(x)=  1/1+exp(−x)."
 ---
+
 # Sigmoid
 
 ```python
 neuralpy.activation_functions.Sigmoid(name=None)
 ```
 
-Applies the element-wise function: Sigmoid(x)=σ(x)=  1/1+exp(−x).
+Applies the element-wise function: Sigmoid(x)=σ(x)= 1/1+exp(−x).
 
 To learn more about Sigmoid, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html#torch.nn.Sigmoid)
 
 ## Supported Arguments
 
-  - `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+- `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
 
 ## Example Code
 
@@ -28,4 +29,4 @@ from neuralpy.activation_functions import Sigmoid
 model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
 model.add(Sigmoid())
-
+```
