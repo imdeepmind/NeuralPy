@@ -1,0 +1,31 @@
+---
+title: "SELU"
+metaTitle: "SELU | Activation Functions | NeuralPy Deep Learning Library"
+metaDescription: "Applied element-wise, as: SELU(x) = scale∗(max(0,x)+min(0,α∗(exp(x)−1)))."
+---
+# SELU
+
+```python
+neuralpy.activation_functions.SELU(name=None)
+```
+
+Applied element-wise, as: SELU(x) = scale∗(max(0,x)+min(0,α∗(exp(x)−1))).
+
+To learn more about SELU, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.SELU.html#torch.nn.SELU)
+
+## Supported Arguments
+
+  - `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+
+## Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import SELU
+
+# Making the model
+model = Sequential()
+model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
+model.add(SELU())
+

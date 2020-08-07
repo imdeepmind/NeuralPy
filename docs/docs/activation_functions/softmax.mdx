@@ -1,0 +1,31 @@
+---
+title: "Softmax"
+metaTitle: "Softmax | Activation Functions | NeuralPy Deep Learning Library"
+metaDescription: "Applies the Softmax function to an n-dimensional input Tensor rescaling them so that the elements of the n-dimensional output Tensor lie in the range [0,1] and sum to 1."
+---
+# Softmax
+
+```python
+neuralpy.activation_functions.Softmax(dim=None, name=None)
+```
+
+Applies the Softmax function to an n-dimensional input Tensor rescaling them so that the elements of the n-dimensional output Tensor lie in the range [0,1] and sum to 1.
+
+To learn more about Softmax, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Softmax.html#torch.nn.Softmax)
+
+## Supported Arguments
+
+  - `dim`: (Interger) A dimension along which Softmax will be computed (so every slice along dim will sum to 1).
+  - `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+
+## Example Code
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+
+# Making the model
+model = Sequential()
+model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
+model.add(Softmax())
+
