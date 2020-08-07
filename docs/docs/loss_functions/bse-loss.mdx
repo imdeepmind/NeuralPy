@@ -1,0 +1,41 @@
+---
+title: "BCE Loss"
+metaTitle: "BCE Loss | Loss Functions | NeuralPy Deep Learning Library"
+metaDescription: "Applies a BCE Loss function to the model."
+---
+
+# BCE Loss
+
+```python
+neuralpy.loss_functions.BCELoss(weight=None, reduction='mean', pos_weight=None)
+```
+
+Applies a BCE Loss function to the model.
+
+> BCE Loss automatically applies a Sigmoid Layer at the end of the model, so there is no need to add a Sigmoid layer.
+
+For more information, check [this](https://pytorch.org/docs/stable/nn.html#bcewithlogitsloss) page.
+
+## Supported Arguments
+
+- `weight=None` : (Numpy Array | List) Manual rescaling of classes
+- `reduction='mean'` : (String) Specifies the reduction that is to be applied to the output.
+- `post_weight=None` : (Numpy Array | List) A weight of positive examples
+
+## Code Example
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adam
+from neuralpy.loss_functions import BCELoss
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Rest of the architecture
+...
+
+model.compile(optimizer=Adam(), loss_function=BCELoss(weight=None, reduction='mean', pos_weight=None))
+```
