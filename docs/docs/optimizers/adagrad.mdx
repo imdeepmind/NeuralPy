@@ -1,0 +1,38 @@
+---
+title: "Adagrad Optimizer"
+metaTitle: "Adagrad Optimizer | Optimizers | NeuralPy Deep Learning Library"
+metaDescription: "Applies Adagrad algorithm."
+---
+
+# Adagrad Optimizer
+
+```python
+neualpy.optimizer.Adagrad(learning_rate=0.001, learning_rate_decay=0.0, eps=1e-08, weight_decay=0.0)
+```
+
+Applies Adagrad algorithm, Adagrad:Adaptive Subgradient Methods for Online Learning and Stochastic Optimization
+
+For more information, check [this](https://pytorch.org/docs/stable/optim.html#torch.optim.Adagrad) page.
+
+## Supported Arguments
+
+- `learning_rate=0.001`: (Float) Learning Rate for the optimizer
+- `learning_rate_decay=(0.9,0.999)` : (Float) Learning Rate decay
+- `eps=0` : (Float) Term added to the denominator to improve numerical stability
+- `weight_decay=0` : (Float) Weight decay for the optimizer
+
+## Code Example
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adagrad
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Rest of the architecture
+...
+
+model.compile(optimizer=Adagrad(), ...))

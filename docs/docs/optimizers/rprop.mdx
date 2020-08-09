@@ -1,0 +1,37 @@
+---
+title: "Rprop Optimizer"
+metaTitle: "Rprop Optimizer | Optimizers | NeuralPy Deep Learning Library"
+metaDescription: "Applies Rprop algorithm."
+---
+
+# Rprop Optimizer
+
+```python
+neualpy.optimizer.Rprop(learning_rate=0.01, etas=(0.5, 1.2), step_sizes=(1e-06, 50.0))
+```
+
+Applies Rprop algorithm, Rprop:Resilient backpropagation algorithm
+
+For more information, check [this](https://pytorch.org/docs/stable/optim.html#torch.optim.Rprop) page.
+
+## Supported Arguments
+
+- `learning_rate=0.01`: (Float) Learning Rate for the optimizer
+- `etas=(0.5,1.2)`: (Tuple) pair of (etaminus, etaplis), that are multiplicative increase and decrease factors
+- `step_sizes=(le-06,50)`: (Tuple) a pair of minimal and maximal allowed step sizes for the optimizer
+
+## Code Example
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Rprop
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Rest of the architecture
+...
+
+model.compile(optimizer=Rprop(), ...))

@@ -1,0 +1,39 @@
+---
+title: "Adam Optimizer"
+metaTitle: "Adam Optimizer | Optimizers | NeuralPy Deep Learning Library"
+metaDescription: "Applies Adam algorithm."
+---
+
+# Adam Optimizer
+
+```python
+neualpy.optimizer.Adam(learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.0, amsgrad=False)
+```
+
+Applies Adam algorithm, Adam: A Method for Stochastic Optimization
+
+For more information, check [this](https://pytorch.org/docs/stable/optim.html#torch.optim.Adam) page.
+
+## Supported Arguments
+
+- `learning_rate=0.001`: (Float) Learning Rate for the optimizer
+- `betas=(0.9,0.999)` : (Tuple[Float, Float]) coefficients used for computing running averages of gradient and its square
+- `eps=0` : (Float) Term added to the denominator to improve numerical stability
+- `weight_decay=0` : (Float) Weight decay for the optimizer
+- `amsgrad=False` : (Bool) if true, then uses AMSGrad various of the optimizer
+
+## Code Example
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.optimizer import Adam
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Rest of the architecture
+...
+
+model.compile(optimizer=Adam(), ...))
