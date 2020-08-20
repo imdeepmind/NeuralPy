@@ -334,7 +334,8 @@ class Model:
     def fit(self,
             train_data,
             validation_data=None,
-            epochs=10, batch_size=32,
+            epochs=10, 
+            batch_size=32,
             steps_per_epoch=None,
             validation_steps=None,
             callbacks=None):
