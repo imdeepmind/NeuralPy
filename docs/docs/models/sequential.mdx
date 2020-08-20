@@ -1,0 +1,80 @@
+---
+title: "Sequential"
+metaTitle: "Sequential | Models | NeuralPy Deep Learning Library"
+metaDescription: "Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor."
+---
+
+## Sequential
+
+```python
+neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
+```
+
+Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
+
+> The Sequential model works on top of Model class, so all the methods that are available on the Model is also available here in Sequential class
+
+### Supported Arguments
+
+- `force_cpu=False`: (Boolean) If True, then uses CPU even if CUDA is available
+- `training_device=None`: (NeuralPy device class) Device that will be used for training predictions
+- `random_state`: (Integer) Random state for the device
+
+### Supported Methods
+
+#### `.add()` method: 
+
+In a Sequential model, the `.add()` method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
+
+##### Supported Arguments
+
+- `layer`: (NeuralPy layer classes) Adds a layer into the model
+
+##### Example Codes
+
+```python
+from neuralpy.models import Sequential
+from neuralpy.layers import Dense
+from neuralpy.activation_functions import ReLU
+from neuralpy import device
+
+# Setting a training device
+training_device = device('cpu')
+
+# Initializing the Sequential models
+model = Sequential(force_cpu=False, training_device=training_device, random_state=1969)
+
+# Adding layers to the model
+model.add(Dense(n_nodes=3, n_inputs=5, bias=True))
+model.add(ReLU())
+model.add(Dense(n_nodes=3, n_inputs=3, bias=True))
+```
+
+#### `.build()` method:
+
+In a Sequential model, the `.build()` method is responsible for building the PyTorch model from the NeuralPy model.
+
+After finishing the architecture of the model, the model needed to be built before training.
+
+##### Supported Arguments:
+
+- There is no argument for this model
+
+#### Example Code
+
+```python
+from neuralpy.models import Sequential
+...
+# Rest of the imports
+...
+
+model = Sequential()
+...
+# Model Architecture
+...
+
+# Calling .build to build the model
+model.build()
+```
+
+---
