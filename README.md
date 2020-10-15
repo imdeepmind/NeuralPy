@@ -116,7 +116,7 @@ model.summary()
 
 ### Training the model
 ```python
-model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)
+model.fit(train_data=(X_train, y_train), validation_data=(X_validation, y_validation), epochs=300, batch_size=4)
 ```
 
 ### Predicting using the trained model
