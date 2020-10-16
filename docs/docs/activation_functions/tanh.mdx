@@ -2,6 +2,9 @@
 id: tanh
 title: Tanh
 slug: /activation-functions/tanh
+description:  Applies the element-wise Tanh function to the input Tensor
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Tanh
@@ -10,9 +13,15 @@ slug: /activation-functions/tanh
 neuralpy.activation_functions.Tanh(name=None)
 ```
 
+:::caution
+
+Tanh Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+
+:::
+
 Applies the element-wise function: Tanh(x) = tanh(x) = exp(x)+exp(−x)/exp(x)−exp(−x).
 
-To learn more about Tanh, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Tanh.html#torch.nn.Tanh)
+To learn more about Tanh, please check PyTorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Tanh.html#torch.nn.Tanh)
 
 ## Supported Arguments
 
