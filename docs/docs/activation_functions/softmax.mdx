@@ -2,6 +2,9 @@
 id: softmax
 title: Softmax
 slug: /activation-functions/softmax
+description: Applies the Softmax function to an n-dimensional input Tensor
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 # Softmax
 
@@ -9,9 +12,15 @@ slug: /activation-functions/softmax
 neuralpy.activation_functions.Softmax(dim=None, name=None)
 ```
 
+:::caution
+
+Softmax Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+
+:::
+
 Applies the Softmax function to an n-dimensional input Tensor rescaling them so that the elements of the n-dimensional output Tensor lie in the range [0,1] and sum to 1.
 
-To learn more about Softmax, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Softmax.html#torch.nn.Softmax)
+To learn more about Softmax, please check PyTorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Softmax.html#torch.nn.Softmax)
 
 ## Supported Arguments
 

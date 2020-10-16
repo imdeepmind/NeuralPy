@@ -2,32 +2,41 @@
 id: leaky-relu
 title: Leaky ReLU
 slug: /activation-functions/leaky-relu
+description: Applies the element-wise function Leaky ReLU activation function
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Leaky ReLU
 
 ```python
-neuralpy.activation_functions.Leaky_ReLU(negative_slope=0.01, name=None)
+neuralpy.activation_functions.LeakyReLU(negative_slope=0.01, name=None)
 ```
 
-Applies the element-wise function: Leaky_ReLU(x) = max(0,x)+negative_slope∗min(0,x).
+:::caution
 
-To learn more about Leaky_ReLU, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.LeakyReLU.html#torch.nn.LeakyReLU)
+Leaky ReLU Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+
+:::
+
+Applies the element-wise function: LeakyReLU(x) = max(0,x)+negative_slope∗min(0,x).
+
+To learn more about LeakyReLU, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.LeakyReLU.html#torch.nn.LeakyReLU)
 
 ## Supported Arguments
 
-- `negative_slope`: (Integer) A negative slope for the LeakyReLU
-- `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+-   `negative_slope`: (Integer) A negative slope for the LeakyReLU
+-   `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
 
 ## Example Code
 
 ```python
 from neuralpy.models import Sequential
 from neuralpy.layers import Dense
-from neuralpy.activation_functions import Leaky_ReLU
+from neuralpy.activation_functions import LeakyReLU
 
 # Making the model
 model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
-model.add(Leaky_ReLU())
+model.add(LeakyReLU())
 ```

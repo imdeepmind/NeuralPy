@@ -2,6 +2,9 @@
 id: sigmoid
 title: Sigmoid
 slug: /activation-functions/sigmoid
+description: Applied element-wise Sigmoid function
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Sigmoid
@@ -10,9 +13,15 @@ slug: /activation-functions/sigmoid
 neuralpy.activation_functions.Sigmoid(name=None)
 ```
 
+:::caution
+
+Sigmoid Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+
+:::
+
 Applies the element-wise function: Sigmoid(x)=σ(x)= 1/1+exp(−x).
 
-To learn more about Sigmoid, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html#torch.nn.Sigmoid)
+To learn more about Sigmoid, please check PyTorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html#torch.nn.Sigmoid)
 
 ## Supported Arguments
 

@@ -2,6 +2,9 @@
 id: gelu
 title: GELU
 slug: /activation-functions/gelu
+description: Applies the Gaussian Error Linear Units function
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # GELU
@@ -10,13 +13,19 @@ slug: /activation-functions/gelu
 neuralpy.activation_functions.GELU(name=None)
 ```
 
+:::caution
+
+GELU Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+
+:::
+
 Applies the Gaussian Error Linear Units function: GELU(x) = x \* Φ(x). where Φ(x) is the Cumulative Distribution Function for Gaussian Distribution.
 
-To learn more about GELU, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.GELU.html#torch.nn.GELU)
+To learn more about GELU, please check PyTorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.GELU.html#torch.nn.GELU)
 
 ## Supported Arguments
 
-- `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
+-   `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
 
 ## Example Code
 

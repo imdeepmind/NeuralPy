@@ -2,6 +2,9 @@
 id: selu
 title: SELU
 slug: /activation-functions/selu
+description: Applied element-wise SELU function
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # SELU
@@ -10,9 +13,15 @@ slug: /activation-functions/selu
 neuralpy.activation_functions.SELU(name=None)
 ```
 
+:::caution
+
+SELU Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+
+:::
+
 Applied element-wise, as: SELU(x) = scale∗(max(0,x)+min(0,α∗(exp(x)−1))).
 
-To learn more about SELU, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.SELU.html#torch.nn.SELU)
+To learn more about SELU, please check PyTorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.SELU.html#torch.nn.SELU)
 
 ## Supported Arguments
 
