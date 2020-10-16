@@ -36,6 +36,6 @@ from neuralpy.activation_functions import GELU
 
 # Making the model
 model = Sequential()
-model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="My GELU Activation Function"))
+model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
 model.add(GELU())
 ```
