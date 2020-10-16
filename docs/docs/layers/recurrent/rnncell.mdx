@@ -1,0 +1,38 @@
+---
+id: rnncell
+title: RNNCell
+slug: /layers/recurrent-layers/rnncell
+---
+
+# RNNCell
+
+```python
+neuralpy.layers.RNNCell(input_size, hidden_size, bias=True, non_linearity='tanh', name=None)
+```
+
+Applies an Elman RNN cell with tanh or ReLU non-linearity.
+
+To learn more about RNNCell, please check pytorch [documentation](https://pytorch.org/docs/stable/nn.html#rnncell)
+
+## Supported Arguments:
+
+- `input_size`: (Integer) The number of expected features in the input
+- `hidden_size`: (Integer) The number of features in the hidden state
+- `bias=True`: (Boolean) If true then uses the bias,Defaults to `true`
+- `non_linearity=tanh`: (String) The non-linearity to use.Default tanh
+- `name=None`: (String) Name of the layer, if not provided then automatically calculates a unique name for the layer
+
+### Example Code
+
+```python
+import torch
+from neuralpy.layers import RNNCell
+
+rnn = RNNCell(10, 20)
+input = torch.randn(6, 3, 10)
+hx = torch.randn(3, 20)
+output = []
+for i in range(6):
+    hx = rnn(input[i], hx)
+    output.append(hx)
+```
