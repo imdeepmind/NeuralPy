@@ -14,3 +14,4 @@ from . import loss_functions
 from . import models
 from . import optimizer
 from . import regularizers
+from . import utils
