@@ -1,8 +1,27 @@
+"""CustomLayer class for NeuralPy"""
+
 import inspect
 
 
 class CustomLayer:
-  def __init__(self, layer_class, layer_type, layer_name):
+  """
+        CustomLayer is class for building custom NeuralPy classes
+
+        Supported Arguments:
+            layer_class: (Class) PyTorch class layer
+            layer_type: (String) Type of a class, should be a string
+            layer_name: (String) Name for the layer, optional
+    """
+
+  def __init__(self, layer_class, layer_type, layer_name=None):
+    """
+      __init__ method for CustomLayer
+
+      Supported Arguments:
+            layer_class: (Class) PyTorch class layer
+            layer_type: (String) Type of a class, should be a string
+            layer_name: (String) Name for the layer, optional
+    """
     # TODO: In future, we might need to add more checks to
     # confirm this is a PyTorch valid class
     if not inspect.isclass(layer_class):
@@ -20,7 +39,11 @@ class CustomLayer:
 
   def _get_layer_details(self, layer_details=None, keyword_arguments=None):
     """
-        Creates the layer details data for the activation function
+        Creates the layer details data for the layers and returns an dictionary
+
+        Supported Arguments:
+            layer_details: (Tuple) Layers details tuple for next layer
+            keyword_arguments: (Dict) Dict for layer keyword arguments
     """
     return {
         'layer_details': layer_details,
@@ -31,10 +54,19 @@ class CustomLayer:
     }
 
   def _get_layer_class(self):
+    """
+      Returns the layer class
+    """
     return self.__layer
-  
+
   def _get_layer_type(self):
+    """
+      Returns the layer type
+    """
     return self.__layer_type
-  
+
   def _get_layer_name(self):
+    """
+      Returns the layer name
+    """
     return self.__layer_name
