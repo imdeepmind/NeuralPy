@@ -48,5 +48,5 @@ class ReLU(CustomLayer):
     """
     # Returning all the details of the activation function
     return self._get_layer_details(None, {
-      'inplace': True
+      'inplace': False
     })

@@ -55,5 +55,5 @@ class LeakyReLU(CustomLayer):
     # Returning all the details of the activation function
     return self._get_layer_details(None,  {
       'negative_slope': self.__negative_slope,
-      'inplace': True
+      'inplace': False
     })
