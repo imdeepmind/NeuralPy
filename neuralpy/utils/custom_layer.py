@@ -45,6 +45,12 @@ class CustomLayer:
             layer_details: (Tuple) Layers details tuple for next layer
             keyword_arguments: (Dict) Dict for layer keyword arguments
     """
+    if layer_details is not None and not isinstance(layer_details, tuple):
+      raise ValueError("Please provide a valid layer details tuple")
+    
+    if keyword_arguments is not None and not isinstance(keyword_arguments, dict):
+      raise ValueError("Please provide a valid keyword arguments tuple")
+    
     return {
         'layer_details': layer_details,
         'name': self.__layer_name,
