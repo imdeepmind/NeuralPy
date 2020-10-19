@@ -15,9 +15,9 @@ class LeakyReLU(CustomLayer):
     of LeakyReLU solves the problem of "dead ReLU" and helps in learning.
 
     Supported Arguments
-            negative_slope=0.01: (Integer) A negative slope for the LeakyReLU
-            name=None: (String) Name of the activation function layer, if not
-                    provided then automatically calculates a unique name for the layer
+      negative_slope=0.01: (Integer) A negative slope for the LeakyReLU
+      name=None: (String) Name of the activation function layer, if not
+            provided then automatically calculates a unique name for the layer
   """
 
   def __init__(self, negative_slope=0.01, name=None):
@@ -25,9 +25,9 @@ class LeakyReLU(CustomLayer):
       __init__ method for the LeakyReLU Activation Function class
 
       Supported Arguments
-                  negative_slope=0.01: (Integer) A negative slope for the LeakyReLU
-                  name=None: (String) Name of the activation function layer, if not
-                          provided then automatically calculates a unique name for the layer
+        negative_slope=0.01: (Integer) A negative slope for the LeakyReLU
+        name=None: (String) Name of the activation function layer, if not
+              provided then automatically calculates a unique name for the layer
     """
     super().__init__(_LeakyReLU, "LeakyReLU", layer_name=name)
 

@@ -11,8 +11,8 @@ class ReLU(CustomLayer):
     For more information, check https://pytorch.org/docs/stable/nn.html#relu
 
     Supported Arguments
-        name=None: (String) Name of the activation function layer,
-            if not provided then automatically calculates a unique name for the layer
+      name=None: (String) Name of the activation function layer,
+        if not provided then automatically calculates a unique name for the layer
   """
 
   def __init__(self, name=None):
@@ -20,8 +20,8 @@ class ReLU(CustomLayer):
       __init__ method for the ReLU Activation Function class
 
       Supported Arguments
-          name=None: (String) Name of the activation function layer,
-              if not provided then automatically calculates a unique name for the layer
+        name=None: (String) Name of the activation function layer,
+          if not provided then automatically calculates a unique name for the layer
     """
     # Checking the name field, this is an optional field,
     # if not provided generates a unique name for the activation function

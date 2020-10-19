@@ -9,8 +9,8 @@ class GELU(CustomLayer):
   For more information, check https://pytorch.org/docs/stable/nn.html#gelu
 
   Supported Arguments
-      name=None: (String) Name of the activation function layer,
-          if not provided then automatically calculates a unique name for the layer
+    name=None: (String) Name of the activation function layer,
+        if not provided then automatically calculates a unique name for the layer
   """
 
   def __init__(self, name=None):
@@ -18,8 +18,8 @@ class GELU(CustomLayer):
         __init__ method for the GELU Activation Function class
 
         Supported Arguments
-            name=None: (String) Name of the activation function layer,
-                if not provided then automatically calculates a unique name for the layer
+          name=None: (String) Name of the activation function layer,
+              if not provided then automatically calculates a unique name for the layer
     """
     super().__init__(_GELU, "GELU", layer_name=name)
 
