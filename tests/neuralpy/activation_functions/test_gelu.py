@@ -15,7 +15,7 @@ def test_gelu_should_throw_value_error_Exception(name):
         x = GELU(name=name)
 
 # Possible values
-names = ["test1", "test2"]
+names = ["test1", "test2", None]
 
 
 @pytest.mark.parametrize(
