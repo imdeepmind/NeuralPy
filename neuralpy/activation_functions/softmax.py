@@ -27,6 +27,9 @@ class Softmax(CustomLayer):
     """
     super().__init__(_Softmax, "Softmax", layer_name=name)
 
+    if not isinstance(dim, int):
+      raise ValueError("Please provide a valid dim")
+
     self.__dim = dim
 
   # pylint: disable=W0613, disable=R0201

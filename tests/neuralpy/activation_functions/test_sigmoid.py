@@ -14,7 +14,7 @@ def test_sigmoid_should_throw_value_error_exception(name):
         x = Sigmoid(name=name)
 
 # Possible values
-names = ["test1", "test2"]
+names = ["test1", "test2", None]
 
 @pytest.mark.parametrize(
     "name", 

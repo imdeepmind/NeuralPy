@@ -15,7 +15,7 @@ def test_selu_should_throw_value_error_Exception(name):
         x = SELU(name=name)
 
 # Possible values
-names = ["test1", "test2"]
+names = ["test1", "test2", None]
 
 
 @pytest.mark.parametrize(

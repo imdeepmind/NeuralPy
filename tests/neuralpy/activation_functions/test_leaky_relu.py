@@ -2,22 +2,25 @@ import pytest
 from torch.nn import LeakyReLU as _LeakyReLU
 from neuralpy.activation_functions import LeakyReLU
 
-# Possible values
-negative_slopes = [0.01]
-names = [False, 12, 3.6, -2]
-
 @pytest.mark.parametrize(
 	"negative_slope, name", 
-	[(negative_slope, name) for negative_slope in negative_slopes
-						    for name in names]
+	[
+        ("invalid", "activation_function"),
+        (12, "activation_function"),
+        (False, "activation_function"),
+        (.33, False),
+        (.33, 12),
+        (.33, 3.6),
+        (.33, -2),
+    ]
 )
 def test_leaky_relu_should_throw_value_error_Exception(negative_slope, name):
     with pytest.raises(ValueError) as ex:
         x = LeakyReLU(negative_slope=negative_slope, name=name)
 
 # Possible values
-negative_slopes = [0.01]
-names = ["test1", "test2"]
+negative_slopes = [0.01, 2.342]
+names = ["test1", "test2", None]
 
 @pytest.mark.parametrize(
     "negative_slope, name", 
