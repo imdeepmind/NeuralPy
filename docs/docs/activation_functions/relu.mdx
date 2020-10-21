@@ -13,15 +13,15 @@ hide_title: true
 neuralpy.activation_functions.ReLU(name=None)
 ```
 
-:::caution
+:::info
 
-ReLU Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+ReLU Activation Function is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
 
 :::
 
 Applies the rectified linear unit function element-wise: ReLU(x) = max(0,x).
 
-To learn more about ReLU, please check pytorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html#torch.nn.ReLU)
+To learn more about ReLU, please check PyTorch [documentation](https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html#torch.nn.ReLU)
 
 ## Supported Arguments
 
@@ -37,5 +37,5 @@ from neuralpy.activation_functions import ReLU
 # Making the model
 model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
-model.add(ReLU())
+model.add(ReLU(name="reluActivation"))
 ```

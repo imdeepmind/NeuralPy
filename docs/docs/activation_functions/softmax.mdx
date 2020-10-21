@@ -6,15 +6,16 @@ description: Applies the Softmax function to an n-dimensional input Tensor
 image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
 hide_title: true
 ---
+
 # Softmax
 
 ```python
 neuralpy.activation_functions.Softmax(dim=None, name=None)
 ```
 
-:::caution
+:::info
 
-Softmax Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+Softmax Activation Function is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
 
 :::
 
@@ -24,7 +25,7 @@ To learn more about Softmax, please check PyTorch [documentation](https://pytorc
 
 ## Supported Arguments
 
-- `dim`: (Interger) A dimension along which Softmax will be computed (so every slice along dim will sum to 1).
+- `dim`: (Integer) A dimension along which Softmax will be computed (so every slice along dim will sum to 1).
 - `name`: (String) Name of the activation function layer, if not provided then automatically calculates a unique name for the layer.
 
 ## Example Code
@@ -36,5 +37,5 @@ from neuralpy.layers import Dense
 # Making the model
 model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
-model.add(Softmax())
+model.add(Softmax(name="softmax_layer"))
 ```
