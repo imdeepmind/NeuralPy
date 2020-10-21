@@ -13,9 +13,9 @@ hide_title: true
 neuralpy.activation_functions.SELU(name=None)
 ```
 
-:::caution
+:::info
 
-SELU Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+SELU Activation Function is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
 
 :::
 
@@ -37,5 +37,5 @@ from neuralpy.activation_functions import SELU
 # Making the model
 model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
-model.add(SELU())
+model.add(SELU(name="selu"))
 ```

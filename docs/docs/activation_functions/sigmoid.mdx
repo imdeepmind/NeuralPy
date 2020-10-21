@@ -13,9 +13,9 @@ hide_title: true
 neuralpy.activation_functions.Sigmoid(name=None)
 ```
 
-:::caution
+:::info
 
-Sigmoid Activation Function is partially stable, can be used on any project, but in the future, it could change. In that case, it might break old code.
+Sigmoid Activation Function is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
 
 :::
 
@@ -37,5 +37,5 @@ from neuralpy.activation_functions import Sigmoid
 # Making the model
 model = Sequential()
 model.add(Dense(n_nodes=1, n_inputs=1, bias=True, name="Input Layer"))
-model.add(Sigmoid())
+model.add(Sigmoid(name="sigmoid_layer"))
 ```
