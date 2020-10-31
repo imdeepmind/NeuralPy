@@ -2,6 +2,9 @@
 id: train-logger
 title: TrainLogger
 slug: /callbacks/train-logger
+description: TrainLogger is a NeuralPy Callback class that generates training logs.
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # TrainLogger
@@ -10,10 +13,16 @@ slug: /callbacks/train-logger
 neuralpy.callbacks.TrainLogger(path=None)
 ```
 
+
+:::caution
+
+Partially stable, can be used for projects, but the structure might change in fututre
+
+:::
+
 TrainLogger is a NeuralPy Callback class that generates training logs. It generates CSV files of training logs with all the parameters, other model configuration, and the model loss accuracy.
 
 ## Supported Arguments
-
     - `path`: (String)  Directory where the logs will be stored
 
 ## Example Code
