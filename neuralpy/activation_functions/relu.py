@@ -27,7 +27,6 @@ class ReLU(CustomLayer):
     # if not provided generates a unique name for the activation function
     super().__init__(_ReLU, "ReLU", layer_name=name)
 
-  # pylint: disable=W0613, disable=R0201
   def get_input_dim(self, prev_input_dim, layer_type):
     """
       This method calculates the input shape for layer based on previous output layer.
@@ -48,5 +47,5 @@ class ReLU(CustomLayer):
     """
     # Returning all the details of the activation function
     return self._get_layer_details(None, {
-      'inplace': False
-    })
+        'inplace': False
+        })
