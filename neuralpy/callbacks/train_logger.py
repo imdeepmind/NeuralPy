@@ -2,13 +2,11 @@
 import datetime
 import os
 
-# pylint: disable=too-few-public-methods
-
 
 class TrainLogger:
     """
-        TrainLogger is a callback for NeuralPy models fit method. It is used for creating
-        training logs with different parameters
+        TrainLogger is a callback for NeuralPy models fit method.
+        It is used for creating training logs with different parameters
 
         Supported Arguments:
             path: (String) path where the log files will be stored
@@ -29,8 +27,8 @@ class TrainLogger:
         self.__rows = []
 
         filename = (
-            str(datetime.datetime.now()) +
-            ".log").replace(" ", "_").replace("-", "_").replace(":", "_")
+            str(datetime.datetime.now()) + ".log") \
+            .replace(" ", "_").replace("-", "_").replace(":", "_")
 
         self.__path = os.path.join(path, filename)
 
@@ -46,16 +44,17 @@ class TrainLogger:
         with open(self.__path, "w") as file:
             file.write(text)
 
-    # pylint: disable=too-many-arguments,unused-argument
     def callback(self, epochs, epoch, loss_function_parameters, optimizer_parameters,
                  traning_progress, model):
         """
-            The callback method is called from the model class once it completes an epoch
+            The callback method is called from the model class once
+            it completes an epoch
 
             Supported Arguments:
                 epochs: (Integer) Total number of epochs
                 epoch: (integer) Current epoch
-                loss_function_parameters: (Dictionary) All parameters of the loss function
+                loss_function_parameters: (Dictionary) All parameters of
+                    the loss function
                 optimizer_parameters: (Dictionary) All parameters of the optimizer
                 traning_progress: (Dictionary) Training progress of the current epoch
         """
