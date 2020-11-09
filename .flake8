@@ -12,6 +12,8 @@ statistics = True
 output-file = flake8.log
 tee = True
 
+ignore = E111
+
 exclude =
     .git,
     __pycache__,
@@ -36,3 +38,6 @@ max-complexity = 15
 hang-closing = True
 
 doctests = True
+
+per-file-ignores =
+    __init__.py: F401
