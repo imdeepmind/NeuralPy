@@ -12,6 +12,7 @@ from .flatten import Flatten
 from .conv1d import Conv1D
 from .conv2d import Conv2D
 from .conv3d import Conv3D
+from .convtranspose1d import ConvTranspose1d
 
 from .avg_pool2d import AvgPool2D
 from .avg_pool1d import AvgPool1D
