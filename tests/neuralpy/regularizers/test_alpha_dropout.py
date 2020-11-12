@@ -2,64 +2,54 @@ import pytest
 from torch.nn import AlphaDropout as _AlphaDropout
 from neuralpy.regularizers import AlphaDropout
 
-@pytest.mark.parametrize(
-	"p, name", 
-	[
-		(6.3, False),
-		(-4.2, False),
-		(.33, False),
-		(.56, 12)
-	]
-)
+
+@pytest.mark.parametrize('p, name', [(6.3, 'Test'), (-4.2, 'Test'),
+                         (.33, False), (.56, 12)])
 def test_dense_should_throw_value_error(p, name):
-    with pytest.raises(ValueError) as ex:
-        x = AlphaDropout(p=p, name=name)
+    with pytest.raises(ValueError):
+        AlphaDropout(p=p, name=name)
 
-@pytest.mark.parametrize(
-	"p, name", 
-	[
-		(.3, "test"),
-		(.2, None)
-	]
-)
+
+@pytest.mark.parametrize('p, name', [(.3, 'test'), (.2, None)])
 def test_dense_get_layer_method(p, name):
-	x = AlphaDropout(p=p, name=name)
+    x = AlphaDropout(p=p, name=name)
 
-	assert x.get_input_dim(12, "dense") == None
-		
-	details = x.get_layer()
+    assert x.get_input_dim(12, 'dense') is None
 
-	assert isinstance(details, dict) == True
+    details = x.get_layer()
 
-	assert details["layer_details"] == None
+    assert isinstance(details, dict) is True
 
-	assert details["name"] == name
+    assert details['layer_details'] is None
 
-	assert issubclass(details["layer"], _AlphaDropout) == True
+    assert details['name'] == name
 
-	assert isinstance(details["keyword_arguments"], dict) == True
+    assert issubclass(details['layer'], _AlphaDropout) is True
 
-	assert details["keyword_arguments"]["p"] == p
+    assert isinstance(details['keyword_arguments'], dict) is True
 
-	assert details["keyword_arguments"]["inplace"] == False
+    assert details['keyword_arguments']['p'] == p
+
+    assert details['keyword_arguments']['inplace'] is False
+
 
 def test_dense_get_layer_method_wit_no_parameter():
-	x = AlphaDropout()
+    x = AlphaDropout()
 
-	assert x.get_input_dim(12, "dense") == None
-		
-	details = x.get_layer()
+    assert x.get_input_dim(12, 'dense') is None
 
-	assert isinstance(details, dict) == True
+    details = x.get_layer()
 
-	assert details["layer_details"] == None
+    assert isinstance(details, dict) is True
 
-	assert details["name"] == None
+    assert details['layer_details'] is None
 
-	assert issubclass(details["layer"], _AlphaDropout) == True
+    assert details['name'] is None
 
-	assert isinstance(details["keyword_arguments"], dict) == True
+    assert issubclass(details['layer'], _AlphaDropout) is True
 
-	assert details["keyword_arguments"]["p"] == .5
+    assert isinstance(details['keyword_arguments'], dict) is True
 
-	assert details["keyword_arguments"]["inplace"] == False
+    assert details['keyword_arguments']['p'] == .5
+
+    assert details['keyword_arguments']['inplace'] is False
