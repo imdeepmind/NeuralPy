@@ -1,8 +1,10 @@
 """Dropout3D Layer"""
 
 from torch.nn import Dropout3d as _Dropout3D
+from neuralpy.utils import CustomLayer
 
-class Dropout3D:
+
+class Dropout3D(CustomLayer):
     """
         Applies Dropout3D to the input.
 
@@ -17,7 +19,7 @@ class Dropout3D:
             name=None: (String) Name of the layer, if not provided
                         then automatically calculates a unique name for the layer
     """
-    #pylint: disable=R1716
+
     def __init__(self, p=0.5, name=None):
         """
             __init__ method for Dropout3D class
@@ -28,21 +30,18 @@ class Dropout3D:
                 name=None: (String) Name of the layer, if not provided
                             then automatically calculates a unique name for the layer
         """
+        super().__init__(_Dropout3D, "Dropout3D", layer_name=name)
+
         # Checking the field p, it should be a valid prob value
         if not (isinstance(p, float) and p >= 0.0 and p <= 1.0):
             raise ValueError("Please provide a valid p value")
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
 
-        self.__p = p
         self.__name = name
 
-    # pylint: disable=no-self-use,unused-argument
     def get_input_dim(self, prev_input_dim, layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous
+            output layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -57,14 +56,7 @@ class Dropout3D:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Returning all the details of the layer
-        return {
-            'layer_details': None,
-            'name': self.__name,
-            'type': 'Dropout3D',
-            'layer': _Dropout3D,
-            "keyword_arguments": {
-                'p': self.__p,
-                'inplace': False
-            }
-        }
+        return self._get_layer_details(None, {
+            'p': self.__p,
+            'inplace': False
+            })
