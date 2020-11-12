@@ -36,7 +36,7 @@ class Dropout3D(CustomLayer):
         if not (isinstance(p, float) and p >= 0.0 and p <= 1.0):
             raise ValueError("Please provide a valid p value")
 
-        self.__name = name
+        self.__p = p
 
     def get_input_dim(self, prev_input_dim, layer_type):
         """
