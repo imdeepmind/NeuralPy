@@ -3,7 +3,7 @@ from torch.nn import Dropout2d as _Dropout2D
 from neuralpy.regularizers import Dropout2D
 
 
-@pytest.mark.parametrize('p, name', [(6.3, False), (-4.2, False), (.33,
+@pytest.mark.parametrize('p, name', [(6.3, "Test"), (-4.2, "Test"), (.33,
                          False), (.56, 12)])
 def test_dense_should_throw_value_error(p, name):
     with pytest.raises(ValueError):
