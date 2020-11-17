@@ -121,7 +121,7 @@ model.fit(train_data=(X_train, y_train), validation_data=(X_validation, y_valida
 
 ### Predicting using the trained model
 ```python
-model.predict(X=X_test, batch_size=4)
+model.predict(predict_data=X_test, batch_size=4)
 ```
 
 ## Documentation

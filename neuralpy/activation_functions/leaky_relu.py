@@ -36,7 +36,6 @@ class LeakyReLU(CustomLayer):
 
     self.__negative_slope = negative_slope
 
-  # pylint: disable=W0613, disable=R0201
   def get_input_dim(self, prev_input_dim, layer_type):
     """
       This method calculates the input shape for layer based on previous output layer.
@@ -56,7 +55,7 @@ class LeakyReLU(CustomLayer):
       No need to call this method for using NeuralPy.
     """
     # Returning all the details of the activation function
-    return self._get_layer_details(None,  {
-      'negative_slope': self.__negative_slope,
-      'inplace': False
-    })
+    return self._get_layer_details(None, {
+        'negative_slope': self.__negative_slope,
+        'inplace': False
+        })

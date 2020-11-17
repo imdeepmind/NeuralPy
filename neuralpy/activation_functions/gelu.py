@@ -3,6 +3,7 @@
 from torch.nn import GELU as _GELU
 from neuralpy.utils import CustomLayer
 
+
 class GELU(CustomLayer):
   """
   Applies the Gaussian Error Linear Units function to the input tensors.
@@ -23,7 +24,6 @@ class GELU(CustomLayer):
     """
     super().__init__(_GELU, "GELU", layer_name=name)
 
-  # pylint: disable=W0613, disable=R0201
   def get_input_dim(self, prev_input_dim, layer_type):
     """
         This method calculates the input shape for layer based on previous output layer.

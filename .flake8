@@ -1,0 +1,43 @@
+[flake8]
+
+jobs = auto
+verbose = 0
+quiet = 0
+
+format = default
+count = True
+show-source = True
+statistics = True
+
+output-file = flake8.log
+tee = True
+
+ignore = E111
+
+exclude =
+    .git,
+    __pycache__,
+    .github,
+    __pytest_cache__,
+    .vscode,
+    build,
+    dist,
+    docs,
+    htmlcov,
+    ignore,
+    neuralpy_torch.egg-info,
+    example.py,
+    conftest.py
+
+filename =
+    *.py
+
+disable-noqa = False
+max-line-length = 88
+max-complexity = 15
+hang-closing = True
+
+doctests = True
+
+per-file-ignores =
+    __init__.py: F401
