@@ -149,14 +149,13 @@ class ConvTranspose1d:
                 raise ValueError("Unsupported previous layer, please provide your own input shape for the layer")
 
     def get_layer(self):
-         """
+        """
             This method returns the details as dict of the layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-
         return{
                 'layer_details': self.__get_layer_details(),
                 'name': self.__name,
