@@ -11,7 +11,7 @@ from neuralpy.activation_functions import LeakyReLU
     (.33, 12),
     (.33, 3.6),
     (.33, -2),
-    ])
+])
 def test_leaky_relu_should_throw_value_error_Exception(negative_slope, name):
     with pytest.raises(ValueError):
         LeakyReLU(negative_slope=negative_slope, name=name)
@@ -25,8 +25,8 @@ names = ['test1', 'test2', None]
 
 
 @pytest.mark.parametrize('negative_slope, name', [(negative_slope,
-                         name) for negative_slope in negative_slopes
-                         for name in names])
+                                                   name) for negative_slope in negative_slopes
+                                                  for name in names])
 def test_leaky_relu_get_input_dim_and_get_layer_method(negative_slope, name):
     x = LeakyReLU(negative_slope=negative_slope, name=name)
 

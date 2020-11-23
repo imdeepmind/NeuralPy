@@ -16,6 +16,7 @@ def test_flatten_should_throw_value_error(start_dim, end_dim):
     with pytest.raises(ValueError) as ex:
         x = Flatten(start_dim=start_dim, end_dim=end_dim)
 
+
 # possible values
 start_dims = [6, 3]
 end_dims = [3, 1]
@@ -35,7 +36,7 @@ def test_flatten_get_layer_method(start_dim, end_dim):
 
     assert isinstance(details, dict) == True
 
-    assert x.get_input_dim(prev_input_dim, "flatten") == None
+    assert x.get_input_dim(prev_input_dim, "flatten") is None
 
     if start_dim:
         assert details["keyword_arguments"]["start_dim"] == start_dim

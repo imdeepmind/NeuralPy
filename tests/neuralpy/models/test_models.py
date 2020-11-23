@@ -165,6 +165,7 @@ def test_model_predict_method():
     with pytest.raises(ValueError) as ex:
         model.predict(predict_data=X_test, batch_size=400)
 
+
 def test_model_evaluate_method():
     model = Model()
     model.set_model(pytorch_model)
@@ -182,7 +183,8 @@ def test_model_evaluate_method():
 
     with pytest.raises(ValueError) as ex:
         model.evaluate(test_data=(X_test, y_test), batch_size=400)
-    
+
+
 def test_model_summary_method():
     model = Model()
     model.set_model(pytorch_model)
@@ -193,7 +195,8 @@ def test_model_summary_method():
     with pytest.raises(Exception) as ex:
         model = Model()
         model.summary()
-    
+
+
 def test_model_set_model_method():
     model = Model()
     model.set_model(pytorch_model)
@@ -203,6 +206,7 @@ def test_model_set_model_method():
         model = Model()
         model.set_model(None)
 
+
 def test_model_save_method():
     model = Model()
     model.set_model(pytorch_model)
@@ -210,11 +214,12 @@ def test_model_save_method():
 
     with pytest.raises(ValueError) as ex:
         model.save(123)
-    
+
     with pytest.raises(ValueError) as ex:
         model.save("")
 
     model.save("ignore/test.npy")
+
 
 def test_model_load_method():
     model = Model()
@@ -223,7 +228,7 @@ def test_model_load_method():
 
     with pytest.raises(ValueError) as ex:
         model.load(123)
-    
+
     with pytest.raises(ValueError) as ex:
         model.load("")
 
@@ -237,11 +242,12 @@ def test_model_save_for_inference_method():
 
     with pytest.raises(ValueError) as ex:
         model.save_for_inference(123)
-    
+
     with pytest.raises(ValueError) as ex:
         model.save_for_inference("")
 
     model.save_for_inference("ignore/test.npy")
+
 
 def test_model_load_for_inference_method():
     model = Model()
@@ -250,7 +256,7 @@ def test_model_load_for_inference_method():
 
     with pytest.raises(ValueError) as ex:
         model.load_for_inference(123)
-    
+
     with pytest.raises(ValueError) as ex:
         model.load_for_inference("")
 
@@ -259,4 +265,3 @@ def test_model_load_for_inference_method():
     with pytest.raises(ValueError) as ex:
         model = Model()
         model.load_for_inference("ignore/test.npy")
-

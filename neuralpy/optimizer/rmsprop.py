@@ -3,6 +3,8 @@
 from torch.optim import RMSprop as _RMSprop
 
 # pylint: disable=too-few-public-methods
+
+
 class RMSprop:
     """
         Implements RMSProp optimizer.
@@ -17,6 +19,7 @@ class RMSprop:
                 the gradient is normalized by an estimation of its variance
     """
     # pylint: disable=too-many-arguments
+
     def __init__(self, learning_rate=0.001, alpha=0.99, eps=1e-08, weight_decay=0.0,
                  momentum=0.0, centered=False):
         """

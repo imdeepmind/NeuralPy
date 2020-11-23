@@ -26,7 +26,8 @@ nesteroves = [122, ""]
         (0.001, 0.002, 0.342, 0.1, "invalid"),
     ]
 )
-def test_sgd_should_throw_value_error(learning_rate, momentum, dampening, weight_decay, nesterov):
+def test_sgd_should_throw_value_error(
+        learning_rate, momentum, dampening, weight_decay, nesterov):
     with pytest.raises(ValueError) as ex:
         x = SGD(learning_rate=learning_rate, momentum=momentum,
                 dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
@@ -48,7 +49,8 @@ nesteroves = [False, True]
      for weight_decay in weight_decays
      for nesterov in nesteroves]
 )
-def test_sgd_get_layer_method(learning_rate, momentum, dampening, weight_decay, nesterov):
+def test_sgd_get_layer_method(learning_rate, momentum,
+                              dampening, weight_decay, nesterov):
     x = SGD(learning_rate=learning_rate, momentum=momentum,
             dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
 
@@ -69,6 +71,7 @@ def test_sgd_get_layer_method(learning_rate, momentum, dampening, weight_decay, 
     assert details["keyword_arguments"]["weight_decay"] == weight_decay
 
     assert details["keyword_arguments"]["nesterov"] == nesterov
+
 
 def test_sgd_get_layer_method_without_parameter():
     x = SGD()

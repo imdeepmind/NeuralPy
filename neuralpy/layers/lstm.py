@@ -32,6 +32,7 @@ class LSTM:
 
     """
     # pylint: disable=too-many-instance-attributes,too-many-arguments
+
     def __init__(
             self, hidden_size, num_layers=1, input_size=None,
             bias=True, batch_first=False, dropout=0,

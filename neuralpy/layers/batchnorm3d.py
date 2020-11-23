@@ -81,7 +81,8 @@ class BatchNorm3D:
             No need to call this method for using NeuralPy.
         """
         # based on the prev layer type, predicting the __num_features
-        # Checking if num_features is there or not, not overwriting the num_features field
+        # Checking if num_features is there or not, not overwriting the
+        # num_features field
         if not self.__num_features:
 
             # based on the prev layer type, predicting the __num_features

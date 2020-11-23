@@ -26,6 +26,7 @@ class AvgPool3D:
 
     """
     # pylint: disable=too-many-branches
+
     def __init__(self, kernel_size, stride=None, padding=0,
                  ceil_mode=False, count_include_pad=True, divisor_override=None, name=None):
         """

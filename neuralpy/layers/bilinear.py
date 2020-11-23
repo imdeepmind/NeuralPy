@@ -3,6 +3,8 @@
 from torch.nn import Bilinear as _BiLinear
 
 # pylint: disable=duplicate-code
+
+
 class Bilinear:
     '''
     A bilinear layer is a function of two inputs x and y

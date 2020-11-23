@@ -4,7 +4,7 @@ from neuralpy.regularizers import Dropout
 
 
 @pytest.mark.parametrize('p, name', [(6.3, 'Test'), (-4.2, 'Test'),
-                         (.33, False), (.56, 12)])
+                                     (.33, False), (.56, 12)])
 def test_dense_should_throw_value_error(p, name):
     with pytest.raises(ValueError):
         Dropout(p=p, name=name)

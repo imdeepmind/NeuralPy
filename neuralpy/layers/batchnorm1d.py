@@ -24,6 +24,7 @@ class BatchNorm1D:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
+
     def __init__(
             self, num_features, eps=1e-05, momentum=0.1, affine=True,
             track_running_status=True, name=None):
@@ -50,7 +51,7 @@ class BatchNorm1D:
         if num_features is not None and not isinstance(num_features, int):
             raise ValueError("Please provide a valid num_features")
         # Checking eps field
-        if  not isinstance(eps, float):
+        if not isinstance(eps, float):
             raise ValueError("Please provide a valid eps")
         # Checking momentum field
         if not isinstance(momentum, float):
@@ -82,7 +83,8 @@ class BatchNorm1D:
             No need to call this method for using NeuralPy.
         """
         # based on the prev layer type, predicting the __num_features
-        # Checking if num_features is there or not, not overwriting the num_features field
+        # Checking if num_features is there or not, not overwriting the
+        # num_features field
         if not self.__num_features:
 
             # based on the prev layer type, predicting the __num_features
@@ -109,7 +111,7 @@ class BatchNorm1D:
             "name": self.__name,
             "layer": _BatchNorm1d,
             "type": "BatchNorm1d",
-            "keyword_arguments":{
+            "keyword_arguments": {
                 "num_features": self.__num_features,
                 "eps": self.__eps,
                 "momentum": self.__momentum,

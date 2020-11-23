@@ -3,6 +3,7 @@ from neuralpy.layers import Dense
 
 import pytest
 
+
 def test_add_method():
     model = Sequential()
 

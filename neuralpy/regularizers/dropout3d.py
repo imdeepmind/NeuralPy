@@ -59,4 +59,4 @@ class Dropout3D(CustomLayer):
         return self._get_layer_details(None, {
             'p': self.__p,
             'inplace': False
-            })
+        })

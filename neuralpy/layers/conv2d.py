@@ -28,7 +28,8 @@ class Conv2D:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
-    # pylint: disable=too-many-instance-attributes,too-many-arguments,too-many-branches,too-many-statements
+    # pylint:
+    # disable=too-many-instance-attributes,too-many-arguments,too-many-branches,too-many-statements
 
     def __init__(self, filters, kernel_size, input_shape=None,
                  stride=1, padding=0, dilation=1, groups=1, bias=True, name=None):
@@ -180,7 +181,8 @@ class Conv2D:
                   dilation_2 * (kernel_2 - 1) - 1) // stride_2) + 1
 
         # Returning for the next layers
-        return (self.__input_shape[0], dim_1*dim_2*self.__filters, (self.__filters, dim_1, dim_2))
+        return (self.__input_shape[0], dim_1 * dim_2 *
+                self.__filters, (self.__filters, dim_1, dim_2))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

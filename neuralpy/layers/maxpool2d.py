@@ -96,7 +96,7 @@ class MaxPool2D:
                 raise ValueError("Please provide a valid dilation")
 
         # Checking the return_indices, it is an optional filed
-        if  not isinstance(return_indices, bool):
+        if not isinstance(return_indices, bool):
             raise ValueError(
                 "Please provide a valid value for return_indices")
 

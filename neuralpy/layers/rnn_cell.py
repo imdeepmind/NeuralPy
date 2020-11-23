@@ -26,7 +26,6 @@ class RNNCell:
     def __init__(
             self, input_size, hidden_size,
             bias=True, non_linearity='tanh', name=None):
-
         """
             __init__ method for RNNCell
 
@@ -65,7 +64,6 @@ class RNNCell:
         self.__bias = bias
         self.__non_linearity = non_linearity
         self.__name = name
-
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

@@ -21,7 +21,8 @@ from neuralpy.optimizer import RMSprop
         (0.001, 0.001, 0.2, 0.32, 0.32, "invalid"),
     ]
 )
-def test_rmsprop_should_throw_value_error(learning_rate, alpha, eps, weight_decay, momentum, centered):
+def test_rmsprop_should_throw_value_error(
+        learning_rate, alpha, eps, weight_decay, momentum, centered):
     with pytest.raises(ValueError) as ex:
         x = RMSprop(learning_rate=learning_rate, alpha=alpha, eps=eps, weight_decay=weight_decay,
                     momentum=momentum, centered=centered)
@@ -45,7 +46,8 @@ centeredes = [False, True]
      for momentum in momentums
      for centered in centeredes]
 )
-def test_rmsprop_get_layer_method(learning_rate, alpha, eps, weight_decay, momentum, centered):
+def test_rmsprop_get_layer_method(
+        learning_rate, alpha, eps, weight_decay, momentum, centered):
     x = RMSprop(learning_rate=learning_rate, alpha=alpha, eps=eps, weight_decay=weight_decay,
                 momentum=momentum, centered=centered)
 

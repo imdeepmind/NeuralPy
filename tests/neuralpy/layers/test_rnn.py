@@ -76,7 +76,7 @@ def test_RNN_should_throw_value_error(
 # Possible values
 input_sizes = [1, 2, None]
 hidden_sizes = [2, 2]
-num_layerses = [1,  4]
+num_layerses = [1, 4]
 non_linearities = ['tanh', 'relu']
 biases = [False, True]
 batch_firsts = [False, True]

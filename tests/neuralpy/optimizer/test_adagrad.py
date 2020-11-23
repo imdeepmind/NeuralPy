@@ -16,7 +16,8 @@ from neuralpy.optimizer import Adagrad
         (.001, .003, .001, "invalid")
     ]
 )
-def test_adagrad_should_throw_value_error(learning_rate, learning_rate_decay, eps, weight_decay):
+def test_adagrad_should_throw_value_error(
+        learning_rate, learning_rate_decay, eps, weight_decay):
     with pytest.raises(ValueError) as ex:
         x = Adagrad(learning_rate=learning_rate,
                     learning_rate_decay=learning_rate_decay, eps=eps, weight_decay=weight_decay)

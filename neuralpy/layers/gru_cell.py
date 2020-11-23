@@ -22,9 +22,8 @@ class GRUCell:
     """
 
     def __init__(
-            self, input_size, hidden_size, bias=True, name=None
-        ):
-
+        self, input_size, hidden_size, bias=True, name=None
+    ):
         """
             __init__ method for GRUCell
 
@@ -58,7 +57,6 @@ class GRUCell:
 
         self.__bias = bias
         self.__name = name
-
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

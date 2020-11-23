@@ -43,7 +43,8 @@ class Model:
 
         # if force_cpu then using CPU
         # if device provided, then using it
-        # else auto detecting the device, if cuda available then using it (default option)
+        # else auto detecting the device, if cuda available then using it (default
+        # option)
 
         # there is a issue pylint, because of that, disabling the no-member check
         # for more info, have the look at the link below
@@ -100,7 +101,7 @@ class Model:
                 # Splitting the data into batches
                 for i in range(0, len(X), batch_size):
                     # Generating the batch from X
-                    batch_x = X[i:i+batch_size].float().to(self.__device)
+                    batch_x = X[i:i + batch_size].float().to(self.__device)
 
                     # Feeding the batch into the model for predictions
                     outputs = self.__model(batch_x)
@@ -196,11 +197,11 @@ class Model:
         # Splitting the data into batches
         for i in range(0, len(x_train), batch_size):
             # Making the batches
-            batch_x = x_train[i:i+batch_size].float()
+            batch_x = x_train[i:i + batch_size].float()
             if "accuracy" in self.__metrics:
-                batch_y = y_train[i:i+batch_size]
+                batch_y = y_train[i:i + batch_size]
             else:
-                batch_y = y_train[i:i+batch_size].float()
+                batch_y = y_train[i:i + batch_size].float()
 
             # Moving the batches to device
             batch_x, batch_y = batch_x.to(
@@ -232,7 +233,7 @@ class Model:
                 correct_training += corrects
 
                 self.__history["batchwise"]["training_accuracy"].append(
-                    corrects/batch_size*100)
+                    corrects / batch_size * 100)
 
                 print_training_progress(epoch, epochs, i, batch_size, len(
                     x_train), train_loss.item(), corrects)
@@ -242,7 +243,7 @@ class Model:
 
         # Checking if accuracy is there in metrics
         if "accuracy" in self.__metrics:
-            return training_loss_score, correct_training/len(x_train)*100
+            return training_loss_score, correct_training / len(x_train) * 100
         return training_loss_score, 0
 
     def __validation_loop(self, x_test, y_test, batch_size):
@@ -282,11 +283,11 @@ class Model:
             # Splitting the data into batches
             for i in range(0, len(x_test), batch_size):
                 # Making the batches
-                batch_x = x_test[i:i+batch_size].float()
+                batch_x = x_test[i:i + batch_size].float()
                 if "accuracy" in self.__metrics:
-                    batch_y = y_test[i:i+batch_size]
+                    batch_y = y_test[i:i + batch_size]
                 else:
-                    batch_y = y_test[i:i+batch_size].float()
+                    batch_y = y_test[i:i + batch_size].float()
 
                 # Moving the batches to device
                 batch_x, batch_y = batch_x.to(
@@ -312,7 +313,7 @@ class Model:
                     correct_val += corrects
 
                     self.__history["batchwise"]["validation_accuracy"].append(
-                        corrects/batch_size*100)
+                        corrects / batch_size * 100)
 
         # Calculating the mean val loss score for all batches
         validation_loss_score /= batch_size
@@ -323,7 +324,7 @@ class Model:
             print_validation_progress(
                 validation_loss_score, len(x_test), correct_val)
 
-            return validation_loss_score, correct_val/len(x_test)*100
+            return validation_loss_score, correct_val / len(x_test) * 100
 
         # Printing a friendly message to the console
         print_validation_progress(
@@ -334,7 +335,7 @@ class Model:
     def fit(self,
             train_data,
             validation_data=None,
-            epochs=10, 
+            epochs=10,
             batch_size=32,
             steps_per_epoch=None,
             validation_steps=None,

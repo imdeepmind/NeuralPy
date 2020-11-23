@@ -6,6 +6,7 @@ import torch
 from .model import Model
 from .model_helper import build_layer_from_dict
 
+
 class Sequential(Model):
     """
         Sequential is a linear stack of layers with single
@@ -29,7 +30,8 @@ class Sequential(Model):
                     be used for training predictions
                 random_state: (Integer) Random state for the device
         """
-        super(Sequential, self).__init__(force_cpu, training_device, random_state)
+        super(Sequential, self).__init__(
+            force_cpu, training_device, random_state)
         # Initializing some attributes that we need to function
         self.__layers = []
         self.__build = False

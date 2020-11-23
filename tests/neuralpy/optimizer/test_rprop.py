@@ -2,6 +2,7 @@ import pytest
 from torch.optim import Rprop as _Rprop
 from neuralpy.optimizer import Rprop
 
+
 @pytest.mark.parametrize(
     "learning_rate, etas, step_sizes",
     [

@@ -22,7 +22,7 @@ def test_train_logger_should_not_throw_any_error():
         {},
         {},
         None,
-        )
+    )
     x.callback(
         10,
         1,
@@ -30,4 +30,4 @@ def test_train_logger_should_not_throw_any_error():
         {'inplace': True},
         {'inplace': True},
         None,
-        )
+    )

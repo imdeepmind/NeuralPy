@@ -14,6 +14,7 @@ class Flatten:
             start_dim: (Integer) first dim to flatten (default = 1)
             end_dim: (Integer)  last dim to flatten (default = -1)
     """
+
     def __init__(self, start_dim=1, end_dim=-1, name=None):
         """
             __init__ method for Flatten

@@ -77,7 +77,7 @@ def test_bilinear_get_layer_method(
         assert details["keyword_arguments"]["in_features1"] == n_inputs
     else:
         assert details["keyword_arguments"]["in_features1"] == prev_dim[0]
-    
+
     assert details["keyword_arguments"]["in_features2"] == n_inputs2
 
     assert details["keyword_arguments"]["out_features"] == n_nodes
