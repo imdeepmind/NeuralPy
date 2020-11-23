@@ -18,7 +18,7 @@ from neuralpy.optimizer import Adagrad
 )
 def test_adagrad_should_throw_value_error(
         learning_rate, learning_rate_decay, eps, weight_decay):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = Adagrad(learning_rate=learning_rate,
                     learning_rate_decay=learning_rate_decay, eps=eps, weight_decay=weight_decay)
 
@@ -36,11 +36,11 @@ def test_adagrad_get_layer_method(learning_rate, learning_rate_decay, eps, weigh
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _Adagrad) == True
+    assert issubclass(details["optimizer"], _Adagrad) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == learning_rate
 
@@ -56,11 +56,11 @@ def test_adagrad_get_layer_method_without_parameters():
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _Adagrad) == True
+    assert issubclass(details["optimizer"], _Adagrad) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == 0.001
 

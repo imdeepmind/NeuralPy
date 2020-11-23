@@ -11,7 +11,7 @@ import torch
     [("invalid", "", 12, 6.3)]
 )
 def test_cce_should_throw_value_error(reduction):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = MSELoss(reduction=reduction)
 
 
@@ -24,11 +24,11 @@ def test_mse_get_layer_method(reduction):
 
     details = x.get_loss_function()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["loss_function"], _MSELoss) == True
+    assert issubclass(details["loss_function"], _MSELoss) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["reduction"] == reduction
 
@@ -38,10 +38,10 @@ def test_mse_get_layer_method_without_parameters():
 
     details = x.get_loss_function()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["loss_function"], _MSELoss) == True
+    assert issubclass(details["loss_function"], _MSELoss) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["reduction"] == 'mean'

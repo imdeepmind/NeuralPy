@@ -26,7 +26,7 @@ amsgrads = [12, "", 30.326]
     ]
 )
 def test_adam_should_throw_value_error(learning_rate, beta, eps, weight_decay, amsgrad):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = Adam(learning_rate=learning_rate, betas=beta, eps=eps,
                  weight_decay=weight_decay, amsgrad=amsgrad)
 
@@ -53,11 +53,11 @@ def test_adam_get_layer_method(learning_rate, beta, eps, weight_decay, amsgrad):
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _Adam) == True
+    assert issubclass(details["optimizer"], _Adam) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == learning_rate
 

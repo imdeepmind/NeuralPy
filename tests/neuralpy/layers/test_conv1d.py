@@ -4,7 +4,7 @@ from neuralpy.layers import Conv1D
 
 
 def test_conv1d_should_throw_type_error():
-    with pytest.raises(TypeError) as ex:
+    with pytest.raises(TypeError):
         x = Conv1D()
 
 
@@ -64,7 +64,7 @@ def test_conv1d_should_throw_type_error():
 )
 def test_conv1d_should_throw_value_error(
         filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = Conv1D(filters=filters, kernel_size=kernel_size, input_shape=input_shape,
                    stride=stride, padding=padding, dilation=dilation, groups=groups, bias=bias, name=name)
 
@@ -105,7 +105,7 @@ def test_conv1d_get_layer_method(
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     # TODO: Need to check the formula
     # if input_shape is None:
@@ -115,11 +115,11 @@ def test_conv1d_get_layer_method(
 
     assert details["name"] == _name
 
-    assert issubclass(details["layer"], _Conv1D) == True
+    assert issubclass(details["layer"], _Conv1D) is True
 
     assert details["type"] == "Conv1D"
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
 
 def test_conv1d_get_layer_method_invlaid_layer():
@@ -127,5 +127,5 @@ def test_conv1d_get_layer_method_invlaid_layer():
 
     prev_dim = (3, 3 * 32, (3, 32))
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x.get_input_dim(prev_dim, "conv2d")

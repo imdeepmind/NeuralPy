@@ -4,7 +4,7 @@ from neuralpy.layers import Dense
 
 
 def test_dense_should_throw_type_error():
-    with pytest.raises(TypeError) as ex:
+    with pytest.raises(TypeError):
         x = Dense()
 
 
@@ -24,7 +24,7 @@ def test_dense_should_throw_type_error():
     ]
 )
 def test_dense_should_throw_value_error(n_nodes, n_inputs, bias, name):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = Dense(n_nodes=n_nodes, n_inputs=n_inputs, bias=bias, name=name)
 
 
@@ -51,15 +51,15 @@ def test_dense_get_layer_method(n_nodes, n_inputs, bias, name):
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details["layer_details"] == (n_nodes,)
 
     assert details["name"] == name
 
-    assert issubclass(details["layer"], Linear) == True
+    assert issubclass(details["layer"], Linear) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     if n_inputs:
         assert details["keyword_arguments"]["in_features"] == n_inputs

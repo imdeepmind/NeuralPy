@@ -4,7 +4,7 @@ from neuralpy.layers import BatchNorm1D
 
 
 def test_batchnorm1d_should_throw_type_error():
-    with pytest.raises(TypeError) as ex:
+    with pytest.raises(TypeError):
         x = BatchNorm1D()
 
 
@@ -23,7 +23,7 @@ def test_batchnorm1d_should_throw_type_error():
 def test_batchnorm1d_should_throw_value_error(
         num_features, eps, momentum, affine,
         track_running_status, name):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = BatchNorm1D(
             num_features=num_features, eps=eps, momentum=momentum,
             affine=affine, track_running_status=track_running_status,
@@ -70,7 +70,7 @@ def test_batchnorm1d_get_layer_method(
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details["layer_details"] == (num_features,)
 
@@ -80,7 +80,7 @@ def test_batchnorm1d_get_layer_method(
 
     assert details["type"] == "BatchNorm1d"
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["eps"] == eps
 

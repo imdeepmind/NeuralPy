@@ -16,7 +16,7 @@ import torch
      ([1.0, 1.0, 1.0], "sum", "invalid")]
 )
 def test_bce_should_throw_value_error(weight, reduction, pos_weight):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = BCELoss(weight=weight, reduction=reduction, pos_weight=pos_weight)
 
 
@@ -31,11 +31,11 @@ def test_bce_get_layer_method(weight, reduction, pos_weight):
 
     details = x.get_loss_function()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["loss_function"], _BCEWithLogitsLoss) == True
+    assert issubclass(details["loss_function"], _BCEWithLogitsLoss) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert torch.all(torch.eq(
         details["keyword_arguments"]["weight"], torch.tensor(weight).float())) == True
@@ -51,11 +51,11 @@ def test_bce_get_layer_method_with_default_parameters():
 
     details = x.get_loss_function()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["loss_function"], _BCEWithLogitsLoss) == True
+    assert issubclass(details["loss_function"], _BCEWithLogitsLoss) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["weight"] is None
 

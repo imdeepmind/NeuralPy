@@ -20,7 +20,7 @@ import torch
     ]
 )
 def test_cce_should_throw_value_error(weight, reduction, ignore_index):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = CrossEntropyLoss(
             weight=weight, reduction=reduction, ignore_index=ignore_index)
 
@@ -39,11 +39,11 @@ def test_cce_get_layer_method(weight, reduction, ignore_index):
 
     details = x.get_loss_function()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["loss_function"], _CrossEntropyLoss) == True
+    assert issubclass(details["loss_function"], _CrossEntropyLoss) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert torch.all(torch.eq(
         details["keyword_arguments"]["weight"], torch.tensor(weight).float())) == True
@@ -58,11 +58,11 @@ def test_CrossEntropyLoss_get_layer_method_with_default_parameters():
 
     details = x.get_loss_function()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["loss_function"], _CrossEntropyLoss) == True
+    assert issubclass(details["loss_function"], _CrossEntropyLoss) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["weight"] is None
 

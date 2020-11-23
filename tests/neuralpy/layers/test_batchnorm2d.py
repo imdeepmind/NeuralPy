@@ -18,7 +18,7 @@ from neuralpy.layers import BatchNorm2D
 def test_batchnorm3d_should_throw_value_error(
         num_features, eps, momentum, affine,
         track_running_stats, name):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = BatchNorm2D(
             num_features=num_features, eps=eps, momentum=momentum,
             affine=affine, track_running_stats=track_running_stats,
@@ -65,7 +65,7 @@ def test_batchnorm2d_get_layer_method(
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details["layer_details"] is None
 
@@ -75,7 +75,7 @@ def test_batchnorm2d_get_layer_method(
 
     assert details["type"] == "BatchNorm2d"
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["eps"] == eps
 

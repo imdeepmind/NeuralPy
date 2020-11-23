@@ -4,7 +4,7 @@ from neuralpy.layers import AvgPool3D
 
 
 def test_AvgPool3D_should_throws_type_error():
-    with pytest.raises(TypeError) as ex:
+    with pytest.raises(TypeError):
         x = AvgPool3D()
 
 
@@ -48,7 +48,7 @@ def test_AvgPool3D_should_throws_type_error():
 )
 def test_AvgPool3D_throws_value_error(
         kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, name):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = AvgPool3D(
             kernel_size=kernel_size, stride=stride,
             padding=padding,
@@ -90,14 +90,14 @@ def test_AvgPool3D_get_layer_method(
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details['name'] == name
 
-    assert issubclass(details['layer'], _AvgPool3D) == True
+    assert issubclass(details['layer'], _AvgPool3D) is True
 
     assert isinstance(
-        details['keyword_arguments'], dict) == True
+        details['keyword_arguments'], dict) is True
 
     assert details['keyword_arguments']['kernel_size'] == kernel_size
 

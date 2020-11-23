@@ -44,13 +44,13 @@ def predict_generator():
 
 
 def test_model():
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = Model(force_cpu="test")
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = Model(training_device="test")
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = Model(random_state="test")
 
     training_device = device("cpu")
@@ -66,14 +66,14 @@ def test_models_compile_method():
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model = Model()
         model.set_model(pytorch_model)
 
         model.compile(optimizer=Adam(),
                       loss_function=MSELoss(), metrics=["test"])
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model = Model()
         model.set_model(pytorch_model)
 
@@ -102,44 +102,44 @@ def test_model_fit_method():
     model.fit(train_data=train_gen, validation_data=validation_gen, epochs=1,
               batch_size=4, steps_per_epoch=5, validation_steps=5, callbacks=[logger])
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.fit(train_data=(X_train, y_train), validation_data=(
             X_validation, y_validation), epochs=1, batch_size=1024)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.fit(train_data=(X_train, y_train[:-1]), validation_data=(
             X_validation, y_validation), epochs=-20, batch_size=1024)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.fit(train_data=(X_train, y_train[:-1]), validation_data=(
             X_validation, y_validation), epochs=1, batch_size=-10)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.fit(train_data=(X_train, y_train[:-1]), validation_data=(
             X_validation, y_validation), epochs=1, batch_size=32, callbacks="test")
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
         model.fit(train_data=train_gen, validation_data=validation_gen,
                   epochs=1, batch_size=32, steps_per_epoch=-123, validation_steps=5)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
         model.fit(train_data=train_gen, validation_data=validation_gen,
                   epochs=1, batch_size=32, steps_per_epoch="test", validation_steps=5)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
         model.fit(train_data=train_gen, validation_data=validation_gen,
                   epochs=1, batch_size=32, steps_per_epoch=5, validation_steps=-23)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
@@ -162,7 +162,7 @@ def test_model_predict_method():
 
     model.predict(predict_data=test_gen, batch_size=4, predict_steps=4)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.predict(predict_data=X_test, batch_size=400)
 
 
@@ -181,7 +181,7 @@ def test_model_evaluate_method():
 
     model.evaluate(test_data=test_gen, batch_size=4, tests_steps=4)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.evaluate(test_data=(X_test, y_test), batch_size=400)
 
 
@@ -192,7 +192,7 @@ def test_model_summary_method():
 
     model.summary()
 
-    with pytest.raises(Exception) as ex:
+    with pytest.raises(Exception):
         model = Model()
         model.summary()
 
@@ -202,7 +202,7 @@ def test_model_set_model_method():
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model = Model()
         model.set_model(None)
 
@@ -212,10 +212,10 @@ def test_model_save_method():
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.save(123)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.save("")
 
     model.save("ignore/test.npy")
@@ -226,10 +226,10 @@ def test_model_load_method():
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.load(123)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.load("")
 
     model.load("ignore/test.npy")
@@ -240,10 +240,10 @@ def test_model_save_for_inference_method():
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.save_for_inference(123)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.save_for_inference("")
 
     model.save_for_inference("ignore/test.npy")
@@ -254,14 +254,14 @@ def test_model_load_for_inference_method():
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.load_for_inference(123)
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model.load_for_inference("")
 
     model.load_for_inference("ignore/test.npy")
 
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         model = Model()
         model.load_for_inference("ignore/test.npy")

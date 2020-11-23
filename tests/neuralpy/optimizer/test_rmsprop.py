@@ -23,7 +23,7 @@ from neuralpy.optimizer import RMSprop
 )
 def test_rmsprop_should_throw_value_error(
         learning_rate, alpha, eps, weight_decay, momentum, centered):
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = RMSprop(learning_rate=learning_rate, alpha=alpha, eps=eps, weight_decay=weight_decay,
                     momentum=momentum, centered=centered)
 
@@ -53,11 +53,11 @@ def test_rmsprop_get_layer_method(
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _RMSprop) == True
+    assert issubclass(details["optimizer"], _RMSprop) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == learning_rate
 
@@ -77,11 +77,11 @@ def test_rmsprop_get_layer_method_without_parameter():
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _RMSprop) == True
+    assert issubclass(details["optimizer"], _RMSprop) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == 0.001
 
@@ -93,4 +93,4 @@ def test_rmsprop_get_layer_method_without_parameter():
 
     assert details["keyword_arguments"]["weight_decay"] == 0.0
 
-    assert details["keyword_arguments"]["centered"] == False
+    assert details["keyword_arguments"]["centered"] is False
