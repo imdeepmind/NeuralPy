@@ -25,7 +25,8 @@ amsgrads = [12, "", 30.326]
         (0.001, (0.10, 2.0), .2, .32, "INVALID")
     ]
 )
-def test_adam_should_throw_value_error(learning_rate, beta, eps, weight_decay, amsgrad):
+def test_adam_should_throw_value_error(
+        learning_rate, beta, eps, weight_decay, amsgrad):
     with pytest.raises(ValueError):
         x = Adam(learning_rate=learning_rate, betas=beta, eps=eps,
                  weight_decay=weight_decay, amsgrad=amsgrad)
@@ -47,7 +48,8 @@ amsgrads = [False, True]
      for weight_decay in weight_decays
      for amsgrad in amsgrads]
 )
-def test_adam_get_layer_method(learning_rate, beta, eps, weight_decay, amsgrad):
+def test_adam_get_layer_method(
+        learning_rate, beta, eps, weight_decay, amsgrad):
     x = Adam(learning_rate=learning_rate, betas=beta, eps=eps,
              weight_decay=weight_decay, amsgrad=amsgrad)
 

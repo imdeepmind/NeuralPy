@@ -20,7 +20,8 @@ class Sequential(Model):
             random_state: (Integer) Random state for the device
     """
 
-    def __init__(self, force_cpu=False, training_device=None, random_state=None):
+    def __init__(self, force_cpu=False, training_device=None,
+                 random_state=None):
         """
             __init__ method for Sequential Model
 

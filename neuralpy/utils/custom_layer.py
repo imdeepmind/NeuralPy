@@ -30,7 +30,8 @@ class CustomLayer:
         if not (isinstance(layer_type, str) and layer_type):
             raise ValueError("Please provide a valid layer type")
 
-        if layer_name is not None and not (isinstance(layer_name, str) and layer_name):
+        if layer_name is not None and not (
+                isinstance(layer_name, str) and layer_name):
             raise ValueError("Please provide a valid name")
 
         self.__layer_type = layer_type
@@ -48,7 +49,8 @@ class CustomLayer:
         if layer_details is not None and not isinstance(layer_details, tuple):
             raise ValueError("Please provide a valid layer details tuple")
 
-        if keyword_arguments is not None and not isinstance(keyword_arguments, dict):
+        if keyword_arguments is not None and not isinstance(
+                keyword_arguments, dict):
             raise ValueError("Please provide a valid keyword arguments tuple")
 
         return {

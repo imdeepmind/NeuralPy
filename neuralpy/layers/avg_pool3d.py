@@ -100,7 +100,8 @@ class AvgPool3D:
             raise ValueError("Please provide a valid count_include_pad")
 
         # Checking divisor_override
-        if divisor_override is not None and not isinstance(divisor_override, int):
+        if divisor_override is not None and not isinstance(
+                divisor_override, int):
             raise ValueError("Please provide a valid divisor_override")
 
         # Checking the name field, this is an optional field,
@@ -148,7 +149,8 @@ class AvgPool3D:
         dim_2 = ((height + 2 * padding_2 - kernel_2) // stride_2) + 1
         dim_3 = ((fourth + 2 * padding_3 - kernel_3) // stride_3) + 1
 
-        return (depth, depth * dim_1 * dim_2 * dim_3, (depth, dim_1, dim_2, dim_3))
+        return (depth, depth * dim_1 * dim_2 *
+                dim_3, (depth, dim_1, dim_2, dim_3))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

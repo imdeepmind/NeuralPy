@@ -37,7 +37,8 @@ class Dense:
             raise ValueError("Please provide a valid n_nodes")
 
         # Checking the n_input field, it is a optional field
-        if n_inputs is not None and not (isinstance(n_inputs, int) and n_inputs >= 0):
+        if n_inputs is not None and not (
+                isinstance(n_inputs, int) and n_inputs >= 0):
             raise ValueError("Please provide a valid n_inputs")
 
         # Checking the bias field, this is also optional, default to True
@@ -63,7 +64,8 @@ class Dense:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Checking if n_inputs is there or not, not overwriting the n_input field
+        # Checking if n_inputs is there or not, not overwriting the n_input
+        # field
         if not self.__n_inputs:
             layer_type = prev_layer_type.lower()
 

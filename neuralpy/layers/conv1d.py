@@ -28,7 +28,8 @@ class Conv1D:
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
-    # pylint: disable=too-many-instance-attributes,too-many-arguments,too-many-branches
+    # pylint:
+    # disable=too-many-instance-attributes,too-many-arguments,too-many-branches
 
     def __init__(self, filters, kernel_size, input_shape=None,
                  stride=1, padding=0, dilation=1, groups=1, bias=True, name=None):
@@ -58,7 +59,8 @@ class Conv1D:
             raise ValueError("Please provide a valid filters")
 
         # Checking the kernel_size field
-        if kernel_size is not None and not isinstance(kernel_size, (int, tuple)):
+        if kernel_size is not None and not isinstance(
+                kernel_size, (int, tuple)):
             raise ValueError("Please provide a valid kernel_size")
 
         if isinstance(kernel_size, tuple):
@@ -161,7 +163,8 @@ class Conv1D:
                   dilation_1 * (kernel_1 - 1) - 1) // stride_1) + 1
 
         # Returning for the next layers
-        return (self.__input_shape[0], dim_1 * self.__filters, (self.__filters, dim_1))
+        return (self.__input_shape[0], dim_1 *
+                self.__filters, (self.__filters, dim_1))
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -170,13 +173,15 @@ class Conv1D:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Checking if n_inputs is there or not, not overwriting the n_input field
+        # Checking if n_inputs is there or not, not overwriting the n_input
+        # field
         if not self.__input_shape:
             layer_type = prev_layer_type.lower()
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type in ("conv1d", 'avgpool1d', 'maxpool1d', 'batchnorm1d'):
+            if layer_type in ("conv1d", 'avgpool1d',
+                              'maxpool1d', 'batchnorm1d'):
                 self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(

@@ -89,7 +89,8 @@ class AvgPool2D:
             raise ValueError("Please provide a valid count_include_pad")
 
         # Checking divisor_override
-        if divisor_override is not None and not isinstance(divisor_override, bool):
+        if divisor_override is not None and not isinstance(
+                divisor_override, bool):
             raise ValueError("Please provide a valid divisor_override")
 
         # Checking the name field, this is an optional field,

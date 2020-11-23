@@ -60,7 +60,8 @@ class Conv2D:
             raise ValueError("Please provide a valid filters")
 
         # Checking the kernel_size field
-        if kernel_size is not None and not isinstance(kernel_size, (int, tuple)):
+        if kernel_size is not None and not isinstance(
+                kernel_size, (int, tuple)):
             raise ValueError("Please provide a valid kernel_size")
 
         if isinstance(kernel_size, tuple):
@@ -191,13 +192,15 @@ class Conv2D:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Checking if n_inputs is there or not, not overwriting the __input_shape field
+        # Checking if n_inputs is there or not, not overwriting the
+        # __input_shape field
         if not self.__input_shape:
             layer_type = prev_layer_type.lower()
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type in ("conv2d", 'avgpool2d', 'maxpool2d', 'batchnorm1d'):
+            if layer_type in ("conv2d", 'avgpool2d',
+                              'maxpool2d', 'batchnorm1d'):
                 self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(

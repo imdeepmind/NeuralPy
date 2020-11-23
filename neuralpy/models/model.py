@@ -17,7 +17,8 @@ class Model:
         NeuralPy Model Class
     """
 
-    def __init__(self, force_cpu=False, training_device=None, random_state=None):
+    def __init__(self, force_cpu=False, training_device=None,
+                 random_state=None):
         self.__model = None
         self.__metrics = ["loss"]
         self.__loss_function = None
@@ -34,7 +35,8 @@ class Model:
 
         # Checking the training_device parameter and comparing it with pytorch device class
         # pylint: disable=no-member
-        if training_device is not None and not isinstance(training_device, torch.device):
+        if training_device is not None and not isinstance(
+                training_device, torch.device):
             raise ValueError("Please provide a valid neuralpy device class")
 
         # Validating random state
@@ -374,7 +376,8 @@ class Model:
         # Running the epochs
         for epoch in range(epochs):
             if isinstance(train_data, types.GeneratorType):
-                if not isinstance(steps_per_epoch, int) or steps_per_epoch <= 0:
+                if not isinstance(steps_per_epoch,
+                                  int) or steps_per_epoch <= 0:
                     raise ValueError("Please provide a valid steps_per_epoch")
 
                 total_loss = 0
@@ -404,7 +407,8 @@ class Model:
                     if not isinstance(validation_data, types.GeneratorType):
                         raise ValueError("Please provide a valid test data")
 
-                    if not isinstance(validation_steps, int) or validation_steps <= 0:
+                    if not isinstance(validation_steps,
+                                      int) or validation_steps <= 0:
                         raise ValueError(
                             "Please provide a valid validation_steps")
 
@@ -511,7 +515,8 @@ class Model:
         # Returning an numpy array of predictions
         return predictions.flatten()
 
-    def predict_classes(self, predict_data, predict_steps=None, batch_size=None):
+    def predict_classes(self, predict_data,
+                        predict_steps=None, batch_size=None):
         """
             The .predict_class()method is used for predicting classes using the trained mode.
             This method works only if accuracy is passed in the metrics parameter on the

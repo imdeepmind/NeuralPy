@@ -65,13 +65,15 @@ class LSTMCell:
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-       # Checking if n_inputs is there or not, not overwriting the n_input field
+       # Checking if n_inputs is there or not, not overwriting the n_input
+       # field
         if not self.__input_size:
             layer_type = prev_layer_type.lower()
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            if layer_type in ("lstmcell", "rnn", "lstm", "gru", "dense", "embedding"):
+            if layer_type in ("lstmcell", "rnn", "lstm",
+                              "gru", "dense", "embedding"):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(

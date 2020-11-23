@@ -51,7 +51,8 @@ def build_layer_from_dict(layer_refs):
 
         # If layer does not have name, then creating a unique name
         if not layer_name:
-            # This method generates a unique layer name based on layer type and index
+            # This method generates a unique layer name based on layer type and
+            # index
             layer_name = generate_layer_name(layer_type, index)
 
         # If layer_arguments is not None, then the layer accepts some parameters
@@ -91,7 +92,8 @@ def build_optimizer_from_dict(optimizer_ref, parameters):
     # Checking the optimizer_arguments, if it is not None then passing it to
     # the optimizer
     if optimizer_arguments:
-        # Initializing the optimizer with optimizer_arguments and models parameters
+        # Initializing the optimizer with optimizer_arguments and models
+        # parameters
         optimizer = optimizer_func(
             **optimizer_arguments, params=parameters)
     else:
@@ -175,7 +177,8 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
     print("\r" + message, end="")
 
 
-def print_validation_progress(validation_loss, no_samples, validation_corrects=None):
+def print_validation_progress(
+        validation_loss, no_samples, validation_corrects=None):
     """
         Show a validation progress text
     """

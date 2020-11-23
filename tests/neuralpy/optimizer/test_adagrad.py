@@ -30,7 +30,8 @@ def test_adagrad_should_throw_value_error(
         (0.1, .03, .1, .1)
     ]
 )
-def test_adagrad_get_layer_method(learning_rate, learning_rate_decay, eps, weight_decay):
+def test_adagrad_get_layer_method(
+        learning_rate, learning_rate_decay, eps, weight_decay):
     x = Adagrad(learning_rate=learning_rate,
                 learning_rate_decay=learning_rate_decay, eps=eps, weight_decay=weight_decay)
 
