@@ -17,7 +17,7 @@ import torch
 )
 def test_bce_should_throw_value_error(weight, reduction, pos_weight):
     with pytest.raises(ValueError):
-        x = BCELoss(weight=weight, reduction=reduction, pos_weight=pos_weight)
+        BCELoss(weight=weight, reduction=reduction, pos_weight=pos_weight)
 
 
 @pytest.mark.parametrize(
@@ -38,12 +38,12 @@ def test_bce_get_layer_method(weight, reduction, pos_weight):
     assert isinstance(details["keyword_arguments"], dict) is True
 
     assert torch.all(torch.eq(
-        details["keyword_arguments"]["weight"], torch.tensor(weight).float())) == True
+        details["keyword_arguments"]["weight"], torch.tensor(weight).float()))
 
     assert details["keyword_arguments"]["reduction"] == reduction
 
     assert torch.all(torch.eq(details["keyword_arguments"]["pos_weight"], torch.tensor(
-        pos_weight).float())) == True
+        pos_weight).float()))
 
 
 def test_bce_get_layer_method_with_default_parameters():

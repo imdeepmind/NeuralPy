@@ -33,16 +33,16 @@ class BCELoss:
                 post_weight=None : (Numpy Array | List) A weight of positive examples
         """
         if weight is not None and not (
-                isinstance(weight, list) or
-                type(weight).__module__ == np.__name__):
+                isinstance(weight, list) or type(weight).__module__ == np.__name__):
             raise ValueError("Invalid weight")
 
         if reduction not in ["none", "mean", "sum"]:
             raise ValueError("Invalid reduction")
 
-        if pos_weight is not None and not (
-                isinstance(pos_weight, list) or
-                type(pos_weight).__module__ == np.__name__):
+        if pos_weight is not None and \
+                not (
+                    isinstance(pos_weight,
+                               list) or type(pos_weight).__module__ == np.__name__):
             raise ValueError("Invalid pos_weight")
 
         self.__weight = weight

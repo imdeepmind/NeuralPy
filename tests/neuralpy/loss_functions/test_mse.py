@@ -2,9 +2,6 @@ import pytest
 from torch.nn import MSELoss as _MSELoss
 from neuralpy.loss_functions import MSELoss
 
-import numpy as np
-import torch
-
 
 @pytest.mark.parametrize(
     "reduction",
@@ -12,7 +9,7 @@ import torch
 )
 def test_cce_should_throw_value_error(reduction):
     with pytest.raises(ValueError):
-        x = MSELoss(reduction=reduction)
+        MSELoss(reduction=reduction)
 
 
 @pytest.mark.parametrize(

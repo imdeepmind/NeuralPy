@@ -21,8 +21,7 @@ import torch
 )
 def test_cce_should_throw_value_error(weight, reduction, ignore_index):
     with pytest.raises(ValueError):
-        x = CrossEntropyLoss(
-            weight=weight, reduction=reduction, ignore_index=ignore_index)
+        CrossEntropyLoss(weight=weight, reduction=reduction, ignore_index=ignore_index)
 
 
 @pytest.mark.parametrize(
@@ -46,7 +45,7 @@ def test_cce_get_layer_method(weight, reduction, ignore_index):
     assert isinstance(details["keyword_arguments"], dict) is True
 
     assert torch.all(torch.eq(
-        details["keyword_arguments"]["weight"], torch.tensor(weight).float())) == True
+        details["keyword_arguments"]["weight"], torch.tensor(weight).float()))
 
     assert details["keyword_arguments"]["reduction"] == reduction
 
