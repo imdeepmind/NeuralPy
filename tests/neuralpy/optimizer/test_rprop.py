@@ -22,7 +22,7 @@ from neuralpy.optimizer import Rprop
 def test_rprop_should_throw_value_error(
         learning_rate, etas, step_sizes):
     with pytest.raises(ValueError):
-        x = Rprop(
+        Rprop(
             learning_rate=learning_rate, etas=etas, step_sizes=step_sizes)
 
 

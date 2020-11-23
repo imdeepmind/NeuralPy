@@ -29,8 +29,8 @@ nesteroves = [122, ""]
 def test_sgd_should_throw_value_error(
         learning_rate, momentum, dampening, weight_decay, nesterov):
     with pytest.raises(ValueError):
-        x = SGD(learning_rate=learning_rate, momentum=momentum,
-                dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
+        SGD(learning_rate=learning_rate, momentum=momentum,
+            dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
 
 
 # Possible values that are valid
@@ -43,7 +43,8 @@ nesteroves = [False, True]
 
 @pytest.mark.parametrize(
     "learning_rate, momentum, dampening, weight_decay, nesterov",
-    [(learning_rate, momentum, dampening, weight_decay, nesterov) for learning_rate in learning_rates
+    [(learning_rate, momentum, dampening, weight_decay, nesterov) for learning_rate in
+        learning_rates
      for momentum in momentums
      for dampening in dampenings
      for weight_decay in weight_decays

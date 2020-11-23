@@ -28,8 +28,8 @@ amsgrads = [12, "", 30.326]
 def test_adam_should_throw_value_error(
         learning_rate, beta, eps, weight_decay, amsgrad):
     with pytest.raises(ValueError):
-        x = Adam(learning_rate=learning_rate, betas=beta, eps=eps,
-                 weight_decay=weight_decay, amsgrad=amsgrad)
+        Adam(learning_rate=learning_rate, betas=beta, eps=eps,
+             weight_decay=weight_decay, amsgrad=amsgrad)
 
 
 # Possible values that are valid
@@ -42,7 +42,8 @@ amsgrads = [False, True]
 
 @pytest.mark.parametrize(
     "learning_rate, beta, eps, weight_decay, amsgrad",
-    [(learning_rate, beta, eps, weight_decay, amsgrad) for learning_rate in learning_rates
+    [(learning_rate, beta, eps, weight_decay, amsgrad) for learning_rate in
+        learning_rates
      for beta in betas
      for eps in epses
      for weight_decay in weight_decays
@@ -50,8 +51,11 @@ amsgrads = [False, True]
 )
 def test_adam_get_layer_method(
         learning_rate, beta, eps, weight_decay, amsgrad):
-    x = Adam(learning_rate=learning_rate, betas=beta, eps=eps,
-             weight_decay=weight_decay, amsgrad=amsgrad)
+    x = Adam(learning_rate=learning_rate,
+             betas=beta,
+             eps=eps,
+             weight_decay=weight_decay,
+             amsgrad=amsgrad)
 
     details = x.get_optimizer()
 

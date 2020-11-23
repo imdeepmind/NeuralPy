@@ -28,7 +28,8 @@ class RMSprop:
             Supported Arguments
                 learning_rate=0.001: (Float) Learning Rate for the optimizer
                 alpha=(0.9,0.999) : (Float) Learningn Rate decay
-                eps=0 : (Float) Term added to the denominator to improve numerical stability
+                eps=0 : (Float) Term added to the denominator to improve numerical
+                    stability
                 weight_decay=0 : (Float) Weight decay for the optimizer
                 momentum=0 : (Float) Momentum for the optimizer
                 centered=False : (Bool) if True, compute the centered RMSProp,

@@ -24,7 +24,8 @@ class Adagrad:
             Supported Arguments:
                 learning_rate=0.001: (Float) Learning Rate for the optimizer
                 learning_rate_decay=(0.9,0.999) : (Float) Learning Rate decay
-                eps=0 : (Float) Term added to the denominator to improve numerical stability
+                eps=0 : (Float) Term added to the denominator to improve numerical
+                    stability
                 weight_decay=0 : (Float) Weight decay for the optimizer
         """
         if not isinstance(learning_rate, float) or learning_rate <= 0.0:
