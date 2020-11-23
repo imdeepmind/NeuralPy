@@ -29,8 +29,8 @@ class ReLU(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, layer_type):
         """
-          This method calculates the input shape for layer based on previous output layer.
-          Here for this activation function, we dont need it
+          This method calculates the input shape for layer based on previous output
+          layer. Here for this activation function, we don't need it
 
           This method is used by the NeuralPy Models, for building the models.
           No need to call this method for using NeuralPy.

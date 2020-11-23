@@ -24,8 +24,8 @@ negative_slopes = [0.01, 2.342]
 names = ['test1', 'test2', None]
 
 
-@pytest.mark.parametrize('negative_slope, name', [(negative_slope,
-                                                   name) for negative_slope in negative_slopes
+@pytest.mark.parametrize('negative_slope, name', [(ns,
+                                                   name) for ns in negative_slopes
                                                   for name in names])
 def test_leaky_relu_get_input_dim_and_get_layer_method(negative_slope, name):
     x = LeakyReLU(negative_slope=negative_slope, name=name)

@@ -12,7 +12,7 @@ statistics = True
 output-file = flake8.log
 tee = True
 
-ignore = E111
+ignore = E111, E133
 
 exclude =
     .git,
