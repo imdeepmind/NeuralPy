@@ -1,9 +1,10 @@
 """Dense layer for NeuralPy"""
 
 from torch.nn import Conv2d as _Conv2d
+from neuralpy.utils import CustomLayer
 
 
-class Conv2D:
+class Conv2D(CustomLayer):
     """
         Applies a 2D convolution over an input signal composed of several input planes.
 
@@ -128,11 +129,8 @@ class Conv2D:
         if not isinstance(bias, bool):
             raise ValueError("Please provide a valid bias")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        super().__init__(_Conv2d, "Conv2D", layer_name=name)
+        
         # Storing the data
         self.__filters = filters
         self.__kernel_size = kernel_size
@@ -143,7 +141,6 @@ class Conv2D:
         self.__groups = groups
 
         self.__bias = bias
-        self.__name = name
 
     def __get_layer_details(self):
         # Return tuple structure
@@ -215,20 +212,14 @@ class Conv2D:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return {
-            'layer_details': self.__get_layer_details(),
-            'name': self.__name,
-            'type': 'Conv2D',
-            'layer': _Conv2d,
-            "keyword_arguments": {
-                'in_channels': self.__input_shape[0],
-                'out_channels': self.__filters,
-                'kernel_size': self.__kernel_size,
-                'stride': self.__stride,
-                'padding': self.__padding,
-                'dilation': self.__dilation,
-                'groups': self.__groups,
-                'bias': self.__bias,
-                'padding_mode': 'zeros'
-            }
-        }
+        return self._get_layer_details(self.__get_layer_details(), {
+            'in_channels': self.__input_shape[0],
+            'out_channels': self.__filters,
+            'kernel_size': self.__kernel_size,
+            'stride': self.__stride,
+            'padding': self.__padding,
+            'dilation': self.__dilation,
+            'groups': self.__groups,
+            'bias': self.__bias,
+            'padding_mode': 'zeros'
+        })

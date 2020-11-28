@@ -1,9 +1,10 @@
 """RNN layer for NeuralPy"""
 
 from torch.nn import RNN as _RNN
+from neuralpy.utils import CustomLayer
 
 
-class RNN:
+class RNN(CustomLayer):
     """
         RNN also known as Recurrent Neural Network
         To learn more about RNN, please check pytorch
@@ -102,10 +103,8 @@ class RNN:
         if not isinstance(bidirectional, bool):
             raise ValueError("Please provide a valid bidirectional")
 
-        # checking the name, it is an optional field
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        super().__init__(_RNN, "RNN", layer_name=name)
+        
         # Storing the data
         self.__input_size = input_size
         self.__hidden_size = hidden_size
@@ -116,7 +115,6 @@ class RNN:
         self.__batch_first = batch_first
         self.__dropout = dropout
         self.__bidirectional = bidirectional
-        self.__name = name
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

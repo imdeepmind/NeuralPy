@@ -2,9 +2,10 @@
 
 
 from torch.nn import RNNCell as _RNNCell
+from neuralpy.utils import CustomLayer
 
 
-class RNNCell:
+class RNNCell(CustomLayer):
     """
         An Elman RNN cell with tanh or ReLU non-linearity
         To learn more about RNN, please check pytorch
@@ -55,15 +56,13 @@ class RNNCell:
         if non_linearity not in ("tanh", "relu"):
             raise ValueError("Please provide a valid non_linearity")
 
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        super().__init__(_RNNCell, "RNNCell", layer_name=name)
+        
         self.__input_size = input_size
         self.__hidden_size = hidden_size
 
         self.__bias = bias
         self.__non_linearity = non_linearity
-        self.__name = name
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

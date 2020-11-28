@@ -1,11 +1,10 @@
 """Bilinear layer for NeuralPy"""
 
 from torch.nn import Bilinear as _BiLinear
+from neuralpy.utils import CustomLayer
 
-# pylint: disable=duplicate-code
 
-
-class Bilinear:
+class Bilinear(CustomLayer):
     '''
     A bilinear layer is a function of two inputs x and y
     that is linear in each input separately.
@@ -63,18 +62,15 @@ class Bilinear:
         if not isinstance(bias, bool):
             raise ValueError("Please provide a valid bias")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
 
+        super().__init__(_BiLinear, "Bilinear", layer_name=name)
+        
         # Storing the data
         self.__n_inputs = n1_features
         self.__n_inputs2 = n2_features
         self.__n_nodes = n_nodes
 
         self.__bias = bias
-        self.__name = name
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -104,15 +100,9 @@ class Bilinear:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return {
-            'layer_details': (self.__n_nodes,),
-            'name': self.__name,
-            'type': 'Bilinear',
-            'layer': _BiLinear,
-            'keyword_arguments': {
-                'in_features1': self.__n_inputs,
-                'in_features2': self.__n_inputs2,
-                'out_features': self.__n_nodes,
-                'bias': self.__bias
-            }
-        }
+        return self._get_layer_details((self.__n_nodes,), {
+            'in_features1': self.__n_inputs,
+            'in_features2': self.__n_inputs2,
+            'out_features': self.__n_nodes,
+            'bias': self.__bias
+        })

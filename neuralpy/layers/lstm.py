@@ -1,9 +1,10 @@
 """ LSTM layer for NeuralPy"""
 
 from torch.nn import LSTM as _LSTM
+from neuralpy.utils import CustomLayer
 
 
-class LSTM:
+class LSTM(CustomLayer):
     """
         LSTM Applies a multi-layer long short-term memory(LSTM) RNN
         to an input sequence
@@ -94,10 +95,8 @@ class LSTM:
         if not isinstance(bidirectional, bool):
             raise ValueError("Please provide a valid bidirectonal")
 
-        # checking the name, it is an optional field
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        super().__init__(_LSTM, "LSTM", layer_name=name)
+        
         # Storing the data
         self.__input_size = input_size
         self.__hidden_size = hidden_size
@@ -107,7 +106,6 @@ class LSTM:
         self.__batch_first = batch_first
         self.__dropout = dropout
         self.__bidirectional = bidirectional
-        self.__name = name
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """

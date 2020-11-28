@@ -1,9 +1,10 @@
 """Dense layer for NeuralPy"""
 
-from torch.nn import Linear
+from torch.nn import Linear as _Dense
+from neuralpy.utils import CustomLayer
 
 
-class Dense:
+class Dense(CustomLayer):
     """
         A Dense is a normal densely connected Neural Network.
         It performs a linear transformation of the input.
@@ -45,17 +46,13 @@ class Dense:
         if not isinstance(bias, bool):
             raise ValueError("Please provide a valid bias")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        super().__init__(_Dense, "Dense", layer_name=name)
+        
         # Storing the data
         self.__n_inputs = n_inputs
         self.__n_nodes = n_nodes
 
         self.__bias = bias
-        self.__name = name
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -91,14 +88,8 @@ class Dense:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return {
-            'layer_details': (self.__n_nodes,),
-            'name': self.__name,
-            'type': 'Dense',
-            'layer': Linear,
-            "keyword_arguments": {
-                'in_features': self.__n_inputs,
-                'out_features': self.__n_nodes,
-                'bias': self.__bias
-            }
-        }
+        return self._get_layer_details((self.__n_nodes,), {
+            'in_features': self.__n_inputs,
+            'out_features': self.__n_nodes,
+            'bias': self.__bias
+        })

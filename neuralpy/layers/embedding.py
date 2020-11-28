@@ -1,9 +1,10 @@
 """Embedding layer for NeuralPy"""
 
 from torch.nn import Embedding as _Embedding
+from neuralpy.utils import CustomLayer
 
 
-class Embedding:
+class Embedding(CustomLayer):
     """
         A simple lookup table that stores embeddings of a fixed dictionary and size
         To learn more about RNN, please check pytorch
@@ -71,11 +72,9 @@ class Embedding:
         # Checking sparse, It is an optional field
         if not isinstance(sparse, bool):
             raise ValueError("Please provide a valid sparse")
-
-        # Checking name, It is an optional field
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        
+        super().__init__(_Embedding, "Embedding", layer_name=name)
+        
         # Storing values
 
         self.__num_embeddings = num_embeddings
@@ -86,7 +85,6 @@ class Embedding:
         self.__norm_type = norm_type
         self.__scale_grad_by_freq = scale_grad_by_freq
         self.__sparse = sparse
-        self.__name = name
 
     # pylint: disable=W0613,R0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):

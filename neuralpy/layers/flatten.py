@@ -1,9 +1,10 @@
 """Flatten layer for NeuralPy"""
 
 from torch.nn import Flatten as _Flatten
+from neuralpy.utils import CustomLayer
 
 
-class Flatten:
+class Flatten(CustomLayer):
     """
         Flattens a contiguous range of dims into a tensor
 
@@ -32,16 +33,11 @@ class Flatten:
         if end_dim and not isinstance(end_dim, int):
             raise ValueError("Please provide a vlaid end_dim")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        super().__init__(_Flatten, "Flatten", layer_name=name)
+        
         # Storing the data
         self.__start_dim = start_dim
         self.__end_dim = end_dim
-
-        self.__name = name
 
     # pylint: disable=W0613,R0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):

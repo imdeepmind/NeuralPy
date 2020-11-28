@@ -1,9 +1,10 @@
 """MaxPool1D for NeuralPy"""
 
 from torch.nn import MaxPool1d as _MaxPool1d
+from neuralpy.utils import CustomLayer
 
 
-class MaxPool1D:
+class MaxPool1D(CustomLayer):
     """
         MaxPool1d Applies a 1D max pooling over an input
         To learn more about MaxPool1d, please check pytorch
@@ -94,10 +95,8 @@ class MaxPool1D:
             raise ValueError(
                 "Please provide a valid value for ceil_mode")
 
-        # Checking the name, it is an optional filed
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
+        super().__init__(_MaxPool1d, "MaxPool1D", layer_name=name)
+        
         # Storing the data
         self.__kernel_size = kernel_size
         self.__stride = stride
@@ -106,7 +105,6 @@ class MaxPool1D:
         self.__dilation = dilation
         self.__return_indices = return_indices
         self.__ceil_mode = ceil_mode
-        self.__name = name
 
         self.____prev_layer_data = None
 

@@ -1,11 +1,13 @@
 """AvgPool2d layer for NeuralPy"""
 
 from torch.nn import AvgPool2d as _AvgPool2d
+from neuralpy.utils import CustomLayer
 
 
-class AvgPool2D:
+class AvgPool2D(CustomLayer):
     """
-        Applies a 2D average pooling over an input signal composed of several input planes.
+        Applies a 2D average pooling over an input signal composed of several input
+        planes.
 
         To learn more about Dense layers, please check PyTorch
         documentation
@@ -13,10 +15,10 @@ class AvgPool2D:
 
         Supported Arguments:
             kernel_size: (Int | Tuple) Kernel size of the layer
-                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
-                        number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
-                            sides for padding number of points
+                stride: (Int | Tuple) Controls the stride for the cross-correlation, a
+                    single number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on
+                    both sides for padding number of points
                 ceil_mode: (Bool) when True, will use ceil instead of floor to
                                 compute the output shape
                 count_include_pad: (Bool) when True, will include the zero-padding
@@ -33,10 +35,10 @@ class AvgPool2D:
 
             Supported Arguments:
                 kernel_size: (Int | Tuple) Kernel size of the layer
-                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
-                        number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
-                            sides for padding number of points
+                stride: (Int | Tuple) Controls the stride for the cross-correlation, a
+                    single number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on
+                    both sides for padding number of points
                 ceil_mode: (Bool) when True, will use ceil instead of
                             floor to compute the output shape
                 count_include_pad: (Bool) when True, will include the zero-padding
@@ -93,10 +95,7 @@ class AvgPool2D:
                 divisor_override, bool):
             raise ValueError("Please provide a valid divisor_override")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_AvgPool2d, "AvgPool2d", layer_name=name)
 
         # Storing the data
         self.__kernel_size = kernel_size
@@ -105,8 +104,6 @@ class AvgPool2D:
         self.__ceil_mode = ceil_mode
         self.__count_include_pad = count_include_pad
         self.__divisor_override = divisor_override
-
-        self.__name = name
 
         self.__prev_layer_data = None
 
@@ -141,7 +138,8 @@ class AvgPool2D:
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -160,17 +158,11 @@ class AvgPool2D:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': self.__get_layer_details(),
-            'layer': _AvgPool2d,
-            'name': self.__name,
-            'type': 'AvgPool2D',
-            'keyword_arguments': {
-                'kernel_size': self.__kernel_size,
-                'stride': self.__stride,
-                'padding': self.__padding,
-                'ceil_mode': self.__ceil_mode,
-                'count_include_pad': self.__count_include_pad,
-                'divisor_override': self.__divisor_override
-            }
-        }
+        return self._get_layer_details(self.__get_layer_details(), {
+            'kernel_size': self.__kernel_size,
+            'stride': self.__stride,
+            'padding': self.__padding,
+            'ceil_mode': self.__ceil_mode,
+            'count_include_pad': self.__count_include_pad,
+            'divisor_override': self.__divisor_override
+        })
