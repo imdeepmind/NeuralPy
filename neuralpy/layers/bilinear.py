@@ -62,9 +62,8 @@ class Bilinear(CustomLayer):
         if not isinstance(bias, bool):
             raise ValueError("Please provide a valid bias")
 
-
         super().__init__(_BiLinear, "Bilinear", layer_name=name)
-        
+
         # Storing the data
         self.__n_inputs = n1_features
         self.__n_inputs2 = n2_features
@@ -74,7 +73,8 @@ class Bilinear(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -90,7 +90,8 @@ class Bilinear(CustomLayer):
                 self.__n_inputs = prev_input_dim[0]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape \
+                    for the layer")
 
     def get_layer(self):
         """

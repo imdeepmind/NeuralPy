@@ -47,7 +47,7 @@ class Dense(CustomLayer):
             raise ValueError("Please provide a valid bias")
 
         super().__init__(_Dense, "Dense", layer_name=name)
-        
+
         # Storing the data
         self.__n_inputs = n_inputs
         self.__n_nodes = n_nodes
@@ -56,7 +56,8 @@ class Dense(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -73,12 +74,13 @@ class Dense(CustomLayer):
             elif layer_type in ("rnn", "lstm", "gru", "rnncell", "lstmcell", "grucell"):
                 self.__n_inputs = prev_input_dim[-1]
             elif layer_type in ('conv1d', 'conv2d', 'conv3d', 'avgpool1d', 'avgpool2d',
-                                "avgpool3d", "maxpool1d", "maxpool2d", "maxpool3d", "batchnorm1d",
-                                "batchnorm2d", "batchnorm3d"):
+                                "avgpool3d", "maxpool1d", "maxpool2d", "maxpool3d",
+                                "batchnorm1d", "batchnorm2d", "batchnorm3d"):
                 self.__n_inputs = prev_input_dim[1]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape \
+                        for the layer")
 
     def get_layer(self):
         """
