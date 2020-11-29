@@ -5,7 +5,7 @@ from neuralpy.layers import AvgPool1D
 
 def test_AvgPool1D_should_throws_type_error():
     with pytest.raises(TypeError):
-        x = AvgPool1D()
+        AvgPool1D()
 
 
 @pytest.mark.parametrize(
@@ -39,7 +39,7 @@ def test_AvgPool1D_should_throws_type_error():
 def test_AvgPool1D_throws_value_error(
         kernel_size, stride, padding, ceil_mode, count_include_pad, name):
     with pytest.raises(ValueError):
-        x = AvgPool1D(
+        AvgPool1D(
             kernel_size=kernel_size, stride=stride,
             padding=padding,
             ceil_mode=ceil_mode, count_include_pad=count_include_pad,
@@ -74,7 +74,8 @@ def test_AvgPool1D_get_layer_method(
         name=name)
 
     prev_dim = (3, 6, (6, 18))
-    layer_details = x.get_input_dim(prev_dim, "conv1d")
+
+    x.get_input_dim(prev_dim, "conv1d")
 
     details = x.get_layer()
 
