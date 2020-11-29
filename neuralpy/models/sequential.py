@@ -26,7 +26,8 @@ class Sequential(Model):
             __init__ method for Sequential Model
 
             Supported Arguments:
-                force_cpu=False: (Boolean) If True, then uses CPU even if CUDA is available
+                force_cpu=False: (Boolean) If True, then uses CPU even if CUDA is
+                    available
                 training_device=None: (NeuralPy device class) Device that will
                     be used for training predictions
                 random_state: (Integer) Random state for the device
@@ -51,7 +52,8 @@ class Sequential(Model):
         # If we already built the model, then we can not a new layer
         if self.__build:
             raise Exception(
-                "You have built this model already, you can not make any changes in this model")
+                "You have built this model already, you can not make any changes in \
+                    this model")
 
         # Finally adding the layer for layers array
         self.__layers.append(layer)

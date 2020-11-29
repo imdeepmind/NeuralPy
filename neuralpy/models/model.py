@@ -33,8 +33,8 @@ class Model:
             raise ValueError(
                 "You have provided an invalid value for the parameter force_cpu")
 
-        # Checking the training_device parameter and comparing it with pytorch device class
-        # pylint: disable=no-member
+        # Checking the training_device parameter and comparing it with pytorch
+        # device class
         if training_device is not None and not isinstance(
                 training_device, torch.device):
             raise ValueError("Please provide a valid neuralpy device class")
@@ -135,7 +135,8 @@ class Model:
 
             Supported Arguments:
                 optimizer: (NeuralPy Optimizer class) Adds a optimizer to the model
-                loss_function: (NeuralPy Loss Function class) Adds a loss function to the model
+                loss_function: (NeuralPy Loss Function class) Adds a loss function to
+                    the model
                 metrics: ([String]) Metrics that will be evaluated by the model.
                     Currently only supports "accuracy".
         """
@@ -153,8 +154,8 @@ class Model:
 
         # Storing the loss function and optimizer for future use
         (self.__optimizer,
-         self.__optimizer_parameters) = build_optimizer_from_dict(optimizer,
-                                                                  self.__model.parameters())
+         self.__optimizer_parameters) = \
+            build_optimizer_from_dict(optimizer, self.__model.parameters())
 
         (self.__loss_function,
          self.__loss_function_parameters) = build_loss_function_from_dict(loss_function)
@@ -347,13 +348,13 @@ class Model:
 
             Supported Arguments
                 train_data: (Tuple(NumPy Array, NumPy Array) |
-                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the training data
-                    as a tuple like (X, y) where X is training data and y is the
-                    labels for the training the model.
+                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
+                    training data as a tuple like (X, y) where X is training data and y
+                    is the labels for the training the model.
                 validation_data=None:(Tuple(NumPy Array, NumPy Array) |
-                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the validation data
-                    as a tuple like (X, y) where X is test data and y is the labels
-                    for the validating the model. This field is optional.
+                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
+                    validation data as a tuple like (X, y) where X is test data and y
+                    is the labels for the validating the model. This field is optional.
                 epochs=10: (Integer) Number of epochs
                 batch_size=32: (Integer) Batch size for training.
                 steps_per_epoch=None: (Integer) No of steps for each
@@ -474,8 +475,10 @@ class Model:
                     training_progress_data = {}
 
                     for m in self.__metrics:
-                        training_progress_data[f"training_{m}"] = self.__history["epochwise"][f"training_{m}"][epoch]
-                        training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
+                        training_progress_data[f"training_{m}"] = \
+                            self.__history["epochwise"][f"training_{m}"][epoch]
+                        training_progress_data[f"validation_{m}"] = \
+                            self.__history["epochwise"][f"validation_{m}"][epoch]
 
                     callback.callback(epochs,
                                       epoch,
@@ -518,9 +521,9 @@ class Model:
     def predict_classes(self, predict_data,
                         predict_steps=None, batch_size=None):
         """
-            The .predict_class()method is used for predicting classes using the trained mode.
-            This method works only if accuracy is passed in the metrics parameter on the
-            .compile()method.
+            The .predict_class()method is used for predicting classes using the
+            trained mode. This method works only if accuracy is passed in the metrics
+            parameter on the .compile()method.
 
             Supported Arguments
                 predict_data: (NumPy Array | Python Generator) Data to be predicted
@@ -657,21 +660,22 @@ class Model:
             print(self.__model)
 
             # Calculating total number of params
-            print("Total Number of Parameters: ", sum(p.numel()
-                                                      for p in self.__model.parameters()))
+            print("Total Number \
+                of Parameters: ", sum(p.numel() for p in self.__model.parameters()))
 
             # Calculating total number of trainable params
-            print("Total Number of Trainable Parameters: ", sum(p.numel()
-                                                                for p in self.__model.parameters()
-                                                                if p.requires_grad))
+            print("Total Number of Trainable \
+                Parameters: ", sum(p.numel()
+                                   for p in self.__model.parameters()
+                                   if p.requires_grad))
         else:
             raise Exception("You need to build the model first")
 
     def get_model(self):
         """
-            The .get_model() method is used for getting the PyTorch model from the NeuralPy model.
-            After extracting the model, the model can be treated just like a regular
-            PyTorch model.
+            The .get_model() method is used for getting the PyTorch model from the
+            NeuralPy model. After extracting the model, the model can be treated just
+            like a regular PyTorch model.
 
             Supported Arguments
                 None
@@ -681,9 +685,9 @@ class Model:
 
     def set_model(self, model):
         """
-            The .set_model() method is used for converting a PyTorch model to a NeuralPy model.
-            After this conversion, the model can be trained using NeuralPy optimizer
-            and loss_functions.
+            The .set_model() method is used for converting a PyTorch model to a
+            NeuralPy model. After this conversion, the model can be trained using
+            NeuralPy optimizer and loss_functions.
 
             Supported Arguments
                 model: (PyTorch model) A valid class based on Sequential PyTorch model.
@@ -718,7 +722,8 @@ class Model:
 
     def load(self, path):
         """
-            The .load() method is responsible for loading a model saved using the .save() method.
+            The .load() method is responsible for loading a model saved using the
+            .save() method.
 
             Supported Parameters:
                 path: (String) Path where the model is stored
@@ -743,7 +748,8 @@ class Model:
 
     def load_for_inference(self, path):
         """
-            The .load_for_inference() method is responsible for loading a trained model only for inference.
+            The .load_for_inference() method is responsible for loading a trained model
+            only for inference.
 
             Supported Parameters:
                 path: (String) Path where the model is stored
