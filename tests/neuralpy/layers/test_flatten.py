@@ -14,7 +14,7 @@ from neuralpy.layers import Flatten
 )
 def test_flatten_should_throw_value_error(start_dim, end_dim):
     with pytest.raises(ValueError):
-        x = Flatten(start_dim=start_dim, end_dim=end_dim)
+        Flatten(start_dim=start_dim, end_dim=end_dim)
 
 
 # possible values
