@@ -5,7 +5,7 @@ from neuralpy.layers import Dense
 
 def test_dense_should_throw_type_error():
     with pytest.raises(TypeError):
-        x = Dense()
+        Dense()
 
 
 @pytest.mark.parametrize(
@@ -25,7 +25,7 @@ def test_dense_should_throw_type_error():
 )
 def test_dense_should_throw_value_error(n_nodes, n_inputs, bias, name):
     with pytest.raises(ValueError):
-        x = Dense(n_nodes=n_nodes, n_inputs=n_inputs, bias=bias, name=name)
+        Dense(n_nodes=n_nodes, n_inputs=n_inputs, bias=bias, name=name)
 
 
 # Possible values

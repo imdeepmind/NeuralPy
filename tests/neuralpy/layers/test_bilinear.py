@@ -5,7 +5,7 @@ from neuralpy.layers import Bilinear
 
 def test_bilinear_should_throw_type_error():
     with pytest.raises(TypeError):
-        x = Bilinear()
+        Bilinear()
 
 
 @pytest.mark.parametrize(
@@ -28,7 +28,7 @@ def test_bilinear_should_throw_type_error():
 def test_bilinear_should_throw_value_error(
         n_nodes, n_inputs, n_inputs2, bias, name):
     with pytest.raises(ValueError):
-        x = Bilinear(
+        Bilinear(
             n_nodes=n_nodes, n1_features=n_inputs,
             n2_features=n_inputs2, bias=bias, name=name)
 
