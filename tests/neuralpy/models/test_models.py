@@ -38,27 +38,25 @@ def train_generator():
 def predict_generator():
     for i in range(40):
         X_train = np.random.rand(40, 1) * 10
-        y_train = X_train + 5 * np.random.rand(40, 1)
 
         yield X_train
 
 
 def test_model():
     with pytest.raises(ValueError):
-        x = Model(force_cpu="test")
+        Model(force_cpu="test")
 
     with pytest.raises(ValueError):
-        x = Model(training_device="test")
+        Model(training_device="test")
 
     with pytest.raises(ValueError):
-        x = Model(random_state="test")
+        Model(random_state="test")
 
     training_device = device("cpu")
 
-    x1 = Model(force_cpu=False, training_device=training_device,
-               random_state=1969)
-    x2 = Model(force_cpu=False, training_device=None, random_state=1969)
-    x3 = Model(force_cpu=True, training_device=None, random_state=1969)
+    Model(force_cpu=False, training_device=training_device, random_state=1969)
+    Model(force_cpu=False, training_device=None, random_state=1969)
+    Model(force_cpu=True, training_device=None, random_state=1969)
 
 
 def test_models_compile_method():
@@ -151,7 +149,7 @@ def test_model_predict_method():
     model = Model()
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
-    logger = TrainLogger("ignore/")
+    TrainLogger("ignore/")
     test_gen = predict_generator()
 
     model.fit(train_data=(X_train, y_train), validation_data=(
@@ -170,7 +168,7 @@ def test_model_evaluate_method():
     model = Model()
     model.set_model(pytorch_model)
     model.compile(optimizer=Adam(), loss_function=MSELoss())
-    logger = TrainLogger("ignore/")
+    TrainLogger("ignore/")
     test_gen = train_generator()
 
     model.fit(train_data=(X_train, y_train), validation_data=(
