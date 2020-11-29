@@ -2,8 +2,6 @@
 
 from torch.optim import Adagrad as _Adagrad
 
-# pylint: disable=too-few-public-methods
-
 
 class Adagrad:
     """

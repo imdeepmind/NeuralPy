@@ -2,8 +2,6 @@
 
 from torch.optim import RMSprop as _RMSprop
 
-# pylint: disable=too-few-public-methods
-
 
 class RMSprop:
     """
@@ -11,14 +9,13 @@ class RMSprop:
 
         Supported Arguments
             learning_rate=0.001: (Float) Learning Rate for the optimizer
-            alpha=(0.9,0.999) : (Float) Learningn Rate decay
+            alpha=(0.9,0.999) : (Float) Learning Rate decay
             eps=0 : (Float) Term added to the denominator to improve numerical stability
             weight_decay=0 : (Float) Weight decay for the optimizer
             momentum=0 : (Float) Momentum for the optimizer
             centered=False : (Bool) if True, compute the centered RMSProp,
                 the gradient is normalized by an estimation of its variance
     """
-    # pylint: disable=too-many-arguments
 
     def __init__(self, learning_rate=0.001, alpha=0.99, eps=1e-08, weight_decay=0.0,
                  momentum=0.0, centered=False):

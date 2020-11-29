@@ -2,8 +2,6 @@
 
 from torch.optim import Adam as _Adam
 
-# pylint: disable=too-few-public-methods
-
 
 class Adam:
     """
@@ -17,7 +15,6 @@ class Adam:
             weight_decay=0 : (Float) Weight decay for the optimizer
             amsgrad=False : (Bool) if true, then uses AMSGrad various of the optimizer
     """
-    # pylint: disable=too-many-arguments
 
     def __init__(self, learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08,
                  weight_decay=0.0, amsgrad=False):
