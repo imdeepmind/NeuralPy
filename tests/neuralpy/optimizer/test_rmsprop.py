@@ -6,17 +6,23 @@ from neuralpy.optimizer import RMSprop
 @pytest.mark.parametrize(
     "learning_rate, alpha, eps, weight_decay, momentum, centered",
     [
-        (-6, False, False, False, False, False),
-        (False, False, False, False, False, False),
-        (0.0, False, False, False, False, False),
-        (0.001, False, False, False, False, False),
-        (0.001, "", False, False, False, False),
-        (0.001, 0.001, False, False, False, False),
-        (0.001, 0.001, -6, False, False, False),
-        (0.001, 0.001, 0.2, False, False, False),
-        (0.001, 0.001, 0.2, "", False, False),
+        (-6, 0.001, 0.001, 0.001, 0.001, False),
+        (False, 0.001, 0.001, 0.001, 0.001, False),
+        ("invalid", 0.001, 0.001, 0.001, 0.001, False),
+        (0.0, False, 0.001, 0.001, 0.001, False),
+        
+        (0.001, False, 0.001, 0.001, 0.001, False),
+        (0.001, "", 0.001, 0.001, 0.001, False),
+        
+        (0.001, 0.001, False, 0.001, 0.001, False),
+        (0.001, 0.001, -6, 0.001, 0.001, False),
+        
+        (0.001, 0.001, 0.2, True, 0.001, False),
+        (0.001, 0.001, 0.2, "", 0.001, False),
+        
         (0.001, 0.001, 0.2, 0.32, False, False),
         (0.001, 0.001, 0.2, 0.32, "invalid", False),
+        
         (0.001, 0.001, 0.2, 0.32, 0.32, 3),
         (0.001, 0.001, 0.2, 0.32, 0.32, "invalid"),
     ]

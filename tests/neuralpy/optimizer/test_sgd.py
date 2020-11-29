@@ -13,15 +13,19 @@ nesteroves = [122, ""]
 @pytest.mark.parametrize(
     "learning_rate, momentum, dampening, weight_decay, nesterov",
     [
-        (-6, -6, False, False, 122),
-        ("invalid", -6, False, False, 122),
-        (0.00, -6, False, False, 122),
-        (0.001, -6, False, False, 122),
-        (0.001, False, False, False, 122),
-        (0.001, 0.1, False, False, 122),
-        (0.001, 0.002, "invalid", False, 122),
+        (-6, 0.33, 0.333, 0.333, False),
+        ("invalid", 0.33, 0.333, 0.333, False),
+        (0.00, 0.33, 0.333, 0.333, False),
+        
+        (0.001, -6, 0.333, 0.333, False),
+        (0.001, False, 0.333, 0.333, False),
+        
+        (0.001, 0.1, False, 0.333, False),
+        (0.001, 0.002, "invalid", 0.33, 122),
+        
         (0.001, 0.002, 0.376, False, 122),
         (0.001, 0.002, 0.342, "test", 122),
+        
         (0.001, 0.002, 0.342, 0.1, 122),
         (0.001, 0.002, 0.342, 0.1, "invalid"),
     ]

@@ -5,7 +5,7 @@ from torch.optim import Rprop as _Rprop
 
 class Rprop:
     """
-    Implements Rprop oprimizer
+    Implements Rprop Optimizer
 
     Supported Arguments
         learning_rate=0.01: (Float) Learning Rate for the optimizer
@@ -33,12 +33,18 @@ class Rprop:
                 learning_rate, float) or learning_rate <= 0.0:
             raise ValueError("Invalid learning_rate")
 
+        if not isinstance(etas, tuple):
+            raise ValueError("Invalid etas parameter")
+        
         if not isinstance(etas[0], float):
             raise ValueError("Invalid etas parameter at index 0")
 
         if not isinstance(etas[1], float):
             raise ValueError("Invalid etas parameter at index 1")
-
+        
+        if not isinstance(step_sizes, tuple):
+            raise ValueError("Invalid step_size parameter")
+        
         if not isinstance(step_sizes[0], float):
             raise ValueError("Invalid step_size parameter at index 0")
 

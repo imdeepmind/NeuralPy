@@ -2,25 +2,26 @@ import pytest
 from torch.optim import Adam as _Adam
 from neuralpy.optimizer import Adam
 
-# Possible values that are invalid
-learning_rates = [-6, False, ""]
-betas = [("", 1), ("", ""), (False, 2)]
-epses = [-6, False, ""]
-weight_decays = [-0.36, 'asd', '', False]
-amsgrads = [12, "", 30.326]
-
 
 @pytest.mark.parametrize(
     "learning_rate, beta, eps, weight_decay, amsgrad",
     [
-        (-6, ("", 1), False, False, 12),
-        (False, ("", 1), False, False, 12),
-        (0.001, ("", 1), False, False, 12),
-        (0.001, (.3, False), False, False, 12),
-        (0.001, (0.10, 2.0), False, False, 12),
-        (0.001, (0.10, 2.0), "Invalid", False, 12),
-        (0.001, (0.10, 2.0), .2, False, 12),
-        (0.001, (0.10, 2.0), .2, "test", 12),
+        (-6, (0.9, 0.999), 1e-08, 0.0, False),
+        (False, (0.9, 0.999), 1e-08, 0.0, False),
+        
+        (0.001, False, 1e-08, 0.0, False),
+        (0.001, ("", 0.3), 1e-08, 0.0, False),
+        (0.001, (-3, 0.3), 1e-08, 0.0, False),
+        (0.001, (0.3, False), 1e-08, 0.0, False),
+        (0.001, (0.3, "invalid"), 1e-08, 0.0, False),
+        
+        (0.001, (0.10, 2.0), False, 0.0, False),
+        (0.001, (0.10, 2.0), "Invalid", 0.0, False),
+        (0.001, (0.10, 2.0), -0.3, 0.0, False),
+        
+        (0.001, (0.10, 2.0), .2, False, False),
+        (0.001, (0.10, 2.0), .2, "test", False),
+        
         (0.001, (0.10, 2.0), .2, .32, 12),
         (0.001, (0.10, 2.0), .2, .32, "INVALID")
     ]
