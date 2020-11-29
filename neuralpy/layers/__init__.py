@@ -12,3 +12,5 @@ from . import pooling
 from . import recurrent
 from . import sparse
 from . import other
+from . import activation_functions
+from . import regularizers
