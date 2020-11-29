@@ -8,8 +8,8 @@ from neuralpy.models.model_helper import (
     print_training_progress,
     print_validation_progress
 )
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import GELU
+from neuralpy.layers.linear import Dense
+from neuralpy.layers.activation_functions import GELU
 from neuralpy.models import Sequential
 from neuralpy.optimizer import Adam
 from neuralpy.loss_functions import MSELoss
