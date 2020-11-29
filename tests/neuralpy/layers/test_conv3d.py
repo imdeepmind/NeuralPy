@@ -5,7 +5,7 @@ from neuralpy.layers import Conv3D
 
 def test_Conv3d_should_throw_type_error():
     with pytest.raises(TypeError):
-        x = Conv3D()
+        Conv3D()
 
 
 @pytest.mark.parametrize(
@@ -106,10 +106,12 @@ def test_Conv3d_should_throw_type_error():
     ]
 )
 def test_Conv3d_should_throw_value_error(
-        filters, kernel_size, input_shape, stride, padding, dilation, groups, bias, name):
+        filters, kernel_size, input_shape, stride, padding, dilation, groups, bias,
+        name):
     with pytest.raises(ValueError):
-        x = Conv3D(filters=filters, kernel_size=kernel_size, input_shape=input_shape,
-                   stride=stride, padding=padding, dilation=dilation, groups=groups, bias=bias, name=name)
+        Conv3D(filters=filters, kernel_size=kernel_size, input_shape=input_shape,
+               stride=stride, padding=padding, dilation=dilation, groups=groups,
+               bias=bias, name=name)
 
 
 # Possible values
@@ -125,8 +127,10 @@ names = ["Test", None]
 
 
 @pytest.mark.parametrize(
-    "_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name",
-    [(_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name)
+    "_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, \
+        _bias, _name",
+    [(_filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups,
+      _bias, _name)
      for _filters in filters
      for _kernel_size in kernel_size
      for _input_shape in input_shape
@@ -138,9 +142,11 @@ names = ["Test", None]
      for _name in names]
 )
 def test_Conv3d_get_layer_method(
-        _filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups, _bias, _name):
+        _filters, _kernel_size, _input_shape, _stride, _padding, _dilation, _groups,
+        _bias, _name):
     x = Conv3D(filters=_filters, kernel_size=_kernel_size, input_shape=_input_shape,
-               stride=_stride, padding=_padding, dilation=_dilation, groups=_groups, bias=_bias, name=_name)
+               stride=_stride, padding=_padding, dilation=_dilation, groups=_groups,
+               bias=_bias, name=_name)
 
     if _input_shape is None:
         prev_dim = (3, 3 * 32 * 32 * 32, (3, 32, 32, 32))
