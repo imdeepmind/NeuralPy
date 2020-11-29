@@ -2,8 +2,6 @@
 
 from torch.optim import Adam as _Adam
 
-# pylint: disable=too-few-public-methods
-
 
 class Adam:
     """
@@ -17,7 +15,6 @@ class Adam:
             weight_decay=0 : (Float) Weight decay for the optimizer
             amsgrad=False : (Bool) if true, then uses AMSGrad various of the optimizer
     """
-    # pylint: disable=too-many-arguments
 
     def __init__(self, learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08,
                  weight_decay=0.0, amsgrad=False):
@@ -34,6 +31,9 @@ class Adam:
         """
         if not isinstance(learning_rate, float) or learning_rate < 0.0:
             raise ValueError("Invalid learning_rate amsgrad")
+        
+        if not isinstance(betas, tuple):
+            raise ValueError("Invalid beta parameter")
 
         if not isinstance(betas[0], float) or betas[0] < 0.0:
             raise ValueError("Invalid beta parameter at index 0")
