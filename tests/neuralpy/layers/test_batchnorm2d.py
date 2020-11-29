@@ -19,7 +19,7 @@ def test_batchnorm3d_should_throw_value_error(
         num_features, eps, momentum, affine,
         track_running_stats, name):
     with pytest.raises(ValueError):
-        x = BatchNorm2D(
+        BatchNorm2D(
             num_features=num_features, eps=eps, momentum=momentum,
             affine=affine, track_running_stats=track_running_stats,
             name=name
@@ -60,20 +60,19 @@ def test_batchnorm2d_get_layer_method(
     prev_dim = (3, 6, (6, 18, 32))
 
     if num_features is None:
-
         num_features = x.get_input_dim(prev_dim, "conv2d")
 
     details = x.get_layer()
 
     assert isinstance(details, dict) is True
 
-    assert details["layer_details"] is None
+    assert details["layer_details"] == (num_features,)
 
     assert details["name"] == name
 
     assert details["layer"] == _BatchNorm2d
 
-    assert details["type"] == "BatchNorm2d"
+    assert details["type"] == "BatchNorm2D"
 
     assert isinstance(details["keyword_arguments"], dict) is True
 
