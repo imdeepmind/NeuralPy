@@ -35,16 +35,16 @@ class Rprop:
 
         if not isinstance(etas, tuple):
             raise ValueError("Invalid etas parameter")
-        
+
         if not isinstance(etas[0], float):
             raise ValueError("Invalid etas parameter at index 0")
 
         if not isinstance(etas[1], float):
             raise ValueError("Invalid etas parameter at index 1")
-        
+
         if not isinstance(step_sizes, tuple):
             raise ValueError("Invalid step_size parameter")
-        
+
         if not isinstance(step_sizes[0], float):
             raise ValueError("Invalid step_size parameter at index 0")
 

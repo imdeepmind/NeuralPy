@@ -31,7 +31,7 @@ class Adam:
         """
         if not isinstance(learning_rate, float) or learning_rate < 0.0:
             raise ValueError("Invalid learning_rate amsgrad")
-        
+
         if not isinstance(betas, tuple):
             raise ValueError("Invalid beta parameter")
 
