@@ -5,7 +5,7 @@ from neuralpy.layers import LSTM
 
 def test_lstm_should_throws_type_error():
     with pytest.raises(TypeError):
-        x = LSTM()
+        LSTM()
 
 
 @pytest.mark.parametrize(
@@ -59,7 +59,7 @@ def test_LSTM_should_throw_value_error(
         hidden_size, num_layers, input_size,
         bias, batch_first, dropout, bidirectional, name):
     with pytest.raises(ValueError):
-        x = LSTM(
+        LSTM(
             hidden_size=hidden_size, input_size=input_size,
             num_layers=num_layers, bias=bias,
             batch_first=batch_first, dropout=dropout,

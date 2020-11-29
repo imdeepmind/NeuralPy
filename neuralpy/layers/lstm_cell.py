@@ -51,7 +51,7 @@ class LSTMCell(CustomLayer):
             raise ValueError("Please provide a valid bias")
 
         super().__init__(_LSTMCell, "LSTMCell", layer_name=name)
-        
+
         self.__input_size = input_size
         self.__hidden_size = hidden_size
 
@@ -59,13 +59,14 @@ class LSTMCell(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-       # Checking if n_inputs is there or not, not overwriting the n_input
-       # field
+        # Checking if n_inputs is there or not, not overwriting the n_input
+        # field
         if not self.__input_size:
             layer_type = prev_layer_type.lower()
 
@@ -76,7 +77,8 @@ class LSTMCell(CustomLayer):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input \
+                        shape for the layer")
 
     def get_layer(self):
         """
@@ -86,14 +88,8 @@ class LSTMCell(CustomLayer):
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': (self.__hidden_size, ),
-            'name': self.__name,
-            'type': 'LSTMCell',
-            'layer': _LSTMCell,
-            'keyword_arguments': {
-                'input_size': self.__input_size,
-                'hidden_size': self.__hidden_size,
-                'bias': self.__bias
-            }
-        }
+        return self._get_layer_details((self.__hidden_size, ), {
+            'input_size': self.__input_size,
+            'hidden_size': self.__hidden_size,
+            'bias': self.__bias
+        })

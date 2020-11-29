@@ -32,7 +32,6 @@ class LSTM(CustomLayer):
                 automatically calculates a unique name for the layer
 
     """
-    # pylint: disable=too-many-instance-attributes,too-many-arguments
 
     def __init__(
             self, hidden_size, num_layers=1, input_size=None,
@@ -93,10 +92,10 @@ class LSTM(CustomLayer):
 
         # checking bidirectional, it is an optional field
         if not isinstance(bidirectional, bool):
-            raise ValueError("Please provide a valid bidirectonal")
+            raise ValueError("Please provide a valid bidirectional")
 
         super().__init__(_LSTM, "LSTM", layer_name=name)
-        
+
         # Storing the data
         self.__input_size = input_size
         self.__hidden_size = hidden_size
@@ -109,7 +108,8 @@ class LSTM(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -125,7 +125,8 @@ class LSTM(CustomLayer):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape \
+                        for the layer")
 
     def get_layer(self):
         """
@@ -135,18 +136,12 @@ class LSTM(CustomLayer):
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': (self.__hidden_size,),
-            'name': self.__name,
-            'type': 'LSTM',
-            'layer': _LSTM,
-            "keyword_arguments": {
-                'input_size': self.__input_size,
-                'hidden_size': self.__hidden_size,
-                'num_layers': self.__num_layers,
-                'bias': self.__bias,
-                'batch_first': self.__batch_first,
-                'dropout': self.__dropout,
-                'bidirectional': self.__bidirectional
-            }
-        }
+        return self._get_layer_details((self.__hidden_size, ), {
+            'input_size': self.__input_size,
+            'hidden_size': self.__hidden_size,
+            'num_layers': self.__num_layers,
+            'bias': self.__bias,
+            'batch_first': self.__batch_first,
+            'dropout': self.__dropout,
+            'bidirectional': self.__bidirectional
+        })

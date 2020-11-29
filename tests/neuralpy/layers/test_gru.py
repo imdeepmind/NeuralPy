@@ -5,7 +5,7 @@ from neuralpy.layers import GRU
 
 def test_GRU_should_throws_type_error():
     with pytest.raises(TypeError):
-        x = GRU()
+        GRU()
 
 
 @pytest.mark.parametrize(
@@ -59,7 +59,7 @@ def test_GRU_should_throw_value_error(
         hidden_size, num_layers, input_size,
         bias, batch_first, dropout, bidirectional, name):
     with pytest.raises(ValueError):
-        x = GRU(
+        GRU(
             hidden_size=hidden_size, input_size=input_size,
             num_layers=num_layers, bias=bias,
             batch_first=batch_first, dropout=dropout,

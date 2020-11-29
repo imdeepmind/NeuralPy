@@ -5,7 +5,7 @@ from neuralpy.layers import RNN
 
 def test_RNN_should_throws_type_error():
     with pytest.raises(TypeError):
-        x = RNN()
+        RNN()
 
 
 @pytest.mark.parametrize(
@@ -65,7 +65,7 @@ def test_RNN_should_throw_value_error(
         hidden_size, num_layers, input_size, non_linearity,
         bias, batch_first, dropout, bidirectional, name):
     with pytest.raises(ValueError):
-        x = RNN(
+        RNN(
             hidden_size=hidden_size, input_size=input_size,
             non_linearity=non_linearity,
             num_layers=num_layers, bias=bias,

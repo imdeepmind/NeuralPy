@@ -74,7 +74,7 @@ class Embedding(CustomLayer):
             raise ValueError("Please provide a valid sparse")
         
         super().__init__(_Embedding, "Embedding", layer_name=name)
-        
+
         # Storing values
 
         self.__num_embeddings = num_embeddings
@@ -89,7 +89,8 @@ class Embedding(CustomLayer):
     # pylint: disable=W0613,R0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -105,18 +106,12 @@ class Embedding(CustomLayer):
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': (self.__embedding_dim, ),
-            'name': self.__name,
-            'type': 'Embedding',
-            'layer': _Embedding,
-            'keyword_arguments': {
-                'num_embeddings': self.__num_embeddings,
-                'embedding_dim': self.__embedding_dim,
-                'padding_idx': self.__padding_idx,
-                'max_norm': self.__max_norm,
-                'norm_type': self.__norm_type,
-                'scale_grad_by_freq': self.__scale_grad_by_freq,
-                'sparse': self.__sparse
-            }
-        }
+        return self._get_layer_details((self.__embedding_dim, ), {
+            'num_embeddings': self.__num_embeddings,
+            'embedding_dim': self.__embedding_dim,
+            'padding_idx': self.__padding_idx,
+            'max_norm': self.__max_norm,
+            'norm_type': self.__norm_type,
+            'scale_grad_by_freq': self.__scale_grad_by_freq,
+            'sparse': self.__sparse
+        })
