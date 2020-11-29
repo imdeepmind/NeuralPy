@@ -14,15 +14,16 @@ class Conv1D(CustomLayer):
         Supported Arguments:
             filters: (Integer) Size of the filter
             kernel_size: (Int | Tuple) Kernel size of the layer
-            input_shape: (Tuple) A tuple with the shape in following format (input_channel, X)
-                no need for this argument layers except the initial layer.
-            stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
-                    number or a one-element tuple.
+            input_shape: (Tuple) A tuple with the shape in following format
+                (input_channel, X) no need for this argument layers except the initial
+                layer.
+            stride: (Int | Tuple) Controls the stride for the cross-correlation, a
+                single number or a one-element tuple.
             padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
-                        sides for padding number of points
+                sides for padding number of points
             dilation: (Int | Tuple) Controls the spacing between the kernel points; also
-                        known as the à trous algorithm. It is harder to describe, but this link has
-                        a nice visualization of what dilation does.
+                known as the à trous algorithm. It is harder to describe, but this
+                link has a nice visualization of what dilation does.
             groups: (Int) Controls the connections between inputs and outputs.
                     input channel and filters must both be divisible by groups
             bias: (Boolean) If true then uses the bias, Defaults to `true`
@@ -40,15 +41,16 @@ class Conv1D(CustomLayer):
             Supported Arguments:
                 filters: (Integer) Size of the filter
                 kernel_size: (Int | Tuple) Kernel size of the layer
-                input_shape: (Tuple) A tuple with the shape in following format (input_channel, X)
-                    no need for this argument layers except the initial layer.
-                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
-                        number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
-                            sides for padding number of points
-                dilation: (Int | Tuple) Controls the spacing between the kernel points; also
-                            known as the à trous algorithm. It is harder to describe,
-                            but this link has a nice visualization of what dilation does.
+                input_shape: (Tuple) A tuple with the shape in following format
+                    (input_channel, X) no need for this argument layers except the
+                    initial layer.
+                stride: (Int | Tuple) Controls the stride for the cross-correlation,
+                    a single number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings
+                    on both sides for padding number of points
+                dilation: (Int | Tuple) Controls the spacing between the kernel points;
+                    also known as the à trous algorithm. It is harder to describe,
+                    but this link has a nice visualization of what dilation does.
                 groups: (Int) Controls the connections between inputs and outputs.
                         input channel and filters must both be divisible by groups
                 bias: (Boolean) If true then uses the bias, Defaults to `true`
@@ -72,12 +74,12 @@ class Conv1D(CustomLayer):
         if input_shape is not None and not isinstance(input_shape, tuple):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not (isinstance(input_shape[0], int)
-                                            and input_shape[0] >= 0):
+        if input_shape is not None and not (isinstance(
+                input_shape[0], int) and input_shape[0] >= 0):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not (isinstance(input_shape[1], int)
-                                            and input_shape[1] >= 0):
+        if input_shape is not None and not (isinstance(
+                input_shape[1], int) and input_shape[1] >= 0):
             raise ValueError("Please provide a valid input_shape")
 
         # Checking the stride field
@@ -113,7 +115,7 @@ class Conv1D(CustomLayer):
             raise ValueError("Please provide a valid bias")
 
         super().__init__(_Conv1d, "Conv1D", layer_name=name)
-        
+
         # Storing the data
         self.__filters = filters
         self.__kernel_size = kernel_size
@@ -165,7 +167,8 @@ class Conv1D(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -182,7 +185,8 @@ class Conv1D(CustomLayer):
                 self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape \
+                        for the layer")
 
     def get_layer(self):
         """
@@ -192,7 +196,7 @@ class Conv1D(CustomLayer):
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return self._get_layer_details((self.__input_shape[0],), {
+        return self._get_layer_details(self.__get_layer_details(), {
             'in_channels': self.__input_shape[0],
             'out_channels': self.__filters,
             'kernel_size': self.__kernel_size,
