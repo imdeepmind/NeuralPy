@@ -18,10 +18,12 @@ class Embedding(CustomLayer):
                 whenever it encounters the index
             max_norm: (Float) If given, each embedding vector with
                 norm larger than max_norm is renormalized to have norm max_norm
-            norm_type: (Float) The p of the p-norm to compute for the max_norm option.Default 2
+            norm_type: (Float) The p of the p-norm to compute for the max_norm option.
+                Default 2
             scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
                 inverse of frequency of the words in the mini-batch. Default False
-            sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse tensor.
+            sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse
+                tensor.
     """
 
     def __init__(
@@ -38,10 +40,12 @@ class Embedding(CustomLayer):
                     whenever it encounters the index
                 max_norm: (Float) If given, each embedding vector with
                     norm larger than max_norm is renormalized to have norm max_norm
-                norm_type: (Float) The p of the p-norm to compute for the max_norm option.Default 2
+                norm_type: (Float) The p of the p-norm to compute for the max_norm
+                    option.Default 2
                 scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
                     inverse of frequency of the words in the mini-batch. Default False
-                sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse tensor.
+                sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a
+                    sparse tensor.
 
         """
 
@@ -72,7 +76,7 @@ class Embedding(CustomLayer):
         # Checking sparse, It is an optional field
         if not isinstance(sparse, bool):
             raise ValueError("Please provide a valid sparse")
-        
+
         super().__init__(_Embedding, "Embedding", layer_name=name)
 
         # Storing values

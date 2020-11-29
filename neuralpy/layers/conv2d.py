@@ -73,16 +73,16 @@ class Conv2D(CustomLayer):
         if input_shape is not None and not isinstance(input_shape, tuple):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not (isinstance(input_shape[0], int)
-                                            and input_shape[0] >= 0):
+        if input_shape is not None and not \
+                (isinstance(input_shape[0], int) and input_shape[0] >= 0):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not (isinstance(input_shape[1], int)
-                                            and input_shape[1] >= 0):
+        if input_shape is not None and not \
+                (isinstance(input_shape[1], int) and input_shape[1] >= 0):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not (isinstance(input_shape[2], int)
-                                            and input_shape[2] >= 0):
+        if input_shape is not None and not \
+                (isinstance(input_shape[2], int) and input_shape[2] >= 0):
             raise ValueError("Please provide a valid input_shape")
 
         # Checking the stride field
