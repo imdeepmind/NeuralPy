@@ -5,7 +5,7 @@ from neuralpy.layers import MaxPool1D
 
 def test_MaxPool1D_should_throws_type_error():
     with pytest.raises(TypeError):
-        x = MaxPool1D()
+        MaxPool1D()
 
 
 @pytest.mark.parametrize(
@@ -45,7 +45,7 @@ def test_MaxPool1D_throws_value_error(
         kernel_size, stride, padding, dilation,
         return_indices, ceil_mode, name):
     with pytest.raises(ValueError):
-        x = MaxPool1D(
+        MaxPool1D(
             kernel_size=kernel_size, stride=stride,
             padding=padding, dilation=dilation,
             return_indices=return_indices,
@@ -87,7 +87,8 @@ def test_MaxPool1D_get_layer_method(
     )
 
     prev_dim = (3, 6, (6, 18))
-    layer_details = x.get_input_dim(prev_dim, "conv1d")
+
+    x.get_input_dim(prev_dim, "conv1d")
 
     details = x.get_layer()
 

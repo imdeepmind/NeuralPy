@@ -26,7 +26,6 @@ class MaxPool1D(CustomLayer):
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
     """
-    # pylint: disable=too-many-branches
 
     def __init__(
             self, kernel_size, stride=None, padding=0, dilation=1,
@@ -96,7 +95,7 @@ class MaxPool1D(CustomLayer):
                 "Please provide a valid value for ceil_mode")
 
         super().__init__(_MaxPool1d, "MaxPool1D", layer_name=name)
-        
+
         # Storing the data
         self.__kernel_size = kernel_size
         self.__stride = stride
@@ -106,7 +105,7 @@ class MaxPool1D(CustomLayer):
         self.__return_indices = return_indices
         self.__ceil_mode = ceil_mode
 
-        self.____prev_layer_data = None
+        self.__prev_layer_data = None
 
     def __get_layer_details(self):
 
@@ -140,7 +139,8 @@ class MaxPool1D(CustomLayer):
     # pylint: disable=W0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -159,17 +159,11 @@ class MaxPool1D(CustomLayer):
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': self.__get_layer_details(),
-            'name': self.__name,
-            'type': 'MaxPool1D',
-            'layer': _MaxPool1d,
-            'keyword_arguments': {
-                'kernel_size': self.__kernel_size,
-                'stride': self.__stride,
-                'padding': self.__padding,
-                'dilation': self.__dilation,
-                'return_indices': self.__return_indices,
-                'ceil_mode': self.__ceil_mode
-            }
-        }
+        return self._get_layer_details(self.__get_layer_details(), {
+            'kernel_size': self.__kernel_size,
+            'stride': self.__stride,
+            'padding': self.__padding,
+            'dilation': self.__dilation,
+            'return_indices': self.__return_indices,
+            'ceil_mode': self.__ceil_mode
+        })

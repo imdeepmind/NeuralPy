@@ -107,7 +107,7 @@ class MaxPool2D(CustomLayer):
                 "Please provide a valid value for ceil_mode")
 
         super().__init__(_MaxPool2d, "MaxPool2D", layer_name=name)
-        
+
         # Storing the data
         self.__kernel_size = kernel_size
         self.__stride = stride
@@ -150,7 +150,8 @@ class MaxPool2D(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -169,17 +170,11 @@ class MaxPool2D(CustomLayer):
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': self.__get_layer_details(),
-            'name': self.__name,
-            'type': 'MaxPool2D',
-            'layer': _MaxPool2d,
-            'keyword_arguments': {
-                'kernel_size': self.__kernel_size,
-                'stride': self.__stride,
-                'padding': self.__padding,
-                'dilation': self.__dilation,
-                'return_indices': self.__return_indices,
-                'ceil_mode': self.__ceil_mode
-            }
-        }
+        return self._get_layer_details(self.__get_layer_details(), {
+            'kernel_size': self.__kernel_size,
+            'stride': self.__stride,
+            'padding': self.__padding,
+            'dilation': self.__dilation,
+            'return_indices': self.__return_indices,
+            'ceil_mode': self.__ceil_mode
+        })
