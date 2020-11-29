@@ -18,8 +18,8 @@ from neuralpy.layers import BatchNorm3D
 def test_batchnorm3d_should_throw_value_error(
         num_features, eps, momentum, affine,
         track_running_stats, name):
-    with pytest.raises(ValueError) as ex:
-        x = BatchNorm3D(
+    with pytest.raises(ValueError):
+        BatchNorm3D(
             num_features=num_features, eps=eps, momentum=momentum,
             affine=affine, track_running_stats=track_running_stats,
             name=name
@@ -65,17 +65,17 @@ def test_batchnorm3d_get_layer_method(
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert details["layer_details"] == None
+    assert details["layer_details"] == (num_features,)
 
     assert details["name"] == name
 
     assert details["layer"] == _BatchNorm3d
 
-    assert details["type"] == "BatchNorm3d"
+    assert details["type"] == "BatchNorm3D"
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["eps"] == eps
 

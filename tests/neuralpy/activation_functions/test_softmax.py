@@ -11,7 +11,7 @@ from neuralpy.activation_functions import Softmax
     (2, 12),
     (2, 3.6),
     (2, -2),
-    ])
+])
 def test_leaky_relu_should_throw_value_error_Exception(dim, name):
     with pytest.raises(ValueError):
         Softmax(dim=dim, name=name)
@@ -25,7 +25,7 @@ names = ['test1', 'test2', None]
 
 
 @pytest.mark.parametrize('dim, name', [(dim, name) for dim in dims
-                         for name in names])
+                                       for name in names])
 def test_leaky_relu_get_input_dim_and_get_layer_method(dim, name):
     x = Softmax(dim=dim, name=name)
 

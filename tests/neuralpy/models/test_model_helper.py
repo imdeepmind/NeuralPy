@@ -40,9 +40,9 @@ def test_build_layer_from_dict():
         assert layer_name == f"dense_layer_{index+1}" or f"gelu_layer_{index+1}"
 
         if "dense" in layer_name:
-            assert isinstance(layer, Linear) == True
+            assert isinstance(layer, Linear) is True
         else:
-            assert isinstance(layer, _GELU) == True
+            assert isinstance(layer, _GELU) is True
 
 
 def test_build_optimizer_from_dict():
@@ -58,9 +58,9 @@ def test_build_optimizer_from_dict():
     optimizer, optimizer_arguments = build_optimizer_from_dict(
         Adam(), pytorch_model.parameters())
 
-    assert isinstance(optimizer_arguments, dict) == True
+    assert isinstance(optimizer_arguments, dict) is True
 
-    assert isinstance(optimizer, _Adam) == True
+    assert isinstance(optimizer, _Adam) is True
 
 
 def test_build_loss_function_from_dict():
@@ -69,9 +69,9 @@ def test_build_loss_function_from_dict():
     loss_function, loss_function_arguments = build_loss_function_from_dict(
         loss)
 
-    assert isinstance(loss_function, _MSELoss) == True
+    assert isinstance(loss_function, _MSELoss) is True
 
-    assert isinstance(loss_function_arguments, dict) == True
+    assert isinstance(loss_function_arguments, dict) is True
 
 
 def test_build_history_object():
@@ -79,17 +79,17 @@ def test_build_history_object():
 
     history_obj = build_history_object(history)
 
-    assert isinstance(history_obj, dict) == True
+    assert isinstance(history_obj, dict) is True
 
-    assert isinstance(history_obj["epochwise"], dict) == True
-    assert isinstance(history_obj["batchwise"], dict) == True
+    assert isinstance(history_obj["epochwise"], dict) is True
+    assert isinstance(history_obj["batchwise"], dict) is True
 
-    assert isinstance(history_obj["epochwise"]["training_loss"], list) == True
+    assert isinstance(history_obj["epochwise"]["training_loss"], list) is True
     assert isinstance(history_obj["epochwise"]
-                      ["validation_loss"], list) == True
-    assert isinstance(history_obj["batchwise"]["training_loss"], list) == True
+                      ["validation_loss"], list) is True
+    assert isinstance(history_obj["batchwise"]["training_loss"], list) is True
     assert isinstance(history_obj["batchwise"]
-                      ["validation_loss"], list) == True
+                      ["validation_loss"], list) is True
 
 
 def test_calculate_accuracy1():

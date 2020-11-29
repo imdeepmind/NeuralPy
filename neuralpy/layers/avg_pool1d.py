@@ -1,21 +1,24 @@
 """AvgPool1D layer for NeuralPy"""
 
 from torch.nn import AvgPool1d as _AvgPool1d
+from neuralpy.utils import CustomLayer
 
 
-class AvgPool1D:
+class AvgPool1D(CustomLayer):
     """
-        Applies a 1D average pooling over an input signal composed of several input planes.
+        Applies a 1D average pooling over an input signal composed of several input
+        planes.
 
         To learn more about Dense layers, please check PyTorch
-        documentation https://pytorch.org/docs/stable/nn.html?highlight=AvgPool1D#torch.nn.AvgPool1d
+        documentation
+        https://pytorch.org/docs/stable/nn.html?highlight=AvgPool1D#torch.nn.AvgPool1d
 
         Supported Arguments:
             kernel_size: (Int | Tuple) Kernel size of the layer
-                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
-                        number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
-                            sides for padding number of points
+                stride: (Int | Tuple) Controls the stride for the cross-correlation, a
+                    single number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on
+                    both sides for padding number of points
                 ceil_mode: (Bool) when True, will use ceil instead of floor to compute
                             the output shape
                 count_include_pad: (Bool) when True, will include the zero-padding
@@ -33,17 +36,16 @@ class AvgPool1D:
 
             Supported Arguments:
                 kernel_size: (Int | Tuple) Kernel size of the layer
-                stride: (Int | Tuple) Controls the stride for the cross-correlation, a single
-                        number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on both
-                            sides for padding number of points
-                ceil_mode: (Bool) when True, will use ceil instead of floor to compute the
-                           output shape
-                count_include_pad: (Bool) when True, will include the zero-padding in the
-                                    averaging calculation
+                stride: (Int | Tuple) Controls the stride for the cross-correlation, a
+                    single number or a one-element tuple.
+                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on
+                    both sides for padding number of points
+                ceil_mode: (Bool) when True, will use ceil instead of floor to compute
+                    the output shape
+                count_include_pad: (Bool) when True, will include the zero-padding in
+                    the averaging calculation
                 divisor_override: (Bool) if specified, it will be used as divisor,
-                                    otherwise attr:kernel_size will be used
-
+                    otherwise attr:kernel_size will be used
         """
         # Checking the kernel_size field
         if not isinstance(kernel_size, (int, tuple)):
@@ -80,10 +82,7 @@ class AvgPool1D:
         if not isinstance(count_include_pad, bool):
             raise ValueError("Please provide a valid count_include_pad")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_AvgPool1d, "AvgPool1d", layer_name=name)
 
         # Storing the data
         self.__kernel_size = kernel_size
@@ -91,8 +90,6 @@ class AvgPool1D:
         self.__padding = padding
         self.__ceil_mode = ceil_mode
         self.__count_include_pad = count_include_pad
-
-        self.__name = name
 
         self.__prev_layer_data = None
 
@@ -126,7 +123,8 @@ class AvgPool1D:
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -145,16 +143,10 @@ class AvgPool1D:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': self.__get_layer_details(),
-            'layer': _AvgPool1d,
-            'name': self.__name,
-            'type': 'AvgPool1D',
-            'keyword_arguments': {
-                'kernel_size': self.__kernel_size,
-                'stride': self.__stride,
-                'padding': self.__padding,
-                'ceil_mode': self.__ceil_mode,
-                'count_include_pad': self.__count_include_pad
-            }
-        }
+        return self._get_layer_details(self.__get_layer_details(), {
+            'kernel_size': self.__kernel_size,
+            'stride': self.__stride,
+            'padding': self.__padding,
+            'ceil_mode': self.__ceil_mode,
+            'count_include_pad': self.__count_include_pad
+        })

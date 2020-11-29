@@ -4,8 +4,8 @@ from neuralpy.layers import GRU
 
 
 def test_GRU_should_throws_type_error():
-    with pytest.raises(TypeError) as ex:
-        x = GRU()
+    with pytest.raises(TypeError):
+        GRU()
 
 
 @pytest.mark.parametrize(
@@ -58,8 +58,8 @@ def test_GRU_should_throws_type_error():
 def test_GRU_should_throw_value_error(
         hidden_size, num_layers, input_size,
         bias, batch_first, dropout, bidirectional, name):
-    with pytest.raises(ValueError) as ex:
-        x = GRU(
+    with pytest.raises(ValueError):
+        GRU(
             hidden_size=hidden_size, input_size=input_size,
             num_layers=num_layers, bias=bias,
             batch_first=batch_first, dropout=dropout,
@@ -69,7 +69,7 @@ def test_GRU_should_throw_value_error(
 # Possible values
 input_sizes = [1, 2, None]
 hidden_sizes = [2, 2]
-num_layerses = [1,  4]
+num_layerses = [1, 4]
 biases = [False, True]
 batch_firsts = [False, True]
 dropouts = [1, 2]
@@ -108,15 +108,15 @@ def test_GRU_layer_get_method(
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details['layer_details'] == (hidden_size, )
 
     assert details['name'] == name
 
-    assert issubclass(details['layer'], _GRU) == True
+    assert issubclass(details['layer'], _GRU) is True
 
-    assert isinstance(details['keyword_arguments'], dict) == True
+    assert isinstance(details['keyword_arguments'], dict) is True
 
     if input_size:
         assert details['keyword_arguments']['input_size'] == input_size
@@ -141,7 +141,7 @@ def test_GRU_layer_get_method(
 
 
 def test_GRU_with_invalid_layer():
-    with pytest.raises(ValueError) as ex:
+    with pytest.raises(ValueError):
         x = GRU(hidden_size=128, num_layers=1, input_size=None)
 
         x.get_input_dim((64, ), "dense")

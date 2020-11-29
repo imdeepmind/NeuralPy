@@ -2,6 +2,7 @@ import pytest
 from torch.optim import Rprop as _Rprop
 from neuralpy.optimizer import Rprop
 
+
 @pytest.mark.parametrize(
     "learning_rate, etas, step_sizes",
     [
@@ -20,8 +21,8 @@ from neuralpy.optimizer import Rprop
 )
 def test_rprop_should_throw_value_error(
         learning_rate, etas, step_sizes):
-    with pytest.raises(ValueError) as ex:
-        x = Rprop(
+    with pytest.raises(ValueError):
+        Rprop(
             learning_rate=learning_rate, etas=etas, step_sizes=step_sizes)
 
 
@@ -45,11 +46,11 @@ def test_rprop_get_optimizer_method(learning_rate, etas, step_sizes):
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _Rprop) == True
+    assert issubclass(details["optimizer"], _Rprop) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == learning_rate
 
@@ -63,11 +64,11 @@ def test_rprop_get_optimizer_method_without_parameter():
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _Rprop) == True
+    assert issubclass(details["optimizer"], _Rprop) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == 0.01
 

@@ -1,9 +1,10 @@
 """RNN layer for NeuralPy"""
 
 from torch.nn import RNN as _RNN
+from neuralpy.utils import CustomLayer
 
 
-class RNN:
+class RNN(CustomLayer):
     """
         RNN also known as Recurrent Neural Network
         To learn more about RNN, please check pytorch
@@ -33,7 +34,7 @@ class RNN:
 
 
     """
-    # pylint: disable=too-many-instance-attributes,too-many-arguments
+
     def __init__(
             self, hidden_size, num_layers=1, input_size=None,
             non_linearity='tanh', bias=True, batch_first=False,
@@ -101,9 +102,7 @@ class RNN:
         if not isinstance(bidirectional, bool):
             raise ValueError("Please provide a valid bidirectional")
 
-        # checking the name, it is an optional field
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_RNN, "RNN", layer_name=name)
 
         # Storing the data
         self.__input_size = input_size
@@ -115,16 +114,17 @@ class RNN:
         self.__batch_first = batch_first
         self.__dropout = dropout
         self.__bidirectional = bidirectional
-        self.__name = name
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Checking if n_inputs is there or not, not overwriting the n_input field
+        # Checking if n_inputs is there or not, not overwriting the n_input
+        # field
         if not self.__input_size:
             layer_type = prev_layer_type.lower()
 
@@ -134,7 +134,8 @@ class RNN:
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape \
+                        for the layer")
 
     def get_layer(self):
         """
@@ -144,19 +145,13 @@ class RNN:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': (self.__hidden_size, ),
-            'name': self.__name,
-            'type': 'RNN',
-            'layer': _RNN,
-            "keyword_arguments": {
-                'input_size': self.__input_size,
-                'hidden_size': self.__hidden_size,
-                'num_layers': self.__num_layers,
-                'nonlinearity': self.__non_linearity,
-                'bias': self.__bias,
-                'batch_first': self.__batch_first,
-                'dropout': self.__dropout,
-                'bidirectional': self.__bidirectional
-            }
-        }
+        return self._get_layer_details((self.__hidden_size, ), {
+            'input_size': self.__input_size,
+            'hidden_size': self.__hidden_size,
+            'num_layers': self.__num_layers,
+            'nonlinearity': self.__non_linearity,
+            'bias': self.__bias,
+            'batch_first': self.__batch_first,
+            'dropout': self.__dropout,
+            'bidirectional': self.__bidirectional
+        })

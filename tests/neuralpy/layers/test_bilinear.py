@@ -4,8 +4,8 @@ from neuralpy.layers import Bilinear
 
 
 def test_bilinear_should_throw_type_error():
-    with pytest.raises(TypeError) as ex:
-        x = Bilinear()
+    with pytest.raises(TypeError):
+        Bilinear()
 
 
 @pytest.mark.parametrize(
@@ -27,8 +27,8 @@ def test_bilinear_should_throw_type_error():
 )
 def test_bilinear_should_throw_value_error(
         n_nodes, n_inputs, n_inputs2, bias, name):
-    with pytest.raises(ValueError) as ex:
-        x = Bilinear(
+    with pytest.raises(ValueError):
+        Bilinear(
             n_nodes=n_nodes, n1_features=n_inputs,
             n2_features=n_inputs2, bias=bias, name=name)
 
@@ -63,21 +63,21 @@ def test_bilinear_get_layer_method(
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details["layer_details"] == (n_nodes,)
 
     assert details["name"] == name
 
-    assert issubclass(details["layer"], BiLinear) == True
+    assert issubclass(details["layer"], BiLinear) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     if n_inputs:
         assert details["keyword_arguments"]["in_features1"] == n_inputs
     else:
         assert details["keyword_arguments"]["in_features1"] == prev_dim[0]
-    
+
     assert details["keyword_arguments"]["in_features2"] == n_inputs2
 
     assert details["keyword_arguments"]["out_features"] == n_nodes

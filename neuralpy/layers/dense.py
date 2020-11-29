@@ -1,9 +1,10 @@
 """Dense layer for NeuralPy"""
 
-from torch.nn import Linear
+from torch.nn import Linear as _Dense
+from neuralpy.utils import CustomLayer
 
 
-class Dense:
+class Dense(CustomLayer):
     """
         A Dense is a normal densely connected Neural Network.
         It performs a linear transformation of the input.
@@ -37,33 +38,32 @@ class Dense:
             raise ValueError("Please provide a valid n_nodes")
 
         # Checking the n_input field, it is a optional field
-        if n_inputs is not None and not (isinstance(n_inputs, int) and n_inputs >= 0):
+        if n_inputs is not None and not (
+                isinstance(n_inputs, int) and n_inputs >= 0):
             raise ValueError("Please provide a valid n_inputs")
 
         # Checking the bias field, this is also optional, default to True
         if not isinstance(bias, bool):
             raise ValueError("Please provide a valid bias")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_Dense, "Dense", layer_name=name)
 
         # Storing the data
         self.__n_inputs = n_inputs
         self.__n_nodes = n_nodes
 
         self.__bias = bias
-        self.__name = name
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-        # Checking if n_inputs is there or not, not overwriting the n_input field
+        # Checking if n_inputs is there or not, not overwriting the n_input
+        # field
         if not self.__n_inputs:
             layer_type = prev_layer_type.lower()
 
@@ -74,12 +74,13 @@ class Dense:
             elif layer_type in ("rnn", "lstm", "gru", "rnncell", "lstmcell", "grucell"):
                 self.__n_inputs = prev_input_dim[-1]
             elif layer_type in ('conv1d', 'conv2d', 'conv3d', 'avgpool1d', 'avgpool2d',
-                                "avgpool3d", "maxpool1d", "maxpool2d", "maxpool3d", "batchnorm1d",
-                                "batchnorm2d", "batchnorm3d"):
+                                "avgpool3d", "maxpool1d", "maxpool2d", "maxpool3d",
+                                "batchnorm1d", "batchnorm2d", "batchnorm3d"):
                 self.__n_inputs = prev_input_dim[1]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape \
+                        for the layer")
 
     def get_layer(self):
         """
@@ -89,14 +90,8 @@ class Dense:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return {
-            'layer_details': (self.__n_nodes,),
-            'name': self.__name,
-            'type': 'Dense',
-            'layer': Linear,
-            "keyword_arguments": {
-                'in_features': self.__n_inputs,
-                'out_features': self.__n_nodes,
-                'bias': self.__bias
-            }
-        }
+        return self._get_layer_details((self.__n_nodes,), {
+            'in_features': self.__n_inputs,
+            'out_features': self.__n_nodes,
+            'bias': self.__bias
+        })

@@ -25,10 +25,11 @@ amsgrads = [12, "", 30.326]
         (0.001, (0.10, 2.0), .2, .32, "INVALID")
     ]
 )
-def test_adam_should_throw_value_error(learning_rate, beta, eps, weight_decay, amsgrad):
-    with pytest.raises(ValueError) as ex:
-        x = Adam(learning_rate=learning_rate, betas=beta, eps=eps,
-                 weight_decay=weight_decay, amsgrad=amsgrad)
+def test_adam_should_throw_value_error(
+        learning_rate, beta, eps, weight_decay, amsgrad):
+    with pytest.raises(ValueError):
+        Adam(learning_rate=learning_rate, betas=beta, eps=eps,
+             weight_decay=weight_decay, amsgrad=amsgrad)
 
 
 # Possible values that are valid
@@ -41,23 +42,28 @@ amsgrads = [False, True]
 
 @pytest.mark.parametrize(
     "learning_rate, beta, eps, weight_decay, amsgrad",
-    [(learning_rate, beta, eps, weight_decay, amsgrad) for learning_rate in learning_rates
+    [(learning_rate, beta, eps, weight_decay, amsgrad) for learning_rate in
+        learning_rates
      for beta in betas
      for eps in epses
      for weight_decay in weight_decays
      for amsgrad in amsgrads]
 )
-def test_adam_get_layer_method(learning_rate, beta, eps, weight_decay, amsgrad):
-    x = Adam(learning_rate=learning_rate, betas=beta, eps=eps,
-             weight_decay=weight_decay, amsgrad=amsgrad)
+def test_adam_get_layer_method(
+        learning_rate, beta, eps, weight_decay, amsgrad):
+    x = Adam(learning_rate=learning_rate,
+             betas=beta,
+             eps=eps,
+             weight_decay=weight_decay,
+             amsgrad=amsgrad)
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _Adam) == True
+    assert issubclass(details["optimizer"], _Adam) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == learning_rate
 

@@ -26,15 +26,15 @@ def build_layer_from_dict(layer_refs):
 
         # Generating n_input if not present
         if prev_layer_details and prev_layer_type:
-            # For each layer, we have this method that returns the new input layer for next dim
-            # based on the previous layer details and type
+            # For each layer, we have this method that returns the new input layer
+            # for next dim based on the previous layer details and type
             # the prev_layer_details is a tuple that contains all the information
             # need for the layer to predict the input shape
             # The prev_layer_type is the type of the layer, based on it,
             # the layers can calculate the input shape
-            # for example, in cnn, after the conv layers, when the dense layer need to do
-            # some complicated calculations to get the input shape of the Dense layer
-            # based on the input shape, stride, padding, etc
+            # for example, in cnn, after the conv layers, when the dense layer need
+            # to do some complicated calculations to get the input shape of the Dense
+            # layer based on the input shape, stride, padding, etc
             layer_ref.get_input_dim(prev_layer_details, prev_layer_type)
 
         # Getting the details of the layer using the get_layer method
@@ -51,12 +51,15 @@ def build_layer_from_dict(layer_refs):
 
         # If layer does not have name, then creating a unique name
         if not layer_name:
-            # This method generates a unique layer name based on layer type and index
+            # This method generates a unique layer name based on layer type and
+            # index
             layer_name = generate_layer_name(layer_type, index)
 
-        # If layer_arguments is not None, then the layer accepts some parameters to initialize
+        # If layer_arguments is not None, then the layer accepts some parameters
+        # to initialize
         if layer_arguments is not None:
-            # Here passing the layer_arguments to the layer reference to initialize the layer
+            # Here passing the layer_arguments to the layer reference to initialize
+            # the layer
             layer = layer_function_ref(**layer_arguments)
         else:
             # This layer does not need layer_arguments so not passing anything
@@ -86,9 +89,11 @@ def build_optimizer_from_dict(optimizer_ref, parameters):
     # Creating a variable for the optimizer
     optimizer = None
 
-    # Checking the optimizer_arguments, if it is not None then passing it to the optimizer
+    # Checking the optimizer_arguments, if it is not None then passing it to
+    # the optimizer
     if optimizer_arguments:
-        # Initializing the optimizer with optimizer_arguments and models parameters
+        # Initializing the optimizer with optimizer_arguments and models
+        # parameters
         optimizer = optimizer_func(
             **optimizer_arguments, params=parameters)
     else:
@@ -112,7 +117,8 @@ def build_loss_function_from_dict(loss_function_ref):
     # Creating a variable for the loss function
     loss_function = None
 
-    # Checking the loss_function_arguments, if not None and passing it to the loss function
+    # Checking the loss_function_arguments, if not None and passing it to the
+    # loss function
     if loss_function_arguments:
         # Passing the loss_function_arguments to the loss function
         loss_function = loss_function_func(**loss_function_arguments)
@@ -171,7 +177,8 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
     print("\r" + message, end="")
 
 
-def print_validation_progress(validation_loss, no_samples, validation_corrects=None):
+def print_validation_progress(
+        validation_loss, no_samples, validation_corrects=None):
     """
         Show a validation progress text
     """

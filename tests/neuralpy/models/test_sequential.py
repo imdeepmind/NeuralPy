@@ -3,6 +3,7 @@ from neuralpy.layers import Dense
 
 import pytest
 
+
 def test_add_method():
     model = Sequential()
 
@@ -10,5 +11,5 @@ def test_add_method():
 
     model.build()
 
-    with pytest.raises(Exception) as ex:
+    with pytest.raises(Exception):
         model.add(Dense(n_nodes=32, n_inputs=45))

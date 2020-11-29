@@ -2,9 +2,10 @@
 
 
 from torch.nn import RNNCell as _RNNCell
+from neuralpy.utils import CustomLayer
 
 
-class RNNCell:
+class RNNCell(CustomLayer):
     """
         An Elman RNN cell with tanh or ReLU non-linearity
         To learn more about RNN, please check pytorch
@@ -26,7 +27,6 @@ class RNNCell:
     def __init__(
             self, input_size, hidden_size,
             bias=True, non_linearity='tanh', name=None):
-
         """
             __init__ method for RNNCell
 
@@ -56,25 +56,24 @@ class RNNCell:
         if non_linearity not in ("tanh", "relu"):
             raise ValueError("Please provide a valid non_linearity")
 
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_RNNCell, "RNNCell", layer_name=name)
 
         self.__input_size = input_size
         self.__hidden_size = hidden_size
 
         self.__bias = bias
         self.__non_linearity = non_linearity
-        self.__name = name
-
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
         """
-       # Checking if n_inputs is there or not, not overwriting the n_input field
+        # Checking if n_inputs is there or not, not overwriting the n_input
+        # field
         if not self.__input_size:
             layer_type = prev_layer_type.lower()
 
@@ -86,7 +85,8 @@ class RNNCell:
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
-                    "Unsupported previous layer, please provide your own input shape for the layer")
+                    "Unsupported previous layer, please provide your own input shape \
+                        for the layer")
 
     def get_layer(self):
         """
@@ -96,15 +96,9 @@ class RNNCell:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': (self.__hidden_size, ),
-            'name': self.__name,
-            'type': 'RNNCell',
-            'layer': _RNNCell,
-            'keyword_arguments': {
-                'input_size': self.__input_size,
-                'hidden_size': self.__hidden_size,
-                'bias': self.__bias,
-                'non_linearity': self.__non_linearity
-            }
-        }
+        return self._get_layer_details((self.__hidden_size, ), {
+            'input_size': self.__input_size,
+            'hidden_size': self.__hidden_size,
+            'bias': self.__bias,
+            'non_linearity': self.__non_linearity
+        })

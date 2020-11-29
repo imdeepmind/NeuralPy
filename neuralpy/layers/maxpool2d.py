@@ -1,9 +1,10 @@
 """MaxPool2d for NeuralPy"""
 
 from torch.nn import MaxPool2d as _MaxPool2d
+from neuralpy.utils import CustomLayer
 
 
-class MaxPool2D:
+class MaxPool2D(CustomLayer):
     """
         MaxPool2d Applies a 2D max pooling over an input
         To learn more about MaxPool2d, please check pytorch
@@ -96,7 +97,7 @@ class MaxPool2D:
                 raise ValueError("Please provide a valid dilation")
 
         # Checking the return_indices, it is an optional filed
-        if  not isinstance(return_indices, bool):
+        if not isinstance(return_indices, bool):
             raise ValueError(
                 "Please provide a valid value for return_indices")
 
@@ -105,9 +106,7 @@ class MaxPool2D:
             raise ValueError(
                 "Please provide a valid value for ceil_mode")
 
-        # Checking the name, it is an optional filed
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_MaxPool2d, "MaxPool2D", layer_name=name)
 
         # Storing the data
         self.__kernel_size = kernel_size
@@ -117,7 +116,6 @@ class MaxPool2D:
         self.__dilation = dilation
         self.__return_indices = return_indices
         self.__ceil_mode = ceil_mode
-        self.__name = name
 
         self.__prev_layer_data = None
 
@@ -152,7 +150,8 @@ class MaxPool2D:
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -171,17 +170,11 @@ class MaxPool2D:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': self.__get_layer_details(),
-            'name': self.__name,
-            'type': 'MaxPool2D',
-            'layer': _MaxPool2d,
-            'keyword_arguments': {
-                'kernel_size': self.__kernel_size,
-                'stride': self.__stride,
-                'padding': self.__padding,
-                'dilation': self.__dilation,
-                'return_indices': self.__return_indices,
-                'ceil_mode': self.__ceil_mode
-            }
-        }
+        return self._get_layer_details(self.__get_layer_details(), {
+            'kernel_size': self.__kernel_size,
+            'stride': self.__stride,
+            'padding': self.__padding,
+            'dilation': self.__dilation,
+            'return_indices': self.__return_indices,
+            'ceil_mode': self.__ceil_mode
+        })

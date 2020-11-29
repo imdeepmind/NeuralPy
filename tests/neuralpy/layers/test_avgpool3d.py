@@ -4,12 +4,13 @@ from neuralpy.layers import AvgPool3D
 
 
 def test_AvgPool3D_should_throws_type_error():
-    with pytest.raises(TypeError) as ex:
-        x = AvgPool3D()
+    with pytest.raises(TypeError):
+        AvgPool3D()
 
 
 @pytest.mark.parametrize(
-    'kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, name',
+    'kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, \
+        name',
     [
         # Checking kernel size validation
         ("invalid", 3, 3, False, False, False, "test"),
@@ -47,9 +48,10 @@ def test_AvgPool3D_should_throws_type_error():
     ]
 )
 def test_AvgPool3D_throws_value_error(
-        kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, name):
-    with pytest.raises(ValueError) as ex:
-        x = AvgPool3D(
+        kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override,
+        name):
+    with pytest.raises(ValueError):
+        AvgPool3D(
             kernel_size=kernel_size, stride=stride,
             padding=padding,
             ceil_mode=ceil_mode, count_include_pad=count_include_pad,
@@ -67,8 +69,10 @@ names = [None, 'Test']
 
 
 @pytest.mark.parametrize(
-    "kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, name",
-    [(kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, name)
+    "kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, \
+        name",
+    [(kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override,
+      name)
      for kernel_size in kernel_sizes
      for stride in strides
      for padding in paddings
@@ -78,7 +82,8 @@ names = [None, 'Test']
      for name in names]
 )
 def test_AvgPool3D_get_layer_method(
-        kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override, name):
+        kernel_size, stride, padding, ceil_mode, count_include_pad, divisor_override,
+        name):
     x = AvgPool3D(
         kernel_size=kernel_size, stride=stride,
         padding=padding,
@@ -86,18 +91,19 @@ def test_AvgPool3D_get_layer_method(
         divisor_override=divisor_override, name=name)
 
     prev_dim = (3, 6, (6, 18, 32, 32))
-    layer_details = x.get_input_dim(prev_dim, "conv3d")
+
+    x.get_input_dim(prev_dim, "conv3d")
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details['name'] == name
 
-    assert issubclass(details['layer'], _AvgPool3D) == True
+    assert issubclass(details['layer'], _AvgPool3D) is True
 
     assert isinstance(
-        details['keyword_arguments'], dict) == True
+        details['keyword_arguments'], dict) is True
 
     assert details['keyword_arguments']['kernel_size'] == kernel_size
 

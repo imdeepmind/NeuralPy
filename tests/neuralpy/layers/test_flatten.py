@@ -13,8 +13,9 @@ from neuralpy.layers import Flatten
     ]
 )
 def test_flatten_should_throw_value_error(start_dim, end_dim):
-    with pytest.raises(ValueError) as ex:
-        x = Flatten(start_dim=start_dim, end_dim=end_dim)
+    with pytest.raises(ValueError):
+        Flatten(start_dim=start_dim, end_dim=end_dim)
+
 
 # possible values
 start_dims = [6, 3]
@@ -33,9 +34,9 @@ def test_flatten_get_layer_method(start_dim, end_dim):
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert x.get_input_dim(prev_input_dim, "flatten") == None
+    assert x.get_input_dim(prev_input_dim, "flatten") is None
 
     if start_dim:
         assert details["keyword_arguments"]["start_dim"] == start_dim
@@ -47,9 +48,9 @@ def test_flatten_get_layer_method(start_dim, end_dim):
     else:
         assert details["keyword_arguments"]["end_dim"] == -1
 
-    assert issubclass(details["layer"], _Flatten) == True
+    assert issubclass(details["layer"], _Flatten) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["start_dim"] == start_dim
 

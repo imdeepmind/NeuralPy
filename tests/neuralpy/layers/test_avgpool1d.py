@@ -4,8 +4,8 @@ from neuralpy.layers import AvgPool1D
 
 
 def test_AvgPool1D_should_throws_type_error():
-    with pytest.raises(TypeError) as ex:
-        x = AvgPool1D()
+    with pytest.raises(TypeError):
+        AvgPool1D()
 
 
 @pytest.mark.parametrize(
@@ -38,8 +38,8 @@ def test_AvgPool1D_should_throws_type_error():
 )
 def test_AvgPool1D_throws_value_error(
         kernel_size, stride, padding, ceil_mode, count_include_pad, name):
-    with pytest.raises(ValueError) as ex:
-        x = AvgPool1D(
+    with pytest.raises(ValueError):
+        AvgPool1D(
             kernel_size=kernel_size, stride=stride,
             padding=padding,
             ceil_mode=ceil_mode, count_include_pad=count_include_pad,
@@ -74,18 +74,19 @@ def test_AvgPool1D_get_layer_method(
         name=name)
 
     prev_dim = (3, 6, (6, 18))
-    layer_details = x.get_input_dim(prev_dim, "conv1d")
+
+    x.get_input_dim(prev_dim, "conv1d")
 
     details = x.get_layer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
     assert details['name'] == name
 
-    assert issubclass(details['layer'], _AvgPool1D) == True
+    assert issubclass(details['layer'], _AvgPool1D) is True
 
     assert isinstance(
-        details['keyword_arguments'], dict) == True
+        details['keyword_arguments'], dict) is True
 
     assert details['keyword_arguments']['kernel_size'] == kernel_size
 

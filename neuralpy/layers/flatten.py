@@ -1,19 +1,22 @@
 """Flatten layer for NeuralPy"""
 
 from torch.nn import Flatten as _Flatten
+from neuralpy.utils import CustomLayer
 
 
-class Flatten:
+class Flatten(CustomLayer):
     """
         Flattens a contiguous range of dims into a tensor
 
         To learn more about Dense layers, please check PyTorch
-        documentation https://pytorch.org/docs/stable/nn.html?highlight=flatten#torch.nn.Flatten
+        documentation
+        https://pytorch.org/docs/stable/nn.html?highlight=flatten#torch.nn.Flatten
 
         Supported Arguments:
             start_dim: (Integer) first dim to flatten (default = 1)
             end_dim: (Integer)  last dim to flatten (default = -1)
     """
+
     def __init__(self, start_dim=1, end_dim=-1, name=None):
         """
             __init__ method for Flatten
@@ -29,23 +32,19 @@ class Flatten:
 
         # Checking end_dim
         if end_dim and not isinstance(end_dim, int):
-            raise ValueError("Please provide a vlaid end_dim")
+            raise ValueError("Please provide a valid end_dim")
 
-        # Checking the name field, this is an optional field,
-        # if not provided generates a unique name for the layer
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_Flatten, "Flatten", layer_name=name)
 
         # Storing the data
         self.__start_dim = start_dim
         self.__end_dim = end_dim
 
-        self.__name = name
-
     # pylint: disable=W0613,R0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -61,13 +60,7 @@ class Flatten:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': None,
-            'layer': _Flatten,
-            'name': self.__name,
-            'type': 'Flatten',
-            'keyword_arguments': {
-                'start_dim': self.__start_dim,
-                'end_dim': self.__end_dim
-            }
-        }
+        return self._get_layer_details(None, {
+            'start_dim': self.__start_dim,
+            'end_dim': self.__end_dim
+        })

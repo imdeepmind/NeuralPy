@@ -1,9 +1,10 @@
 """Embedding layer for NeuralPy"""
 
 from torch.nn import Embedding as _Embedding
+from neuralpy.utils import CustomLayer
 
 
-class Embedding:
+class Embedding(CustomLayer):
     """
         A simple lookup table that stores embeddings of a fixed dictionary and size
         To learn more about RNN, please check pytorch
@@ -17,10 +18,12 @@ class Embedding:
                 whenever it encounters the index
             max_norm: (Float) If given, each embedding vector with
                 norm larger than max_norm is renormalized to have norm max_norm
-            norm_type: (Float) The p of the p-norm to compute for the max_norm option.Default 2
+            norm_type: (Float) The p of the p-norm to compute for the max_norm option.
+                Default 2
             scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
                 inverse of frequency of the words in the mini-batch. Default False
-            sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse tensor.
+            sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse
+                tensor.
     """
 
     def __init__(
@@ -37,10 +40,12 @@ class Embedding:
                     whenever it encounters the index
                 max_norm: (Float) If given, each embedding vector with
                     norm larger than max_norm is renormalized to have norm max_norm
-                norm_type: (Float) The p of the p-norm to compute for the max_norm option.Default 2
+                norm_type: (Float) The p of the p-norm to compute for the max_norm
+                    option.Default 2
                 scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
                     inverse of frequency of the words in the mini-batch. Default False
-                sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse tensor.
+                sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a
+                    sparse tensor.
 
         """
 
@@ -72,9 +77,7 @@ class Embedding:
         if not isinstance(sparse, bool):
             raise ValueError("Please provide a valid sparse")
 
-        # Checking name, It is an optional field
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
+        super().__init__(_Embedding, "Embedding", layer_name=name)
 
         # Storing values
 
@@ -86,12 +89,12 @@ class Embedding:
         self.__norm_type = norm_type
         self.__scale_grad_by_freq = scale_grad_by_freq
         self.__sparse = sparse
-        self.__name = name
 
     # pylint: disable=W0613,R0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output layer.
+            This method calculates the input shape for layer based on previous output
+            layer.
 
             This method is used by the NeuralPy Models, for building the models.
             No need to call this method for using NeuralPy.
@@ -107,18 +110,12 @@ class Embedding:
             No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return{
-            'layer_details': (self.__embedding_dim, ),
-            'name': self.__name,
-            'type': 'Embedding',
-            'layer': _Embedding,
-            'keyword_arguments': {
-                'num_embeddings': self.__num_embeddings,
-                'embedding_dim': self.__embedding_dim,
-                'padding_idx': self.__padding_idx,
-                'max_norm': self.__max_norm,
-                'norm_type': self.__norm_type,
-                'scale_grad_by_freq': self.__scale_grad_by_freq,
-                'sparse': self.__sparse
-            }
-        }
+        return self._get_layer_details((self.__embedding_dim, ), {
+            'num_embeddings': self.__num_embeddings,
+            'embedding_dim': self.__embedding_dim,
+            'padding_idx': self.__padding_idx,
+            'max_norm': self.__max_norm,
+            'norm_type': self.__norm_type,
+            'scale_grad_by_freq': self.__scale_grad_by_freq,
+            'sparse': self.__sparse
+        })

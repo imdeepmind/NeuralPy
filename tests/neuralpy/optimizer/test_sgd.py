@@ -26,10 +26,11 @@ nesteroves = [122, ""]
         (0.001, 0.002, 0.342, 0.1, "invalid"),
     ]
 )
-def test_sgd_should_throw_value_error(learning_rate, momentum, dampening, weight_decay, nesterov):
-    with pytest.raises(ValueError) as ex:
-        x = SGD(learning_rate=learning_rate, momentum=momentum,
-                dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
+def test_sgd_should_throw_value_error(
+        learning_rate, momentum, dampening, weight_decay, nesterov):
+    with pytest.raises(ValueError):
+        SGD(learning_rate=learning_rate, momentum=momentum,
+            dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
 
 
 # Possible values that are valid
@@ -42,23 +43,25 @@ nesteroves = [False, True]
 
 @pytest.mark.parametrize(
     "learning_rate, momentum, dampening, weight_decay, nesterov",
-    [(learning_rate, momentum, dampening, weight_decay, nesterov) for learning_rate in learning_rates
+    [(learning_rate, momentum, dampening, weight_decay, nesterov) for learning_rate in
+        learning_rates
      for momentum in momentums
      for dampening in dampenings
      for weight_decay in weight_decays
      for nesterov in nesteroves]
 )
-def test_sgd_get_layer_method(learning_rate, momentum, dampening, weight_decay, nesterov):
+def test_sgd_get_layer_method(learning_rate, momentum,
+                              dampening, weight_decay, nesterov):
     x = SGD(learning_rate=learning_rate, momentum=momentum,
             dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _SGD) == True
+    assert issubclass(details["optimizer"], _SGD) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == learning_rate
 
@@ -70,16 +73,17 @@ def test_sgd_get_layer_method(learning_rate, momentum, dampening, weight_decay, 
 
     assert details["keyword_arguments"]["nesterov"] == nesterov
 
+
 def test_sgd_get_layer_method_without_parameter():
     x = SGD()
 
     details = x.get_optimizer()
 
-    assert isinstance(details, dict) == True
+    assert isinstance(details, dict) is True
 
-    assert issubclass(details["optimizer"], _SGD) == True
+    assert issubclass(details["optimizer"], _SGD) is True
 
-    assert isinstance(details["keyword_arguments"], dict) == True
+    assert isinstance(details["keyword_arguments"], dict) is True
 
     assert details["keyword_arguments"]["lr"] == 0.001
 
@@ -89,4 +93,4 @@ def test_sgd_get_layer_method_without_parameter():
 
     assert details["keyword_arguments"]["weight_decay"] == 0.0
 
-    assert details["keyword_arguments"]["nesterov"] == False
+    assert details["keyword_arguments"]["nesterov"] is False

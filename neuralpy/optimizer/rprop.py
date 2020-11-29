@@ -3,6 +3,8 @@
 from torch.optim import Rprop as _Rprop
 
 # pylint: disable=too-few-public-methods
+
+
 class Rprop:
     """
     Implements Rprop oprimizer
@@ -15,6 +17,7 @@ class Rprop:
             minimal and maximal allowed step sizes for the optimizer
 
     """
+
     def __init__(
             self, learning_rate=0.01, etas=(0.5, 1.2),
             step_sizes=(1e-06, 50.0)):
