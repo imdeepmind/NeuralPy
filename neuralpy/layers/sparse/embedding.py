@@ -90,7 +90,6 @@ class Embedding(CustomLayer):
         self.__scale_grad_by_freq = scale_grad_by_freq
         self.__sparse = sparse
 
-    # pylint: disable=W0613,R0201
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
             This method calculates the input shape for layer based on previous output

@@ -6,7 +6,6 @@
     learning, research, etc.
 """
 
-# pylint: disable=no-name-in-module
 from torch import device
 from . import layers
 from . import loss_functions

@@ -25,7 +25,6 @@ class Bilinear(CustomLayer):
         automatically calculates a unique name for the layer
     '''
 
-    # pylint: disable=too-many-arguments
     def __init__(
             self, n_nodes, n1_features=None,
             n2_features=None, bias=True, name=None

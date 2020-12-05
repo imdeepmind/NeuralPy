@@ -38,7 +38,6 @@ class Dropout2D(CustomLayer):
 
         self.__p = p
 
-    # pylint: disable=no-self-use,unused-argument
     def get_input_dim(self, prev_input_dim, layer_type):
         """
             This method calculates the input shape for layer based on previous
