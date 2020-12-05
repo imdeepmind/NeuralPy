@@ -77,7 +77,7 @@ Let's create a linear regression model in 100 seconds.
 import numpy as np
 
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
+from neuralpy.layers.linear import Dense
 from neuralpy.optimizer import Adam
 from neuralpy.loss_functions import MSELoss
 ```
