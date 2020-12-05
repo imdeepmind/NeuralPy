@@ -2,9 +2,7 @@
 
 import numpy as np
 import torch
-from torch.nn import CrossEntropyLoss as _CrossEntrypyLoss
-
-# pylint: disable=too-few-public-methods
+from torch.nn import CrossEntropyLoss as _CrossEntropyLoss
 
 
 class CrossEntropyLoss:
@@ -55,16 +53,14 @@ class CrossEntropyLoss:
             Sequential model to build the model
         """
         # If weight provided, then converting it into torch tensor
-        # pylint: disable=not-callable
         weight = None
 
         if self.__weight is not None:
             weight = torch.tensor(self.__weight).float()
 
         return {
-            'loss_function': _CrossEntrypyLoss,
+            'loss_function': _CrossEntropyLoss,
             'keyword_arguments': {
-                # pylint: disable=not-callable
                 'weight': weight,
                 'ignore_index': self.__ignore_index,
                 'reduction': self.__reduction
