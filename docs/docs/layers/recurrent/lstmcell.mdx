@@ -1,14 +1,24 @@
 ---
 id: lstmcell
-title: LSTMCell
+title: LSTMCell | NeuralPy
+sidebar_label: LSTMCell
 slug: /layers/recurrent-layers/lstmcell
+description: Applies a long short-term memory (LSTM) cell
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # LSTMCell
 
 ```python
-neuralpy.layers.LSTMCell(input_size, hidden_size, bias=True, name=None)
+neuralpy.layers.recurrent.LSTMCell(input_size, hidden_size, bias=True, name=None)
 ```
+
+:::caution
+
+LSTMCell Layer is unstable and buggy, not ready for any real use
+
+:::
 
 Applies a long short-term memory (LSTM) cell.
 
@@ -25,7 +35,7 @@ To learn more about LSTMCell, please check pytorch [documentation](https://pytor
 
 ```python
 import torch
-from neuralpy.layers import LSTMCell
+from neuralpy.layers.recurrent import LSTMCell
 
 rnn = LSTMCell(10, 20)
 input = torch.randn(6, 3, 10)

@@ -1,14 +1,24 @@
 ---
 id: rnncell
-title: RNNCell
+title: RNNCell | NeuralPy
+sidebar_label: RNNCell
 slug: /layers/recurrent-layers/rnncell
+description: Applies an Elman RNN cell with tanh or ReLU non-linearity
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # RNNCell
 
 ```python
-neuralpy.layers.RNNCell(input_size, hidden_size, bias=True, non_linearity='tanh', name=None)
+neuralpy.layers.recurrent.RNNCell(input_size, hidden_size, bias=True, non_linearity='tanh', name=None)
 ```
+
+:::caution
+
+RNNCell Layer is unstable and buggy, not ready for any real use
+
+:::
 
 Applies an Elman RNN cell with tanh or ReLU non-linearity.
 
@@ -26,7 +36,7 @@ To learn more about RNNCell, please check pytorch [documentation](https://pytorc
 
 ```python
 import torch
-from neuralpy.layers import RNNCell
+from neuralpy.layers.recurrent import RNNCell
 
 rnn = RNNCell(10, 20)
 input = torch.randn(6, 3, 10)
