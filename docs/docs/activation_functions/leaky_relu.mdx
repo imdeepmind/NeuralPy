@@ -1,6 +1,7 @@
 ---
 id: leaky-relu
-title: Leaky ReLU
+title: Leaky ReLU | NeuralPy
+sidebar_label: Leaky ReLU
 slug: /activation-functions/leaky-relu
 description: Applies the element-wise function Leaky ReLU activation function
 image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
@@ -32,8 +33,8 @@ To learn more about LeakyReLU, please check PyTorch [documentation](https://pyto
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import LeakyReLU
+from neuralpy.layers.linear import Dense
+from neuralpy.layers.activation_functions import LeakyReLU
 
 # Making the model
 model = Sequential()
