@@ -1,6 +1,7 @@
 ---
 id: dropout2d
-title: Dropout2D
+title: Dropout2D | NeuralPy
+sidebar_label: Dropout2D
 slug: /regularizers/dropout2d
 description: Applies the Dropout2D layer to the input tensor
 image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
@@ -10,7 +11,7 @@ hide_title: true
 # Dropout2D
 
 ```python
-neuralpy.regularizers.Dropout2D(p=0.5, name=None)
+neuralpy.layers.regularizers.Dropout2D(p=0.5, name=None)
 ```
 
 :::info
@@ -36,7 +37,7 @@ For more information, check [this](https://pytorch.org/docs/stable/nn.html#dropo
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.regularizers import Dropout2D
+from neuralpy.layers.regularizers import Dropout2D
 
 # Initializing the Sequential models
 model = Sequential()
