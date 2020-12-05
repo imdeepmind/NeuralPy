@@ -1,6 +1,7 @@
 ---
 id: tanh
-title: Tanh
+title: Tanh | NeuralPy
+sidebar_label: Tanh
 slug: /activation-functions/tanh
 description:  Applies the element-wise Tanh function to the input Tensor
 image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
@@ -10,7 +11,7 @@ hide_title: true
 # Tanh
 
 ```python
-neuralpy.activation_functions.Tanh(name=None)
+neuralpy.layers.activation_functions.Tanh(name=None)
 ```
 
 :::info
@@ -31,8 +32,8 @@ To learn more about Tanh, please check PyTorch [documentation](https://pytorch.o
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import Tanh
+from neuralpy.layers.linear import Dense
+from neuralpy.layers.activation_functions import Tanh
 
 # Making the model
 model = Sequential()

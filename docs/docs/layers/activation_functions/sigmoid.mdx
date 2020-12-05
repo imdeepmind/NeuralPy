@@ -1,6 +1,7 @@
 ---
 id: sigmoid
-title: Sigmoid
+title: Sigmoid | NeuralPy
+sidebar_label: Sigmoid
 slug: /activation-functions/sigmoid
 description: Applied element-wise Sigmoid function
 image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
@@ -10,7 +11,7 @@ hide_title: true
 # Sigmoid
 
 ```python
-neuralpy.activation_functions.Sigmoid(name=None)
+neuralpy.layers.activation_functions.Sigmoid(name=None)
 ```
 
 :::info
@@ -31,8 +32,8 @@ To learn more about Sigmoid, please check PyTorch [documentation](https://pytorc
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import Sigmoid
+from neuralpy.layers.linear import Dense
+from neuralpy.layers.activation_functions import Sigmoid
 
 # Making the model
 model = Sequential()

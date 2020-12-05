@@ -1,6 +1,7 @@
 ---
 id: relu
-title: ReLU
+title: Leaky ReLU | NeuralPy
+sidebar_label: ReLU
 slug: /activation-functions/relu
 description: Applies the rectified linear unit function element-wise
 image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
@@ -10,7 +11,7 @@ hide_title: true
 # ReLU
 
 ```python
-neuralpy.activation_functions.ReLU(name=None)
+neuralpy.layers.activation_functions.ReLU(name=None)
 ```
 
 :::info
@@ -31,8 +32,8 @@ To learn more about ReLU, please check PyTorch [documentation](https://pytorch.o
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import ReLU
+from neuralpy.layers.linear import Dense
+from neuralpy.layers.activation_functions import ReLU
 
 # Making the model
 model = Sequential()

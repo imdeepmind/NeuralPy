@@ -1,14 +1,24 @@
 ---
 id: rnn
-title: RNN
+title: RNN | NeuralPy
+sidebar_label: RNN
 slug: /layers/recurrent-layers/rnn
+description: Applies a multi-layer Elman RNN with tanh or ReLU non-linearity to an input sequence
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # RNN
 
 ```python
-neuralpy.layers.RNN(hidden_size, num_layers=1, input_size=None, non_linearity='tanh', bias=True, batch_first=False, dropout=0, bidirectional=False, name=None)
+neuralpy.layers.recurrent.RNN(hidden_size, num_layers=1, input_size=None, non_linearity='tanh', bias=True, batch_first=False, dropout=0, bidirectional=False, name=None)
 ```
+
+:::caution
+
+RNN Layer is unstable and buggy, not ready for any real use
+
+:::
 
 Applies a multi-layer Elman RNN with tanh or ReLU non-linearity to an input sequence.
 
@@ -29,8 +39,8 @@ To learn more about RNN, please check pytorch [documentation](https://pytorch.or
 ### Example Code
 
 ```python
-from neuralpy.layers import Sequential
-from neuralpy.layers import RNN
+from neuralpy.models import Sequential
+from neuralpy.layers.recurrent import RNN
 
 # Making the model
 model = Sequential()

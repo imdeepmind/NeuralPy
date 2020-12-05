@@ -1,14 +1,24 @@
 ---
 id: gru
-title: GRU
+title: GRU | NeuralPy
+sidebar_label: GRU
 slug: /layers/recurrent-layers/gru
+description: Applies a multi-layer gated recurrent unit (GRU) RNN to an input sequence
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # GRU
 
 ```python
-neuralpy.layers.GRU(hidden_size, num_layers=1, input_size=None, bias=True, batch_first=False, dropout=0, bidirectional=False, name=None)
+neuralpy.layers.recurrent.GRU(hidden_size, num_layers=1, input_size=None, bias=True, batch_first=False, dropout=0, bidirectional=False, name=None)
 ```
+
+:::caution
+
+GRU Layer is unstable and buggy, not ready for any real use
+
+:::
 
 Applies a multi-layer gated recurrent unit (GRU) RNN to an input sequence.
 
@@ -28,8 +38,8 @@ To learn more about GRU, please check pytorch [documentation](https://pytorch.or
 ### Example Code
 
 ```python
-from neuralpy.layers import Sequential
-from neuralpy.layers import GRU
+from neuralpy.models import Sequential
+from neuralpy.layers.recurrent import GRU
 
 # Making the model
 model = Sequential()

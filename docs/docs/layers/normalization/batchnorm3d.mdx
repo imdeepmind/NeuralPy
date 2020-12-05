@@ -1,14 +1,24 @@
 ---
 id: batchnorm3d
-title: BatchNorm3D
-slug: /layers/normalizarion-layers/batchnorm3d
+title: BatchNorm3D | NeuralPy
+sidebar_label: BatchNorm3D
+slug: /layers/normalization-layers/batchnorm3d
+description: Applies Batch Normalization over a 5D input
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # BatchNorm3D
 
 ```python
-neuralpy.layers.BatchNorm3D(num_features, eps=1e-05, momentum=0.1, affine=True, track_running_status=True, name=None)
+neuralpy.layers.normalization.BatchNorm3D(num_features, eps=1e-05, momentum=0.1, affine=True, track_running_status=True, name=None)
 ```
+
+:::info
+
+BatchNorm3D is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 Applies Batch Normalization over a 5D input.
 
@@ -27,7 +37,8 @@ To learn more about BatchNorm3D layers, please check [pytorch documentation](htt
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Conv3D, BatchNorm3D
+from neuralpy.layers.normalization import BatchNorm3D
+from neuralpy.layers.normalization import Conv3D
 
 # Making the model
 model = Sequential()

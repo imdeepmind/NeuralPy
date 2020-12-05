@@ -1,6 +1,7 @@
 ---
 id: selu
-title: SELU
+title: SELU | NeuralPy
+sidebar_label: SELU
 slug: /activation-functions/selu
 description: Applied element-wise SELU function
 image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
@@ -10,7 +11,7 @@ hide_title: true
 # SELU
 
 ```python
-neuralpy.activation_functions.SELU(name=None)
+neuralpy.layers.activation_functions.SELU(name=None)
 ```
 
 :::info
@@ -31,8 +32,8 @@ To learn more about SELU, please check PyTorch [documentation](https://pytorch.o
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import SELU
+from neuralpy.layers.linear import Dense
+from neuralpy.layers.activation_functions import SELU
 
 # Making the model
 model = Sequential()

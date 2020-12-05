@@ -1,7 +1,11 @@
 ---
 id: sequential
-title: Sequential
+title: Sequential | NeuralPy
+sidebar_label: Sequential
 slug: /models/sequential
+description: Sequential is a linear stack of layers with single input and output layer.
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 ## Sequential
@@ -9,6 +13,12 @@ slug: /models/sequential
 ```python
 neuralpy.models.Sequential(force_cpu=False, training_device=None, random_state=None)
 ```
+
+:::info
+
+NeuralPy Sequential Model Class is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 Sequential is a linear stack of layers with single input and output layer. It is one of the simplest types of models. In Sequential models, each layer has a single input and output tensor.
 
@@ -22,7 +32,7 @@ Sequential is a linear stack of layers with single input and output layer. It is
 
 ### Supported Methods
 
-#### `.add()` method: 
+#### `.add()` method:
 
 In a Sequential model, the `.add()` method is responsible for adding a new layer to the model. It accepts a NeuralPy layer class as an argument and builds a model, and based on that. The .add() method can be called as many times as needed. There is no limitation on that, assuming you have enough computation power to handle it.
 
@@ -34,8 +44,8 @@ In a Sequential model, the `.add()` method is responsible for adding a new layer
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
-from neuralpy.activation_functions import ReLU
+from neuralpy.layers.linear import Dense
+from neuralpy.layers.activation_functions import ReLU
 from neuralpy import device
 
 # Setting a training device
@@ -76,5 +86,3 @@ model = Sequential()
 # Calling .build to build the model
 model.build()
 ```
-
----

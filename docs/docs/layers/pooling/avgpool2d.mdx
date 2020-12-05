@@ -1,14 +1,24 @@
 ---
 id: avgpool2d
-title: AvgPool2D
+title: AvgPool2D | NeuralPy
+sidebar_label: AvgPool2D
 slug: /layers/pooling-layers/avgpool2d
+description: AvgPool2D Applies a 2D avg pooling over an input
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # AvgPool2D
 
 ```python
-neuralpy.layers.AvgPool2D(kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, name=None)
+neuralpy.layers.pooling.AvgPool2D(kernel_size, stride=None, padding=0, ceil_mode=False, count_include_pad=True, name=None)
 ```
+
+:::info
+
+AvgPool2D Layer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 AvgPool2D Applies a 2D avg pooling over an input.
 
@@ -27,7 +37,8 @@ To learn more about AvgPool2D layers, please check PyTorch [documentation](https
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Conv2D, AvgPool2D
+from neuralpy.layers.pooling import AvgPool2D
+from neuralpy.layers.convolutional import Conv2D
 
 # Making the model
 model = Sequential()
