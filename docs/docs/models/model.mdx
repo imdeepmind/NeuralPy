@@ -1,7 +1,11 @@
 ---
 id: model
-title: Model
+title: Model | NeuralPy
+sidebar_label: Model
 slug: /models/model
+description: The Model class on NeuralPy is a wrapper class that wraps a PyTorch model and provides some simple methods to train, predict, evaluate, etc.
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 ## Model
@@ -10,9 +14,15 @@ slug: /models/model
 neuralpy.models.Model(force_cpu=False, training_device=None, random_state=None)
 ```
 
+:::info
+
+NeuralPy Model Class is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
+
 The Model class on NeuralPy is a wrapper class that wraps a PyTorch model and provides some simple methods to train, predict, evaluate, etc. In NeuralPy every model is based on this class and they inherits the Model class.
 
->  The Model class can be used for training any PyTorch model.
+> The Model class can be used for training any PyTorch model.
 
 ### Supported Arguments
 
@@ -26,12 +36,11 @@ The Model class on NeuralPy is a wrapper class that wraps a PyTorch model and pr
 
 In the NeuralPy Model, the compile method is responsible for attaching a loss function and optimizer with the model and this method needs to be called before training. This method can also be used for setting metrics for the model so that NeuralPy Model can evaluate those during training.
 
-
 ##### Supported Arguments:
 
 - `optimizer`: (NeuralPy Optimizer class) Adds an optimizer to the model
 - `loss_function`: (NeuralPy Loss Function class) Adds a loss function to the model
-- `metrics`: (String[]) Metrics that will be evaluated by the model. Currently only supports `accuracy`. 
+- `metrics`: (String[]) Metrics that will be evaluated by the model. Currently only supports `accuracy`.
 
 #### Example Code
 
@@ -48,14 +57,14 @@ model = Sequential()
 # Model Architecture
 ...
 
-# Calling .compile to build the model 
+# Calling .compile to build the model
 # and attach a optimizer and loss function with the model
 model.compile(optimizer=Adam(), loss_function=MSELoss(),metrics=["accuracy"])
 ```
 
-#### `.fit()` Method	
+#### `.fit()` Method
 
-The `.fit()` method is used for training the NeuralPy model. 
+The `.fit()` method is used for training the NeuralPy model.
 
 ##### Supported Arguments
 
@@ -65,7 +74,7 @@ The `.fit()` method is used for training the NeuralPy model.
 - `batch_size=32`: (Integer) Batch size for training.
 - `steps_per_epoch=None`: (Integer) No of steps in each epoch. Used only for generator.
 - `validation_steps=None`: (Integer) No of validation steps in each epoch. Used on for generators.
-- `callbacks=None`: (Array) Array of callbacks 
+- `callbacks=None`: (Array) Array of callbacks
 
 ##### Example Code
 
@@ -123,7 +132,6 @@ from neuralpy.models import Sequential
 y_pred = model.predict_class(X, batch_size=32)
 ```
 
-
 #### `.evaluate()` Method
 
 The `.evaluate()` method is used for evaluating models using the test dataset.
@@ -146,7 +154,6 @@ from neuralpy.models import Sequential
 results = model.evaluate(X, batch_size=32)
 ```
 
-
 #### `.summary()` Method
 
 The `.summary()` method is for getting a summary of the model
@@ -167,10 +174,9 @@ from neuralpy.models import Sequential
 print(model.summary())
 ```
 
-
 #### `.get_model()` Method
 
-The `.get_model()` method is used for getting the PyTorch model from the NeuralPy model. After extracting the model, the model can be treated just like a regular PyTorch model. 
+The `.get_model()` method is used for getting the PyTorch model from the NeuralPy model. After extracting the model, the model can be treated just like a regular PyTorch model.
 
 ##### Supported Arguments
 
@@ -187,7 +193,6 @@ from neuralpy.models import Sequential
 # Extracting the PyTorch model
 pytorch_model = model.get_model()
 ```
-
 
 #### `.set_model()` Method
 
