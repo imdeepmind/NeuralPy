@@ -1,14 +1,24 @@
 ---
 id: dense
-title: Dense
+title: Dense | NeuralPy
+sidebar_label: Dense
 slug: /layers/linear-layers/dense
+description: A Dense layer is a densely connected Neural Network layer. It performs a linear transformation of the input
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Dense
 
 ```python
-neuralpy.layers.Dense(n_nodes, n_inputs=None, bias=True, name=None)
+neuralpy.layers.linear.Dense(n_nodes, n_inputs=None, bias=True, name=None)
 ```
+
+:::info
+
+Dense Layer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 A Dense layer is a densely connected Neural Network layer. It performs a linear transformation of the input.
 
@@ -25,7 +35,7 @@ To learn more about Dense layers, please check [pytorch documentation](https://p
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
+from neuralpy.layers.linear import Dense
 
 # Making the model
 model = Sequential()
