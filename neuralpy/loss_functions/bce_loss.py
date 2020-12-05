@@ -4,8 +4,6 @@ import numpy as np
 import torch
 from torch.nn import BCEWithLogitsLoss as _BCEWithLogitsLoss
 
-# pylint: disable=too-few-public-methods
-
 
 class BCELoss:
     """
@@ -57,7 +55,6 @@ class BCELoss:
             Sequential model to build the model
         """
         # If weight provided, then converting it into torch tensor
-        # pylint: disable=not-callable
         weight = None
 
         if self.__weight is not None:
