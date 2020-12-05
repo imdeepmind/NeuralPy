@@ -3,6 +3,9 @@ id: get-started
 title: Get Started | NeuralPy Deep Learning Library
 sidebar_label: Get Started
 slug: /get-started
+description: Get Started with NeuralPy
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Get Started
@@ -38,11 +41,11 @@ y_test = X_test + 5 * np.random.rand(100, 1)
 
 Let’s import the dependencies from NeuralPy.
 
-Here we’ll use the Sequential model. Sequential is basically a linear stack of layers. Dense as a layer, Adam as an optimizer and MSELoss for calculating the loss.
+Here we’ll use the Sequential model. Sequential is basically a linear stack of layers. Dense as a layer, Adam as an optimizer, and MSELoss for calculating the loss.
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Dense
+from neuralpy.layers.linear import Dense
 from neuralpy.optimizer import Adam
 from neuralpy.loss_functions import MSELoss
 ```
@@ -87,7 +90,7 @@ model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation),
 
 ## Predicting Results
 
-Main purpose of the model is to predict results. In NeuralPy models, there are two methods for prediction, `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
+The main purpose of the model is to predict results. In NeuralPy models, there are two methods for prediction, `.predict()` and `.predict_classes()`. Here for this linear regression problem, we'll use the `.predict()` method.
 
 ```python
 # Predicting
