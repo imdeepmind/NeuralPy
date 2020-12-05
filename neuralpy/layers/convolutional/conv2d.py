@@ -6,10 +6,44 @@ from neuralpy.utils import CustomLayer
 
 class Conv2D(CustomLayer):
     """
-        Applies a 2D convolution over an input signal composed of several input planes.
+    Applies a 2D convolution over an input signal composed of several input planes.
 
-        To learn more about Conv2D layers, please check PyTorch
-        documentation at https://pytorch.org/docs/stable/nn.html#Conv2d
+    To learn more about Conv2D layers, please check PyTorch
+    documentation at https://pytorch.org/docs/stable/nn.html#Conv2d
+
+    Supported Arguments:
+        filters: (Integer) Size of the filter
+        kernel_size: (Int | Tuple) Kernel size of the layer
+        input_shape: (Tuple) A tuple with the shape in following format
+            (input_channel, X, y) no need for this argument layers except the
+            initial layer.
+        stride: (Int | Tuple) Controls the stride for the cross-correlation, a
+            single number or a one-element tuple.
+        padding: (Int | Tuple) Controls the amount of implicit zero-paddings on
+            both sides for padding number of points
+        dilation: (Int | Tuple) Controls the spacing between the kernel points;
+            also known as the à trous algorithm.
+        groups: (Int) Controls the connections between inputs and outputs.
+                input channel and filters must both be divisible by groups
+        bias: (Boolean) If true then uses the bias, Defaults to `true`
+        name: (String) Name of the layer, if not provided then
+            automatically calculates a unique name for the layer
+    """
+
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        input_shape=None,
+        stride=1,
+        padding=0,
+        dilation=1,
+        groups=1,
+        bias=True,
+        name=None,
+    ):
+        """
+        __init__ method for the Conv2D layer
 
         Supported Arguments:
             filters: (Integer) Size of the filter
@@ -28,38 +62,13 @@ class Conv2D(CustomLayer):
             bias: (Boolean) If true then uses the bias, Defaults to `true`
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
-    """
-
-    def __init__(self, filters, kernel_size, input_shape=None,
-                 stride=1, padding=0, dilation=1, groups=1, bias=True, name=None):
-        """
-            __init__ method for the Conv2D layer
-
-            Supported Arguments:
-                filters: (Integer) Size of the filter
-                kernel_size: (Int | Tuple) Kernel size of the layer
-                input_shape: (Tuple) A tuple with the shape in following format
-                    (input_channel, X, y) no need for this argument layers except the
-                    initial layer.
-                stride: (Int | Tuple) Controls the stride for the cross-correlation, a
-                    single number or a one-element tuple.
-                padding: (Int | Tuple) Controls the amount of implicit zero-paddings on
-                    both sides for padding number of points
-                dilation: (Int | Tuple) Controls the spacing between the kernel points;
-                    also known as the à trous algorithm.
-                groups: (Int) Controls the connections between inputs and outputs.
-                        input channel and filters must both be divisible by groups
-                bias: (Boolean) If true then uses the bias, Defaults to `true`
-                name: (String) Name of the layer, if not provided then
-                    automatically calculates a unique name for the layer
         """
         # Checking the filters field
         if not filters or not isinstance(filters, int) or filters <= 0:
             raise ValueError("Please provide a valid filters")
 
         # Checking the kernel_size field
-        if kernel_size is not None and not isinstance(
-                kernel_size, (int, tuple)):
+        if kernel_size is not None and not isinstance(kernel_size, (int, tuple)):
             raise ValueError("Please provide a valid kernel_size")
 
         if isinstance(kernel_size, tuple):
@@ -73,16 +82,19 @@ class Conv2D(CustomLayer):
         if input_shape is not None and not isinstance(input_shape, tuple):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not \
-                (isinstance(input_shape[0], int) and input_shape[0] >= 0):
+        if input_shape is not None and not (
+            isinstance(input_shape[0], int) and input_shape[0] >= 0
+        ):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not \
-                (isinstance(input_shape[1], int) and input_shape[1] >= 0):
+        if input_shape is not None and not (
+            isinstance(input_shape[1], int) and input_shape[1] >= 0
+        ):
             raise ValueError("Please provide a valid input_shape")
 
-        if input_shape is not None and not \
-                (isinstance(input_shape[2], int) and input_shape[2] >= 0):
+        if input_shape is not None and not (
+            isinstance(input_shape[2], int) and input_shape[2] >= 0
+        ):
             raise ValueError("Please provide a valid input_shape")
 
         # Checking the stride field
@@ -170,22 +182,29 @@ class Conv2D(CustomLayer):
             dilation_1, dilation_2 = self.__dilation
 
         # Calculating the width and height of the conv output
-        dim_1 = ((self.__input_shape[1] + 2 * padding_1 -
-                  dilation_1 * (kernel_1 - 1) - 1) // stride_1) + 1
-        dim_2 = ((self.__input_shape[2] + 2 * padding_2 -
-                  dilation_2 * (kernel_2 - 1) - 1) // stride_2) + 1
+        dim_1 = (
+            (self.__input_shape[1] + 2 * padding_1 - dilation_1 * (kernel_1 - 1) - 1)
+            // stride_1
+        ) + 1
+        dim_2 = (
+            (self.__input_shape[2] + 2 * padding_2 - dilation_2 * (kernel_2 - 1) - 1)
+            // stride_2
+        ) + 1
 
         # Returning for the next layers
-        return (self.__input_shape[0], dim_1 * dim_2 *
-                self.__filters, (self.__filters, dim_1, dim_2))
+        return (
+            self.__input_shape[0],
+            dim_1 * dim_2 * self.__filters,
+            (self.__filters, dim_1, dim_2),
+        )
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output
-            layer.
+        This method calculates the input shape for layer based on previous output
+        layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Checking if n_inputs is there or not, not overwriting the
         # __input_shape field
@@ -194,8 +213,7 @@ class Conv2D(CustomLayer):
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type in ("conv2d", 'avgpool2d',
-                              'maxpool2d', 'batchnorm1d'):
+            if layer_type in ("conv2d", "avgpool2d", "maxpool2d", "batchnorm1d"):
                 self.__input_shape = prev_input_dim[2]
             else:
                 raise ValueError(
@@ -205,20 +223,23 @@ class Conv2D(CustomLayer):
 
     def get_layer(self):
         """
-            This method returns the details as dict of the layer.
+        This method returns the details as dict of the layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return self._get_layer_details(self.__get_layer_details(), {
-            'in_channels': self.__input_shape[0],
-            'out_channels': self.__filters,
-            'kernel_size': self.__kernel_size,
-            'stride': self.__stride,
-            'padding': self.__padding,
-            'dilation': self.__dilation,
-            'groups': self.__groups,
-            'bias': self.__bias,
-            'padding_mode': 'zeros'
-        })
+        return self._get_layer_details(
+            self.__get_layer_details(),
+            {
+                "in_channels": self.__input_shape[0],
+                "out_channels": self.__filters,
+                "kernel_size": self.__kernel_size,
+                "stride": self.__stride,
+                "padding": self.__padding,
+                "dilation": self.__dilation,
+                "groups": self.__groups,
+                "bias": self.__bias,
+                "padding_mode": "zeros",
+            },
+        )
