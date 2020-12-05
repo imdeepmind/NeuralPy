@@ -48,21 +48,14 @@ class Model:
         # else auto detecting the device, if cuda available then using it (default
         # option)
 
-        # there is a issue pylint, because of that, disabling the no-member check
-        # for more info, have the look at the link below
-        # https://github.com/pytorch/pytorch/issues/701
-
         if training_device:
             self.__device = training_device
         elif force_cpu:
-            # pylint: disable=no-member
             self.__device = torch.device("cpu")
         else:
             if torch.cuda.is_available():
-                # pylint: disable=no-member
                 self.__device = torch.device("cuda:0")
             else:
-                # pylint: disable=no-member
                 self.__device = torch.device("cpu")
 
         # Setting random state if given
@@ -71,7 +64,6 @@ class Model:
 
         self.__history = {}
 
-    # pylint: disable=invalid-name
     def __predict(self, X, batch_size=None):
         """
             Method for predicting
@@ -84,7 +76,6 @@ class Model:
         self.__model.eval()
 
         # Initializing an empty list to store the predictions
-        # pylint: disable=not-callable,no-member
         predictions = torch.Tensor().to(self.__device)
 
         # Converting the input X to PyTorch tensor
@@ -109,7 +100,6 @@ class Model:
                     outputs = self.__model(batch_x)
 
                     # Appending the data into the predictions tensor
-                    # pylint: disable=not-callable,no-member
                     predictions = torch.cat((predictions, outputs))
         else:
             # Predicting, so no grad
@@ -160,7 +150,6 @@ class Model:
         (self.__loss_function,
          self.__loss_function_parameters) = build_loss_function_from_dict(loss_function)
 
-    # pylint: disable=too-many-arguments
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
         """
             This method training the model on a given training data
@@ -186,7 +175,6 @@ class Model:
                 "Length of training Input data and training output data should be same")
 
         # Converting the data into PyTorch tensor
-        # pylint: disable=not-callable,no-member
         x_train = torch.tensor(x_train)
         y_train = torch.tensor(y_train)
 
@@ -271,7 +259,6 @@ class Model:
             raise ValueError(
                 "Length of testing Input data and testing output data should be same")
 
-        # pylint: disable=not-callable,no-member
         x_test = torch.tensor(x_test)
         y_test = torch.tensor(y_test)
 
@@ -583,7 +570,6 @@ class Model:
         predictions = self.__predict(X, batch_size)
 
         # Converting to tensor
-        # pylint: disable=not-callable,no-member
         if self.__metrics and "accuracy" in self.__metrics:
             y_tensor = torch.tensor(y).to(self.__device)
         else:

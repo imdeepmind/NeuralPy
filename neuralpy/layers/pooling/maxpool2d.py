@@ -25,7 +25,6 @@ class MaxPool2D(CustomLayer):
                 of floor to compute the output shape
     """
 
-    # pylint: disable=R0912
     def __init__(
             self, kernel_size, stride=None, padding=0, dilation=1,
             return_indices=False, ceil_mode=False, name=None):

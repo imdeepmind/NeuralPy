@@ -147,7 +147,6 @@ def build_history_object(metrics):
     return history
 
 
-# pylint: disable=invalid-name
 def calculate_accuracy(y, y_pred):
     """
         Calculates accuracy from real labels and predicted labels

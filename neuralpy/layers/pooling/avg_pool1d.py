@@ -27,7 +27,6 @@ class AvgPool1D(CustomLayer):
                                     otherwise attr:kernel_size will be used
 
     """
-    # pylint: disable=too-many-branches
 
     def __init__(self, kernel_size, stride=None, padding=0, ceil_mode=False,
                  count_include_pad=True, name=None):
