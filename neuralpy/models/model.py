@@ -17,7 +17,8 @@ class Model:
         NeuralPy Model Class
     """
 
-    def __init__(self, force_cpu=False, training_device=None, random_state=None):
+    def __init__(self, force_cpu=False, training_device=None,
+                 random_state=None):
         self.__model = None
         self.__metrics = ["loss"]
         self.__loss_function = None
@@ -32,9 +33,10 @@ class Model:
             raise ValueError(
                 "You have provided an invalid value for the parameter force_cpu")
 
-        # Checking the training_device parameter and comparing it with pytorch device class
-        # pylint: disable=no-member
-        if training_device is not None and not isinstance(training_device, torch.device):
+        # Checking the training_device parameter and comparing it with pytorch
+        # device class
+        if training_device is not None and not isinstance(
+                training_device, torch.device):
             raise ValueError("Please provide a valid neuralpy device class")
 
         # Validating random state
@@ -43,23 +45,17 @@ class Model:
 
         # if force_cpu then using CPU
         # if device provided, then using it
-        # else auto detecting the device, if cuda available then using it (default option)
-
-        # there is a issue pylint, because of that, disabling the no-member check
-        # for more info, have the look at the link below
-        # https://github.com/pytorch/pytorch/issues/701
+        # else auto detecting the device, if cuda available then using it (default
+        # option)
 
         if training_device:
             self.__device = training_device
         elif force_cpu:
-            # pylint: disable=no-member
             self.__device = torch.device("cpu")
         else:
             if torch.cuda.is_available():
-                # pylint: disable=no-member
                 self.__device = torch.device("cuda:0")
             else:
-                # pylint: disable=no-member
                 self.__device = torch.device("cpu")
 
         # Setting random state if given
@@ -68,7 +64,6 @@ class Model:
 
         self.__history = {}
 
-    # pylint: disable=invalid-name
     def __predict(self, X, batch_size=None):
         """
             Method for predicting
@@ -81,7 +76,6 @@ class Model:
         self.__model.eval()
 
         # Initializing an empty list to store the predictions
-        # pylint: disable=not-callable,no-member
         predictions = torch.Tensor().to(self.__device)
 
         # Converting the input X to PyTorch tensor
@@ -100,13 +94,12 @@ class Model:
                 # Splitting the data into batches
                 for i in range(0, len(X), batch_size):
                     # Generating the batch from X
-                    batch_x = X[i:i+batch_size].float().to(self.__device)
+                    batch_x = X[i:i + batch_size].float().to(self.__device)
 
                     # Feeding the batch into the model for predictions
                     outputs = self.__model(batch_x)
 
                     # Appending the data into the predictions tensor
-                    # pylint: disable=not-callable,no-member
                     predictions = torch.cat((predictions, outputs))
         else:
             # Predicting, so no grad
@@ -132,7 +125,8 @@ class Model:
 
             Supported Arguments:
                 optimizer: (NeuralPy Optimizer class) Adds a optimizer to the model
-                loss_function: (NeuralPy Loss Function class) Adds a loss function to the model
+                loss_function: (NeuralPy Loss Function class) Adds a loss function to
+                    the model
                 metrics: ([String]) Metrics that will be evaluated by the model.
                     Currently only supports "accuracy".
         """
@@ -150,13 +144,12 @@ class Model:
 
         # Storing the loss function and optimizer for future use
         (self.__optimizer,
-         self.__optimizer_parameters) = build_optimizer_from_dict(optimizer,
-                                                                  self.__model.parameters())
+         self.__optimizer_parameters) = \
+            build_optimizer_from_dict(optimizer, self.__model.parameters())
 
         (self.__loss_function,
          self.__loss_function_parameters) = build_loss_function_from_dict(loss_function)
 
-    # pylint: disable=too-many-arguments
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
         """
             This method training the model on a given training data
@@ -182,7 +175,6 @@ class Model:
                 "Length of training Input data and training output data should be same")
 
         # Converting the data into PyTorch tensor
-        # pylint: disable=not-callable,no-member
         x_train = torch.tensor(x_train)
         y_train = torch.tensor(y_train)
 
@@ -196,11 +188,11 @@ class Model:
         # Splitting the data into batches
         for i in range(0, len(x_train), batch_size):
             # Making the batches
-            batch_x = x_train[i:i+batch_size].float()
+            batch_x = x_train[i:i + batch_size].float()
             if "accuracy" in self.__metrics:
-                batch_y = y_train[i:i+batch_size]
+                batch_y = y_train[i:i + batch_size]
             else:
-                batch_y = y_train[i:i+batch_size].float()
+                batch_y = y_train[i:i + batch_size].float()
 
             # Moving the batches to device
             batch_x, batch_y = batch_x.to(
@@ -232,7 +224,7 @@ class Model:
                 correct_training += corrects
 
                 self.__history["batchwise"]["training_accuracy"].append(
-                    corrects/batch_size*100)
+                    corrects / batch_size * 100)
 
                 print_training_progress(epoch, epochs, i, batch_size, len(
                     x_train), train_loss.item(), corrects)
@@ -242,7 +234,7 @@ class Model:
 
         # Checking if accuracy is there in metrics
         if "accuracy" in self.__metrics:
-            return training_loss_score, correct_training/len(x_train)*100
+            return training_loss_score, correct_training / len(x_train) * 100
         return training_loss_score, 0
 
     def __validation_loop(self, x_test, y_test, batch_size):
@@ -267,7 +259,6 @@ class Model:
             raise ValueError(
                 "Length of testing Input data and testing output data should be same")
 
-        # pylint: disable=not-callable,no-member
         x_test = torch.tensor(x_test)
         y_test = torch.tensor(y_test)
 
@@ -282,11 +273,11 @@ class Model:
             # Splitting the data into batches
             for i in range(0, len(x_test), batch_size):
                 # Making the batches
-                batch_x = x_test[i:i+batch_size].float()
+                batch_x = x_test[i:i + batch_size].float()
                 if "accuracy" in self.__metrics:
-                    batch_y = y_test[i:i+batch_size]
+                    batch_y = y_test[i:i + batch_size]
                 else:
-                    batch_y = y_test[i:i+batch_size].float()
+                    batch_y = y_test[i:i + batch_size].float()
 
                 # Moving the batches to device
                 batch_x, batch_y = batch_x.to(
@@ -312,7 +303,7 @@ class Model:
                     correct_val += corrects
 
                     self.__history["batchwise"]["validation_accuracy"].append(
-                        corrects/batch_size*100)
+                        corrects / batch_size * 100)
 
         # Calculating the mean val loss score for all batches
         validation_loss_score /= batch_size
@@ -323,7 +314,7 @@ class Model:
             print_validation_progress(
                 validation_loss_score, len(x_test), correct_val)
 
-            return validation_loss_score, correct_val/len(x_test)*100
+            return validation_loss_score, correct_val / len(x_test) * 100
 
         # Printing a friendly message to the console
         print_validation_progress(
@@ -334,7 +325,7 @@ class Model:
     def fit(self,
             train_data,
             validation_data=None,
-            epochs=10, 
+            epochs=10,
             batch_size=32,
             steps_per_epoch=None,
             validation_steps=None,
@@ -344,13 +335,13 @@ class Model:
 
             Supported Arguments
                 train_data: (Tuple(NumPy Array, NumPy Array) |
-                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the training data
-                    as a tuple like (X, y) where X is training data and y is the
-                    labels for the training the model.
+                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
+                    training data as a tuple like (X, y) where X is training data and y
+                    is the labels for the training the model.
                 validation_data=None:(Tuple(NumPy Array, NumPy Array) |
-                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the validation data
-                    as a tuple like (X, y) where X is test data and y is the labels
-                    for the validating the model. This field is optional.
+                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
+                    validation data as a tuple like (X, y) where X is test data and y
+                    is the labels for the validating the model. This field is optional.
                 epochs=10: (Integer) Number of epochs
                 batch_size=32: (Integer) Batch size for training.
                 steps_per_epoch=None: (Integer) No of steps for each
@@ -373,7 +364,8 @@ class Model:
         # Running the epochs
         for epoch in range(epochs):
             if isinstance(train_data, types.GeneratorType):
-                if not isinstance(steps_per_epoch, int) or steps_per_epoch <= 0:
+                if not isinstance(steps_per_epoch,
+                                  int) or steps_per_epoch <= 0:
                     raise ValueError("Please provide a valid steps_per_epoch")
 
                 total_loss = 0
@@ -403,7 +395,8 @@ class Model:
                     if not isinstance(validation_data, types.GeneratorType):
                         raise ValueError("Please provide a valid test data")
 
-                    if not isinstance(validation_steps, int) or validation_steps <= 0:
+                    if not isinstance(validation_steps,
+                                      int) or validation_steps <= 0:
                         raise ValueError(
                             "Please provide a valid validation_steps")
 
@@ -469,8 +462,10 @@ class Model:
                     training_progress_data = {}
 
                     for m in self.__metrics:
-                        training_progress_data[f"training_{m}"] = self.__history["epochwise"][f"training_{m}"][epoch]
-                        training_progress_data[f"validation_{m}"] = self.__history["epochwise"][f"validation_{m}"][epoch]
+                        training_progress_data[f"training_{m}"] = \
+                            self.__history["epochwise"][f"training_{m}"][epoch]
+                        training_progress_data[f"validation_{m}"] = \
+                            self.__history["epochwise"][f"validation_{m}"][epoch]
 
                     callback.callback(epochs,
                                       epoch,
@@ -510,11 +505,12 @@ class Model:
         # Returning an numpy array of predictions
         return predictions.flatten()
 
-    def predict_classes(self, predict_data, predict_steps=None, batch_size=None):
+    def predict_classes(self, predict_data,
+                        predict_steps=None, batch_size=None):
         """
-            The .predict_class()method is used for predicting classes using the trained mode.
-            This method works only if accuracy is passed in the metrics parameter on the
-            .compile()method.
+            The .predict_class()method is used for predicting classes using the
+            trained mode. This method works only if accuracy is passed in the metrics
+            parameter on the .compile()method.
 
             Supported Arguments
                 predict_data: (NumPy Array | Python Generator) Data to be predicted
@@ -574,7 +570,6 @@ class Model:
         predictions = self.__predict(X, batch_size)
 
         # Converting to tensor
-        # pylint: disable=not-callable,no-member
         if self.__metrics and "accuracy" in self.__metrics:
             y_tensor = torch.tensor(y).to(self.__device)
         else:
@@ -651,21 +646,22 @@ class Model:
             print(self.__model)
 
             # Calculating total number of params
-            print("Total Number of Parameters: ", sum(p.numel()
-                                                      for p in self.__model.parameters()))
+            print("Total Number \
+                of Parameters: ", sum(p.numel() for p in self.__model.parameters()))
 
             # Calculating total number of trainable params
-            print("Total Number of Trainable Parameters: ", sum(p.numel()
-                                                                for p in self.__model.parameters()
-                                                                if p.requires_grad))
+            print("Total Number of Trainable \
+                Parameters: ", sum(p.numel()
+                                   for p in self.__model.parameters()
+                                   if p.requires_grad))
         else:
             raise Exception("You need to build the model first")
 
     def get_model(self):
         """
-            The .get_model() method is used for getting the PyTorch model from the NeuralPy model.
-            After extracting the model, the model can be treated just like a regular
-            PyTorch model.
+            The .get_model() method is used for getting the PyTorch model from the
+            NeuralPy model. After extracting the model, the model can be treated just
+            like a regular PyTorch model.
 
             Supported Arguments
                 None
@@ -675,9 +671,9 @@ class Model:
 
     def set_model(self, model):
         """
-            The .set_model() method is used for converting a PyTorch model to a NeuralPy model.
-            After this conversion, the model can be trained using NeuralPy optimizer
-            and loss_functions.
+            The .set_model() method is used for converting a PyTorch model to a
+            NeuralPy model. After this conversion, the model can be trained using
+            NeuralPy optimizer and loss_functions.
 
             Supported Arguments
                 model: (PyTorch model) A valid class based on Sequential PyTorch model.
@@ -712,7 +708,8 @@ class Model:
 
     def load(self, path):
         """
-            The .load() method is responsible for loading a model saved using the .save() method.
+            The .load() method is responsible for loading a model saved using the
+            .save() method.
 
             Supported Parameters:
                 path: (String) Path where the model is stored
@@ -737,7 +734,8 @@ class Model:
 
     def load_for_inference(self, path):
         """
-            The .load_for_inference() method is responsible for loading a trained model only for inference.
+            The .load_for_inference() method is responsible for loading a trained model
+            only for inference.
 
             Supported Parameters:
                 path: (String) Path where the model is stored

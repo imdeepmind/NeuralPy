@@ -1,7 +1,11 @@
 ---
 id: adam-optimizer
-title: Adam Optimizer
+title: Adam Optimizer | NeuralPy
+sidebar_label: Adam Optimizer
 slug: /optimizers/adam-optimizer
+description: Applies Adam algorithm, Adam - A Method for Stochastic Optimization
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Adam Optimizer
@@ -9,6 +13,12 @@ slug: /optimizers/adam-optimizer
 ```python
 neualpy.optimizer.Adam(learning_rate=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.0, amsgrad=False)
 ```
+
+:::info
+
+Adam Optimizer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 Applies Adam algorithm, Adam: A Method for Stochastic Optimization
 
@@ -37,3 +47,4 @@ model = Sequential()
 ...
 
 model.compile(optimizer=Adam(), ...))
+```

@@ -2,7 +2,7 @@
 
 from torch.optim import Adagrad as _Adagrad
 
-# pylint: disable=too-few-public-methods
+
 class Adagrad:
     """
         Implements Adagrad optimizer.
@@ -13,14 +13,17 @@ class Adagrad:
             eps=0 : (Float) Term added to the denominator to improve numerical stability
             weight_decay=0 : (Float) Weight decay for the optimizer
     """
-    def __init__(self, learning_rate=0.001, learning_rate_decay=0.0, eps=1e-08, weight_decay=0.0):
+
+    def __init__(self, learning_rate=0.001, learning_rate_decay=0.0,
+                 eps=1e-08, weight_decay=0.0):
         """
             __init__ method for Adagrad optimizer
 
             Supported Arguments:
                 learning_rate=0.001: (Float) Learning Rate for the optimizer
                 learning_rate_decay=(0.9,0.999) : (Float) Learning Rate decay
-                eps=0 : (Float) Term added to the denominator to improve numerical stability
+                eps=0 : (Float) Term added to the denominator to improve numerical
+                    stability
                 weight_decay=0 : (Float) Weight decay for the optimizer
         """
         if not isinstance(learning_rate, float) or learning_rate <= 0.0:

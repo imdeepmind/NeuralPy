@@ -1,7 +1,11 @@
 ---
 id: sgd-optimizer
-title: SGD Optimizer
+title: SGD Optimizer | NeuralPy
+sidebar_label: SGD Optimizer
 slug: /optimizers/sgd-optimizer
+description: Applies stochastic gradient descent algorithm
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # SGD Optimizer
@@ -10,7 +14,13 @@ slug: /optimizers/sgd-optimizer
 neualpy.optimizer.SGD(learning_rate=0.001, momentum=0.0, dampening=0.0, weight_decay=0.0, nesterov=False)
 ```
 
-Applies stochastic gradient descent algorithm 
+:::info
+
+SGD Optimizer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
+
+Applies stochastic gradient descent algorithm
 
 For more information, check [this](https://pytorch.org/docs/stable/optim.html#torch.optim.SGD) page.
 
@@ -37,3 +47,4 @@ model = Sequential()
 ...
 
 model.compile(optimizer=SGD(), ...))
+```

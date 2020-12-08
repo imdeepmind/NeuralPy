@@ -1,7 +1,11 @@
 ---
 id: adagrad-optimizer
-title: Adagrad Optimizer
+title: Adagrad Optimizer | NeuralPy
+sidebar_label: Adagrad Optimizer
 slug: /optimizers/adagrad-optimizer
+description: Applies Adagrad algorithm, Adagrad - Adaptive Subgradient Methods for Online Learning and Stochastic Optimization
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Adagrad Optimizer
@@ -9,6 +13,12 @@ slug: /optimizers/adagrad-optimizer
 ```python
 neualpy.optimizer.Adagrad(learning_rate=0.001, learning_rate_decay=0.0, eps=1e-08, weight_decay=0.0)
 ```
+
+:::info
+
+Adagrad Optimizer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 Applies Adagrad algorithm, Adagrad:Adaptive Subgradient Methods for Online Learning and Stochastic Optimization
 
@@ -36,3 +46,4 @@ model = Sequential()
 ...
 
 model.compile(optimizer=Adagrad(), ...))
+```

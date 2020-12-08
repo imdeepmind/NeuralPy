@@ -1,7 +1,11 @@
 ---
 id: rprop-optimizer
-title: Rprop Optimizer
+title: Rprop Optimizer | NeuralPy
+sidebar_label: Rprop Optimizer
 slug: /optimizers/rprop-optimizer
+description: Applies Rprop algorithm, Rprop:Resilient backpropagation algorithm
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Rprop Optimizer
@@ -9,6 +13,12 @@ slug: /optimizers/rprop-optimizer
 ```python
 neualpy.optimizer.Rprop(learning_rate=0.01, etas=(0.5, 1.2), step_sizes=(1e-06, 50.0))
 ```
+
+:::info
+
+Rprop Optimizer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 Applies Rprop algorithm, Rprop:Resilient backpropagation algorithm
 
@@ -35,3 +45,4 @@ model = Sequential()
 ...
 
 model.compile(optimizer=Rprop(), ...))
+```

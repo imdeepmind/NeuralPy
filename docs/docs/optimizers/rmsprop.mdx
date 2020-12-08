@@ -1,7 +1,11 @@
 ---
 id: rmsprop-optimizer
-title: RMSProp Optimizer
+title: RMSProp Optimizer | NeuralPy
+sidebar_label: RMSProp Optimizer
 slug: /optimizers/rmsprop-optimizer
+description: Applies RMSProp algorithm
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # RMSProp Optimizer
@@ -10,7 +14,13 @@ slug: /optimizers/rmsprop-optimizer
 neualpy.optimizer.RMSProp(learning_rate=0.001, alpha=0.99, eps=1e-08, weight_decay=0.0, momentum=0.0, centered=False)
 ```
 
-Applies RMSProp algorithm 
+:::info
+
+RMSProp Optimizer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
+
+Applies RMSProp algorithm
 
 For more information, check [this](https://pytorch.org/docs/stable/optim.html#torch.optim.RMSprop) page.
 
@@ -38,3 +48,4 @@ model = Sequential()
 ...
 
 model.compile(optimizer=RMSProp(), ...))
+```

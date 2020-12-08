@@ -2,8 +2,6 @@
 
 from torch.optim import SGD as _SGD
 
-# pylint: disable=too-few-public-methods
-
 
 class SGD:
     """
@@ -16,7 +14,6 @@ class SGD:
             weight_decay=0 : (Float) Weight decay for the optimizer
             nesterov=False : (Bool) Enables Nesterov momentum
     """
-    # pylint: disable=too-many-arguments
 
     def __init__(self, learning_rate=0.001, momentum=0.0,
                  dampening=0.0, weight_decay=0.0, nesterov=False):

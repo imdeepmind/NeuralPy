@@ -1,14 +1,24 @@
 ---
 id: bilinear
-title: Bilinear
+title: Bilinear | NeuralPy
+sidebar_label: Bilinear
 slug: /layers/linear-layers/bilinear
+description: Bilinear layer performs a bilinear transformation of the input
+image: https://user-images.githubusercontent.com/34741145/81591141-99752900-93d9-11ea-9ef6-cc2c68daaa19.png
+hide_title: true
 ---
 
 # Bilinear
 
 ```python
-neuralpy.layers.Bilinear(n_nodes, n1_features=None, n2_features=None, bias=True, name=None)
+neuralpy.layers.linear.Bilinear(n_nodes, n1_features=None, n2_features=None, bias=True, name=None)
 ```
+
+:::info
+
+Bilinear Layer is mostly stable and can be used for any project. In the future, any chance of breaking changes is very low.
+
+:::
 
 Bilinear layer performs a bilinear transformation of the input.
 
@@ -26,7 +36,7 @@ To learn more about Bilinear layers, please check [pytorch documentation](https:
 
 ```python
 from neuralpy.models import Sequential
-from neuralpy.layers import Bilinear
+from neuralpy.layers.linear import Bilinear
 
 # Making the model
 model = Sequential()
