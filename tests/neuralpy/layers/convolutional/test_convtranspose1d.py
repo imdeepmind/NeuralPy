@@ -1,6 +1,6 @@
 import pytest
 from torch.nn import ConvTranspose1d as _ConvTranspose1d
-from neuralpy.layers import ConvTranspose1d
+from neuralpy.layers.convolutional import ConvTranspose1d
 
 
 def test_convtranspose1d_should_throw_type_error():
@@ -133,7 +133,7 @@ def test_convtrans1d_get_layer_method(_in_channels, _out_channels, _kernel_size,
 
     assert issubclass(details["layer"], _ConvTranspose1d) == True
 
-    assert details["type"] == "ConvTranspose1D"
+    assert details["type"] == "ConvTranspose1d"
 
     assert isinstance(details["keyword_arguments"], dict) == True
 
