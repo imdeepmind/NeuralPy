@@ -69,3 +69,54 @@ def test_dense_get_layer_method(n_nodes, n_inputs, bias, name):
     assert details["keyword_arguments"]["out_features"] == n_nodes
 
     assert details["keyword_arguments"]["bias"] == bias
+
+
+
+
+@pytest.mark.parametrize(
+    "n_nodes, bias, name",
+    [(n_node, bias, name) for n_node in n_nodes
+     for bias in biases
+     for name in names]
+)
+def test_dense_get_layer_method_with_diff_prev_layers(n_nodes, bias, name):
+    x1 = Dense(n_nodes=n_nodes, n_inputs=None, bias=bias, name=name)
+    
+    prev_dim = (6,2)
+
+    x1.get_input_dim(prev_dim, "lstm")
+
+    details = x1.get_layer()
+    
+    assert isinstance(details, dict) is True
+
+    assert issubclass(details["layer"], Linear) is True
+
+    assert isinstance(details["keyword_arguments"], dict) is True
+
+    assert details["keyword_arguments"]["in_features"] == prev_dim[-1]
+    
+    
+    x2 = Dense(n_nodes=n_nodes, n_inputs=None, bias=bias, name=name)
+    
+    prev_dim = (6,2)
+
+    x2.get_input_dim(prev_dim, "conv1d")
+
+    details = x2.get_layer()
+
+    assert isinstance(details, dict) is True
+
+    assert issubclass(details["layer"], Linear) is True
+
+    assert isinstance(details["keyword_arguments"], dict) is True
+
+    assert details["keyword_arguments"]["in_features"] == prev_dim[1]
+    
+    
+    x3 = Dense(n_nodes=n_nodes, n_inputs=None, bias=bias, name=name)
+    
+    prev_dim = (6,2)
+
+    with pytest.raises(ValueError):
+        x3.get_input_dim(prev_dim, "invalid")

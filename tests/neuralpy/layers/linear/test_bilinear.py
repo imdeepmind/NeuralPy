@@ -39,7 +39,6 @@ n_inputs2 = [6, 5, None]
 biases = [True, False]
 names = ["Test", None]
 
-
 @pytest.mark.parametrize(
     "n_nodes, n_inputs, n_inputs2, bias, name",
     [(n_node, n_input, n_input2, bias, name)
@@ -83,3 +82,12 @@ def test_bilinear_get_layer_method(
     assert details["keyword_arguments"]["out_features"] == n_nodes
 
     assert details["keyword_arguments"]["bias"] == bias
+
+def test_invalid_previous_layer():
+    x = Bilinear(10)
+    
+    prev_dim = (6,)
+    
+    with pytest.raises(ValueError):
+        x.get_input_dim(prev_dim, "invalid")
+    
