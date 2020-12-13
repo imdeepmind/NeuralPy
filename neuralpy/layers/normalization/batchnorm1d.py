@@ -20,7 +20,7 @@ class BatchNorm1D(CustomLayer):
                 (i.e. simple average).Default: 0.1
             affine: (Boolean) a boolean value that when set to True,
                 this module has learnable affine parameters. Default: True
-            track_running_status: (Boolean) a boolean value that when set to True,
+            track_running_stats: (Boolean) a boolean value that when set to True,
                 this module tracks the running mean and variance, and when set to False,
                 this module does not track such statistics and always uses batch
                 statistics in both training and eval modes. Default: True
@@ -30,7 +30,7 @@ class BatchNorm1D(CustomLayer):
 
     def __init__(
             self, num_features, eps=1e-05, momentum=0.1, affine=True,
-            track_running_status=True, name=None):
+            track_running_stats=True, name=None):
         """
             __init__ method for BatchNorm1d
 
@@ -44,7 +44,7 @@ class BatchNorm1D(CustomLayer):
                     (i.e. simple average). Default: 0.1
                 affine: (Boolean) A boolean value that when set to True,
                     this module has learnable affine parameters. Default: True
-                track_running_status: (Boolean) A boolean value that when set to True,
+                track_running_stats: (Boolean) A boolean value that when set to True,
                     this module tracks the running mean and variance, and when set to
                     False, this module does not track such statistics and always uses
                     batch statistics in both training and eval modes. Default: True
@@ -64,8 +64,8 @@ class BatchNorm1D(CustomLayer):
         if not isinstance(affine, bool):
             raise ValueError("Please provide a valid affine")
         # Checking test_running_status field
-        if not isinstance(track_running_status, bool):
-            raise ValueError("Please provide a vlaid track_running_status")
+        if not isinstance(track_running_stats, bool):
+            raise ValueError("Please provide a vlaid track_running_stats")
         # Checking name field
         if name is not None and not (isinstance(name, str) and name):
             raise ValueError("Please provide a valid name")
@@ -78,7 +78,7 @@ class BatchNorm1D(CustomLayer):
         self.__eps = eps
         self.__momentum = momentum
         self.__affine = affine
-        self.__track_running_status = track_running_status
+        self.__track_running_stats = track_running_stats
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
@@ -118,5 +118,5 @@ class BatchNorm1D(CustomLayer):
             "eps": self.__eps,
             "momentum": self.__momentum,
             "affine": self.__affine,
-            "track_running_status": self.__track_running_status
+            "track_running_stats": self.__track_running_stats
         })

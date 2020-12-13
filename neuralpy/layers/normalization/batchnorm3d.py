@@ -19,7 +19,7 @@ class BatchNorm3D(CustomLayer):
                 (i.e. simple average).Default: 0.1
             affine: (Boolean) a boolean value that when set to True,
                 this module has learnable affine parameters. Default: True
-            track_running_status: (Boolean) a boolean value that when set to True,
+            track_running_stats: (Boolean) a boolean value that when set to True,
                 this module tracks the running mean and variance, and when set to False,
                 this module does not track such statistics and always uses batch
                 statistics in both training and eval modes. Default: True
@@ -42,7 +42,7 @@ class BatchNorm3D(CustomLayer):
                 (i.e. simple average).Default: 0.1
             affine: (Boolean) a boolean value that when set to True,
                 this module has learnable affine parameters. Default: True
-            track_running_status: (Boolean) a boolean value that when set to True,
+            track_running_stats: (Boolean) a boolean value that when set to True,
                 this module tracks the running mean and variance, and when set to False,
                 this module does not track such statistics and always uses batch
                 statistics in both training and eval modes. Default: True
@@ -63,7 +63,7 @@ class BatchNorm3D(CustomLayer):
             raise ValueError("Please provide a valid affine")
         # Checking test_running_status field
         if not isinstance(track_running_stats, bool):
-            raise ValueError("Please provide a valid track_running_status")
+            raise ValueError("Please provide a valid track_running_stats")
 
         super().__init__(_BatchNorm3d, "BatchNorm3D", layer_name=name)
 
