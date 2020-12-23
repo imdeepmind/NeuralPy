@@ -17,203 +17,71 @@ def test_convtranspose1d_should_throw_type_error():
             0.3, 0.3, 0.36, "invalid", "invalid",
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
-        (
-            0.3, 0.3, 0.36, "invalid", "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-
         # Checking out_channels validation
         (
-            3, 3, 0.36, "invalid", "invalid", "invalid",
-            "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, False, 0.36, "invalid", "invalid",
+            3, 0.3, 0.36, "invalid", "invalid",
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
-        (
-            3, "", 0.36, "invalid", "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, ("",), 0.36, "invalid", "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-
         # Checking kernel_size validation
         (
-            3, (3,), "invalid", "invalid", "invalid",
+            3, 3, 0.36, "invalid", "invalid",
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
-        (
-            3, (3,), False, 5.7, "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, ""), "invalid", "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), ("", 3), "invalid", "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-
         # Checking input_shape validation
         (
-            3, (3,), (3, 3), "invalid", "invalid",
+            3, 3, 5, "invalid", "invalid",
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
         (
-            3, (3,), (3, 3), 5.7, "invalid",
+            3, 3, 5, (-1,), "invalid",
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
         (
-            3, (3,), (3, 3), False, "invalid",
+            3, 3, 5, (3, 0.6), "invalid",
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
-        (
-            3, (3,), (3, 3), ("",), "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (5.7,), "invalid",
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-
         # Checking stride validation
         (
-            3, (3,), (3, 3), (3,), "invalid",
+            3, 3, 3, (3, 3), 3.5,
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
-        (
-            3, (3,), (3, 3), (3,), False,
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), 5.7,
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), ("",),
-            "invalid", "invalid", "groups", False, "invalid", ""
-        ),
-
         # Checking padding validation
         (
-            3, (3,), (3, 3), (3,), (3, 3),
+            3, 3, 3, (3, 3), (4, 4),
             "invalid", "invalid", "groups", False, "invalid", ""
         ),
+        # Checking out_padding validation
         (
-            3, (3,), (3, 3), (3,), (3, 3),
-            False, "invalid", "groups", False, "invalid", ""
+            3, 3, 3, (3, 3), (4, 4),
+            4, "invalid", "groups", False, "invalid", ""
         ),
+        # Checking group validation
         (
-            3, (3,), (3, 3), (3,), (3, 3),
-            5.7, "invalid", "groups", False, "invalid", ""
+            3, 3, 3, (3, 3), (4, 4),
+            4, (5, 5), "groups", False, "invalid", ""
         ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            ("",), "invalid", "groups", False, "invalid", ""
-        ),
-
-        # Checking output_padding validation
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), "invalid", "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), False, "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            3, 5.7, "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3, 3), ("",), "groups", False, "invalid", ""
-        ),
-
-        # Checking groups validation
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), "groups", False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 1, False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            3, (3, 3), 5.7, False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3, 3), (3, 3), ("",), False, "invalid", ""
-        ),
-
         # Checking bias validation
         (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, "invalid", "invalid", ""
+            3, 3, 3, (3, 3), (4, 4),
+            4, (5, 5), 4, "invalid", "invalid", ""
         ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, False, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            3, (3, 3), 3, 3, "invalid", ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3, 3), (3, 3), 3, 5.7, "invalid", ""
-        ),
-
         # Checking dilation validation
         (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, False, "invalid", ""
+            3, 3, 3, (3, 3), (4, 4),
+            4, (5, 5), 4, True, (3, 0.6), ""
         ),
         (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, False, 3, ""
+            3, 3, 3, (3, 3), (4, 4),
+            4, (5, 5), 4, True, "invalid", ""
+        ),
+        # Checking name validation
+        (
+            3, 3, 3, (3, 3), (4, 4),
+            4, (5, 5), 4, True, (3, 3), ""
         ),
         (
-            3, (3,), (3, 3), (3,), (3, 3),
-            3, (3, 3), 3, 3, ("",), ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3, 3), (3, 3), 3, 5.7, 5.7, ""
-        ),
-
-        # Checking dilation validation
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, False, (3,), "invalid"
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, False, (3,), False
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            3, (3, 3), 3, 3, (3,), 3.5
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3, 3), (3, 3), 3, 5.7, (3,), 3
-        ),
-
-        # Checking name validations
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, False, (3,), ""
-        ),
-        (
-            3, (3,), (3, 3), (3,), (3, 3),
-            (3,), (3, 3), 3, False, (3,), 12
+            3, 3, 3, (3, 3), (4, 4),
+            4, (5, 5), 4, True, (3, 3), True
         )
     ]
 )

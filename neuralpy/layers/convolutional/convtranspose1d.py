@@ -118,10 +118,6 @@ class ConvTranspose1d(CustomLayer):
                 dilation, (int, tuple)):
             raise ValueError("Please provide a valid dilation")
 
-        # Checking the name field, it is a optional field
-        if name is not None and not (isinstance(name, str) and name):
-            raise ValueError("Please provide a valid name")
-
         super().__init__(_ConvTranspose1d, "ConvTranspose1d", layer_name=name)
 
         # Storing the data
@@ -136,7 +132,6 @@ class ConvTranspose1d(CustomLayer):
         self.__groups = groups
         self.__bias = bias
         self.__dilation = dilation
-        self.__name = name
 
     def __get_layer_details(self):
         # Return tuple structure
@@ -176,14 +171,12 @@ class ConvTranspose1d(CustomLayer):
             out_padding1, = self.__out_padding
 
         # Calculating the width and height of the convtranspose output
-        dim1 = (
-            (self.__input_shape[-1] - 1)
-            * (stride_1 - 2)
-            * padding1
-            + dilation1
-            * (kernel1 - 1)
-            + (out_padding1 + 1)
-        )
+        input_shape1 = self.__input_shape[-1] - 1
+        stride_1 = stride_1 - 2
+        kernel1 = kernel1 - 1
+        out_padding1 = out_padding1 + 1
+        dim1 = input_shape1 * stride_1 * padding1 \
+            + dilation1 * kernel1 + out_padding1
 
         return(
             self.__input_shape[0], self.__in_channels * dim1,
