@@ -58,8 +58,7 @@ setup(
     extras_require={
         'tests': [
             "pytest",
-            "pytest-cov",
-            "flake8"
+            "pytest-cov"
         ]
     },
     include_package_data=True
