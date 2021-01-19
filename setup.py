@@ -33,16 +33,25 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7"
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9"
     ],
     packages=[
         "neuralpy",
-        "neuralpy.activation_functions",
         "neuralpy.layers",
+        "neuralpy.layers.activation_functions",
+        "neuralpy.layers.convolutional",
+        "neuralpy.layers.linear",
+        "neuralpy.layers.normalization",
+        "neuralpy.layers.other",
+        "neuralpy.layers.pooling",
+        "neuralpy.layers.recurrent",
+        "neuralpy.layers.regularizers",
+        "neuralpy.layers.sparse",
         "neuralpy.loss_functions",
         "neuralpy.models",
         "neuralpy.optimizer",
-        "neuralpy.regularizers",
         "neuralpy.callbacks"
     ],
     install_requires=["torch"],
