@@ -28,10 +28,10 @@ names = ["test1", "test2", None]
 
 
 @pytest.mark.parametrize("dim, name", [(dim, name) for dim in dims for name in names])
-def test_leaky_relu_get_input_dim_and_get_layer_method(dim, name):
+def test_leaky_relu_set_input_dim_and_get_layer_method(dim, name):
     x = Softmax(dim=dim, name=name)
 
-    assert x.get_input_dim(12, "dense") is None
+    assert x.set_input_dim(12, "dense") is None
 
     details = x.get_layer()
 

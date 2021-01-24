@@ -15,7 +15,7 @@ def test_dense_should_throw_value_error(p, name):
 def test_dense_get_layer_method(p, name):
     x = AlphaDropout(p=p, name=name)
 
-    assert x.get_input_dim(12, "dense") is None
+    assert x.set_input_dim(12, "dense") is None
 
     details = x.get_layer()
 
@@ -37,7 +37,7 @@ def test_dense_get_layer_method(p, name):
 def test_dense_get_layer_method_wit_no_parameter():
     x = AlphaDropout()
 
-    assert x.get_input_dim(12, "dense") is None
+    assert x.set_input_dim(12, "dense") is None
 
     details = x.get_layer()
 

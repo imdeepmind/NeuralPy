@@ -67,13 +67,13 @@ def test_batchnorm1d_get_layer_method(
     prev_dim = (3, 6, (6, 18))
 
     if num_features is None:
-        num_features = x.get_input_dim(prev_dim, "conv1d")
+        num_features = x.set_input_dim(prev_dim, "conv1d")
 
     details = x.get_layer()
 
     assert isinstance(details, dict) is True
 
-    assert details["layer_details"] == None
+    assert details["layer_details"] is None
 
     assert details["name"] == name
 

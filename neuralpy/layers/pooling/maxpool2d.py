@@ -152,7 +152,7 @@ class MaxPool2D(CustomLayer):
 
         return (depth, depth * dim_1 * dim_2, (depth, dim_1, dim_2))
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
         This method calculates the input shape for layer based on previous output
         layer.

@@ -67,13 +67,13 @@ def test_batchnorm2d_get_layer_method(
     prev_dim = (3, 6, (6, 18, 32))
 
     if num_features is None:
-        num_features = x.get_input_dim(prev_dim, "conv2d")
+        num_features = x.set_input_dim(prev_dim, "conv2d")
 
     details = x.get_layer()
 
     assert isinstance(details, dict) is True
 
-    assert details["layer_details"] == None
+    assert details["layer_details"] is None
 
     assert details["name"] == name
 
@@ -98,4 +98,4 @@ def test_batchnorm_2d_layer_invalid_layer():
     prev_dim = (3, 6, (6, 18, 32))
 
     with pytest.raises(ValueError):
-        x.get_input_dim(prev_dim, "conv3d")
+        x.set_input_dim(prev_dim, "conv3d")

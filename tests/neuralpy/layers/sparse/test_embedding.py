@@ -125,7 +125,7 @@ def test_embedding_get_layer_method(
 
     prev_input_dim = (6,)
 
-    x.get_input_dim(prev_input_dim, "embedding")
+    x.set_input_dim(prev_input_dim, "embedding")
 
     details = x.get_layer()
 

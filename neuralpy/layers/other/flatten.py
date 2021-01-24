@@ -40,7 +40,7 @@ class Flatten(CustomLayer):
         self.__start_dim = start_dim
         self.__end_dim = end_dim
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
         This method calculates the input shape for layer based on previous output
         layer.

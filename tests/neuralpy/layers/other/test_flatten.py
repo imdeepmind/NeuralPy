@@ -28,7 +28,7 @@ def test_flatten_get_layer_method(start_dim, end_dim):
 
     assert isinstance(details, dict) is True
 
-    assert x.get_input_dim(prev_input_dim, "flatten") is None
+    assert x.set_input_dim(prev_input_dim, "flatten") is None
 
     if start_dim:
         assert details["keyword_arguments"]["start_dim"] == start_dim

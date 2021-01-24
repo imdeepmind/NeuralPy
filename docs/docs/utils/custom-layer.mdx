@@ -39,7 +39,7 @@ This method is used to get the details of the model, NeuralPy model class needs 
 
 #### Supported Arguments
 
-- `layer_details=None` : (Tuple) Some values in a tuple that can be passed here. These values are available in the next layer's get_input_dim method
+- `layer_details=None` : (Tuple) Some values in a tuple that can be passed here. These values are available in the next layer's set_input_dim method
 - `keyword_arguments=None` : (String) Multiple arguments needed by the PyTorch layer
 
 ### `._get_layer_class()` method:
@@ -69,7 +69,7 @@ class <ClassName>(CustomLayer):
     ):
         super().__init__(<PyTorch_Class_Name>, "Conv1D", layer_name=name)
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         # This method calculates the input shape for the layer based on the previous output layer.
         return <>
 

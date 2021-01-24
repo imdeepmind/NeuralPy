@@ -67,7 +67,7 @@ def test_bilinear_get_layer_method(n_nodes, n_inputs, n_inputs2, bias, name):
     prev_dim = (6,)
 
     if n_inputs is None:
-        x.get_input_dim(prev_dim, "dense")
+        x.set_input_dim(prev_dim, "dense")
 
     details = x.get_layer()
 
@@ -99,4 +99,4 @@ def test_invalid_previous_layer():
     prev_dim = (6,)
 
     with pytest.raises(ValueError):
-        x.get_input_dim(prev_dim, "invalid")
+        x.set_input_dim(prev_dim, "invalid")

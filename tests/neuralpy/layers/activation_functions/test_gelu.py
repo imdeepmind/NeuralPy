@@ -20,10 +20,10 @@ names = ["test1", "test2", None]
 
 
 @pytest.mark.parametrize("name", [name for name in names])
-def test_gelu_get_input_dim_and_get_layer_method(name):
+def test_gelu_set_input_dim_and_get_layer_method(name):
     x = GELU(name=name)
 
-    assert x.get_input_dim(12, "dense") is None
+    assert x.set_input_dim(12, "dense") is None
 
     details = x.get_layer()
 

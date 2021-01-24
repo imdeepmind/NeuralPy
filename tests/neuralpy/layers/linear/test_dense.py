@@ -50,7 +50,7 @@ def test_dense_get_layer_method(n_nodes, n_inputs, bias, name):
     prev_dim = (6,)
 
     if n_inputs is None:
-        x.get_input_dim(prev_dim, "dense")
+        x.set_input_dim(prev_dim, "dense")
 
     details = x.get_layer()
 
@@ -83,7 +83,7 @@ def test_dense_get_layer_method_with_diff_prev_layers(n_nodes, bias, name):
 
     prev_dim = (6, 2)
 
-    x1.get_input_dim(prev_dim, "lstm")
+    x1.set_input_dim(prev_dim, "lstm")
 
     details = x1.get_layer()
 
@@ -99,7 +99,7 @@ def test_dense_get_layer_method_with_diff_prev_layers(n_nodes, bias, name):
 
     prev_dim = (6, 2)
 
-    x2.get_input_dim(prev_dim, "conv1d")
+    x2.set_input_dim(prev_dim, "conv1d")
 
     details = x2.get_layer()
 
@@ -116,4 +116,4 @@ def test_dense_get_layer_method_with_diff_prev_layers(n_nodes, bias, name):
     prev_dim = (6, 2)
 
     with pytest.raises(ValueError):
-        x3.get_input_dim(prev_dim, "invalid")
+        x3.set_input_dim(prev_dim, "invalid")

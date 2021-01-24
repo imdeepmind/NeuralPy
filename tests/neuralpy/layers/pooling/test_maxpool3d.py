@@ -98,7 +98,7 @@ def test_MaxPool3D_get_layer_method(
 
     prev_dim = (3, 6, (6, 18, 32, 32))
 
-    x.get_input_dim(prev_dim, "conv3d")
+    x.set_input_dim(prev_dim, "conv3d")
 
     details = x.get_layer()
 

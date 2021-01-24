@@ -34,7 +34,7 @@ def build_layer_from_dict(layer_refs):
             # for example, in cnn, after the conv layers, when the dense layer need
             # to do some complicated calculations to get the input shape of the Dense
             # layer based on the input shape, stride, padding, etc
-            layer_ref.get_input_dim(prev_layer_details, prev_layer_type)
+            layer_ref.set_input_dim(prev_layer_details, prev_layer_type)
 
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
