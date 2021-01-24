@@ -5,32 +5,39 @@ from torch.optim import RMSprop as _RMSprop
 
 class RMSprop:
     """
-        Implements RMSProp optimizer.
+    Implements RMSProp optimizer.
+
+    Supported Arguments
+        learning_rate=0.001: (Float) Learning Rate for the optimizer
+        alpha=(0.9,0.999) : (Float) Learning Rate decay
+        eps=0 : (Float) Term added to the denominator to improve numerical stability
+        weight_decay=0 : (Float) Weight decay for the optimizer
+        momentum=0 : (Float) Momentum for the optimizer
+        centered=False : (Bool) if True, compute the centered RMSProp,
+            the gradient is normalized by an estimation of its variance
+    """
+
+    def __init__(
+        self,
+        learning_rate=0.001,
+        alpha=0.99,
+        eps=1e-08,
+        weight_decay=0.0,
+        momentum=0.0,
+        centered=False,
+    ):
+        """
+        __init__ method for RMSProp
 
         Supported Arguments
             learning_rate=0.001: (Float) Learning Rate for the optimizer
-            alpha=(0.9,0.999) : (Float) Learning Rate decay
-            eps=0 : (Float) Term added to the denominator to improve numerical stability
+            alpha=(0.9,0.999) : (Float) Learningn Rate decay
+            eps=0 : (Float) Term added to the denominator to improve numerical
+                stability
             weight_decay=0 : (Float) Weight decay for the optimizer
             momentum=0 : (Float) Momentum for the optimizer
             centered=False : (Bool) if True, compute the centered RMSProp,
                 the gradient is normalized by an estimation of its variance
-    """
-
-    def __init__(self, learning_rate=0.001, alpha=0.99, eps=1e-08, weight_decay=0.0,
-                 momentum=0.0, centered=False):
-        """
-            __init__ method for RMSProp
-
-            Supported Arguments
-                learning_rate=0.001: (Float) Learning Rate for the optimizer
-                alpha=(0.9,0.999) : (Float) Learningn Rate decay
-                eps=0 : (Float) Term added to the denominator to improve numerical
-                    stability
-                weight_decay=0 : (Float) Weight decay for the optimizer
-                momentum=0 : (Float) Momentum for the optimizer
-                centered=False : (Bool) if True, compute the centered RMSProp,
-                    the gradient is normalized by an estimation of its variance
         """
         if not isinstance(learning_rate, float) or learning_rate <= 0.0:
             raise ValueError("Invalid learning_rate")
@@ -59,19 +66,19 @@ class RMSprop:
 
     def get_optimizer(self):
         """
-            Method used for getting the details of the optimizer
+        Method used for getting the details of the optimizer
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         return {
-            'optimizer': _RMSprop,
-            'keyword_arguments': {
-                'lr': self.__learning_rate,
-                'alpha': self.__alpha,
-                'eps': self.__eps,
-                'weight_decay': self.__weight_decay,
-                'momentum': self.__momentum,
-                'centered': self.__centered
-            }
+            "optimizer": _RMSprop,
+            "keyword_arguments": {
+                "lr": self.__learning_rate,
+                "alpha": self.__alpha,
+                "eps": self.__eps,
+                "weight_decay": self.__weight_decay,
+                "momentum": self.__momentum,
+                "centered": self.__centered,
+            },
         }

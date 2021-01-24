@@ -4,21 +4,22 @@ import types
 import torch
 import numpy as np
 
-from .model_helper import (build_optimizer_from_dict,
-                           build_loss_function_from_dict,
-                           build_history_object,
-                           calculate_accuracy,
-                           print_training_progress,
-                           print_validation_progress)
+from .model_helper import (
+    build_optimizer_from_dict,
+    build_loss_function_from_dict,
+    build_history_object,
+    calculate_accuracy,
+    print_training_progress,
+    print_validation_progress,
+)
 
 
 class Model:
     """
-        NeuralPy Model Class
+    NeuralPy Model Class
     """
 
-    def __init__(self, force_cpu=False, training_device=None,
-                 random_state=None):
+    def __init__(self, force_cpu=False, training_device=None, random_state=None):
         self.__model = None
         self.__metrics = ["loss"]
         self.__loss_function = None
@@ -31,12 +32,14 @@ class Model:
         # Checking the force_cpu parameter
         if not isinstance(force_cpu, bool):
             raise ValueError(
-                "You have provided an invalid value for the parameter force_cpu")
+                "You have provided an invalid value for the parameter force_cpu"
+            )
 
         # Checking the training_device parameter and comparing it with pytorch
         # device class
         if training_device is not None and not isinstance(
-                training_device, torch.device):
+            training_device, torch.device
+        ):
             raise ValueError("Please provide a valid neuralpy device class")
 
         # Validating random state
@@ -66,11 +69,11 @@ class Model:
 
     def __predict(self, X, batch_size=None):
         """
-            Method for predicting
+        Method for predicting
 
-            Supported Arguments:
-                X: (Numpy Array) Data
-                batch_size=None: (Integer) Batch size for predicting
+        Supported Arguments:
+            X: (Numpy Array) Data
+            batch_size=None: (Integer) Batch size for predicting
         """
         # Calling model.eval as we are evaluating the model only
         self.__model.eval()
@@ -86,15 +89,14 @@ class Model:
             # and comparing it with the length of input
             if X.shape[0] < batch_size:
                 # Batch size can not be greater that sample size
-                raise ValueError(
-                    "Batch size is greater than total number of samples")
+                raise ValueError("Batch size is greater than total number of samples")
 
             # Predicting, so no grad
             with torch.no_grad():
                 # Splitting the data into batches
                 for i in range(0, len(X), batch_size):
                     # Generating the batch from X
-                    batch_x = X[i:i + batch_size].float().to(self.__device)
+                    batch_x = X[i : i + batch_size].float().to(self.__device)
 
                     # Feeding the batch into the model for predictions
                     outputs = self.__model(batch_x)
@@ -115,20 +117,20 @@ class Model:
 
     def compile(self, optimizer, loss_function, metrics=None):
         """
-            In NeuralPy model, compile method is responsible for attaching a loss
-            function and optimizer with the model and this method needs to
-            be called before training. This method also attaches metrics that needed
-            to be calculated during training.
+        In NeuralPy model, compile method is responsible for attaching a loss
+        function and optimizer with the model and this method needs to
+        be called before training. This method also attaches metrics that needed
+        to be calculated during training.
 
-            The .compile() method internally calls the .build(),
-            so there is no need to call .build().
+        The .compile() method internally calls the .build(),
+        so there is no need to call .build().
 
-            Supported Arguments:
-                optimizer: (NeuralPy Optimizer class) Adds a optimizer to the model
-                loss_function: (NeuralPy Loss Function class) Adds a loss function to
-                    the model
-                metrics: ([String]) Metrics that will be evaluated by the model.
-                    Currently only supports "accuracy".
+        Supported Arguments:
+            optimizer: (NeuralPy Optimizer class) Adds a optimizer to the model
+            loss_function: (NeuralPy Loss Function class) Adds a loss function to
+                the model
+            metrics: ([String]) Metrics that will be evaluated by the model.
+                Currently only supports "accuracy".
         """
         if metrics and not isinstance(metrics, list):
             raise ValueError("Please provide a valid metrics")
@@ -143,36 +145,40 @@ class Model:
             raise ValueError("Please provide valid metrics")
 
         # Storing the loss function and optimizer for future use
-        (self.__optimizer,
-         self.__optimizer_parameters) = \
-            build_optimizer_from_dict(optimizer, self.__model.parameters())
+        (self.__optimizer, self.__optimizer_parameters) = build_optimizer_from_dict(
+            optimizer, self.__model.parameters()
+        )
 
-        (self.__loss_function,
-         self.__loss_function_parameters) = build_loss_function_from_dict(loss_function)
+        (
+            self.__loss_function,
+            self.__loss_function_parameters,
+        ) = build_loss_function_from_dict(loss_function)
 
     def __train_loop(self, x_train, y_train, batch_size, epoch, epochs):
         """
-            This method training the model on a given training data
+        This method training the model on a given training data
 
-            Supported Arguments:
-                x_train: (Numpy Array): Validation data
-                y_train: (Numpy array): validation data
-                batch_size: (Integer) Batch size of the model
-                epoch: (Integer) Current epoch
-                epochs: (Integer) No of epochs
+        Supported Arguments:
+            x_train: (Numpy Array): Validation data
+            y_train: (Numpy array): validation data
+            batch_size: (Integer) Batch size of the model
+            epoch: (Integer) Current epoch
+            epochs: (Integer) No of epochs
         """
         # If batch_size is there then checking the
         # length and comparing it with the length of training data
         if x_train.shape[0] < batch_size:
             # Batch size can not be greater that train data size
             raise ValueError(
-                "Batch size is greater than total number of training samples")
+                "Batch size is greater than total number of training samples"
+            )
 
         # Checking the length of input and output
         if x_train.shape[0] != y_train.shape[0]:
             # length of X and y should be same
             raise ValueError(
-                "Length of training Input data and training output data should be same")
+                "Length of training Input data and training output data should be same"
+            )
 
         # Converting the data into PyTorch tensor
         x_train = torch.tensor(x_train)
@@ -188,15 +194,14 @@ class Model:
         # Splitting the data into batches
         for i in range(0, len(x_train), batch_size):
             # Making the batches
-            batch_x = x_train[i:i + batch_size].float()
+            batch_x = x_train[i : i + batch_size].float()
             if "accuracy" in self.__metrics:
-                batch_y = y_train[i:i + batch_size]
+                batch_y = y_train[i : i + batch_size]
             else:
-                batch_y = y_train[i:i + batch_size].float()
+                batch_y = y_train[i : i + batch_size].float()
 
             # Moving the batches to device
-            batch_x, batch_y = batch_x.to(
-                self.__device), batch_y.to(self.__device)
+            batch_x, batch_y = batch_x.to(self.__device), batch_y.to(self.__device)
 
             # Zero grad
             self.__model.zero_grad()
@@ -213,8 +218,7 @@ class Model:
 
             # Storing the loss val, batchwise data
             training_loss_score = train_loss.item()
-            self.__history["batchwise"]["training_loss"].append(
-                train_loss.item())
+            self.__history["batchwise"]["training_loss"].append(train_loss.item())
 
             # Calculating accuracy
             # Checking if accuracy is there in metrics
@@ -224,13 +228,22 @@ class Model:
                 correct_training += corrects
 
                 self.__history["batchwise"]["training_accuracy"].append(
-                    corrects / batch_size * 100)
+                    corrects / batch_size * 100
+                )
 
-                print_training_progress(epoch, epochs, i, batch_size, len(
-                    x_train), train_loss.item(), corrects)
+                print_training_progress(
+                    epoch,
+                    epochs,
+                    i,
+                    batch_size,
+                    len(x_train),
+                    train_loss.item(),
+                    corrects,
+                )
             else:
                 print_training_progress(
-                    epoch, epochs, i, batch_size, len(x_train), train_loss.item())
+                    epoch, epochs, i, batch_size, len(x_train), train_loss.item()
+                )
 
         # Checking if accuracy is there in metrics
         if "accuracy" in self.__metrics:
@@ -239,25 +252,27 @@ class Model:
 
     def __validation_loop(self, x_test, y_test, batch_size):
         """
-            Method calculates the validation loss and accuracy for a model
+        Method calculates the validation loss and accuracy for a model
 
-            Supported Arguments:
-                x_test: (Numpy Array): Validation data
-                y_test: (Numpy array): validation data
-                batch_size: (Integer) Batch size of the model
+        Supported Arguments:
+            x_test: (Numpy Array): Validation data
+            y_test: (Numpy array): validation data
+            batch_size: (Integer) Batch size of the model
         """
         # If batch_size is there then checking the length and
         # comparing it with the length of training data
         if x_test.shape[0] < batch_size:
             # Batch size can not be greater that test data size
             raise ValueError(
-                "Batch size is greater than total number of testing samples")
+                "Batch size is greater than total number of testing samples"
+            )
 
         # Checking the length of input and output
         if x_test.shape[0] != y_test.shape[0]:
             # length of X and y should be same
             raise ValueError(
-                "Length of testing Input data and testing output data should be same")
+                "Length of testing Input data and testing output data should be same"
+            )
 
         x_test = torch.tensor(x_test)
         y_test = torch.tensor(y_test)
@@ -273,15 +288,14 @@ class Model:
             # Splitting the data into batches
             for i in range(0, len(x_test), batch_size):
                 # Making the batches
-                batch_x = x_test[i:i + batch_size].float()
+                batch_x = x_test[i : i + batch_size].float()
                 if "accuracy" in self.__metrics:
-                    batch_y = y_test[i:i + batch_size]
+                    batch_y = y_test[i : i + batch_size]
                 else:
-                    batch_y = y_test[i:i + batch_size].float()
+                    batch_y = y_test[i : i + batch_size].float()
 
                 # Moving the batches to device
-                batch_x, batch_y = batch_x.to(
-                    self.__device), batch_y.to(self.__device)
+                batch_x, batch_y = batch_x.to(self.__device), batch_y.to(self.__device)
 
                 # Feeding the data into the model
                 outputs = self.__model(batch_x)
@@ -292,18 +306,19 @@ class Model:
                 # Storing the loss val, batchwise data
                 validation_loss_score += validation_loss.item()
                 self.__history["batchwise"]["validation_loss"].append(
-                    validation_loss.item())
+                    validation_loss.item()
+                )
 
                 # Calculating accuracy
                 # Checking if accuracy is there in metrics
                 if "accuracy" in self.__metrics:
-                    corrects = corrects = calculate_accuracy(
-                        batch_y, outputs)
+                    corrects = corrects = calculate_accuracy(batch_y, outputs)
 
                     correct_val += corrects
 
                     self.__history["batchwise"]["validation_accuracy"].append(
-                        corrects / batch_size * 100)
+                        corrects / batch_size * 100
+                    )
 
         # Calculating the mean val loss score for all batches
         validation_loss_score /= batch_size
@@ -311,43 +326,43 @@ class Model:
         # Checking if accuracy is there in metrics
         if "accuracy" in self.__metrics:
             # Printing a friendly message to the console
-            print_validation_progress(
-                validation_loss_score, len(x_test), correct_val)
+            print_validation_progress(validation_loss_score, len(x_test), correct_val)
 
             return validation_loss_score, correct_val / len(x_test) * 100
 
         # Printing a friendly message to the console
-        print_validation_progress(
-            validation_loss_score, len(x_test))
+        print_validation_progress(validation_loss_score, len(x_test))
 
         return validation_loss_score, 0
 
-    def fit(self,
-            train_data,
-            validation_data=None,
-            epochs=10,
-            batch_size=32,
-            steps_per_epoch=None,
-            validation_steps=None,
-            callbacks=None):
+    def fit(
+        self,
+        train_data,
+        validation_data=None,
+        epochs=10,
+        batch_size=32,
+        steps_per_epoch=None,
+        validation_steps=None,
+        callbacks=None,
+    ):
         """
-            The `.fit()` method is used for training the NeuralPy model.
+        The `.fit()` method is used for training the NeuralPy model.
 
-            Supported Arguments
-                train_data: (Tuple(NumPy Array, NumPy Array) |
-                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
-                    training data as a tuple like (X, y) where X is training data and y
-                    is the labels for the training the model.
-                validation_data=None:(Tuple(NumPy Array, NumPy Array) |
-                    Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
-                    validation data as a tuple like (X, y) where X is test data and y
-                    is the labels for the validating the model. This field is optional.
-                epochs=10: (Integer) Number of epochs
-                batch_size=32: (Integer) Batch size for training.
-                steps_per_epoch=None: (Integer) No of steps for each
-                training loop (only needed if use generator)
-                validation_steps=None: (Integer) No of steps for each
-                validation epoch (only needed if use generator)
+        Supported Arguments
+            train_data: (Tuple(NumPy Array, NumPy Array) |
+                Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
+                training data as a tuple like (X, y) where X is training data and y
+                is the labels for the training the model.
+            validation_data=None:(Tuple(NumPy Array, NumPy Array) |
+                Python Generator(Tuple(NumPy Array, NumPy Array))) Pass the
+                validation data as a tuple like (X, y) where X is test data and y
+                is the labels for the validating the model. This field is optional.
+            epochs=10: (Integer) Number of epochs
+            batch_size=32: (Integer) Batch size for training.
+            steps_per_epoch=None: (Integer) No of steps for each
+            training loop (only needed if use generator)
+            validation_steps=None: (Integer) No of steps for each
+            validation epoch (only needed if use generator)
         """
         if not epochs or epochs <= 0:
             raise ValueError("Please provide a valid epochs")
@@ -364,8 +379,7 @@ class Model:
         # Running the epochs
         for epoch in range(epochs):
             if isinstance(train_data, types.GeneratorType):
-                if not isinstance(steps_per_epoch,
-                                  int) or steps_per_epoch <= 0:
+                if not isinstance(steps_per_epoch, int) or steps_per_epoch <= 0:
                     raise ValueError("Please provide a valid steps_per_epoch")
 
                 total_loss = 0
@@ -373,8 +387,9 @@ class Model:
 
                 for _ in range(steps_per_epoch):
                     x_train, y_train = next(train_data)
-                    loss, accuracy = self.__train_loop(x_train, y_train,
-                                                       batch_size, epoch, epochs)
+                    loss, accuracy = self.__train_loop(
+                        x_train, y_train, batch_size, epoch, epochs
+                    )
 
                     total_loss += loss
                     total_accuracy += accuracy
@@ -387,7 +402,8 @@ class Model:
 
                 if "accuracy" in self.__metrics:
                     self.__history["epochwise"]["training_accuracy"].append(
-                        total_accuracy)
+                        total_accuracy
+                    )
 
                 print("")
 
@@ -395,10 +411,8 @@ class Model:
                     if not isinstance(validation_data, types.GeneratorType):
                         raise ValueError("Please provide a valid test data")
 
-                    if not isinstance(validation_steps,
-                                      int) or validation_steps <= 0:
-                        raise ValueError(
-                            "Please provide a valid validation_steps")
+                    if not isinstance(validation_steps, int) or validation_steps <= 0:
+                        raise ValueError("Please provide a valid validation_steps")
 
                     validation_loss = 0
                     validation_accuracy = 0
@@ -406,7 +420,8 @@ class Model:
                     for _ in range(validation_steps):
                         x_test, y_test = next(validation_data)
                         loss, accuracy = self.__validation_loop(
-                            x_test, y_test, batch_size)
+                            x_test, y_test, batch_size
+                        )
 
                         validation_loss += loss
                         validation_accuracy += accuracy
@@ -414,23 +429,25 @@ class Model:
                     if "accuracy" in self.__metrics:
                         # Adding data into history dictionary
                         self.__history["epochwise"]["validation_accuracy"].append(
-                            validation_accuracy)
+                            validation_accuracy
+                        )
 
                     # Added the epochwise value to the history dictionary
                     self.__history["epochwise"]["validation_loss"].append(
-                        validation_loss)
+                        validation_loss
+                    )
 
             else:
                 x_train, y_train = train_data
                 loss, accuracy = self.__train_loop(
-                    x_train, y_train, batch_size, epoch, epochs)
+                    x_train, y_train, batch_size, epoch, epochs
+                )
 
                 # Added the epochwise value to the history dictionary
                 self.__history["epochwise"]["training_loss"].append(loss)
 
                 if "accuracy" in self.__metrics:
-                    self.__history["epochwise"]["training_accuracy"].append(
-                        accuracy)
+                    self.__history["epochwise"]["training_accuracy"].append(accuracy)
 
                 print("")
 
@@ -438,21 +455,25 @@ class Model:
                     if isinstance(validation_data, types.GeneratorType):
                         raise ValueError(
                             "Please provide a valid test_data,"
-                            "cannot mix up with generator and array")
+                            "cannot mix up with generator and array"
+                        )
 
                     x_test, y_test = validation_data
 
                     validation_loss_score, validation_accuracy = self.__validation_loop(
-                        x_test, y_test, batch_size)
+                        x_test, y_test, batch_size
+                    )
 
                     if "accuracy" in self.__metrics:
                         # Adding data into history dictionary
                         self.__history["epochwise"]["validation_accuracy"].append(
-                            validation_accuracy)
+                            validation_accuracy
+                        )
 
                     # Added the epochwise value to the history dictionary
                     self.__history["epochwise"]["validation_loss"].append(
-                        validation_loss_score)
+                        validation_loss_score
+                    )
 
             print("")
 
@@ -462,29 +483,33 @@ class Model:
                     training_progress_data = {}
 
                     for m in self.__metrics:
-                        training_progress_data[f"training_{m}"] = \
-                            self.__history["epochwise"][f"training_{m}"][epoch]
-                        training_progress_data[f"validation_{m}"] = \
-                            self.__history["epochwise"][f"validation_{m}"][epoch]
+                        training_progress_data[f"training_{m}"] = self.__history[
+                            "epochwise"
+                        ][f"training_{m}"][epoch]
+                        training_progress_data[f"validation_{m}"] = self.__history[
+                            "epochwise"
+                        ][f"validation_{m}"][epoch]
 
-                    callback.callback(epochs,
-                                      epoch,
-                                      self.__loss_function_parameters,
-                                      self.__optimizer_parameters,
-                                      training_progress_data,
-                                      self.__model)
+                    callback.callback(
+                        epochs,
+                        epoch,
+                        self.__loss_function_parameters,
+                        self.__optimizer_parameters,
+                        training_progress_data,
+                        self.__model,
+                    )
 
         return self.__history
 
     def predict(self, predict_data, predict_steps=None, batch_size=None):
         """
-            The .predict()method is used for predicting using the trained mode.
+        The .predict()method is used for predicting using the trained mode.
 
-            Supported Arguments
-                predict_data: (NumPy Array | Python Generator) Data to be predicted
-                predict_steps: (Integer) Number of steps in the generator
-                batch_size=None: (Integer) Batch size for predicting.
-                            If not provided, then the entire data is predicted once.
+        Supported Arguments
+            predict_data: (NumPy Array | Python Generator) Data to be predicted
+            predict_steps: (Integer) Number of steps in the generator
+            batch_size=None: (Integer) Batch size for predicting.
+                        If not provided, then the entire data is predicted once.
         """
         if isinstance(predict_data, types.GeneratorType):
             predictions = None
@@ -505,18 +530,17 @@ class Model:
         # Returning an numpy array of predictions
         return predictions.flatten()
 
-    def predict_classes(self, predict_data,
-                        predict_steps=None, batch_size=None):
+    def predict_classes(self, predict_data, predict_steps=None, batch_size=None):
         """
-            The .predict_class()method is used for predicting classes using the
-            trained mode. This method works only if accuracy is passed in the metrics
-            parameter on the .compile()method.
+        The .predict_class()method is used for predicting classes using the
+        trained mode. This method works only if accuracy is passed in the metrics
+        parameter on the .compile()method.
 
-            Supported Arguments
-                predict_data: (NumPy Array | Python Generator) Data to be predicted
-                predict_steps: (Integer) Number of steps in the generator
-                batch_size=None: (Integer) Batch size for predicting.
-                If not provided, then the entire data is predicted once.
+        Supported Arguments
+            predict_data: (NumPy Array | Python Generator) Data to be predicted
+            predict_steps: (Integer) Number of steps in the generator
+            batch_size=None: (Integer) Batch size for predicting.
+            If not provided, then the entire data is predicted once.
         """
         # Checking if the model is for classification
         if self.__metrics and "accuracy" in self.__metrics:
@@ -546,11 +570,12 @@ class Model:
             return predictions.flatten()
 
         raise ValueError(
-            "Cannot predict classes as this is not a classification problem")
+            "Cannot predict classes as this is not a classification problem"
+        )
 
     def __evaluate(self, X, y, batch_size=None):
         """
-            helper method for __evaluate
+        helper method for __evaluate
 
         """
         # If batch_size is there then checking the length and comparing
@@ -558,13 +583,15 @@ class Model:
         if batch_size and X.shape[0] < batch_size:
             # Batch size can not be greater that train data size
             raise ValueError(
-                "Batch size is greater than total number of training samples")
+                "Batch size is greater than total number of training samples"
+            )
 
         # Checking the length of input and output
         if X.shape[0] != y.shape[0]:
             # length of X and y should be same
             raise ValueError(
-                "Length of training Input data and training output data should be same")
+                "Length of training Input data and training output data should be same"
+            )
 
         # Calling the __predict method to get the predicts
         predictions = self.__predict(X, batch_size)
@@ -587,25 +614,20 @@ class Model:
             accuracy = corrects / len(X) * 100
 
             # Returning loss and accuracy
-            return {
-                'loss': loss.item(),
-                'accuracy': accuracy
-            }
+            return {"loss": loss.item(), "accuracy": accuracy}
 
         # Returning loss
-        return {
-            'loss': loss.item()
-        }
+        return {"loss": loss.item()}
 
     def evaluate(self, test_data, tests_steps=None, batch_size=None):
         """
-            The .evaluate()method is used for evaluating models using the test dataset.
+        The .evaluate()method is used for evaluating models using the test dataset.
 
-            Supported Arguments
-                tests_data: (NumPy Array | Python Generator) Data to be predicted
-                tests_steps: (Integer) Number of steps in the generator
-                batch_size=None: (Integer) Batch size for predicting.
-                    If not provided, then the entire data is predicted once.
+        Supported Arguments
+            tests_data: (NumPy Array | Python Generator) Data to be predicted
+            tests_steps: (Integer) Number of steps in the generator
+            batch_size=None: (Integer) Batch size for predicting.
+                If not provided, then the entire data is predicted once.
         """
         if isinstance(test_data, types.GeneratorType):
             loss = 0
@@ -616,29 +638,24 @@ class Model:
 
                 data = self.__evaluate(X_data, y_data, batch_size)
 
-                loss += data['loss']
+                loss += data["loss"]
                 if "accuracy" in self.__metrics:
-                    accuracy += data['accuracy']
+                    accuracy += data["accuracy"]
 
             if "accuracy" in self.__metrics:
-                return {
-                    'loss': loss / tests_steps,
-                    'accuracy': accuracy / tests_steps
-                }
+                return {"loss": loss / tests_steps, "accuracy": accuracy / tests_steps}
 
-            return {
-                'loss': loss / tests_steps
-            }
+            return {"loss": loss / tests_steps}
 
         X_data, y_data = test_data
         return self.__evaluate(X_data, y_data, batch_size)
 
     def summary(self):
         """
-            The .summary() method is getting a summary of the model.
+        The .summary() method is getting a summary of the model.
 
-            Supported Arguments
-                None
+        Supported Arguments
+            None
         """
         # Printing the model summary using PyTorch model
         if self.__model:
@@ -646,37 +663,41 @@ class Model:
             print(self.__model)
 
             # Calculating total number of params
-            print("Total Number \
-                of Parameters: ", sum(p.numel() for p in self.__model.parameters()))
+            print(
+                "Total Number \
+                of Parameters: ",
+                sum(p.numel() for p in self.__model.parameters()),
+            )
 
             # Calculating total number of trainable params
-            print("Total Number of Trainable \
-                Parameters: ", sum(p.numel()
-                                   for p in self.__model.parameters()
-                                   if p.requires_grad))
+            print(
+                "Total Number of Trainable \
+                Parameters: ",
+                sum(p.numel() for p in self.__model.parameters() if p.requires_grad),
+            )
         else:
             raise Exception("You need to build the model first")
 
     def get_model(self):
         """
-            The .get_model() method is used for getting the PyTorch model from the
-            NeuralPy model. After extracting the model, the model can be treated just
-            like a regular PyTorch model.
+        The .get_model() method is used for getting the PyTorch model from the
+        NeuralPy model. After extracting the model, the model can be treated just
+        like a regular PyTorch model.
 
-            Supported Arguments
-                None
+        Supported Arguments
+            None
         """
         # Returning the PyTorch model
         return self.__model
 
     def set_model(self, model):
         """
-            The .set_model() method is used for converting a PyTorch model to a
-            NeuralPy model. After this conversion, the model can be trained using
-            NeuralPy optimizer and loss_functions.
+        The .set_model() method is used for converting a PyTorch model to a
+        NeuralPy model. After this conversion, the model can be trained using
+        NeuralPy optimizer and loss_functions.
 
-            Supported Arguments
-                model: (PyTorch model) A valid class based on Sequential PyTorch model.
+        Supported Arguments
+            model: (PyTorch model) A valid class based on Sequential PyTorch model.
 
 
         """
@@ -695,11 +716,11 @@ class Model:
 
     def save(self, path):
         """
-            The .save() method is responsible for saving a trained model. This method is
-            to be shared with someone without any code access.
+        The .save() method is responsible for saving a trained model. This method is
+        to be shared with someone without any code access.
 
-            Supported Parameters:
-                path: (String) Path where the model is to be stored
+        Supported Parameters:
+            path: (String) Path where the model is to be stored
         """
         if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
@@ -708,11 +729,11 @@ class Model:
 
     def load(self, path):
         """
-            The .load() method is responsible for loading a model saved using the
-            .save() method.
+        The .load() method is responsible for loading a model saved using the
+        .save() method.
 
-            Supported Parameters:
-                path: (String) Path where the model is stored
+        Supported Parameters:
+            path: (String) Path where the model is stored
         """
         if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
@@ -721,11 +742,11 @@ class Model:
 
     def save_for_inference(self, path):
         """
-            The .save_for_inference() method is responsible for saving a trained model.
-            This method saves the method only for inference.
+        The .save_for_inference() method is responsible for saving a trained model.
+        This method saves the method only for inference.
 
-            Supported Parameters:
-                path: (String) Path where the model is to be stored
+        Supported Parameters:
+            path: (String) Path where the model is to be stored
         """
         if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
@@ -734,11 +755,11 @@ class Model:
 
     def load_for_inference(self, path):
         """
-            The .load_for_inference() method is responsible for loading a trained model
-            only for inference.
+        The .load_for_inference() method is responsible for loading a trained model
+        only for inference.
 
-            Supported Parameters:
-                path: (String) Path where the model is stored
+        Supported Parameters:
+            path: (String) Path where the model is stored
         """
         if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
@@ -746,5 +767,4 @@ class Model:
         if self.__model:
             self.__model.load_state_dict(torch.load(path))
         else:
-            raise ValueError(
-                "To load the model state, you need to have a model first")
+            raise ValueError("To load the model state, you need to have a model first")

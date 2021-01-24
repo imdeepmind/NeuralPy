@@ -17,17 +17,20 @@ def test_batchnorm1d_should_throw_type_error():
         (1, 1.1, 3, True, False, "test"),
         (1, 1.1, 3.1, "invalid", False, "test"),
         (1, 1.1, 3.1, True, "invalid", "test"),
-        (1, 1.1, 3.1, True, False, 1)
-    ]
+        (1, 1.1, 3.1, True, False, 1),
+    ],
 )
 def test_batchnorm1d_should_throw_value_error(
-        num_features, eps, momentum, affine,
-        track_running_stats, name):
+    num_features, eps, momentum, affine, track_running_stats, name
+):
     with pytest.raises(ValueError):
         BatchNorm1D(
-            num_features=num_features, eps=eps, momentum=momentum,
-            affine=affine, track_running_stats=track_running_stats,
-            name=name
+            num_features=num_features,
+            eps=eps,
+            momentum=momentum,
+            affine=affine,
+            track_running_stats=track_running_stats,
+            name=name,
         )
 
 
@@ -43,24 +46,28 @@ names = ["Test", None]
 @pytest.mark.parametrize(
     "num_features, eps, momentum,\
     affine, track_running_stats, name",
-    [(
-        num_features, eps, momentum, affine,
-        track_running_stats, name)
+    [
+        (num_features, eps, momentum, affine, track_running_stats, name)
         for num_features in num_featuress
         for eps in epss
         for momentum in momentums
         for affine in affines
         for track_running_stats in track_running_statss
-        for name in names]
+        for name in names
+    ],
 )
 def test_batchnorm1d_get_layer_method(
-        num_features, eps, momentum, affine,
-        track_running_stats, name):
+    num_features, eps, momentum, affine, track_running_stats, name
+):
 
     x = BatchNorm1D(
-        num_features=num_features, eps=eps, momentum=momentum,
-        affine=affine, track_running_stats=track_running_stats,
-        name=name)
+        num_features=num_features,
+        eps=eps,
+        momentum=momentum,
+        affine=affine,
+        track_running_stats=track_running_stats,
+        name=name,
+    )
 
     prev_dim = (3, 6, (6, 18))
 

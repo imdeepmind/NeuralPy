@@ -6,7 +6,7 @@ from neuralpy.optimizer import SGD
 learning_rates = [-6, False, ""]
 momentums = [-6, False, ""]
 dampenings = ["asd", False, 3]
-weight_decays = [-0.36, 'asd', '', False]
+weight_decays = [-0.36, "asd", "", False]
 nesteroves = [122, ""]
 
 
@@ -16,25 +16,27 @@ nesteroves = [122, ""]
         (-6, 0.33, 0.333, 0.333, False),
         ("invalid", 0.33, 0.333, 0.333, False),
         (0.00, 0.33, 0.333, 0.333, False),
-
         (0.001, -6, 0.333, 0.333, False),
         (0.001, False, 0.333, 0.333, False),
-
         (0.001, 0.1, False, 0.333, False),
         (0.001, 0.002, "invalid", 0.33, 122),
-
         (0.001, 0.002, 0.376, False, 122),
         (0.001, 0.002, 0.342, "test", 122),
-
         (0.001, 0.002, 0.342, 0.1, 122),
         (0.001, 0.002, 0.342, 0.1, "invalid"),
-    ]
+    ],
 )
 def test_sgd_should_throw_value_error(
-        learning_rate, momentum, dampening, weight_decay, nesterov):
+    learning_rate, momentum, dampening, weight_decay, nesterov
+):
     with pytest.raises(ValueError):
-        SGD(learning_rate=learning_rate, momentum=momentum,
-            dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
+        SGD(
+            learning_rate=learning_rate,
+            momentum=momentum,
+            dampening=dampening,
+            weight_decay=weight_decay,
+            nesterov=nesterov,
+        )
 
 
 # Possible values that are valid
@@ -47,17 +49,25 @@ nesteroves = [False, True]
 
 @pytest.mark.parametrize(
     "learning_rate, momentum, dampening, weight_decay, nesterov",
-    [(learning_rate, momentum, dampening, weight_decay, nesterov) for learning_rate in
-        learning_rates
-     for momentum in momentums
-     for dampening in dampenings
-     for weight_decay in weight_decays
-     for nesterov in nesteroves]
+    [
+        (learning_rate, momentum, dampening, weight_decay, nesterov)
+        for learning_rate in learning_rates
+        for momentum in momentums
+        for dampening in dampenings
+        for weight_decay in weight_decays
+        for nesterov in nesteroves
+    ],
 )
-def test_sgd_get_layer_method(learning_rate, momentum,
-                              dampening, weight_decay, nesterov):
-    x = SGD(learning_rate=learning_rate, momentum=momentum,
-            dampening=dampening, weight_decay=weight_decay, nesterov=nesterov)
+def test_sgd_get_layer_method(
+    learning_rate, momentum, dampening, weight_decay, nesterov
+):
+    x = SGD(
+        learning_rate=learning_rate,
+        momentum=momentum,
+        dampening=dampening,
+        weight_decay=weight_decay,
+        nesterov=nesterov,
+    )
 
     details = x.get_optimizer()
 

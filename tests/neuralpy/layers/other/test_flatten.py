@@ -4,13 +4,7 @@ from neuralpy.layers.other import Flatten
 
 
 @pytest.mark.parametrize(
-    "start_dim, end_dim",
-    [
-        (0.3, False),
-        (1, 0.3),
-        (1, "invalid"),
-        ("invalid", 1)
-    ]
+    "start_dim, end_dim", [(0.3, False), (1, 0.3), (1, "invalid"), ("invalid", 1)]
 )
 def test_flatten_should_throw_value_error(start_dim, end_dim):
     with pytest.raises(ValueError):
@@ -24,9 +18,7 @@ end_dims = [3, 1]
 
 @pytest.mark.parametrize(
     "start_dim, end_dim",
-    [(start_dim, end_dim)
-        for start_dim in start_dims
-        for end_dim in end_dims]
+    [(start_dim, end_dim) for start_dim in start_dims for end_dim in end_dims],
 )
 def test_flatten_get_layer_method(start_dim, end_dim):
     x = Flatten(start_dim=start_dim, end_dim=end_dim)

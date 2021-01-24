@@ -5,20 +5,20 @@ import os
 
 class TrainLogger:
     """
-        TrainLogger is a callback for NeuralPy models fit method.
-        It is used for creating training logs with different parameters
+    TrainLogger is a callback for NeuralPy models fit method.
+    It is used for creating training logs with different parameters
 
-        Supported Arguments:
-            path: (String) path where the log files will be stored
+    Supported Arguments:
+        path: (String) path where the log files will be stored
 
     """
 
     def __init__(self, path):
         """
-            __init__ method for TrainLogger class
+        __init__ method for TrainLogger class
 
-            Supported Arguments:
-                path: (String) path where the log files will be stored
+        Supported Arguments:
+            path: (String) path where the log files will be stored
         """
         if not path or not isinstance(path, str):
             raise ValueError("Please provide a valid path")
@@ -27,8 +27,11 @@ class TrainLogger:
         self.__rows = []
 
         filename = (
-            str(datetime.datetime.now()) + ".log") \
-            .replace(" ", "_").replace("-", "_").replace(":", "_")
+            (str(datetime.datetime.now()) + ".log")
+            .replace(" ", "_")
+            .replace("-", "_")
+            .replace(":", "_")
+        )
 
         self.__path = os.path.join(path, filename)
 
@@ -44,21 +47,28 @@ class TrainLogger:
         with open(self.__path, "w") as file:
             file.write(text)
 
-    def callback(self, epochs, epoch, loss_function_parameters, optimizer_parameters,
-                 traning_progress, model):
+    def callback(
+        self,
+        epochs,
+        epoch,
+        loss_function_parameters,
+        optimizer_parameters,
+        traning_progress,
+        model,
+    ):
         """
-            The callback method is called from the model class once
-            it completes an epoch
+        The callback method is called from the model class once
+        it completes an epoch
 
-            Supported Arguments:
-                epochs: (Integer) Total number of epochs
-                epoch: (integer) Current epoch
-                loss_function_parameters: (Dictionary) All parameters of
-                    the loss function
-                optimizer_parameters: (Dictionary) All parameters of the optimizer
-                traning_progress: (Dictionary) Training progress of the current epoch
+        Supported Arguments:
+            epochs: (Integer) Total number of epochs
+            epoch: (integer) Current epoch
+            loss_function_parameters: (Dictionary) All parameters of
+                the loss function
+            optimizer_parameters: (Dictionary) All parameters of the optimizer
+            traning_progress: (Dictionary) Training progress of the current epoch
         """
-        headers = ['epochs', 'epoch']
+        headers = ["epochs", "epoch"]
         row = [str(epochs), str(epoch)]
         if loss_function_parameters:
             for k in loss_function_parameters:

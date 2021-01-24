@@ -6,7 +6,7 @@ from neuralpy.models.model_helper import (
     build_history_object,
     calculate_accuracy,
     print_training_progress,
-    print_validation_progress
+    print_validation_progress,
 )
 from neuralpy.layers.linear import Dense
 from neuralpy.layers.activation_functions import GELU
@@ -21,9 +21,9 @@ from torch import Tensor
 
 
 def test_generate_layer_name():
-    assert generate_layer_name('Dense', 1) == 'dense_layer_2'
-    assert generate_layer_name('ReLU', 1) == 'relu_layer_2'
-    assert generate_layer_name('Softmax', 1) == 'softmax_layer_2'
+    assert generate_layer_name("Dense", 1) == "dense_layer_2"
+    assert generate_layer_name("ReLU", 1) == "relu_layer_2"
+    assert generate_layer_name("Softmax", 1) == "softmax_layer_2"
 
 
 def test_build_layer_from_dict():
@@ -56,7 +56,8 @@ def test_build_optimizer_from_dict():
     pytorch_model = model.get_model()
 
     optimizer, optimizer_arguments = build_optimizer_from_dict(
-        Adam(), pytorch_model.parameters())
+        Adam(), pytorch_model.parameters()
+    )
 
     assert isinstance(optimizer_arguments, dict) is True
 
@@ -66,8 +67,7 @@ def test_build_optimizer_from_dict():
 def test_build_loss_function_from_dict():
     loss = MSELoss()
 
-    loss_function, loss_function_arguments = build_loss_function_from_dict(
-        loss)
+    loss_function, loss_function_arguments = build_loss_function_from_dict(loss)
 
     assert isinstance(loss_function, _MSELoss) is True
 
@@ -85,22 +85,22 @@ def test_build_history_object():
     assert isinstance(history_obj["batchwise"], dict) is True
 
     assert isinstance(history_obj["epochwise"]["training_loss"], list) is True
-    assert isinstance(history_obj["epochwise"]
-                      ["validation_loss"], list) is True
+    assert isinstance(history_obj["epochwise"]["validation_loss"], list) is True
     assert isinstance(history_obj["batchwise"]["training_loss"], list) is True
-    assert isinstance(history_obj["batchwise"]
-                      ["validation_loss"], list) is True
+    assert isinstance(history_obj["batchwise"]["validation_loss"], list) is True
 
 
 def test_calculate_accuracy1():
     y = Tensor([1, 1, 2, 2, 1]).view(-1, 1)
-    y_pred = Tensor([
-        [.98, .12, .12],
-        [.12, .98, .11],
-        [.12, .12, .99],
-        [.12, .12, .99],
-        [.12, .99, .1],
-    ])
+    y_pred = Tensor(
+        [
+            [0.98, 0.12, 0.12],
+            [0.12, 0.98, 0.11],
+            [0.12, 0.12, 0.99],
+            [0.12, 0.12, 0.99],
+            [0.12, 0.99, 0.1],
+        ]
+    )
 
     score = calculate_accuracy(y, y_pred)
 
@@ -109,13 +109,15 @@ def test_calculate_accuracy1():
 
 def test_calculate_accuracy2():
     y = Tensor([1, 1, 2, 2, 1]).view(-1, 1)
-    y_pred = Tensor([
-        [.98, .12, .12],
-        [.12, .11, .91],
-        [.12, .12, .99],
-        [.12, .12, .99],
-        [.12, .99, .1],
-    ])
+    y_pred = Tensor(
+        [
+            [0.98, 0.12, 0.12],
+            [0.12, 0.11, 0.91],
+            [0.12, 0.12, 0.99],
+            [0.12, 0.12, 0.99],
+            [0.12, 0.99, 0.1],
+        ]
+    )
 
     score = calculate_accuracy(y, y_pred)
 
@@ -127,6 +129,6 @@ def test_print_training_progress():
 
 
 def test_print_validation_progress():
-    print_validation_progress(.23423, 100, 43)
+    print_validation_progress(0.23423, 100, 43)
     print_validation_progress(23, 100)
     print_validation_progress(None, 100)

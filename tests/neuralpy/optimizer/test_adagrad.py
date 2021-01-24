@@ -8,39 +8,39 @@ from neuralpy.optimizer import Adagrad
     [
         (-6, 0.003, 0.003, 0.003),
         ("test", 0.003, 0.003, 0.003),
-
-        (.001, -6, 0.003, 0.003),
-        (.001, "invalid", 0.003, 0.003),
-
-        (.001, .003, "invalid", 0.003),
-        (.001, .003, -3, 0.003),
-
-        (.001, .003, .001, -0.36),
-        (.001, .003, .001, "invalid")
-    ]
+        (0.001, -6, 0.003, 0.003),
+        (0.001, "invalid", 0.003, 0.003),
+        (0.001, 0.003, "invalid", 0.003),
+        (0.001, 0.003, -3, 0.003),
+        (0.001, 0.003, 0.001, -0.36),
+        (0.001, 0.003, 0.001, "invalid"),
+    ],
 )
 def test_adagrad_should_throw_value_error(
-        learning_rate, learning_rate_decay, eps, weight_decay):
+    learning_rate, learning_rate_decay, eps, weight_decay
+):
     with pytest.raises(ValueError):
-        Adagrad(learning_rate=learning_rate,
-                learning_rate_decay=learning_rate_decay,
-                eps=eps,
-                weight_decay=weight_decay)
+        Adagrad(
+            learning_rate=learning_rate,
+            learning_rate_decay=learning_rate_decay,
+            eps=eps,
+            weight_decay=weight_decay,
+        )
 
 
 @pytest.mark.parametrize(
     "learning_rate, learning_rate_decay, eps, weight_decay",
-    [
-        (0.1, .001, .2, .32),
-        (0.1, .03, .1, .1)
-    ]
+    [(0.1, 0.001, 0.2, 0.32), (0.1, 0.03, 0.1, 0.1)],
 )
 def test_adagrad_get_layer_method(
-        learning_rate, learning_rate_decay, eps, weight_decay):
-    x = Adagrad(learning_rate=learning_rate,
-                learning_rate_decay=learning_rate_decay,
-                eps=eps,
-                weight_decay=weight_decay)
+    learning_rate, learning_rate_decay, eps, weight_decay
+):
+    x = Adagrad(
+        learning_rate=learning_rate,
+        learning_rate_decay=learning_rate_decay,
+        eps=eps,
+        weight_decay=weight_decay,
+    )
 
     details = x.get_optimizer()
 
