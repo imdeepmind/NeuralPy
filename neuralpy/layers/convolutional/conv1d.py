@@ -175,7 +175,7 @@ class Conv1D(CustomLayer):
         # Returning for the next layers
         return (self.__input_shape[0], dim_1 * self.__filters, (self.__filters, dim_1))
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
         This method calculates the input shape for layer based on previous output
         layer.

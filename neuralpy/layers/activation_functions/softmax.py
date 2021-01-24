@@ -34,7 +34,7 @@ class Softmax(CustomLayer):
 
         self.__dim = dim
 
-    def get_input_dim(self, prev_input_dim, layer_type):
+    def set_input_dim(self, prev_input_dim, layer_type):
         """
         This method calculates the input shape for layer based on previous output
         layer. Here for this activation function, we don't need it

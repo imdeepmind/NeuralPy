@@ -90,7 +90,7 @@ def test_MaxPool1D_get_layer_method(
 
     prev_dim = (3, 6, (6, 18))
 
-    x.get_input_dim(prev_dim, "conv1d")
+    x.set_input_dim(prev_dim, "conv1d")
 
     details = x.get_layer()
 

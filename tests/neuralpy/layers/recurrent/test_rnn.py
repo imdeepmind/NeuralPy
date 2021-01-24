@@ -143,7 +143,7 @@ def test_RNN_layer_get_method(
     prev_dim = (6,)
 
     if input_size is None:
-        x.get_input_dim(prev_dim, "RNN")
+        x.set_input_dim(prev_dim, "RNN")
 
     details = x.get_layer()
 
@@ -183,4 +183,4 @@ def test_RNN_with_invalid_layer():
     with pytest.raises(ValueError):
         x = RNN(hidden_size=128, num_layers=1, input_size=None)
 
-        x.get_input_dim((64,), "dense")
+        x.set_input_dim((64,), "dense")

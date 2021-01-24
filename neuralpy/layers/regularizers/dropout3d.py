@@ -38,7 +38,7 @@ class Dropout3D(CustomLayer):
 
         self.__p = p
 
-    def get_input_dim(self, prev_input_dim, layer_type):
+    def set_input_dim(self, prev_input_dim, layer_type):
         """
         This method calculates the input shape for layer based on previous
         output layer.
