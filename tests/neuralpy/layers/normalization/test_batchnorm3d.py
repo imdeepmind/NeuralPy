@@ -74,7 +74,7 @@ def test_batchnorm3d_get_layer_method(
 
     assert isinstance(details, dict) is True
 
-    assert details["layer_details"] == None
+    assert details["layer_details"] is None
 
     assert details["name"] == name
 
