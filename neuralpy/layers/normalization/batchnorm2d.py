@@ -116,7 +116,7 @@ class BatchNorm2D(CustomLayer):
         """
         # Returning all the details of the layer
         return self._get_layer_details(
-            (self.__num_features,),
+            None,
             {
                 "num_features": self.__num_features,
                 "eps": self.__eps,
