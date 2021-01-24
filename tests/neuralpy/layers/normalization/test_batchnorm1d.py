@@ -3,11 +3,6 @@ from torch.nn import BatchNorm1d as _BatchNorm1d
 from neuralpy.layers.normalization import BatchNorm1D
 
 
-def test_batchnorm1d_should_throw_type_error():
-    with pytest.raises(TypeError):
-        BatchNorm1D()
-
-
 @pytest.mark.parametrize(
     "num_features, eps, momentum, affine, \
     track_running_stats, name",
@@ -78,7 +73,7 @@ def test_batchnorm1d_get_layer_method(
 
     assert isinstance(details, dict) is True
 
-    assert details["layer_details"] == (num_features,)
+    assert details["layer_details"] == None
 
     assert details["name"] == name
 

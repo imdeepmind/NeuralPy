@@ -30,7 +30,7 @@ class BatchNorm1D(CustomLayer):
 
     def __init__(
         self,
-        num_features,
+        num_features=None,
         eps=1e-05,
         momentum=0.1,
         affine=True,
@@ -71,7 +71,7 @@ class BatchNorm1D(CustomLayer):
             raise ValueError("Please provide a valid affine")
         # Checking test_running_status field
         if not isinstance(track_running_stats, bool):
-            raise ValueError("Please provide a vlaid track_running_stats")
+            raise ValueError("Please provide a valid track_running_stats")
         # Checking name field
         if name is not None and not (isinstance(name, str) and name):
             raise ValueError("Please provide a valid name")
@@ -102,8 +102,10 @@ class BatchNorm1D(CustomLayer):
             # based on the prev layer type, predicting the __num_features
             # to support more layers, we need to add some more statements
             layer_type = prev_layer_type.lower()
-            if layer_type in ("dense", "conv1d", "conv2d"):
+            if layer_type == "dense":
                 self.__num_features = prev_input_dim[1]
+            elif layer_type == "conv1d":
+                self.__num_features = prev_input_dim[2][0]
             else:
                 raise ValueError(
                     "Unsupported previous layer, please provide your own input \
@@ -121,7 +123,7 @@ class BatchNorm1D(CustomLayer):
         """
         # Returning all the details of the layer
         return self._get_layer_details(
-            (self.__num_features,),
+            None,
             {
                 "num_features": self.__num_features,
                 "eps": self.__eps,
