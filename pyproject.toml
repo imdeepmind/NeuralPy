@@ -6,8 +6,8 @@ exclude = '''
 
 (
   /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
+      \.eggs      
+    | \.git       
     | \.hg
     | \.mypy_cache
     | \.tox
@@ -17,7 +17,5 @@ exclude = '''
     | build
     | dist
   )/
-  | foo.py           # also separately exclude a file named foo.py in
-                     # the root of the project
 )
 '''
