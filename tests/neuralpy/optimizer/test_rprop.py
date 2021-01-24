@@ -8,26 +8,22 @@ from neuralpy.optimizer import Rprop
     [
         (-6, (1.0, 1.0), (1.0, 1.0)),
         (False, (1.0, 1.0), (1.0, 1.0)),
-
         (0.001, False, (1.0, 1.0)),
         (0.001, ("", 1.0), (1.0, 1.0)),
         (0.001, ("", 1.0), (1.0, 1.0)),
         (0.001, (False, 1.0), (1.0, 1.0)),
         (0.001, (0.1, "invalid"), (1.0, 1.0)),
         (0.001, (0.1, False), (1.0, 1.0)),
-
         (0.001, (0.1, 0.002), False),
         (0.001, (0.1, 0.002), ("", 1)),
         (0.001, (0.1, 0.002), (False, 1)),
         (0.001, (0.1, 0.002), (0.001, "invalid")),
-        (0.001, (0.1, 0.002), (0.001, True))
-    ]
+        (0.001, (0.1, 0.002), (0.001, True)),
+    ],
 )
-def test_rprop_should_throw_value_error(
-        learning_rate, etas, step_sizes):
+def test_rprop_should_throw_value_error(learning_rate, etas, step_sizes):
     with pytest.raises(ValueError):
-        Rprop(
-            learning_rate=learning_rate, etas=etas, step_sizes=step_sizes)
+        Rprop(learning_rate=learning_rate, etas=etas, step_sizes=step_sizes)
 
 
 # Possible values that are valid
@@ -38,15 +34,15 @@ step_sizeses = [(0.2, 1.0)]
 
 @pytest.mark.parametrize(
     "learning_rate, etas, step_sizes",
-    [(learning_rate, etas, step_sizes)
+    [
+        (learning_rate, etas, step_sizes)
         for learning_rate in learning_rates
         for etas in etases
-        for step_sizes in step_sizeses]
+        for step_sizes in step_sizeses
+    ],
 )
 def test_rprop_get_optimizer_method(learning_rate, etas, step_sizes):
-    x = Rprop(
-        learning_rate=learning_rate, etas=etas,
-        step_sizes=step_sizes)
+    x = Rprop(learning_rate=learning_rate, etas=etas, step_sizes=step_sizes)
 
     details = x.get_optimizer()
 

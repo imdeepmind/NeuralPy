@@ -5,7 +5,7 @@ from neuralpy.utils import CustomLayer
 
 
 class Bilinear(CustomLayer):
-    '''
+    """
     A bilinear layer is a function of two inputs x and y
     that is linear in each input separately.
     Simple bilinear functions on vectors are the
@@ -23,13 +23,12 @@ class Bilinear(CustomLayer):
     bias: (Boolean) If true then uses the bias, Defaults to `true`
     name: (String) Name of the layer, if not provided then
         automatically calculates a unique name for the layer
-    '''
+    """
 
     def __init__(
-            self, n_nodes, n1_features=None,
-            n2_features=None, bias=True, name=None
+        self, n_nodes, n1_features=None, n2_features=None, bias=True, name=None
     ):
-        '''
+        """
         __init__ method for bilinear layer
 
         Supported Arguments:
@@ -42,19 +41,21 @@ class Bilinear(CustomLayer):
         name: (String) Name of the layer, if not provided then
             automatically calculates a unique name for the layer
 
-        '''
+        """
         # Checking the n_nodes field
         if not n_nodes or not isinstance(n_nodes, int) or n_nodes <= 0:
             raise ValueError("Please provide a valid n_nodes")
 
         # Checking the n1_features field, it is a optional field
-        if n1_features is not None and not (isinstance(
-                n1_features, int) and n1_features >= 0):
+        if n1_features is not None and not (
+            isinstance(n1_features, int) and n1_features >= 0
+        ):
             raise ValueError("Please provide a valid n1_features")
 
         # Checking the n2_features field
-        if n2_features is not None and not (isinstance(
-                n2_features, int) and n2_features >= 0):
+        if n2_features is not None and not (
+            isinstance(n2_features, int) and n2_features >= 0
+        ):
             raise ValueError("Please provide a valid n2_features")
 
         # Checking the bias field, this is also optional, default to True
@@ -72,11 +73,11 @@ class Bilinear(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output
-            layer.
+        This method calculates the input shape for layer based on previous output
+        layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Checking if n_inputs is there or not, not overwriting the n_input
         # field
@@ -88,19 +89,23 @@ class Bilinear(CustomLayer):
             else:
                 raise ValueError(
                     "Unsupported previous layer, please provide your own input shape \
-                    for the layer")
+                    for the layer"
+                )
 
     def get_layer(self):
         """
-            This method returns the details as dict of the layer.
+        This method returns the details as dict of the layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return self._get_layer_details((self.__n_nodes,), {
-            'in_features1': self.__n_inputs,
-            'in_features2': self.__n_inputs2,
-            'out_features': self.__n_nodes,
-            'bias': self.__bias
-        })
+        return self._get_layer_details(
+            (self.__n_nodes,),
+            {
+                "in_features1": self.__n_inputs,
+                "in_features2": self.__n_inputs2,
+                "out_features": self.__n_nodes,
+                "bias": self.__bias,
+            },
+        )

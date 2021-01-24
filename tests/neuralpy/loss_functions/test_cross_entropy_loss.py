@@ -16,8 +16,8 @@ import torch
         (np.ones([3]), "mean", "mean"),
         (np.ones([3]), "sum", "sum"),
         (np.ones([3]), "none", "asd"),
-        (np.ones([3]), "none", False)
-    ]
+        (np.ones([3]), "none", False),
+    ],
 )
 def test_cce_should_throw_value_error(weight, reduction, ignore_index):
     with pytest.raises(ValueError):
@@ -30,11 +30,10 @@ def test_cce_should_throw_value_error(weight, reduction, ignore_index):
         ([2.0, 1.0, 2.0], "mean", -100),
         (np.ones([3]), "sum", 1),
         (np.ones([3]), "none", 1),
-    ]
+    ],
 )
 def test_cce_get_layer_method(weight, reduction, ignore_index):
-    x = CrossEntropyLoss(weight=weight, reduction=reduction,
-                         ignore_index=ignore_index)
+    x = CrossEntropyLoss(weight=weight, reduction=reduction, ignore_index=ignore_index)
 
     details = x.get_loss_function()
 
@@ -44,8 +43,9 @@ def test_cce_get_layer_method(weight, reduction, ignore_index):
 
     assert isinstance(details["keyword_arguments"], dict) is True
 
-    assert torch.all(torch.eq(
-        details["keyword_arguments"]["weight"], torch.tensor(weight).float()))
+    assert torch.all(
+        torch.eq(details["keyword_arguments"]["weight"], torch.tensor(weight).float())
+    )
 
     assert details["keyword_arguments"]["reduction"] == reduction
 
@@ -65,6 +65,6 @@ def test_CrossEntropyLoss_get_layer_method_with_default_parameters():
 
     assert details["keyword_arguments"]["weight"] is None
 
-    assert details["keyword_arguments"]["reduction"] == 'mean'
+    assert details["keyword_arguments"]["reduction"] == "mean"
 
     assert details["keyword_arguments"]["ignore_index"] == -100

@@ -6,9 +6,38 @@ from neuralpy.utils import CustomLayer
 
 class BatchNorm2D(CustomLayer):
     """
-        Applies Batch Normalization over a 4D input
-        To learn more about BatchNorm1d layers, please check PyTorch
-        documentation at https://pytorch.org/docs/stable/nn.html#batchnorm2d
+    Applies Batch Normalization over a 4D input
+    To learn more about BatchNorm1d layers, please check PyTorch
+    documentation at https://pytorch.org/docs/stable/nn.html#batchnorm2d
+
+    Supported Arguments:
+        num_features: (Integer) C from an expected input of size (N,C,H,W)
+        eps: (Float) a value added to the denominator for numerical stability.
+            Default: 1e-5
+        momentum: (Float) the value used for the running_mean and running_var
+            computation. Can be set to None for cumulative moving average
+            (i.e. simple average).Default: 0.1
+        affine: (Boolean) a boolean value that when set to True,
+            this module has learnable affine parameters. Default: True
+        track_running_stats: (Boolean) a boolean value that when set to True,
+            this module tracks the running mean and variance, and when set to
+            False, this module does not track such statistics and always uses batch
+            statistics in both training and eval modes. Default: True
+        name: (String) Name of the layer, if not provided then
+            automatically calculates a unique name for the layer
+    """
+
+    def __init__(
+        self,
+        num_features=None,
+        eps=1e-05,
+        momentum=0.1,
+        affine=True,
+        track_running_stats=True,
+        name=None,
+    ):
+        """
+        __init__ method for BatchNorm2d
 
         Supported Arguments:
             num_features: (Integer) C from an expected input of size (N,C,H,W)
@@ -16,38 +45,15 @@ class BatchNorm2D(CustomLayer):
                 Default: 1e-5
             momentum: (Float) the value used for the running_mean and running_var
                 computation. Can be set to None for cumulative moving average
-                (i.e. simple average).Default: 0.1
+                (i.e. simple average). Default: 0.1
             affine: (Boolean) a boolean value that when set to True,
                 this module has learnable affine parameters. Default: True
             track_running_stats: (Boolean) a boolean value that when set to True,
                 this module tracks the running mean and variance, and when set to
-                False, this module does not track such statistics and always uses batch
-                statistics in both training and eval modes. Default: True
+                False, this module does not track such statistics and always uses
+                batch statistics in both training and eval modes. Default: True
             name: (String) Name of the layer, if not provided then
                 automatically calculates a unique name for the layer
-    """
-
-    def __init__(
-            self, num_features=None, eps=1e-05, momentum=0.1, affine=True,
-            track_running_stats=True, name=None):
-        """
-            __init__ method for BatchNorm2d
-
-            Supported Arguments:
-                num_features: (Integer) C from an expected input of size (N,C,H,W)
-                eps: (Float) a value added to the denominator for numerical stability.
-                    Default: 1e-5
-                momentum: (Float) the value used for the running_mean and running_var
-                    computation. Can be set to None for cumulative moving average
-                    (i.e. simple average). Default: 0.1
-                affine: (Boolean) a boolean value that when set to True,
-                    this module has learnable affine parameters. Default: True
-                track_running_stats: (Boolean) a boolean value that when set to True,
-                    this module tracks the running mean and variance, and when set to
-                    False, this module does not track such statistics and always uses
-                    batch statistics in both training and eval modes. Default: True
-                name: (String) Name of the layer, if not provided then
-                    automatically calculates a unique name for the layer
         """
         # Checking num_features field
         if num_features is not None and not isinstance(num_features, int):
@@ -77,11 +83,11 @@ class BatchNorm2D(CustomLayer):
 
     def get_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output
-            layer.
+        This method calculates the input shape for layer based on previous output
+        layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # based on the prev layer type, predicting the __num_features
         # Checking if num_features is there or not, not overwriting the
@@ -96,22 +102,26 @@ class BatchNorm2D(CustomLayer):
             else:
                 raise ValueError(
                     "Unsupported previous layer, please provide your own input \
-                        shape for the layer")
+                        shape for the layer"
+                )
 
         return self.__num_features
 
     def get_layer(self):
         """
-            This method returns the details as dict of the layer.
+        This method returns the details as dict of the layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return self._get_layer_details((self.__num_features,), {
-            "num_features": self.__num_features,
-            "eps": self.__eps,
-            "momentum": self.__momentum,
-            "affine": self.__affine,
-            "track_running_stats": self.__track_running_stats
-        })
+        return self._get_layer_details(
+            (self.__num_features,),
+            {
+                "num_features": self.__num_features,
+                "eps": self.__eps,
+                "momentum": self.__momentum,
+                "affine": self.__affine,
+                "track_running_stats": self.__track_running_stats,
+            },
+        )

@@ -9,65 +9,64 @@ from .model_helper import build_layer_from_dict
 
 class Sequential(Model):
     """
-        Sequential is a linear stack of layers with single
-        input and output layer. It is one of the simplest types of models.
-        In Sequential models, each layer has a single input and output tensor.
+    Sequential is a linear stack of layers with single
+    input and output layer. It is one of the simplest types of models.
+    In Sequential models, each layer has a single input and output tensor.
+
+    Supported Arguments:
+        force_cpu=False: (Boolean) If True, then uses CPU even if CUDA is available
+        training_device=None: (NeuralPy device class) Device that will
+            be used for training predictions
+        random_state: (Integer) Random state for the device
+    """
+
+    def __init__(self, force_cpu=False, training_device=None, random_state=None):
+        """
+        __init__ method for Sequential Model
 
         Supported Arguments:
-            force_cpu=False: (Boolean) If True, then uses CPU even if CUDA is available
+            force_cpu=False: (Boolean) If True, then uses CPU even if CUDA is
+                available
             training_device=None: (NeuralPy device class) Device that will
                 be used for training predictions
             random_state: (Integer) Random state for the device
-    """
-
-    def __init__(self, force_cpu=False, training_device=None,
-                 random_state=None):
         """
-            __init__ method for Sequential Model
-
-            Supported Arguments:
-                force_cpu=False: (Boolean) If True, then uses CPU even if CUDA is
-                    available
-                training_device=None: (NeuralPy device class) Device that will
-                    be used for training predictions
-                random_state: (Integer) Random state for the device
-        """
-        super(Sequential, self).__init__(
-            force_cpu, training_device, random_state)
+        super(Sequential, self).__init__(force_cpu, training_device, random_state)
         # Initializing some attributes that we need to function
         self.__layers = []
         self.__build = False
 
     def add(self, layer):
         """
-            In a Sequential model, the .add() method is responsible
-            for adding a new layer to the model. It accepts a NeuralPy
-            layer class as an argument and builds a model, and based on that.
-            The .add() method can be called as many times as needed. There is no
-            limitation on that, assuming you have enough computation power to handle it.
+        In a Sequential model, the .add() method is responsible
+        for adding a new layer to the model. It accepts a NeuralPy
+        layer class as an argument and builds a model, and based on that.
+        The .add() method can be called as many times as needed. There is no
+        limitation on that, assuming you have enough computation power to handle it.
 
-            Supported Arguments
-                layer: (NeuralPy layer classes) Adds a layer into the model
+        Supported Arguments
+            layer: (NeuralPy layer classes) Adds a layer into the model
         """
         # If we already built the model, then we can not a new layer
         if self.__build:
             raise Exception(
                 "You have built this model already, you can not make any changes in \
-                    this model")
+                    this model"
+            )
 
         # Finally adding the layer for layers array
         self.__layers.append(layer)
 
     def build(self):
         """
-            In a Sequential model, the .build() method is responsible for
-            building the PyTorch model from the NeuralPy model.
+        In a Sequential model, the .build() method is responsible for
+        building the PyTorch model from the NeuralPy model.
 
-            After finishing the architecture of the model, the model
-            needed to be build before training.
+        After finishing the architecture of the model, the model
+        needed to be build before training.
 
-            Supported Arguments:
-                There is no argument for this model
+        Supported Arguments:
+            There is no argument for this model
         """
         # Building the layers from the layer refs and details
         layers = build_layer_from_dict(self.__layers)

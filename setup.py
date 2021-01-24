@@ -21,9 +21,9 @@ setup(
     author_email="abhishek.chatterjee97@protonmail.com",
     license="MIT",
     project_urls={
-            "Bug Tracker": "https://github.com/imdeepmind/NeuralPy/issues",
-            "Documentation": "https://www.neuralpy.xyz/",
-            "Source Code": "https://github.com/imdeepmind/NeuralPy",
+        "Bug Tracker": "https://github.com/imdeepmind/NeuralPy/issues",
+        "Documentation": "https://www.neuralpy.xyz/",
+        "Source Code": "https://github.com/imdeepmind/NeuralPy",
     },
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -35,7 +35,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9"
+        "Programming Language :: Python :: 3.9",
     ],
     packages=[
         "neuralpy",
@@ -52,14 +52,9 @@ setup(
         "neuralpy.loss_functions",
         "neuralpy.models",
         "neuralpy.optimizer",
-        "neuralpy.callbacks"
+        "neuralpy.callbacks",
     ],
     install_requires=["torch"],
-    extras_require={
-        'tests': [
-            "pytest",
-            "pytest-cov"
-        ]
-    },
-    include_package_data=True
+    extras_require={"tests": ["pytest", "pytest-cov", "flake8", "black"]},
+    include_package_data=True,
 )

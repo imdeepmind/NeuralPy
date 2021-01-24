@@ -5,7 +5,26 @@ from torch.optim import SGD as _SGD
 
 class SGD:
     """
-        Applies a SGD (Stochastic Gradient Descent) with momentum.
+    Applies a SGD (Stochastic Gradient Descent) with momentum.
+
+    Supported Arguments
+        learning_rate=0.001: (Float) Learning Rate for the optimizer
+        momentum=0 : (Float) Momentum for the optimizer
+        dampening=0 : (Float) Dampening of momentum
+        weight_decay=0 : (Float) Weight decay for the optimizer
+        nesterov=False : (Bool) Enables Nesterov momentum
+    """
+
+    def __init__(
+        self,
+        learning_rate=0.001,
+        momentum=0.0,
+        dampening=0.0,
+        weight_decay=0.0,
+        nesterov=False,
+    ):
+        """
+        __init__ method for SGD
 
         Supported Arguments
             learning_rate=0.001: (Float) Learning Rate for the optimizer
@@ -13,19 +32,6 @@ class SGD:
             dampening=0 : (Float) Dampening of momentum
             weight_decay=0 : (Float) Weight decay for the optimizer
             nesterov=False : (Bool) Enables Nesterov momentum
-    """
-
-    def __init__(self, learning_rate=0.001, momentum=0.0,
-                 dampening=0.0, weight_decay=0.0, nesterov=False):
-        """
-            __init__ method for SGD
-
-            Supported Arguments
-                learning_rate=0.001: (Float) Learning Rate for the optimizer
-                momentum=0 : (Float) Momentum for the optimizer
-                dampening=0 : (Float) Dampening of momentum
-                weight_decay=0 : (Float) Weight decay for the optimizer
-                nesterov=False : (Bool) Enables Nesterov momentum
         """
 
         # Validation the input fields
@@ -52,19 +58,19 @@ class SGD:
 
     def get_optimizer(self):
         """
-            Method used for getting the details of the optimizer
+        Method used for getting the details of the optimizer
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Returning the optimizer data
         return {
-            'optimizer': _SGD,
-            'keyword_arguments': {
-                'lr': self.__learning_rate,
-                'momentum': self.__momentum,
-                'dampening': self.__dampening,
-                'weight_decay': self.__weight_decay,
-                'nesterov': self.__nesterov
-            }
+            "optimizer": _SGD,
+            "keyword_arguments": {
+                "lr": self.__learning_rate,
+                "momentum": self.__momentum,
+                "dampening": self.__dampening,
+                "weight_decay": self.__weight_decay,
+                "nesterov": self.__nesterov,
+            },
         }
