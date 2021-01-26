@@ -85,7 +85,7 @@ model.compile(optimizer=Adam(), loss_function=MSELoss())
 To train, we have the fit method. We need to pass the training and validation data, along with some other parameters to the fit method.
 
 ```python
-model.fit(train_data=(X_train, y_train), test_data=(X_validation, y_validation), epochs=300, batch_size=4)
+model.fit(train_data=(X_train, y_train), validation_data=(X_validation, y_validation), epochs=10, batch_size=4)
 ```
 
 ## Predicting Results
@@ -94,7 +94,7 @@ The main purpose of the model is to predict results. In NeuralPy models, there a
 
 ```python
 # Predicting
-preds = model.predict(X=X_test, batch_size=4)
+preds = model.predict(predict_data=X_test, batch_size=4)
 ```
 
 ## Evaluating the models
@@ -103,5 +103,5 @@ After training, one important step is to evaluate the model on the test dataset.
 
 ```python
 # Evaluating
-ev = model.evaluate(X=X_test, y=y_test, batch_size=4)
+ev = model.evaluate(test_data=(X_test, y_test), batch_size=4)
 ```
