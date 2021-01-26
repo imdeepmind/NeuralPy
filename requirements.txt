@@ -28,8 +28,8 @@ six==1.15.0
 smmap==3.0.5
 stevedore==3.3.0
 toml==0.10.2
-torch==1.7.1+cpu
+torch
 torchaudio==0.7.2
-torchvision==0.8.2+cpu
+torchvision
 typed-ast==1.4.2
 typing-extensions==3.7.4.3

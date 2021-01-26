@@ -98,12 +98,11 @@ class BatchNorm1D(CustomLayer):
         # Checking if num_features is there or not, not overwriting the
         # num_features field
         if not self.__num_features:
-
             # based on the prev layer type, predicting the __num_features
             # to support more layers, we need to add some more statements
             layer_type = prev_layer_type.lower()
             if layer_type == "dense":
-                self.__num_features = prev_input_dim[1]
+                self.__num_features = prev_input_dim[0]
             elif layer_type == "conv1d":
                 self.__num_features = prev_input_dim[2][0]
             else:
