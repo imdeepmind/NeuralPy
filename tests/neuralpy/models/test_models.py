@@ -68,15 +68,13 @@ def test_models_compile_method():
         model = Model()
         model.set_model(pytorch_model)
 
-        model.compile(optimizer=Adam(),
-                      loss_function=MSELoss(), metrics=["test"])
+        model.compile(optimizer=Adam(), loss_function=MSELoss(), metrics=["test"])
 
     with pytest.raises(ValueError):
         model = Model()
         model.set_model(pytorch_model)
 
-        model.compile(optimizer=Adam(),
-                      loss_function=MSELoss(), metrics="test")
+        model.compile(optimizer=Adam(), loss_function=MSELoss(), metrics="test")
 
 
 def test_model_fit_method():
@@ -85,64 +83,127 @@ def test_model_fit_method():
     model.compile(optimizer=Adam(), loss_function=MSELoss())
     logger = TrainLogger("ignore/")
 
-    model.fit(train_data=(X_train, y_train), validation_data=(
-        X_validation, y_validation), epochs=1, batch_size=32)
+    model.fit(
+        train_data=(X_train, y_train),
+        validation_data=(X_validation, y_validation),
+        epochs=1,
+        batch_size=32,
+    )
 
-    model.fit(train_data=(X_train, y_train), validation_data=(
-        X_validation, y_validation), epochs=1, batch_size=32, callbacks=[logger])
+    model.fit(
+        train_data=(X_train, y_train),
+        validation_data=(X_validation, y_validation),
+        epochs=1,
+        batch_size=32,
+        callbacks=[logger],
+    )
 
     train_gen = train_generator()
     validation_gen = train_generator()
 
-    model.fit(train_data=train_gen, validation_data=validation_gen,
-              epochs=1, batch_size=4, steps_per_epoch=5, validation_steps=5)
+    model.fit(
+        train_data=train_gen,
+        validation_data=validation_gen,
+        epochs=1,
+        batch_size=4,
+        steps_per_epoch=5,
+        validation_steps=5,
+    )
 
-    model.fit(train_data=train_gen, validation_data=validation_gen, epochs=1,
-              batch_size=4, steps_per_epoch=5, validation_steps=5, callbacks=[logger])
+    model.fit(
+        train_data=train_gen,
+        validation_data=validation_gen,
+        epochs=1,
+        batch_size=4,
+        steps_per_epoch=5,
+        validation_steps=5,
+        callbacks=[logger],
+    )
 
     with pytest.raises(ValueError):
-        model.fit(train_data=(X_train, y_train), validation_data=(
-            X_validation, y_validation), epochs=1, batch_size=1024)
+        model.fit(
+            train_data=(X_train, y_train),
+            validation_data=(X_validation, y_validation),
+            epochs=1,
+            batch_size=1024,
+        )
 
     with pytest.raises(ValueError):
-        model.fit(train_data=(X_train, y_train[:-1]), validation_data=(
-            X_validation, y_validation), epochs=-20, batch_size=1024)
+        model.fit(
+            train_data=(X_train, y_train[:-1]),
+            validation_data=(X_validation, y_validation),
+            epochs=-20,
+            batch_size=1024,
+        )
 
     with pytest.raises(ValueError):
-        model.fit(train_data=(X_train, y_train[:-1]), validation_data=(
-            X_validation, y_validation), epochs=1, batch_size=-10)
+        model.fit(
+            train_data=(X_train, y_train[:-1]),
+            validation_data=(X_validation, y_validation),
+            epochs=1,
+            batch_size=-10,
+        )
 
     with pytest.raises(ValueError):
-        model.fit(train_data=(X_train, y_train[:-1]), validation_data=(
-            X_validation, y_validation), epochs=1, batch_size=32, callbacks="test")
+        model.fit(
+            train_data=(X_train, y_train[:-1]),
+            validation_data=(X_validation, y_validation),
+            epochs=1,
+            batch_size=32,
+            callbacks="test",
+        )
 
     with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
-        model.fit(train_data=train_gen, validation_data=validation_gen,
-                  epochs=1, batch_size=32, steps_per_epoch=-123, validation_steps=5)
+        model.fit(
+            train_data=train_gen,
+            validation_data=validation_gen,
+            epochs=1,
+            batch_size=32,
+            steps_per_epoch=-123,
+            validation_steps=5,
+        )
 
     with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
-        model.fit(train_data=train_gen, validation_data=validation_gen,
-                  epochs=1, batch_size=32, steps_per_epoch="test", validation_steps=5)
+        model.fit(
+            train_data=train_gen,
+            validation_data=validation_gen,
+            epochs=1,
+            batch_size=32,
+            steps_per_epoch="test",
+            validation_steps=5,
+        )
 
     with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
-        model.fit(train_data=train_gen, validation_data=validation_gen,
-                  epochs=1, batch_size=32, steps_per_epoch=5, validation_steps=-23)
+        model.fit(
+            train_data=train_gen,
+            validation_data=validation_gen,
+            epochs=1,
+            batch_size=32,
+            steps_per_epoch=5,
+            validation_steps=-23,
+        )
 
     with pytest.raises(ValueError):
         train_gen = train_generator()
         validation_gen = train_generator()
 
-        model.fit(train_data=train_gen, validation_data=validation_gen,
-                  epochs=1, batch_size=32, steps_per_epoch=5, validation_steps="asd")
+        model.fit(
+            train_data=train_gen,
+            validation_data=validation_gen,
+            epochs=1,
+            batch_size=32,
+            steps_per_epoch=5,
+            validation_steps="asd",
+        )
 
 
 def test_model_predict_method():
@@ -152,8 +213,12 @@ def test_model_predict_method():
     TrainLogger("ignore/")
     test_gen = predict_generator()
 
-    model.fit(train_data=(X_train, y_train), validation_data=(
-        X_validation, y_validation), epochs=1, batch_size=32)
+    model.fit(
+        train_data=(X_train, y_train),
+        validation_data=(X_validation, y_validation),
+        epochs=1,
+        batch_size=32,
+    )
 
     model.predict(predict_data=X_test)
     model.predict(predict_data=X_test, batch_size=4)
@@ -171,8 +236,12 @@ def test_model_evaluate_method():
     TrainLogger("ignore/")
     test_gen = train_generator()
 
-    model.fit(train_data=(X_train, y_train), validation_data=(
-        X_validation, y_validation), epochs=1, batch_size=32)
+    model.fit(
+        train_data=(X_train, y_train),
+        validation_data=(X_validation, y_validation),
+        epochs=1,
+        batch_size=32,
+    )
 
     model.evaluate(test_data=(X_test, y_test))
     model.evaluate(test_data=(X_test, y_test), batch_size=4)

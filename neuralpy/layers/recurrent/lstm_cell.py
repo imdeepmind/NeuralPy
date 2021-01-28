@@ -7,44 +7,42 @@ from neuralpy.utils import CustomLayer
 
 class LSTMCell(CustomLayer):
     """
-        A long short-term memory (LSTM) cell
-        To learn more about RNN, please check pytorch
-        documentation at https://pytorch.org/docs/stable/nn.html#lstmcell
+    A long short-term memory (LSTM) cell
+    To learn more about RNN, please check pytorch
+    documentation at https://pytorch.org/docs/stable/nn.html#lstmcell
 
-        Supported Arguments:
-            input_size: (Integer) The number of expected features
-                in the input
-            hidden)size: (Integer) The number of features
-                in the hidden state
-            bias: (Boolean) If true then uses the bias,
-                Defaults to `true`
-            name: (String) Name of the layer, if not provided then
-                automatically calculates a unique name for the layer
+    Supported Arguments:
+        input_size: (Integer) The number of expected features
+            in the input
+        hidden)size: (Integer) The number of features
+            in the hidden state
+        bias: (Boolean) If true then uses the bias,
+            Defaults to `true`
+        name: (String) Name of the layer, if not provided then
+            automatically calculates a unique name for the layer
     """
 
-    def __init__(
-        self, input_size, hidden_size, bias=True, name=None
-    ):
+    def __init__(self, input_size, hidden_size, bias=True, name=None):
         """
-            __init__ method for LSTMCell
+        __init__ method for LSTMCell
 
-            Supported Arguments:
-            input_size: (Integer) The number of expected features
-                in the input
-            hidden)size: (Integer) The number of features
-                in the hidden state
-            bias: (Boolean) If true then uses the bias,
-                Defaults to `true`
-            name: (String) Name of the layer, if not provided then
-                automatically calculates a unique name for the layer
+        Supported Arguments:
+        input_size: (Integer) The number of expected features
+            in the input
+        hidden)size: (Integer) The number of features
+            in the hidden state
+        bias: (Boolean) If true then uses the bias,
+            Defaults to `true`
+        name: (String) Name of the layer, if not provided then
+            automatically calculates a unique name for the layer
         """
 
-        if input_size is not None and not (isinstance(
-                input_size, int) and input_size > 0):
+        if input_size is not None and not (
+            isinstance(input_size, int) and input_size > 0
+        ):
             raise ValueError("Please provide a valid input_size")
 
-        if not hidden_size or not isinstance(
-                hidden_size, int) or hidden_size <= 0:
+        if not hidden_size or not isinstance(hidden_size, int) or hidden_size <= 0:
             raise ValueError("Please provide a valid hidden_size")
 
         if not isinstance(bias, bool):
@@ -57,13 +55,13 @@ class LSTMCell(CustomLayer):
 
         self.__bias = bias
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output
-            layer.
+        This method calculates the input shape for layer based on previous output
+        layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Checking if n_inputs is there or not, not overwriting the n_input
         # field
@@ -72,24 +70,27 @@ class LSTMCell(CustomLayer):
 
             # based on the prev layer type, predicting the n_inputs
             # to support more layers, we need to add some more statements
-            if layer_type in ("lstmcell", "rnn", "lstm",
-                              "gru", "dense", "embedding"):
+            if layer_type in ("lstmcell", "rnn", "lstm", "gru", "dense", "embedding"):
                 self.__input_size = prev_input_dim[-1]
             else:
                 raise ValueError(
                     "Unsupported previous layer, please provide your own input \
-                        shape for the layer")
+                        shape for the layer"
+                )
 
     def get_layer(self):
         """
-            This method returns the details as dict of the layer.
+        This method returns the details as dict of the layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return self._get_layer_details((self.__hidden_size, ), {
-            'input_size': self.__input_size,
-            'hidden_size': self.__hidden_size,
-            'bias': self.__bias
-        })
+        return self._get_layer_details(
+            (self.__hidden_size,),
+            {
+                "input_size": self.__input_size,
+                "hidden_size": self.__hidden_size,
+                "bias": self.__bias,
+            },
+        )

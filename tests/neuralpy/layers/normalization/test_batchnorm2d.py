@@ -12,17 +12,20 @@ from neuralpy.layers.normalization import BatchNorm2D
         (1, 1.1, 3, True, False, "test"),
         (1, 1.1, 3.1, "invalid", False, "test"),
         (1, 1.1, 3.1, True, "invalid", "test"),
-        (1, 1.1, 3.1, True, False, 1)
-    ]
+        (1, 1.1, 3.1, True, False, 1),
+    ],
 )
 def test_batchnorm3d_should_throw_value_error(
-        num_features, eps, momentum, affine,
-        track_running_stats, name):
+    num_features, eps, momentum, affine, track_running_stats, name
+):
     with pytest.raises(ValueError):
         BatchNorm2D(
-            num_features=num_features, eps=eps, momentum=momentum,
-            affine=affine, track_running_stats=track_running_stats,
-            name=name
+            num_features=num_features,
+            eps=eps,
+            momentum=momentum,
+            affine=affine,
+            track_running_stats=track_running_stats,
+            name=name,
         )
 
 
@@ -38,35 +41,39 @@ names = ["Test", None]
 @pytest.mark.parametrize(
     "num_features, eps, momentum,\
     affine, track_running_stats, name",
-    [(
-        num_features, eps, momentum, affine,
-        track_running_stats, name)
+    [
+        (num_features, eps, momentum, affine, track_running_stats, name)
         for num_features in num_featuress
         for eps in epss
         for momentum in momentums
         for affine in affines
         for track_running_stats in track_running_statss
-        for name in names]
+        for name in names
+    ],
 )
 def test_batchnorm2d_get_layer_method(
-        num_features, eps, momentum, affine,
-        track_running_stats, name):
+    num_features, eps, momentum, affine, track_running_stats, name
+):
 
     x = BatchNorm2D(
-        num_features=num_features, eps=eps, momentum=momentum,
-        affine=affine, track_running_stats=track_running_stats,
-        name=name)
+        num_features=num_features,
+        eps=eps,
+        momentum=momentum,
+        affine=affine,
+        track_running_stats=track_running_stats,
+        name=name,
+    )
 
     prev_dim = (3, 6, (6, 18, 32))
 
     if num_features is None:
-        num_features = x.get_input_dim(prev_dim, "conv2d")
+        num_features = x.set_input_dim(prev_dim, "conv2d")
 
     details = x.get_layer()
 
     assert isinstance(details, dict) is True
 
-    assert details["layer_details"] == (num_features,)
+    assert details["layer_details"] is None
 
     assert details["name"] == name
 
@@ -91,4 +98,4 @@ def test_batchnorm_2d_layer_invalid_layer():
     prev_dim = (3, 6, (6, 18, 32))
 
     with pytest.raises(ValueError):
-        x.get_input_dim(prev_dim, "conv3d")
+        x.set_input_dim(prev_dim, "conv3d")

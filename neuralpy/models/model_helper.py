@@ -3,7 +3,7 @@
 
 def generate_layer_name(layer_type, index):
     """
-        Generates a unique layer name
+    Generates a unique layer name
     """
     # Generating a unique name for the layer
     return f"{layer_type.lower()}_layer_{index+1}"
@@ -11,7 +11,7 @@ def generate_layer_name(layer_type, index):
 
 def build_layer_from_dict(layer_refs):
     """
-        Builds model from layers ref and details
+    Builds model from layers ref and details
     """
     # Storing the layer here to build the Sequential layer
     layers = []
@@ -22,8 +22,7 @@ def build_layer_from_dict(layer_refs):
     prev_layer_type = None
 
     # Iterating through the layers
-    for index, layer_ref in enumerate(layer_refs):\
-
+    for index, layer_ref in enumerate(layer_refs):
         # Generating n_input if not present
         if prev_layer_details and prev_layer_type:
             # For each layer, we have this method that returns the new input layer
@@ -35,7 +34,7 @@ def build_layer_from_dict(layer_refs):
             # for example, in cnn, after the conv layers, when the dense layer need
             # to do some complicated calculations to get the input shape of the Dense
             # layer based on the input shape, stride, padding, etc
-            layer_ref.get_input_dim(prev_layer_details, prev_layer_type)
+            layer_ref.set_input_dim(prev_layer_details, prev_layer_type)
 
         # Getting the details of the layer using the get_layer method
         layer_details = layer_ref.get_layer()
@@ -77,7 +76,7 @@ def build_layer_from_dict(layer_refs):
 
 def build_optimizer_from_dict(optimizer_ref, parameters):
     """
-        Builds optimizer from ref and details
+    Builds optimizer from ref and details
     """
     # Getting the details of the optimizer using get_optimizer method
     optimizer_details = optimizer_ref.get_optimizer()
@@ -94,8 +93,7 @@ def build_optimizer_from_dict(optimizer_ref, parameters):
     if optimizer_arguments:
         # Initializing the optimizer with optimizer_arguments and models
         # parameters
-        optimizer = optimizer_func(
-            **optimizer_arguments, params=parameters)
+        optimizer = optimizer_func(**optimizer_arguments, params=parameters)
     else:
         # Initializing the optimizer with models parameters only
         optimizer = optimizer_func(params=parameters)
@@ -105,7 +103,7 @@ def build_optimizer_from_dict(optimizer_ref, parameters):
 
 def build_loss_function_from_dict(loss_function_ref):
     """
-        Builds loss function
+    Builds loss function
     """
     # Getting the details of the loss_function using get_loss_function method
     loss_function_details = loss_function_ref.get_loss_function()
@@ -131,12 +129,9 @@ def build_loss_function_from_dict(loss_function_ref):
 
 def build_history_object(metrics):
     """
-        Builds history object
+    Builds history object
     """
-    history = {
-        'batchwise': {},
-        'epochwise': {}
-    }
+    history = {"batchwise": {}, "epochwise": {}}
 
     for matrix in metrics:
         history["batchwise"][f"training_{matrix}"] = []
@@ -149,7 +144,7 @@ def build_history_object(metrics):
 
 def calculate_accuracy(y, y_pred):
     """
-        Calculates accuracy from real labels and predicted labels
+    Calculates accuracy from real labels and predicted labels
     """
     pred = y_pred.argmax(dim=1, keepdim=True)
 
@@ -158,10 +153,11 @@ def calculate_accuracy(y, y_pred):
     return corrects
 
 
-def print_training_progress(epoch, epochs, batch, batches, no_samples,
-                            training_loss, training_corrects=None):
+def print_training_progress(
+    epoch, epochs, batch, batches, no_samples, training_loss, training_corrects=None
+):
     """
-        Show a training progress text
+    Show a training progress text
     """
     # Printing a friendly message to the console
     message = (
@@ -176,10 +172,9 @@ def print_training_progress(epoch, epochs, batch, batches, no_samples,
     print("\r" + message, end="")
 
 
-def print_validation_progress(
-        validation_loss, no_samples, validation_corrects=None):
+def print_validation_progress(validation_loss, no_samples, validation_corrects=None):
     """
-        Show a validation progress text
+    Show a validation progress text
     """
     message = ""
     if validation_corrects:

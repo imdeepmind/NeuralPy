@@ -6,47 +6,53 @@ from neuralpy.utils import CustomLayer
 
 class MaxPool3D(CustomLayer):
     """
-        MaxPool3d Applies a 3D max pooling over an input
-        To learn more about MaxPool3d, please check pytorch
-        documentation at https://pytorch.org/docs/stable/nn.html#maxpool3d
+    MaxPool3d Applies a 3D max pooling over an input
+    To learn more about MaxPool3d, please check pytorch
+    documentation at https://pytorch.org/docs/stable/nn.html#maxpool3d
 
-        Supported Arguments:
+    Supported Arguments:
 
-            kernel_size: (Int | Tuple) the size of the window to take a max over
-            stride: (Int | Tuple) the stride of the window.
-                Default value is kernel_size
-            padding: (Int | Tuple) implicit zero padding to be
-                added on both sides
-            dilation: (Integer) a parameter that controls the
-                stride of elements in the window
-            return_indices: (Boolean) if True, will return the
-                max indices along with the outputs
-            ceil_mode: (Boolean) when True, will use ceil instead
-                of floor to compute the output shape
-            name: (String) Name of the layer, if not provided then
-                automatically calculates a unique name for the layer
+        kernel_size: (Int | Tuple) the size of the window to take a max over
+        stride: (Int | Tuple) the stride of the window.
+            Default value is kernel_size
+        padding: (Int | Tuple) implicit zero padding to be
+            added on both sides
+        dilation: (Integer) a parameter that controls the
+            stride of elements in the window
+        return_indices: (Boolean) if True, will return the
+            max indices along with the outputs
+        ceil_mode: (Boolean) when True, will use ceil instead
+            of floor to compute the output shape
+        name: (String) Name of the layer, if not provided then
+            automatically calculates a unique name for the layer
     """
 
     def __init__(
-            self, kernel_size, stride=None, padding=0, dilation=1,
-            return_indices=False, ceil_mode=False, name=None
+        self,
+        kernel_size,
+        stride=None,
+        padding=0,
+        dilation=1,
+        return_indices=False,
+        ceil_mode=False,
+        name=None,
     ):
         """
-            __init__ method for MaxPool3d
+        __init__ method for MaxPool3d
 
-            Supported Arguments:
+        Supported Arguments:
 
-            kernel_size: (Integer) the size of the window to take a max over
-            stride: (Integer) the stride of the window.
-                Default value is kernel_size
-            padding: (Integer) implicit zero padding to be
-                added on both sides
-            dilation: (Integer) a parameter that controls the
-                stride of elements in the window
-            return_indices: (Boolean) if True, will return the
-                max indices along with the outputs
-            ceil_mode: (Boolean) when True, will use ceil instead
-                of floor to compute the output shape
+        kernel_size: (Integer) the size of the window to take a max over
+        stride: (Integer) the stride of the window.
+            Default value is kernel_size
+        padding: (Integer) implicit zero padding to be
+            added on both sides
+        dilation: (Integer) a parameter that controls the
+            stride of elements in the window
+        return_indices: (Boolean) if True, will return the
+            max indices along with the outputs
+        ceil_mode: (Boolean) when True, will use ceil instead
+            of floor to compute the output shape
         """
         # Checking the kernel_size field
         if not isinstance(kernel_size, (int, tuple)):
@@ -109,13 +115,11 @@ class MaxPool3D(CustomLayer):
 
         # Checking the return_indices, it is an optional filed
         if return_indices and not isinstance(return_indices, bool):
-            raise ValueError(
-                "Please provide a valid value for return_indices")
+            raise ValueError("Please provide a valid value for return_indices")
 
         # Checking the ceil_mode, it is an optional filed
         if ceil_mode and not isinstance(ceil_mode, bool):
-            raise ValueError(
-                "Please provide a valid value for ceil_mode")
+            raise ValueError("Please provide a valid value for ceil_mode")
 
         super().__init__(_MaxPool3d, "MaxPool3D", layer_name=name)
 
@@ -160,33 +164,36 @@ class MaxPool3D(CustomLayer):
 
         return (depth, depth * dim_1 * dim_2 * dim_3, (depth, dim_1, dim_2, dim_3))
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output
-            layer.
+        This method calculates the input shape for layer based on previous output
+        layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # MaxPool3d does not need to n_input, so returning None
         layer_type = prev_layer_type.lower()
 
-        if layer_type == 'conv3d':
+        if layer_type == "conv3d":
             self.__prev_layer_data = prev_input_dim[2]
 
     def get_layer(self):
         """
-            This method returns the details as dict of the layer.
+        This method returns the details as dict of the layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return self._get_layer_details(self.__get_layer_details(), {
-            'kernel_size': self.__kernel_size,
-            'stride': self.__stride,
-            'padding': self.__padding,
-            'dilation': self.__dilation,
-            'return_indices': self.__return_indices,
-            'ceil_mode': self.__ceil_mode
-        })
+        return self._get_layer_details(
+            self.__get_layer_details(),
+            {
+                "kernel_size": self.__kernel_size,
+                "stride": self.__stride,
+                "padding": self.__padding,
+                "dilation": self.__dilation,
+                "return_indices": self.__return_indices,
+                "ceil_mode": self.__ceil_mode,
+            },
+        )

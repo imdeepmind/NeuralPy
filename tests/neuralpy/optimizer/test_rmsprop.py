@@ -10,31 +10,30 @@ from neuralpy.optimizer import RMSprop
         (False, 0.001, 0.001, 0.001, 0.001, False),
         ("invalid", 0.001, 0.001, 0.001, 0.001, False),
         (0.0, False, 0.001, 0.001, 0.001, False),
-
         (0.001, False, 0.001, 0.001, 0.001, False),
         (0.001, "", 0.001, 0.001, 0.001, False),
-
         (0.001, 0.001, False, 0.001, 0.001, False),
         (0.001, 0.001, -6, 0.001, 0.001, False),
-
         (0.001, 0.001, 0.2, True, 0.001, False),
         (0.001, 0.001, 0.2, "", 0.001, False),
-
         (0.001, 0.001, 0.2, 0.32, False, False),
         (0.001, 0.001, 0.2, 0.32, "invalid", False),
-
         (0.001, 0.001, 0.2, 0.32, 0.32, 3),
         (0.001, 0.001, 0.2, 0.32, 0.32, "invalid"),
-    ]
+    ],
 )
 def test_rmsprop_should_throw_value_error(
-        learning_rate, alpha, eps, weight_decay, momentum, centered):
+    learning_rate, alpha, eps, weight_decay, momentum, centered
+):
     with pytest.raises(ValueError):
-        RMSprop(learning_rate=learning_rate,
-                alpha=alpha,
-                eps=eps,
-                weight_decay=weight_decay,
-                momentum=momentum, centered=centered)
+        RMSprop(
+            learning_rate=learning_rate,
+            alpha=alpha,
+            eps=eps,
+            weight_decay=weight_decay,
+            momentum=momentum,
+            centered=centered,
+        )
 
 
 # Possible values that are valid
@@ -48,19 +47,27 @@ centeredes = [False, True]
 
 @pytest.mark.parametrize(
     "learning_rate, alpha, eps, weight_decay, momentum, centered",
-    [(learning_rate, alpha, eps, weight_decay, momentum, centered) for learning_rate in
-     learning_rates
-     for alpha in alphas
-     for eps in epses
-     for weight_decay in weight_decays
-     for momentum in momentums
-     for centered in centeredes]
+    [
+        (learning_rate, alpha, eps, weight_decay, momentum, centered)
+        for learning_rate in learning_rates
+        for alpha in alphas
+        for eps in epses
+        for weight_decay in weight_decays
+        for momentum in momentums
+        for centered in centeredes
+    ],
 )
 def test_rmsprop_get_layer_method(
-        learning_rate, alpha, eps, weight_decay, momentum, centered):
-    x = RMSprop(learning_rate=learning_rate, alpha=alpha, eps=eps,
-                weight_decay=weight_decay,
-                momentum=momentum, centered=centered)
+    learning_rate, alpha, eps, weight_decay, momentum, centered
+):
+    x = RMSprop(
+        learning_rate=learning_rate,
+        alpha=alpha,
+        eps=eps,
+        weight_decay=weight_decay,
+        momentum=momentum,
+        centered=centered,
+    )
 
     details = x.get_optimizer()
 

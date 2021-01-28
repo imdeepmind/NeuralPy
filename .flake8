@@ -12,7 +12,7 @@ statistics = True
 output-file = flake8.log
 tee = True
 
-ignore = E111, E133
+ignore = E111, E133, E203, W503
 
 exclude =
     .git,
@@ -20,6 +20,7 @@ exclude =
     .github,
     __pytest_cache__,
     .vscode,
+    venv,
     build,
     dist,
     docs,

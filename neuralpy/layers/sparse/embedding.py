@@ -6,10 +6,39 @@ from neuralpy.utils import CustomLayer
 
 class Embedding(CustomLayer):
     """
-        A simple lookup table that stores embeddings of a fixed dictionary and size
-        To learn more about RNN, please check pytorch
-        documentation at https://pytorch.org/docs/stable/nn.html#embedding
+    A simple lookup table that stores embeddings of a fixed dictionary and size
+    To learn more about RNN, please check pytorch
+    documentation at https://pytorch.org/docs/stable/nn.html#embedding
 
+    Supported Arguments:
+        num_embeddings: (Integer) size of the dictionary of embeddings
+        embedding_dim: (Integer) the size of each embedding vector
+        padding_idx: (Integer) If given, pads the output with the
+            embedding vector at padding_idx (initialized to zeros)
+            whenever it encounters the index
+        max_norm: (Float) If given, each embedding vector with
+            norm larger than max_norm is renormalized to have norm max_norm
+        norm_type: (Float) The p of the p-norm to compute for the max_norm option.
+            Default 2
+        scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
+            inverse of frequency of the words in the mini-batch. Default False
+        sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse
+            tensor.
+    """
+
+    def __init__(
+        self,
+        num_embeddings,
+        embedding_dim,
+        padding_idx=None,
+        max_norm=None,
+        norm_type=2.0,
+        scale_grad_by_freq=False,
+        sparse=False,
+        name=None,
+    ):
+        """
+        __init__ method for Embedding
         Supported Arguments:
             num_embeddings: (Integer) size of the dictionary of embeddings
             embedding_dim: (Integer) the size of each embedding vector
@@ -18,34 +47,12 @@ class Embedding(CustomLayer):
                 whenever it encounters the index
             max_norm: (Float) If given, each embedding vector with
                 norm larger than max_norm is renormalized to have norm max_norm
-            norm_type: (Float) The p of the p-norm to compute for the max_norm option.
-                Default 2
+            norm_type: (Float) The p of the p-norm to compute for the max_norm
+                option.Default 2
             scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
                 inverse of frequency of the words in the mini-batch. Default False
-            sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a sparse
-                tensor.
-    """
-
-    def __init__(
-            self, num_embeddings, embedding_dim, padding_idx=None,
-            max_norm=None, norm_type=2.0, scale_grad_by_freq=False,
-            sparse=False, name=None):
-        """
-            __init__ method for Embedding
-            Supported Arguments:
-                num_embeddings: (Integer) size of the dictionary of embeddings
-                embedding_dim: (Integer) the size of each embedding vector
-                padding_idx: (Integer) If given, pads the output with the
-                    embedding vector at padding_idx (initialized to zeros)
-                    whenever it encounters the index
-                max_norm: (Float) If given, each embedding vector with
-                    norm larger than max_norm is renormalized to have norm max_norm
-                norm_type: (Float) The p of the p-norm to compute for the max_norm
-                    option.Default 2
-                scale_grad_by_freq: (Boolean) If given, this will scale gradients by the
-                    inverse of frequency of the words in the mini-batch. Default False
-                sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a
-                    sparse tensor.
+            sparse: (Boolean) If True, gradient w.r.t. weight matrix will be a
+                sparse tensor.
 
         """
 
@@ -90,31 +97,34 @@ class Embedding(CustomLayer):
         self.__scale_grad_by_freq = scale_grad_by_freq
         self.__sparse = sparse
 
-    def get_input_dim(self, prev_input_dim, prev_layer_type):
+    def set_input_dim(self, prev_input_dim, prev_layer_type):
         """
-            This method calculates the input shape for layer based on previous output
-            layer.
+        This method calculates the input shape for layer based on previous output
+        layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Embedding does not need to n_input, so returning None
         return None
 
     def get_layer(self):
         """
-            This method returns the details as dict of the layer.
+        This method returns the details as dict of the layer.
 
-            This method is used by the NeuralPy Models, for building the models.
-            No need to call this method for using NeuralPy.
+        This method is used by the NeuralPy Models, for building the models.
+        No need to call this method for using NeuralPy.
         """
         # Returning all the details of the layer
-        return self._get_layer_details((self.__embedding_dim, ), {
-            'num_embeddings': self.__num_embeddings,
-            'embedding_dim': self.__embedding_dim,
-            'padding_idx': self.__padding_idx,
-            'max_norm': self.__max_norm,
-            'norm_type': self.__norm_type,
-            'scale_grad_by_freq': self.__scale_grad_by_freq,
-            'sparse': self.__sparse
-        })
+        return self._get_layer_details(
+            (self.__embedding_dim,),
+            {
+                "num_embeddings": self.__num_embeddings,
+                "embedding_dim": self.__embedding_dim,
+                "padding_idx": self.__padding_idx,
+                "max_norm": self.__max_norm,
+                "norm_type": self.__norm_type,
+                "scale_grad_by_freq": self.__scale_grad_by_freq,
+                "sparse": self.__sparse,
+            },
+        )
