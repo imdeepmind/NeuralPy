@@ -137,41 +137,47 @@ class ConvTranspose2d(CustomLayer):
         # Return tuple structure
         # Getting the kernel values
         kernel1 = 0
+        kernel2 = 0
         if isinstance(self.__kernel_size, int):
             kernel1 = self.__kernel_size
+            kernel2 = self.__kernel_size
         else:
-            kernel1, = self.__kernel_size
+            kernel1, kernel2 = self.__kernel_size[0], self.__kernel_size[1]
 
         # Getting the padding values
         padding1 = 0
+        padding2 = 0
         if isinstance(self.__padding, int):
             padding1 = self.__padding
         else:
-            padding1, = self.__padding
+            padding1, padding2 = self.__padding[0], self.__padding[1]
 
         # Getting the stride values
         stride_1 = 0
+        stride_2 = 0
         if isinstance(self.__stride, int):
             stride_1 = self.__stride
             stride_2 = self.__stride
         else:
-            stride_1, stride_2 = self.__stride
+            stride_1, stride_2 = self.__stride[0], self.__stride[1]
 
         # Getting the dilation values
         dilation1 = 0
+        dilation2 = 0
         if isinstance(self.__dilation, int):
             dilation1 = self.__dilation
             dilation2 = self.__dilation
         else:
-            dilation1, dilation2 = self.__dilation
+            dilation1, dilation2 = self.__dilation[0], self.__dilation[1]
 
         # Getting the out_padding values
         out_padding1 = 0
+        out_padding2 = 0
         if isinstance(self.__out_padding, int):
             out_padding1 = self.__out_padding
             out_padding2 = self.__out_padding
         else:
-            out_padding1, out_padding2 = self.__out_padding
+            out_padding1, out_padding2 = self.__out_padding[0], self.__out_padding[1]
 
         # Calculating the width and height of the convtranspose output
         input_shape1 = self.__input_shape[-1] - 1
@@ -208,7 +214,7 @@ class ConvTranspose2d(CustomLayer):
 
             # based on the prev layer type, predicting the __input_shape
             # to support more layers, we need to add some more statements
-            if layer_type == 'ConvTranspose2d':
+            if layer_type == 'convtranspose2d':
                 self.__input_shape = prev_input_dim[-1]
             else:
                 raise ValueError(
