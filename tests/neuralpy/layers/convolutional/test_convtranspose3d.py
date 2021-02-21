@@ -3,7 +3,7 @@ from torch.nn import ConvTranspose3d as _ConvTranspose3d
 from neuralpy.layers.convolutional import ConvTranspose3d
 
 
-def test_ConvTranspose3d_should_throw_type_error():
+def test_convtranspose3d_should_throw_type_error():
     with pytest.raises(TypeError):
         ConvTranspose3d()
 
@@ -127,7 +127,7 @@ name = ["Name", None]
      for _dilation in dilation
      for _name in name]
 )
-def test_convtrans1d_get_layer_method(
+def test_convtrans3d_get_layer_method(
         _in_channels, _out_channels, _kernel_size, _input_shape, _stride,
         _padding, _out_padding, _groups, _bias, _dilation, _name):
     x = ConvTranspose3d(in_channels=_in_channels, out_channels=_out_channels,
@@ -152,7 +152,7 @@ def test_convtrans1d_get_layer_method(
     assert isinstance(details["keyword_arguments"], dict) is True
 
 
-def test_convtrans1d_get_layer_method_invalid_layer():
+def test_convtrans3d_get_layer_method_invalid_layer():
     x = ConvTranspose3d(
         in_channels=16, out_channels=12, kernel_size=2, input_shape=None)
 

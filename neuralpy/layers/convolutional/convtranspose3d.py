@@ -6,7 +6,7 @@ from neuralpy.utils import CustomLayer
 
 class ConvTranspose3d(CustomLayer):
     """
-    Applies a 2D transposed convolution operator over
+    Applies a 3D transposed convolution operator over
     an input image composed of several input planes.
 
     To learn more about ConvTranspose3d layers, please check PyTorch
