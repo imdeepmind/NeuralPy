@@ -58,7 +58,7 @@ class BatchNorm1D(CustomLayer):
                 automatically calculates a unique name for the layer
         """
         # Checking num_features field
-        if num_features is not None and not isinstance(num_features, int):
+        if num_features is None or not isinstance(num_features, int):
             raise ValueError("Please provide a valid num_features")
         # Checking eps field
         if not isinstance(eps, float):
